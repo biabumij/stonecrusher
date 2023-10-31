@@ -1,0 +1,2 @@
+[15-Jun-2023 13:51:39 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 262214 bytes) in /home1/biabumij/sc/application/libraries/tcpdf/tcpdf.php on line 10338
+[15-Jun-2023 14:14:10 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 262214 bytes) in /home1/biabumij/sc/application/libraries/tcpdf/tcpdf.php on line 10338
