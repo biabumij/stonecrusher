@@ -1436,21 +1436,16 @@ class Produksi extends Secure_Controller {
 	public function submit_hpp()
 	{
 		$date_hpp = $this->input->post('date_hpp');
-		$abubatu = str_replace('.', '', $this->input->post('abubatu'));
-		$batu0510 = str_replace('.', '', $this->input->post('batu0510'));
-		$batu1020 = str_replace('.', '', $this->input->post('batu1020'));
-		$batu2030 = str_replace('.', '', $this->input->post('batu2030'));
+		$harga_satuan_bahan_jadi = str_replace('.', '', $this->input->post('harga_satuan_bahan_jadi'));
+		$faktor_kehilangan = str_replace('.', '', $this->input->post('faktor_kehilangan'));
 
 		$this->db->trans_start(); # Starting Transaction
 		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
 
 		$arr_insert = array(
 			'date_hpp' => date('Y-m-d', strtotime($date_hpp)),
-			'abubatu' => $abubatu,
-			'batu0510' => $batu0510,
-			'batu1020' => $batu1020,
-			'batu2030' => $batu2030,
-			'reset' => 1,
+			'harga_satuan_bahan_jadi' => $harga_satuan_bahan_jadi,
+			'faktor_kehilangan' => $faktor_kehilangan,
 			'status' => 'PUBLISH',
 			'created_by' => $this->session->userdata('admin_id'),
 			'created_on' => date('Y-m-d H:i:s')
@@ -1481,7 +1476,7 @@ class Produksi extends Secure_Controller {
 			$this->db->where('pp.date_hpp >=',date('Y-m-d',strtotime($arr_date[0])));
 			$this->db->where('pp.date_hpp <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
-        $this->db->select('pp.id, pp.date_hpp, pp.abubatu, pp.batu0510, pp.batu1020, pp.batu2030, pp.status, pp.created_by, pp.created_on');
+        $this->db->select('pp.id, pp.date_hpp, pp.harga_satuan_bahan_jadi, pp.faktor_kehilangan, pp.status, pp.created_by, pp.created_on');
 		$this->db->order_by('pp.date_hpp','desc');
 		$query = $this->db->get('hpp pp');
 		
@@ -1489,10 +1484,8 @@ class Produksi extends Secure_Controller {
 			foreach ($query->result_array() as $key => $row) {
                 $row['no'] = $key+1;
                 $row['date_hpp'] = date('d F Y',strtotime($row['date_hpp']));
-                $row['abubatu'] = number_format($row['abubatu'],0,',','.');
-				$row['batu0510'] = number_format($row['batu0510'],0,',','.');
-				$row['batu1020'] = number_format($row['batu1020'],0,',','.');
-				$row['batu2030'] = number_format($row['batu2030'],0,',','.');
+                $row['harga_satuan_bahan_jadi'] = number_format($row['harga_satuan_bahan_jadi'],0,',','.');
+				$row['faktor_kehilangan'] = number_format($row['faktor_kehilangan'],0,',','.');
 				$row['status'] = $row['status'];
 				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
                 $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
@@ -1620,103 +1613,6 @@ class Produksi extends Secure_Controller {
 		$id = $this->input->post('id');
 		if(!empty($id)){
 			$this->db->delete('akumulasi_bahan_baku',array('id'=>$id));
-			{
-				$output['output'] = true;
-			}
-		}
-		echo json_encode($output);
-	}
-
-	public function form_akumulasi()
-	{
-		$check = $this->m_admin->check_login();
-		if ($check == true) {
-			$data['products'] = $this->db->select('*')->get_where('produk', array('status' => 'PUBLISH', 'aggregat' => 1))->result_array();
-			$this->load->view('produksi/form_akumulasi', $data);
-		} else {
-			redirect('admin');
-		}
-	}
-
-	public function submit_akumulasi()
-	{
-		$date_akumulasi = $this->input->post('date_akumulasi');
-		$total_nilai_keluar = str_replace('.', '', $this->input->post('total_nilai_keluar'));
-		$total_nilai_akhir = str_replace('.', '', $this->input->post('total_nilai_akhir'));
-		$memo = $this->input->post('memo');
-
-		$this->db->trans_start(); # Starting Transaction
-		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
-
-		$arr_insert = array(
-			'date_akumulasi' => date('Y-m-d', strtotime($date_akumulasi)),
-			'total_nilai_keluar' => $total_nilai_keluar,
-			'total_nilai_akhir' => $total_nilai_akhir,
-			'memo' => $memo,
-			'status' => 'PUBLISH',
-			'created_by' => $this->session->userdata('admin_id'),
-			'created_on' => date('Y-m-d H:i:s')
-		);
-
-		$this->db->insert('akumulasi', $arr_insert);
-
-		if ($this->db->trans_status() === FALSE) {
-			# Something went wrong.
-			$this->db->trans_rollback();
-			$this->session->set_flashdata('notif_error', 'Gagal membuat Akumulasi Pergerakan Bahan Baku !!');
-			redirect('kunci_&_approval/akumulasi');
-		} else {
-			# Everything is Perfect. 
-			# Committing data to the database.
-			$this->db->trans_commit();
-			$this->session->set_flashdata('notif_success', 'Berhasil membuat Akumulasi Pergerakan Bahan Baku !!');
-			redirect('admin/kunci_&_approval');
-		}
-	}
-
-	public function table_akumulasi()
-	{   
-        $data = array();
-		$filter_date = $this->input->post('filter_date');
-		if(!empty($filter_date)){
-			$arr_date = explode(' - ', $filter_date);
-			$this->db->where('pp.date_akumulasi >=',date('Y-m-d',strtotime($arr_date[0])));
-			$this->db->where('pp.date_akumulasi <=',date('Y-m-d',strtotime($arr_date[1])));
-		}
-        $this->db->select('pp.id, pp.date_akumulasi, pp.total_nilai_keluar, pp.total_nilai_akhir, pp.status, pp.created_by, pp.created_on, pp.memo');
-		$this->db->order_by('pp.date_akumulasi','desc');
-		$query = $this->db->get('akumulasi pp');
-		
-       if($query->num_rows() > 0){
-			foreach ($query->result_array() as $key => $row) {
-                $row['no'] = $key+1;
-                $row['date_akumulasi'] = date('d F Y',strtotime($row['date_akumulasi']));
-                $row['total_nilai_keluar'] = number_format($row['total_nilai_keluar'],0,',','.');
-				$row['total_nilai_akhir'] = number_format($row['total_nilai_akhir'],0,',','.');
-				$row['memo'] = $row['memo'];
-				$row['status'] = $row['status'];
-				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
-                $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
-
-				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
-				$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteDataAkumulasi('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
-				}else {
-					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
-				}
-
-                $data[] = $row;
-            }
-
-        }
-        echo json_encode(array('data'=>$data));
-    }
-
-	public function delete_akumulasi()
-	{
-		$output['output'] = false;
-		$id = $this->input->post('id');
-		if(!empty($id)){
-			$this->db->delete('akumulasi',array('id'=>$id));
 			{
 				$output['output'] = true;
 			}

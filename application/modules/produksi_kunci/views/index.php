@@ -41,9 +41,8 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a href="<?= site_url('produksi/form_hpp_bahan_baku'); ?>">HPP Pergerakan Bahan Baku</a></li>
-                                            <li><a href="<?= site_url('produksi/form_hpp'); ?>">HPP Pergerakan Bahan Jadi</a></li>
                                             <li><a href="<?= site_url('produksi/form_akumulasi_bahan_baku'); ?>">Akumulasi Pergerakan Bahan Baku</a></li>
-                                            <li><a href="<?= site_url('produksi/form_akumulasi'); ?>">Akumulasi Pergerakan Bahan Jadi</a></li>
+                                            <li><a href="<?= site_url('produksi/form_hpp'); ?>">Harga Satuan Bahan Jadi</a></li>
                                         </ul>
                                     </div>
                                 </h3>
@@ -52,9 +51,8 @@
                             <div class="panel-content">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#hpp_bahan_baku" aria-controls="hpp_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Pergerakan Bahan Baku</a>
-                                    <li role="presentation"><a href="#hpp" aria-controls="hpp" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Pergerakan Bahan Jadi</a></li>
                                     <li role="presentation"><a href="#akumulasi_bahan_baku" aria-controls="akumulasi_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Pergerakan Bahan Baku</a>
-                                    <li role="presentation"><a href="#akumulasi" aria-controls="akumulasi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Pergerakan Bahan Jadi</a>
+                                    <li role="presentation"><a href="#hpp" aria-controls="hpp" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Harga Satuan Bahan Jadi</a></li>
                                 </ul>
 
                                 <div class="tab-content">
@@ -93,42 +91,6 @@
 										
 									<!-- End Table HPP Bahan Baku -->
 
-                                    <!-- Table HPP Pergerakan Bahan Jadi -->
-									
-                                    <div role="tabpanel" class="tab-pane" id="hpp">
-										<div class="col-sm-4">
-											<input type="text" id="filter_date_hpp" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
-										</div>
-										<br />
-										<br />										
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover" id="table_hpp" style="width:100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th width="5%" class="text-center">No</th>
-														<th>Tanggal</th>
-														<th class="text-right">Abu Batu</th>
-                                                        <th class="text-right">Batu 0,5 - 10</th>
-														<th class="text-right">Batu 10 - 20</th>
-                                                        <th class="text-right">Batu 20 - 30</th>
-														<th class="text-center">Status</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
-                                                        <th width="5%" class="text-center">Hapus</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                                <tfoot>
-                                                   
-                                                </tfoot>
-                                            </table>
-                                        </div>
-									</div>
-										
-									<!-- End Table HPP Pergerakan Bahan Jadi -->
-
                                     <!-- Akumulasi Bahan Baku -->
 									
                                     <div role="tabpanel" class="tab-pane" id="akumulasi_bahan_baku">
@@ -164,23 +126,24 @@
 										
 									<!-- End Akumulasi Bahan Baku -->
 
-                                    <!-- Akumulasi -->
+                                    
+
+                                    <!-- Table Harga Satuan Bahan Jadi -->
 									
-                                    <div role="tabpanel" class="tab-pane" id="akumulasi">
+                                    <div role="tabpanel" class="tab-pane" id="hpp">
 										<div class="col-sm-4">
-											<input type="text" id="filter_date_akumulasi" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
+											<input type="text" id="filter_date_hpp" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
 										</div>
 										<br />
 										<br />										
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover" id="table_akumulasi" style="width:100%">
+                                            <table class="table table-striped table-hover" id="table_hpp" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th width="5%" class="text-center">No</th>
 														<th>Tanggal</th>
-														<th class="text-right">Total Nilai Keluar</th>
-                                                        <th class="text-right">Total Nilai Akhir</th>
-                                                        <th>Catatan</th>
+														<th class="text-right">Harga Satuan Bahan Jadi</th>
+                                                        <th class="text-right">Faktor Kehilangan</th>
 														<th class="text-center">Status</th>
                                                         <th>Dibuat Oleh</th>
                                                         <th>Dibuat Tanggal</th>
@@ -197,7 +160,7 @@
                                         </div>
 									</div>
 										
-									<!-- End Akumulasi -->
+									<!-- End Table Table Harga Satuan Bahan Jadi -->
 										           
                                 </div>
                             </div>
@@ -331,94 +294,6 @@
             });
         }
 
-        var table_hpp = $('#table_hpp').DataTable({
-            ajax: {
-                processing: true,
-                serverSide: true,
-                url: '<?php echo site_url('produksi/table_hpp'); ?>',
-                type: 'POST',
-                data: function(d) {
-                    d.filter_date = $('#filter_date_hpp').val();
-                }
-            },
-            responsive: true,
-            paging: false,
-            "deferRender": true,
-            "language": {
-                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
-            },
-            columns: [
-				{
-                    "data": "no"
-                },
-				{
-                    "data": "date_hpp"
-                },
-				{
-                    "data": "abubatu"
-                },
-				{
-                    "data": "batu0510"
-                },
-				{
-                    "data": "batu1020"
-                },
-                {
-                    "data": "batu2030"
-                },
-                {
-                    "data": "status"
-                },
-                {
-                    "data": "admin_name"
-                },
-                {
-                    "data": "created_on"
-                },
-                {
-                    "data": "actions"
-                }
-            ],
-            "columnDefs": [{
-                    "targets": [0, 6, 9],
-                    "className": 'text-center',
-                },
-                {
-                    "targets": [2, 3, 4, 5],
-                    "className": 'text-right',
-                }
-            ],
-        });
-
-        $('.dtpickerange').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_hpp.ajax.reload();
-        });
-
-        function DeleteDataHpp(id) {
-        bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
-            // console.log('This was logged in the callback: ' + result); 
-            if (result) {
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo site_url('produksi/delete_hpp'); ?>",
-                    dataType: 'json',
-                    data: {
-                        id: id
-                    },
-                    success: function(result) {
-                        if (result.output) {
-                            table_hpp.ajax.reload();
-                            bootbox.alert('Berhasil Menghapus HPP Pergerakan Bahan Jadi !!');
-                        } else if (result.err) {
-                            bootbox.alert(result.err);
-                        }
-                    }
-                });
-            }
-            });
-        }
-
         var table_akumulasi_bahan_baku = $('#table_akumulasi_bahan_baku').DataTable({
             ajax: {
                 processing: true,
@@ -504,14 +379,14 @@
             });
         }
 
-        var table_akumulasi = $('#table_akumulasi').DataTable({
+        var table_hpp = $('#table_hpp').DataTable({
             ajax: {
                 processing: true,
                 serverSide: true,
-                url: '<?php echo site_url('produksi/table_akumulasi'); ?>',
+                url: '<?php echo site_url('produksi/table_hpp'); ?>',
                 type: 'POST',
                 data: function(d) {
-                    d.filter_date = $('#filter_date_akumulasi').val();
+                    d.filter_date = $('#filter_date_hpp').val();
                 }
             },
             responsive: true,
@@ -525,16 +400,13 @@
                     "data": "no"
                 },
 				{
-                    "data": "date_akumulasi"
+                    "data": "date_hpp"
                 },
 				{
-                    "data": "total_nilai_keluar"
+                    "data": "harga_satuan_bahan_jadi"
                 },
-                {
-                    "data": "total_nilai_akhir"
-                },
-                {
-                    "data": "memo"
+				{
+                    "data": "faktor_kehilangan"
                 },
                 {
                     "data": "status"
@@ -550,7 +422,7 @@
                 }
             ],
             "columnDefs": [{
-                    "targets": [0, 5, 8],
+                    "targets": [0, 7],
                     "className": 'text-center',
                 },
                 {
@@ -562,24 +434,24 @@
 
         $('.dtpickerange').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_akumulasi.ajax.reload();
+        table_hpp.ajax.reload();
         });
 
-        function DeleteDataAkumulasi(id) {
+        function DeleteDataHpp(id) {
         bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
             // console.log('This was logged in the callback: ' + result); 
             if (result) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('produksi/delete_akumulasi'); ?>",
+                    url: "<?php echo site_url('produksi/delete_hpp'); ?>",
                     dataType: 'json',
                     data: {
                         id: id
                     },
                     success: function(result) {
                         if (result.output) {
-                            table_akumulasi.ajax.reload();
-                            bootbox.alert('Berhasil Menghapus Akumulasi Pergerakan Bahan Jadi !!');
+                            table_hpp.ajax.reload();
+                            bootbox.alert('Berhasil Menghapus HPP Pergerakan Bahan Jadi !!');
                         } else if (result.err) {
                             bootbox.alert(result.err);
                         }
