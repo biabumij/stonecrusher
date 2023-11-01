@@ -1790,17 +1790,18 @@ class Receipt_material extends CI_Controller {
 						$arr['presentase_c'] = $row['presentase_c'];
 						$arr['presentase_d'] = $row['presentase_d'];
 						$arr['presentase_e'] = $row['presentase_e'];
-						$arr['jumlah_pemakaian_a'] = number_format($row['jumlah_pemakaian_a'],2,',','.');
-						$arr['jumlah_pemakaian_b'] = number_format($row['jumlah_pemakaian_b'],2,',','.');
-						$arr['jumlah_pemakaian_c'] = number_format($row['jumlah_pemakaian_c'],2,',','.');
-						$arr['jumlah_pemakaian_d'] = number_format($row['jumlah_pemakaian_d'],2,',','.');					
+						$arr['jumlah_pemakaian_a'] = round($row['jumlah_pemakaian_a'],2);
+						$arr['jumlah_pemakaian_b'] = round($row['jumlah_pemakaian_b'],2);
+						$arr['jumlah_pemakaian_c'] = round($row['jumlah_pemakaian_c'],2);
+						$arr['jumlah_pemakaian_d'] = round($row['jumlah_pemakaian_d'],2);
+						$arr['jumlah_pemakaian_e'] = round($row['jumlah_pemakaian_e'],2);			
 						
 						$mats[] = $arr;
 					}
 					
 					
 					$sups['mats'] = $mats;
-					$total += $sups['jumlah_pemakaian_a'] + $sups['jumlah_pemakaian_b'] + $sups['jumlah_pemakaian_c'] + $sups['jumlah_pemakaian_d'] + $sups['jumlah_pemakaian_e'];
+					$total += round($sups['jumlah_pemakaian_a'],2) + round($sups['jumlah_pemakaian_b'],2) + round($sups['jumlah_pemakaian_c'],2) + round($sups['jumlah_pemakaian_d'],2) + round($sups['jumlah_pemakaian_e'],2);
 					$sups['no'] =$no;
 					$sups['jumlah_used'] = number_format($sups['jumlah_used'],2,',','.');
 					$sups['produk_a'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_a']),'nama_produk');
@@ -1818,11 +1819,11 @@ class Receipt_material extends CI_Controller {
 					$sups['presentase_c'] = $sups['presentase_c'];
 					$sups['presentase_d'] = $sups['presentase_d'];
 					$sups['presentase_e'] = $sups['presentase_e'];
-					$sups['jumlah_pemakaian_a'] = number_format($sups['jumlah_pemakaian_a'],2,',','.');
-					$sups['jumlah_pemakaian_b'] = number_format($sups['jumlah_pemakaian_b'],2,',','.');
-					$sups['jumlah_pemakaian_c'] = number_format($sups['jumlah_pemakaian_c'],2,',','.');
-					$sups['jumlah_pemakaian_d'] = number_format($sups['jumlah_pemakaian_d'],2,',','.');
-					$sups['jumlah_pemakaian_e'] = number_format($sups['jumlah_pemakaian_e'],2,',','.');
+					$sups['jumlah_pemakaian_a'] = round($sups['jumlah_pemakaian_a'],2);
+					$sups['jumlah_pemakaian_b'] = round($sups['jumlah_pemakaian_b'],2);
+					$sups['jumlah_pemakaian_c'] = round($sups['jumlah_pemakaian_c'],2);
+					$sups['jumlah_pemakaian_d'] = round($sups['jumlah_pemakaian_d'],2);
+					$sups['jumlah_pemakaian_e'] = round($sups['jumlah_pemakaian_e'],2);
 					$sups['jumlah_presentase'] = $sups['jumlah_presentase'];
 
 					$data[] = $sups;

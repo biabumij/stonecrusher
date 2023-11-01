@@ -73,7 +73,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="vertical-align:middle">2.</td>
-                                                    <td style="vertical-align:middle">Apakah Ada Produksi?</td>
+                                                    <td style="vertical-align:middle">Apakah Ada Penjualan?</td>
 													<td>
                                                         <table width="100%">
                                                             <tr>

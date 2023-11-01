@@ -419,8 +419,7 @@
                                 fontFamily: 'arial'
                             }
                         },
-                        //categories: ['Jan 23','Feb 23','Mar 23','Apr 23','Mei 23','Jun 23','Jul 23','Agu 23','Sep 23','Okt 23','Nov 23','Des 23','Akumulasi <br />2021-2023']
-                        categories: ['Juli 23','Agustus 23','September 23','Oktober 23','November 23','Desember 23','Akumulasi <br />Juli 2023 - Saat Ini']
+                        categories: ['November 23','Desember 23']
                     },
                     yAxis: {
                         title: {
@@ -487,7 +486,7 @@
             
                     series: [{  
                         name: '0 %',  
-                        data: [0,0,0,0,0,0,0],
+                        data: [0,0],
 
                         color: '#000000',
                         fontWeight: 'bold',
@@ -496,8 +495,7 @@
                     },
                     {  
                         name: 'Laba Rugi %',
-                        //data: [ <?php echo number_format($persentase_jan_fix,2,'.',','); ?>,<?php echo number_format($persentase_feb_fix,2,'.',','); ?>,<?php echo number_format($persentase_mar_fix,2,'.',','); ?>,<?php echo number_format($persentase_apr_fix,2,'.',','); ?>,<?php echo number_format($persentase_mei_fix,2,'.',','); ?>,<?php echo number_format($persentase_jun_fix,2,'.',','); ?>,<?php echo number_format($persentase_jul_fix,2,'.',','); ?>,<?php echo number_format($persentase_agu_fix,2,'.',','); ?>,<?php echo number_format($persentase_sep_fix,2,'.',','); ?>,<?php echo number_format($persentase_okt_fix,2,'.',','); ?>,<?php echo number_format($persentase_nov_fix,2,'.',','); ?>,<?php echo number_format($persentase_des_fix,2,'.',','); ?>,<?php echo number_format($persentase_aku_fix,2,'.',','); ?>],
-                        data: [ <?php echo number_format($persentase_jul_fix,2,'.',',');?>,<?php echo number_format($persentase_agu_fix,2,'.',','); ?>,<?php echo number_format($persentase_sep_fix,2,'.',','); ?>,<?php echo number_format($persentase_okt_fix,2,'.',','); ?>,<?php echo number_format($persentase_nov_fix,2,'.',','); ?>,<?php echo number_format($persentase_des_fix,2,'.',','); ?>,<?php echo number_format($persentase_aku_fix,2,'.',','); ?>],
+                        data: [ <?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',','); ?>],
 
                         color: '#FF0000',
                         fontWeight: 'bold',

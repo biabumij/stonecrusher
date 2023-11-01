@@ -54,6 +54,34 @@
 		<br />
 		<br />
 
+		<!-- Opening Balance -->
+		<?php
+		$last_production = $this->db->select('date')->order_by('date','desc')->limit(1,5)->get_where('pmm_remaining_materials_cat',array('status'=>'PUBLISH','material_id'=>'4'))->row_array();
+		$last_production_2 = $this->db->select('date')->order_by('date','desc')->limit(1,3)->get_where('pmm_remaining_materials_cat',array('status'=>'PUBLISH','material_id'=>'4'))->row_array();
+
+		$date1_old = date('Y-m-d', strtotime('+1 days', strtotime($last_production['date'])));
+		$date2_old = date('Y-m-d', strtotime($last_production_2['date']));
+
+		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
+
+		$stock_opname_bahan_jadi_bulan_lalu = $this->db->select('sum(cat.volume) as volume')
+		->from('pmm_remaining_materials_cat cat ')
+		->where("(cat.date = '$tanggal_opening_balance')")
+		->where("cat.material_id in (3, 4, 7, 8)")
+		->where("cat.status = 'PUBLISH'")
+		->order_by('date','desc')->limit(1)
+		->get()->row_array();
+
+		$akumulasi_bahan_jadi_bulan_lalu = $this->db->select('(pp.total_nilai_akhir) as total_nilai_akhir')
+		->from('akumulasi pp')
+		->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
+		->order_by('pp.date_akumulasi','desc')->limit(1)
+		->get()->row_array();
+
+		$total_akumulasi_bahan_jadi_bulan_lalu = $akumulasi_bahan_jadi_bulan_lalu['total_nilai_akhir'];
+		
+		?>
+
 		<!-- Pergerakan Bahan Baku -->
 		<?php
 		//Opening Balance
@@ -425,20 +453,6 @@
 		$total_operasional = $gaji_upah + $konsumsi + $thr_bonus + $perbaikan + $akomodasi_tamu + $pengujian + $listrik_internet;
 		?>
 
-		<!-- Opening Balance -->
-		<?php
-		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
-
-		$stock_opname_bahan_jadi_bulan_lalu = $this->db->select('sum(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat cat ')
-		->where("(cat.date = '$tanggal_opening_balance')")
-		->where("cat.material_id in (3, 4, 7, 8)")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-		file_put_contents("D:\\test.txt", $this->db->last_query());
-		?>
-
 		<!-- Produksi Harian -->
 		<?php
 		$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a,  (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b,  (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c,  (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d,  (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e')
@@ -449,7 +463,7 @@
 		->where('pph.status','PUBLISH')
 		->get()->row_array();
 
-		$total_rekapitulasi_produksi_harian = $rekapitulasi_produksi_harian['jumlah_pemakaian_a'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_b'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_c'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_d'];
+		$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2);
 		?>
 
 		<!-- BPP -->
@@ -930,73 +944,102 @@
 				</td>
 			</tr>
 			<tr class="table-active3">
-				<th align="center" width="5%" align="center"><b>No.</b></th>
-				<th align="center" width="55%" align="left"><b>Uraian</b></th>
-				<th align="center" width="10%" align="center"><b>Vol</b></th>
-				<th align="center" width="20%" align="right"><b>Nilai</b></th>
-				<th align="center" width="10%" align="center"><b>Harga</b></th>
+				<th align="center" width="5%"><b>NO.</b></th>
+				<th align="left" width="25%"><b>URAIAN</b></th>
+				<th align="right" width="15%"><b>VOLUME</b></th>
+				<th align="right" width="15%"><b>NILAI</b></th>
+				<th align="right" width="15%"><b>VOLUME</b></th>
+				<th align="right" width="15%"><b>NILAI</b></th>
+				<th align="right" width="10%"><b>HARGA</b></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">1.</th>
 				<th align="left">HPPenjualan</th>
-				<th align="center"></th>
 				<th align="right"></th>
-				<th align="center"></th>
+				<th align="right"></th>
+				<th align="right"></th>
+				<th align="right"></th>
+				<th align="right"></th>
 			</tr>
 			<tr>
 				<th align="center"></th>
 				<th align="left">Stok Awal Barang Jadi</th>
-				<th align="center"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'],2,',','.');?></th>
-				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_bpp,0,',','.');?></th>
-				<th align="right"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_bpp) / $stock_opname_bahan_jadi_bulan_lalu['volume'],0,',','.');?></th>
+				<th align="right"></th>
+				<th align="right"></th>
+				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'],2,',','.');?> (Ton)</th>
+				<th align="right"><?php echo number_format($total_akumulasi_bahan_jadi_bulan_lalu,0,',','.');?></th>
+				<th align="right"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume']!=0)?($total_akumulasi_bahan_jadi_bulan_lalu / $stock_opname_bahan_jadi_bulan_lalu['volume'])  * 1:0,0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">2.</th>
 				<th align="left">HPProduksi</th>
-				<th align="center"></th>
+				<th align="right"></th>
+				<th align="right"></th>
+				<th align="right"></th>
 				<th align="right"></th>
 				<th align="right"></th>
 			</tr>
 			<tr>
 				<th align="center"></th>
 				<th align="left">Bahan</th>
-				<th align="center"></th>
-				<th align="right"><?php echo number_format($total_nilai_keluar,0,',','.');?></th>
+				<th align="right"><?php echo number_format($total_volume_produksi_boulder,2,',','.');?> (Ton)</th>
+				<th align="right"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></th>
+				<th align="right"></th>
+				<th align="right"></th>
 				<th align="right"></th>
 			</tr>
 			<tr>
 				<th align="center"></th>
 				<th align="left">Alat</th>
-				<th align="center"></th>
-				<th align="right"><?php echo number_format($total_biaya_peralatan,0,',','.');?></th>
+				<th align="right"></th>
+				<th align="right"><?php echo number_format($total_biaya_peralatan + $total_nilai_produksi_solar,0,',','.');?></th>
+				<th align="right"></th>
+				<th align="right"></th>
 				<th align="right"></th>
 			</tr>
 			<tr>
 				<th align="center"></th>
 				<th align="left">Overhead (Biaya Langsung)</th>
-				<th align="center"></th>
+				<th align="right"></th>
 				<th align="right"><?php echo number_format($total_operasional,0,',','.');?></th>
+				<th align="right"></th>
+				<th align="right"></th>
 				<th align="right"></th>
 			</tr>
 			<tr>
 				<th align="center"></th>
 				<th align="left">Jumlah HPProduksi (Tanpa Limbah)</th>
-				<th align="center"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
-				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_bpp,0,',','.');?></th>
+				<th align="right"></th>
+				<th align="right"></th>
+				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?> (Ton)</th>
+				<th align="right"><?php echo number_format($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional,0,',','.');?></th>
 				<th align="right"><?php echo number_format(($total_rekapitulasi_produksi_harian * $harga_bpp) / $total_rekapitulasi_produksi_harian,0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">3.</th>
 				<th align="left">Harga Pokok Penjualan (Siap Jual)</th>
-				<th align="center"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian,2,',','.');?></th>
-				<th align="right"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_bpp) + $total_nilai_keluar + $total_biaya_peralatan + $total_operasional,0,',','.');?></th>
-				<th align="right"><?php echo number_format((($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_bpp) + $total_nilai_keluar + $total_biaya_peralatan + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian),0,',','.');?></th>
+				<th align="right"></th>
+				<th align="right"></th>
+				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian,2,',','.');?> (Ton)</th>
+				<th align="right"><?php echo number_format($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional,0,',','.');?></th>
+				<th align="right"><?php echo number_format(($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian),0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">4.</th>
 				<th align="left">Persediaan Akhir Bahan Jadi</th>
-				<th align="center"><?php echo number_format($stock_opname_bahan_jadi_bulan_akhir['volume'],2,',','.');?></th>
-				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_akhir['volume'] * $harga_bpp,0,',','.');?></th>
+				<th align="right"></th>
+				<th align="right"></th>
+				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_akhir['volume'],2,',','.');?> (Ton)</th>
+				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_akhir['volume'] * ($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian),0,',','.');?></th>
+				<th align="right"></th>
+			</tr>
+			<tr style="font-weight:bold;">
+				<th align="center">5.</th>
+				<th align="left">Jumlah Harga Pokok Penjuala</th>
+				<th align="right"></th>
+				<th align="right"></th>
+				<th align="right"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian) - $stock_opname_bahan_jadi_bulan_akhir['volume'],2,',','.');?> (Ton)</th>
+				<th align="right"><?php echo number_format(($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) - ($stock_opname_bahan_jadi_bulan_akhir['volume'] * ($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian)),0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 		</table>

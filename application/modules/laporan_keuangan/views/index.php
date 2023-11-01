@@ -61,14 +61,14 @@
                                                 </div>-->
                                                 <div class="panel panel-default">                                            
                                                     <div class="col-sm-5">
-                                                    <p><h5>Biaya</h5></p>
-                                                    <a href="<?= site_url('laporan/laporan_biaya'); ?>" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+														<p><h5>Laporan Laba Rugi</h5></p>
+                                                        <a href="#laporan-laba-rugi-new" aria-controls="laporan-laba-rugi-new" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
                                                     </div>													
                                                 </div>
                                                 <div class="panel panel-default">                                            
                                                     <div class="col-sm-5">
-														<p><h5>Laporan Laba Rugi</h5></p>
-                                                        <a href="#laporan-laba-rugi-new" aria-controls="laporan-laba-rugi-new" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
+                                                    <p><h5>Biaya</h5></p>
+                                                    <a href="<?= site_url('laporan/laporan_biaya'); ?>" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
                                                     </div>													
                                                 </div>
                                             </div>
@@ -119,7 +119,7 @@
                                         <div class="col-sm-15">
 										<div class="panel panel-default">
                                                 <div class="panel-heading">
-                                                    <h3 class="panel-title">Laporan Laba Rugi (Baru)</h3>
+                                                    <h3 class="panel-title">Laporan Laba Rugi</h3>
 													<a href="laporan_keuangan">Kembali</a>
                                                 </div>
 												<div style="margin: 20px">
@@ -216,7 +216,7 @@
 		
 		</script>
 
-        <!-- Script Laba Rugi  Baru-->
+        <!-- Script Laba Rugi Baru-->
 		<script type="text/javascript">
         $('#filter_date_new').daterangepicker({
             autoUpdateInput : false,
