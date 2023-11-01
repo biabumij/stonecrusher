@@ -1484,17 +1484,6 @@ class Produksi extends Secure_Controller {
 			foreach ($query->result_array() as $key => $row) {
                 $row['no'] = $key+1;
                 $row['date_hpp'] = date('d F Y',strtotime($row['date_hpp']));
-                $row['harga_satuan_bahan_jadi'] = number_format($row['harga_satuan_bahan_jadi'],0,',','.');
-				$row['faktor_kehilangan'] = number_format($row['faktor_kehilangan'],0,',','.');
-				$row['status'] = $row['status'];
-				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
-                $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
-
-				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
-				$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteDataHpp('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
-				}else {
-					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
-				}
 
                 $data[] = $row;
             }
