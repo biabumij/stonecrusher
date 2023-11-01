@@ -142,12 +142,6 @@
                                                     <tr>
                                                         <th width="5%" class="text-center">No</th>
 														<th>Tanggal</th>
-														<th class="text-right">Harga Satuan Bahan Jadi</th>
-                                                        <th class="text-right">Faktor Kehilangan</th>
-														<th class="text-center">Status</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
-                                                        <th width="5%" class="text-center">Hapus</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -402,32 +396,10 @@
 				{
                     "data": "date_hpp"
                 },
-				{
-                    "data": "harga_satuan_bahan_jadi"
-                },
-				{
-                    "data": "faktor_kehilangan"
-                },
-                {
-                    "data": "status"
-                },
-                {
-                    "data": "admin_name"
-                },
-                {
-                    "data": "created_on"
-                },
-                {
-                    "data": "actions"
-                }
             ],
             "columnDefs": [{
-                    "targets": [0, 7],
+                    "targets": [0],
                     "className": 'text-center',
-                },
-                {
-                    "targets": [2, 3],
-                    "className": 'text-right',
                 }
             ],
         });
