@@ -551,13 +551,6 @@
 				<th align="right"></th>
 				<th align="right"></th>
 			</tr>
-			<?php
-			$bpp = $this->db->select('(pp.bpp) as bpp')
-			->from('akumulasi_bahan_baku pp')
-			->where("(pp.date_akumulasi between '$date1' and '$date2')")
-			->order_by('pp.date_akumulasi','desc')->limit(1)
-			->get()->row_array();
-			?>
 			<tr style="font-weight:bold;">
 				<th align="center"></th>
 				<th align="left">&nbsp;&nbsp;&nbsp;Bahan</th>
