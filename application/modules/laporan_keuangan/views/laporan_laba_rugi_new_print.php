@@ -100,7 +100,7 @@
 		
 		<table width="98%" border="0" cellpadding="3">
 		
-			<?php
+		<?php
 			$penjualan_limbah = $this->db->select('SUM(pp.display_price) as price')
 			->from('pmm_productions pp')
 			->join('penerima p', 'pp.client_id = p.id','left')
@@ -658,8 +658,8 @@
 
 			$persedian_bahan_jadi  = $stock_opname_bahan_jadi_bulan_akhir['volume'] * ($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
 
-			$total = $laba_usaha + $nilai_akhir_pergerakan_bahan_baku['total_nilai_akhir'] + $persedian_bahan_jadi;
-			$persentase = ($total!=0)?($total_penjualan_all / $total)  * 100:0;
+			$total = $laba_usaha + $nilai_akhir_pergerakan_bahan_baku['total_nilai_akhir'] + $persedian_bahan_jadi + $total_penjualan_limbah;
+			$persentase = ($total_penjualan_all!=0)?($laba_usaha / $total_penjualan_all)  * 100:0;
 
 			//AKUMULASI 2
 			$penjualan_limbah_2 = $this->db->select('SUM(pp.display_price) as price')
@@ -1316,8 +1316,8 @@
 
 				$persedian_bahan_jadi_2  = $stock_opname_bahan_jadi_bulan_akhir['volume'] * ($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
 				
-				$total_2 = $laba_usaha_2 + $nilai_akhir_pergerakan_bahan_baku_2['total_nilai_akhir'] + $persedian_bahan_jadi_2;
-				$persentase_2 = ($total_2!=0)?($total_penjualan_all_2 / $total_2)  * 100:0;
+				$total_2 = $laba_usaha_2 + $nilai_akhir_pergerakan_bahan_baku_2['total_nilai_akhir'] + $persedian_bahan_jadi_2 + $total_penjualan_limbah_2;
+				$persentase_2 = ($total_penjualan_all_2!=0)?($laba_usaha_2 / $total_penjualan_all_2)  * 100:0;
 				?>
 				<th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
@@ -1537,6 +1537,33 @@
 								</th>
 								<th align="center" width="80%">
 									<span><b><?php echo number_format($persedian_bahan_jadi_2,0,',','.');?></b></span>
+								</th>
+							</tr>
+					</table>
+				</th>
+	        </tr>
+			<tr class="table-active4">
+	            <th width="50%" align="left"><b>Pendapatan Lain - Lain (Limbah)</b></th>
+	            <th width="25%" align="right">
+					<table width="100%" border="0" cellpadding="0">
+						<tr>
+								<th align="left" width="20%">
+									<span><b>Rp.</b></span>
+								</th>
+								<th align="center" width="80%">
+									<span><b><?php echo number_format($total_penjualan_limbah,0,',','.');?></b></span>
+								</th>
+							</tr>
+					</table>
+				</th>
+				<th width="25%" align="right">
+					<table width="100%" border="0" cellpadding="0">
+						<tr>
+								<th align="left" width="20%">
+									<span><b>Rp.</b></span>
+								</th>
+								<th align="center" width="80%">
+									<span><b><?php echo number_format($total_penjualan_limbah_2,0,',','.');?></b></span>
 								</th>
 							</tr>
 					</table>
