@@ -1986,7 +1986,7 @@ class Reports extends CI_Controller {
 	        </tr>-->
 			<tr class="table-active3">
 				<th class="text-center"style="vertical-align:middle"><?php echo $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>			
-				<th class="text-left"><i>Produksi / Factor Loss</i></th>
+				<th class="text-left"><i>Produksi</i></th>
 				<th class="text-center">Ton</th>
 				<th class="text-center"></th>
 				<th class="text-right"></th>
