@@ -1704,18 +1704,5 @@ class Produksi extends Secure_Controller {
         echo json_encode(array('data'=>$data));
     }
 
-	public function delete_akumulasi()
-	{
-		$output['output'] = false;
-		$id = $this->input->post('id');
-		if(!empty($id)){
-			$this->db->delete('akumulasi',array('id'=>$id));
-			{
-				$output['output'] = true;
-			}
-		}
-		echo json_encode($output);
-	}
-
 }
 ?>
