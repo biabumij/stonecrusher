@@ -1857,14 +1857,23 @@ class Reports extends CI_Controller {
 			->where("cat.status = 'PUBLISH'")
 			->order_by('date','desc')->limit(1)
 			->get()->row_array();
-			
+
+			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a,  (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b,  (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c,  (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d,  (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e')
+			->from('pmm_produksi_harian pph ')
+			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id','left')
+			->where("(pph.date_prod between '$date1' and '$date2')")
+			->where('pph.status','PUBLISH')
+			->get()->row_array();
+			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2);
+
+			$total_volume_produksi = $total_rekapitulasi_produksi_harian;
+			$total_harga_produksi = round($total_harga_pembelian_akhir,0);
+			$total_nilai_produksi = $total_volume_produksi * $total_harga_produksi;
+
 			$total_volume_produksi_akhir = $total_volume_pembelian_akhir - $total_volume_produksi;
 			$total_harga_produksi_akhir = round($total_harga_pembelian_akhir,0);
 			$total_nilai_produksi_akhir = $total_volume_produksi_akhir * $total_harga_produksi_akhir;
-
-			$total_volume_produksi = round($total_volume_pembelian_akhir - $total_volume_produksi_akhir,2);
-			$total_harga_produksi = $total_harga_produksi_akhir;
-			$total_nilai_produksi = $total_volume_produksi * $total_harga_produksi;
 
 			$total_volume_produksi_loss_akhir = $stock_opname_batu_boulder['volume'];
 			$total_harga_produksi_loss_akhir = round($total_harga_pembelian_akhir,0);
@@ -1970,7 +1979,7 @@ class Reports extends CI_Controller {
 				<th class="text-right" style='background-color:red; color:white'><blink><?php echo number_format($total_harga_pembelian_akhir,0,',','.');?></blink></th>
 				<th class="text-right"><?php echo number_format($total_nilai_pembelian_akhir,0,',','.');?></th>		
 	        </tr>
-			<!--<tr class="table-active3">
+			<tr class="table-active3">
 				<th class="text-center"style="vertical-align:middle"><?php echo $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>			
 				<th class="text-left"><i>Produksi</i></th>
 				<th class="text-center">Ton</th>
@@ -1983,10 +1992,10 @@ class Reports extends CI_Controller {
 				<th class="text-center"><?php echo number_format($total_volume_produksi_akhir,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_harga_produksi_akhir,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_nilai_produksi_akhir,0,',','.');?></th>
-	        </tr>-->
+	        </tr>
 			<tr class="table-active3">
 				<th class="text-center"style="vertical-align:middle"><?php echo $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>			
-				<th class="text-left"><i>Produksi</i></th>
+				<th class="text-left"><i>Factor Loss</i></th>
 				<th class="text-center">Ton</th>
 				<th class="text-center"></th>
 				<th class="text-right"></th>
@@ -10611,14 +10620,23 @@ class Reports extends CI_Controller {
 			->where("cat.status = 'PUBLISH'")
 			->order_by('date','desc')->limit(1)
 			->get()->row_array();
-			
+
+			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a,  (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b,  (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c,  (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d,  (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e')
+			->from('pmm_produksi_harian pph ')
+			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id','left')
+			->where("(pph.date_prod between '$date1' and '$date2')")
+			->where('pph.status','PUBLISH')
+			->get()->row_array();
+			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2);
+
+			$total_volume_produksi = $total_rekapitulasi_produksi_harian;
+			$total_harga_produksi = round($total_harga_pembelian_akhir,0);
+			$total_nilai_produksi = $total_volume_produksi * $total_harga_produksi;
+
 			$total_volume_produksi_akhir = $total_volume_pembelian_akhir - $total_volume_produksi;
 			$total_harga_produksi_akhir = round($total_harga_pembelian_akhir,0);
 			$total_nilai_produksi_akhir = $total_volume_produksi_akhir * $total_harga_produksi_akhir;
-
-			$total_volume_produksi = round($total_volume_pembelian_akhir - $total_volume_produksi_akhir,2);
-			$total_harga_produksi = $total_harga_produksi_akhir;
-			$total_nilai_produksi = $total_volume_produksi * $total_harga_produksi;
 
 			$total_volume_produksi_loss_akhir = $stock_opname_batu_boulder['volume'];
 			$total_harga_produksi_loss_akhir = round($total_harga_pembelian_akhir,0);
@@ -11276,14 +11294,23 @@ class Reports extends CI_Controller {
 				->where("cat.status = 'PUBLISH'")
 				->order_by('date','desc')->limit(1)
 				->get()->row_array();
-				
+
+				$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a,  (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b,  (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c,  (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d,  (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e')
+				->from('pmm_produksi_harian pph ')
+				->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+				->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id','left')
+				->where("(pph.date_prod between '$date1' and '$date2')")
+				->where('pph.status','PUBLISH')
+				->get()->row_array();
+				$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2);
+
+				$total_volume_produksi = $total_rekapitulasi_produksi_harian;
+				$total_harga_produksi = round($total_harga_pembelian_akhir,0);
+				$total_nilai_produksi = $total_volume_produksi * $total_harga_produksi;
+
 				$total_volume_produksi_akhir = $total_volume_pembelian_akhir - $total_volume_produksi;
 				$total_harga_produksi_akhir = round($total_harga_pembelian_akhir,0);
 				$total_nilai_produksi_akhir = $total_volume_produksi_akhir * $total_harga_produksi_akhir;
-
-				$total_volume_produksi = round($total_volume_pembelian_akhir - $total_volume_produksi_akhir,2);
-				$total_harga_produksi = $total_harga_produksi_akhir;
-				$total_nilai_produksi = $total_volume_produksi * $total_harga_produksi;
 
 				$total_volume_produksi_loss_akhir = $stock_opname_batu_boulder['volume'];
 				$total_harga_produksi_loss_akhir = round($total_harga_pembelian_akhir,0);
