@@ -138,7 +138,7 @@
 			}
 
 			$total_penjualan_all = 0;
-			$total_penjualan_all = $total_penjualan + $total_penjualan_limbah;
+			$total_penjualan_all = $total_penjualan;
 
 			?>
 
@@ -698,7 +698,7 @@
 			}
 
 			$total_penjualan_all_2 = 0;
-			$total_penjualan_all_2 = $total_penjualan_2 + $total_penjualan_limbah_2;
+			$total_penjualan_all_2 = $total_penjualan_2;
 
 			?>
 

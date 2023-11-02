@@ -551,6 +551,13 @@
 				<th align="right"></th>
 				<th align="right"></th>
 			</tr>
+			<?php
+			$bpp = $this->db->select('(pp.bpp) as bpp')
+			->from('akumulasi_bahan_baku pp')
+			->where("(pp.date_akumulasi between '$date1' and '$date2')")
+			->order_by('pp.date_akumulasi','desc')->limit(1)
+			->get()->row_array();
+			?>
 			<tr style="font-weight:bold;">
 				<th align="center"></th>
 				<th align="left">&nbsp;&nbsp;&nbsp;Bahan</th>
@@ -577,7 +584,10 @@
 				<th align="left">&nbsp;&nbsp;&nbsp;Jumlah HPProduksi (Tanpa Limbah)</th>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?> (Ton)</th>
 				<th align="right"><?php echo number_format($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional,0,',','.');?></th>
-				<th align="right"><?php echo number_format(($total_rekapitulasi_produksi_harian * $harga_bpp) / $total_rekapitulasi_produksi_harian,0,',','.');?></th>
+				<?php
+				$harga_hpproduksi = ($total_rekapitulasi_produksi_harian!=0)?($total_rekapitulasi_produksi_harian * $harga_bpp) / $total_rekapitulasi_produksi_harian * 100:0;
+				?>
+				<th align="right"><?php echo number_format($harga_hpproduksi,0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">4.</th>
