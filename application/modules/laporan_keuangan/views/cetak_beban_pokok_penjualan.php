@@ -611,7 +611,7 @@
 				<th align="center">7.</th>
 				<th align="left">Jumlah Faktor Kehilangan</th>
 				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian - $total_volume - $stock_opname_bahan_jadi_bulan_akhir['volume'],2,',','.');?> (Ton)</th>
-				<th align="right" style="color:green;"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian - $total_volume - $stock_opname_bahan_jadi_bulan_akhir['volume']) * ($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian),0,',','.');?></th>
+				<th align="right" style="color:green;"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian - $total_volume - $stock_opname_bahan_jadi_bulan_akhir['volume']) * $harga_siap_jual,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 		</table>
