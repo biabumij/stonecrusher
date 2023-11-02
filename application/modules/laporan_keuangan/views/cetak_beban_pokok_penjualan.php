@@ -593,8 +593,8 @@
 				<th align="center">4.</th>
 				<th align="left">Harga Pokok Penjualan (Siap Jual)</th>
 				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian,2,',','.');?> (Ton)</th>
-				<th align="right"><?php echo number_format($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional,0,',','.');?></th>
-				<th align="right" style="color:red;"><?php echo number_format(($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian),0,',','.');?></th>
+				<th align="right"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional,0,',','.');?></th>
+				<th align="right" style="color:red;"><?php echo number_format((($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian),0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">5.</th>
