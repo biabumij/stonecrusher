@@ -604,7 +604,7 @@
 				<th align="center">6.</th>
 				<th align="left">Jumlah Harga Pokok Penjualan</th>
 				<th align="right"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian) - $stock_opname_bahan_jadi_bulan_akhir['volume'],2,',','.');?> (Ton)</th>
-				<th align="right"><?php echo number_format((($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) - ($stock_opname_bahan_jadi_bulan_akhir['volume'] * ($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian)),0,',','.');?></th>
+				<th align="right"><?php echo number_format((($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) - (round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual_new),0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 			<tr style="font-weight:bold;">
