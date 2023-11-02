@@ -1970,7 +1970,7 @@ class Reports extends CI_Controller {
 				<th class="text-right" style='background-color:red; color:white'><blink><?php echo number_format($total_harga_pembelian_akhir,0,',','.');?></blink></th>
 				<th class="text-right"><?php echo number_format($total_nilai_pembelian_akhir,0,',','.');?></th>		
 	        </tr>
-			<tr class="table-active3">
+			<!--<tr class="table-active3">
 				<th class="text-center"style="vertical-align:middle"><?php echo $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>			
 				<th class="text-left"><i>Produksi</i></th>
 				<th class="text-center">Ton</th>
@@ -1983,10 +1983,10 @@ class Reports extends CI_Controller {
 				<th class="text-center"><?php echo number_format($total_volume_produksi_akhir,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_harga_produksi_akhir,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_nilai_produksi_akhir,0,',','.');?></th>
-	        </tr>
+	        </tr>-->
 			<tr class="table-active3">
 				<th class="text-center"style="vertical-align:middle"><?php echo $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>			
-				<th class="text-left"><i>Factor Loss</i></th>
+				<th class="text-left"><i>Produksi / Factor Loss</i></th>
 				<th class="text-center">Ton</th>
 				<th class="text-center"></th>
 				<th class="text-right"></th>
