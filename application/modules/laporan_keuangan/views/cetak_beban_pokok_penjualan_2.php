@@ -130,7 +130,7 @@
 		->order_by('date','desc')->limit(1)
 		->get()->row_array();
 
-		$harga_satuan_bahan_jadi_bulan_lalu = $this->db->select('(pp.harga_satuan_bahan_jadi) as harga_satuan_bahan_jadi')
+		$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
 		->from('hpp pp')
 		->where("(pp.date_hpp = '$tanggal_opening_balance')")
 		->order_by('pp.date_hpp','desc')->limit(1)
@@ -447,8 +447,8 @@
 				<th align="center"></th>
 				<th align="left">&nbsp;&nbsp;&nbsp;Stok Awal Barang Jadi</th>
 				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'],2,',','.');?> (Ton)</th>
-				<th align="right"><?php echo number_format(round($stock_opname_bahan_jadi_bulan_lalu['volume'],2) * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi'],0,',','.');?></th>
-				<th align="right"><?php echo number_format($harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi'],0,',','.');?></th>
+				<th align="right"><?php echo number_format($nilai_persediaan_bahan_jadi['nilai'],0,',','.');?></th>
+				<th align="right"><?php echo number_format($nilai_persediaan_bahan_jadi['nilai'] / $stock_opname_bahan_jadi_bulan_lalu['volume'],0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">3.</th>
