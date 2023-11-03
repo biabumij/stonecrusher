@@ -425,7 +425,7 @@
 			<tr style="font-weight:bold;">
 				<th align="center"></th>
 				<th align="left">&nbsp;&nbsp;&nbsp;Bahan</th>
-				<th align="right"><?php echo number_format($total_volume_produksi_boulder,2,',','.');?> (Ton)</th>
+				<th align="right"></th>
 				<th align="right"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
