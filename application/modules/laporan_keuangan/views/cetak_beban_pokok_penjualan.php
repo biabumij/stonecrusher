@@ -448,7 +448,7 @@
 				<th align="left">&nbsp;&nbsp;&nbsp;Stok Awal Barang Jadi</th>
 				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'],2,',','.');?> (Ton)</th>
 				<th align="right"><?php echo number_format(round($stock_opname_bahan_jadi_bulan_lalu['volume'],2) * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi'],0,',','.');?></th>
-				<th align="right"><?php echo round($harga_satuan_bahan_jadi_bulan_lalu,4);?></th>
+				<th align="right"><?php echo round($harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi'],4);?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">3.</th>
