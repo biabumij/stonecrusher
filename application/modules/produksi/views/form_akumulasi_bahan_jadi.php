@@ -30,13 +30,13 @@
                                 </div>
                             </div>
                             <div class="panel-content">
-                                <form method="POST" action="<?php echo site_url('produksi/submit_hpp');?>" id="form-po" enctype="multipart/form-data" autocomplete="off">
+                                <form method="POST" action="<?php echo site_url('produksi/submit_akumulasi_bahan_jadi');?>" id="form-po" enctype="multipart/form-data" autocomplete="off">
                                     <div class="row">
                                         <div class="col-sm-2">
                                             <label>Tanggal</label>
                                         </div>
 										 <div class="col-sm-2">
-                                            <input type="text" class="form-control dtpicker" name="date_hpp" required="" value="" />
+                                            <input type="text" class="form-control dtpicker" name="date_akumulasi" required="" value="" />
                                         </div>                          
                                     </div>
                                     <br />

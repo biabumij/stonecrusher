@@ -1433,9 +1433,9 @@ class Produksi extends Secure_Controller {
 		}
 	}
 
-	public function submit_hpp()
+	public function submit_akumulasi_bahan_jadi()
 	{
-		$date_hpp = $this->input->post('date_hpp');
+		$date_akumulasi = $this->input->post('date_akumulasi');
 		$nilai = str_replace('.', '', $this->input->post('nilai'));
 		$faktor_kehilangan = str_replace('.', '', $this->input->post('faktor_kehilangan'));
 
@@ -1443,7 +1443,7 @@ class Produksi extends Secure_Controller {
 		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
 
 		$arr_insert = array(
-			'date_hpp' => date('Y-m-d', strtotime($date_hpp)),
+			'date_akumulasi' => date('Y-m-d', strtotime($date_akumulasi)),
 			'nilai' => $nilai,
 			'faktor_kehilangan' => $faktor_kehilangan,
 			'status' => 'PUBLISH',
@@ -1451,13 +1451,13 @@ class Produksi extends Secure_Controller {
 			'created_on' => date('Y-m-d H:i:s')
 		);
 
-		$this->db->insert('hpp', $arr_insert);
+		$this->db->insert('akumulasi_bahan_jadi', $arr_insert);
 
 		if ($this->db->trans_status() === FALSE) {
 			# Something went wrong.
 			$this->db->trans_rollback();
 			$this->session->set_flashdata('notif_error','<b>Data Gagal Disimpan</b>');
-			redirect('kunci_&_approval/hpp');
+			redirect('kunci_&_approval/akumulasi_bahan_jadi');
 		} else {
 			# Everything is Perfect. 
 			# Committing data to the database.
@@ -1467,23 +1467,23 @@ class Produksi extends Secure_Controller {
 		}
 	}
 
-	public function table_hpp()
+	public function table_akumulasi_bahan_jadi()
 	{   
         $data = array();
 		$filter_date = $this->input->post('filter_date');
 		if(!empty($filter_date)){
 			$arr_date = explode(' - ', $filter_date);
-			$this->db->where('pp.date_hpp >=',date('Y-m-d',strtotime($arr_date[0])));
-			$this->db->where('pp.date_hpp <=',date('Y-m-d',strtotime($arr_date[1])));
+			$this->db->where('pp.date_akumulasi >=',date('Y-m-d',strtotime($arr_date[0])));
+			$this->db->where('pp.date_akumulasi <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
-        $this->db->select('pp.id, pp.date_hpp, pp.nilai, pp.faktor_kehilangan, pp.status, pp.created_by, pp.created_on');
-		$this->db->order_by('pp.date_hpp','desc');
-		$query = $this->db->get('hpp pp');
+        $this->db->select('pp.id, pp.date_akumulasi, pp.nilai, pp.faktor_kehilangan, pp.status, pp.created_by, pp.created_on');
+		$this->db->order_by('pp.date_akumulasi','desc');
+		$query = $this->db->get('akumulasi_bahan_jadi pp');
 		
        if($query->num_rows() > 0){
 			foreach ($query->result_array() as $key => $row) {
                 $row['no'] = $key+1;
-                $row['date_hpp'] = date('d F Y',strtotime($row['date_hpp']));
+                $row['date_akumulasi'] = date('d F Y',strtotime($row['date_akumulasi']));
                 $row['nilai'] = number_format($row['nilai'],0,',','.');
 				$row['faktor_kehilangan'] = number_format($row['faktor_kehilangan'],0,',','.');
 				$row['status'] = $row['status'];
@@ -1491,7 +1491,7 @@ class Produksi extends Secure_Controller {
                 $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
 
 				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
-				$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteDataHpp('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+				$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteDataAkumulasiBahanJadi('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
 				}else {
 					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
 				}
@@ -1503,12 +1503,12 @@ class Produksi extends Secure_Controller {
         echo json_encode(array('data'=>$data));
     }
 
-	public function delete_hpp()
+	public function delete_akumulasi_bahan_jadi()
 	{
 		$output['output'] = false;
 		$id = $this->input->post('id');
 		if(!empty($id)){
-			$this->db->delete('hpp',array('id'=>$id));
+			$this->db->delete('akumulasi_bahan_jadi',array('id'=>$id));
 			{
 				$output['output'] = true;
 			}

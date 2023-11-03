@@ -125,12 +125,12 @@
                                     <!-- Akumulasi Persediaan Bahan Jadi -->
                                     <div role="tabpanel" class="tab-pane" id="akumulasi_bahan_jadi">
 										<div class="col-sm-4">
-											<input type="text" id="filter_date_hpp" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
+											<input type="text" id="filter_date_akumulasi_bahan_jadi" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
 										</div>
 										<br />
 										<br />										
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover" id="table_hpp" style="width:100%">
+                                            <table class="table table-striped table-hover" id="table_akumulasi_bahan_jadi" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th width="5%" class="text-center">No</th>
@@ -371,14 +371,14 @@
             });
         }
 
-        var table_hpp = $('#table_hpp').DataTable({
+        var table_akumulasi_bahan_jadi = $('#table_akumulasi_bahan_jadi').DataTable({
             ajax: {
                 processing: true,
                 serverSide: true,
-                url: '<?php echo site_url('produksi/table_hpp'); ?>',
+                url: '<?php echo site_url('produksi/table_akumulasi_bahan_jadi'); ?>',
                 type: 'POST',
                 data: function(d) {
-                    d.filter_date = $('#filter_date_hpp').val();
+                    d.filter_date = $('#filter_date_akumulasi_bahan_jadi').val();
                 }
             },
             responsive: true,
@@ -392,7 +392,7 @@
                     "data": "no"
                 },
 				{
-                    "data": "date_hpp"
+                    "data": "date_akumulasi_bahan_jadi"
                 },
 				{
                     "data": "nilai"
@@ -426,16 +426,16 @@
 
         $('.dtpickerange').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_hpp.ajax.reload();
+        table_akumulasi_bahan_jadi.ajax.reload();
         });
 
-        function DeleteDataHpp(id) {
+        function DeleteDataAkumulasiBahanJadi(id) {
         bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
             // console.log('This was logged in the callback: ' + result); 
             if (result) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('produksi/delete_hpp'); ?>",
+                    url: "<?php echo site_url('produksi/delete_akumulasi_bahan_jadi'); ?>",
                     dataType: 'json',
                     data: {
                         id: id
