@@ -52,7 +52,7 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#hpp_bahan_baku" aria-controls="hpp_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Pergerakan Bahan Baku</a>
                                     <li role="presentation"><a href="#akumulasi_bahan_baku" aria-controls="akumulasi_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Pergerakan Bahan Baku</a>
-                                    <li role="presentation"><a href="#hpp" aria-controls="hpp" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Harga Satuan Bahan Jadi</a></li>
+                                    <li role="presentation"><a href="#hpp" aria-controls="hpp" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Nilai Persediaan Bahan Jadi</a></li>
                                 </ul>
 
                                 <div class="tab-content">
@@ -126,9 +126,7 @@
 										
 									<!-- End Akumulasi Bahan Baku -->
 
-                                    
-
-                                    <!-- Table Harga Satuan Bahan Jadi -->
+                                    <!-- Nilai Persediaan Bahan Jadi -->
 									
                                     <div role="tabpanel" class="tab-pane" id="hpp">
 										<div class="col-sm-4">
@@ -142,7 +140,7 @@
                                                     <tr>
                                                         <th width="5%" class="text-center">No</th>
 														<th>Tanggal</th>
-														<th class="text-right">Harga Satuan Bahan Jadi</th>
+														<th class="text-right">Nilai Persediaan Bahan Jadi</th>
                                                         <th class="text-right">Faktor Kehilangan</th>
 														<th class="text-center">Status</th>
                                                         <th>Dibuat Oleh</th>
@@ -160,7 +158,7 @@
                                         </div>
 									</div>
 										
-									<!-- End Table Table Harga Satuan Bahan Jadi -->
+									<!-- End Table Nilai Persediaan Bahan Jadi -->
 										           
                                 </div>
                             </div>
@@ -403,7 +401,7 @@
                     "data": "date_hpp"
                 },
 				{
-                    "data": "harga_satuan_bahan_jadi"
+                    "data": "nilai"
                 },
 				{
                     "data": "faktor_kehilangan"

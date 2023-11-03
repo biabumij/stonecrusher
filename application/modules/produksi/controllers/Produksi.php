@@ -1436,7 +1436,7 @@ class Produksi extends Secure_Controller {
 	public function submit_hpp()
 	{
 		$date_hpp = $this->input->post('date_hpp');
-		$harga_satuan_bahan_jadi = str_replace('.', '', $this->input->post('harga_satuan_bahan_jadi'));
+		$nilai = str_replace('.', '', $this->input->post('nilai'));
 		$faktor_kehilangan = str_replace('.', '', $this->input->post('faktor_kehilangan'));
 
 		$this->db->trans_start(); # Starting Transaction
@@ -1444,7 +1444,7 @@ class Produksi extends Secure_Controller {
 
 		$arr_insert = array(
 			'date_hpp' => date('Y-m-d', strtotime($date_hpp)),
-			'harga_satuan_bahan_jadi' => $harga_satuan_bahan_jadi,
+			'nilai' => $nilai,
 			'faktor_kehilangan' => $faktor_kehilangan,
 			'status' => 'PUBLISH',
 			'created_by' => $this->session->userdata('admin_id'),

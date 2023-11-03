@@ -48,16 +48,16 @@
                                                 <tr>
                                                     <th width="5%">NO.</th>
                                                     <th width="50%" class="text-left">URAIAN</th>
-													<th width="45%" class="text-right">HARGA SATUAN</th>
+													<th width="45%" class="text-right">NILAI</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                  <tr>
 
                                                     <td class="text-center">1.</td>
-                                                    <td>Harga Satuan Bahan Jadi</td>
+                                                    <td>Nilai</td>
 													<td>
-                                                        <input type="text" name="harga_satuan_bahan_jadi" id="harga_satuan_bahan_jadi" class="form-control text-right" required="" value="0"/>
+                                                        <input type="text" name="nilai" id="nilai" class="form-control text-right" required="" value="0"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
