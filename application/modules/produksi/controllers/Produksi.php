@@ -1422,12 +1422,12 @@ class Produksi extends Secure_Controller {
 		echo json_encode($output);
 	}
 
-	public function form_hpp()
+	public function form_akumulasi_bahan_jadi()
 	{
 		$check = $this->m_admin->check_login();
 		if ($check == true) {
 			$data['products'] = $this->db->select('*')->get_where('produk', array('status' => 'PUBLISH', 'aggregat' => 1))->result_array();
-			$this->load->view('produksi/form_hpp', $data);
+			$this->load->view('produksi/form_akumulasi_bahan_jadi', $data);
 		} else {
 			redirect('admin');
 		}

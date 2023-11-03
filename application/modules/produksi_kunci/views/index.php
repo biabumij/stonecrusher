@@ -42,7 +42,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="<?= site_url('produksi/form_hpp_bahan_baku'); ?>">HPP Pergerakan Bahan Baku</a></li>
                                             <li><a href="<?= site_url('produksi/form_akumulasi_bahan_baku'); ?>">Akumulasi Pergerakan Bahan Baku</a></li>
-                                            <li><a href="<?= site_url('produksi/form_hpp'); ?>">Akumulasi Persediaan Bahan Jadi</a></li>
+                                            <li><a href="<?= site_url('produksi/form_akumulasi_bahan_jadi'); ?>">Akumulasi Persediaan Bahan Jadi</a></li>
                                         </ul>
                                     </div>
                                 </h3>
@@ -52,13 +52,12 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#hpp_bahan_baku" aria-controls="hpp_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Pergerakan Bahan Baku</a>
                                     <li role="presentation"><a href="#akumulasi_bahan_baku" aria-controls="akumulasi_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Pergerakan Bahan Baku</a>
-                                    <li role="presentation"><a href="#hpp" aria-controls="hpp" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Persediaan Bahan Jadi</a></li>
+                                    <li role="presentation"><a href="#akumulasi_bahan_jadi" aria-controls="akumulasi_bahan_jadi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Persediaan Bahan Jadi</a></li>
                                 </ul>
 
                                 <div class="tab-content">
 
                                     <!-- Table HPP Bahan Baku -->
-									
                                     <div role="tabpanel" class="tab-pane active" class="tab-pane" id="hpp_bahan_baku">
 										<div class="col-sm-4">
 											<input type="text" id="filter_date_hpp_bahan_baku" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
@@ -88,11 +87,9 @@
                                             </table>
                                         </div>
 									</div>
-										
 									<!-- End Table HPP Bahan Baku -->
 
                                     <!-- Akumulasi Bahan Baku -->
-									
                                     <div role="tabpanel" class="tab-pane" id="akumulasi_bahan_baku">
 										<div class="col-sm-4">
 											<input type="text" id="filter_date_akumulasi_bahan_baku" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
@@ -122,13 +119,11 @@
                                                 </tfoot>
                                             </table>
                                         </div>
-									</div>
-										
+									</div>	
 									<!-- End Akumulasi Bahan Baku -->
 
-                                    <!-- Nilai Persediaan Bahan Jadi -->
-									
-                                    <div role="tabpanel" class="tab-pane" id="hpp">
+                                    <!-- Akumulasi Persediaan Bahan Jadi -->
+                                    <div role="tabpanel" class="tab-pane" id="akumulasi_bahan_jadi">
 										<div class="col-sm-4">
 											<input type="text" id="filter_date_hpp" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
 										</div>
@@ -157,8 +152,7 @@
                                             </table>
                                         </div>
 									</div>
-										
-									<!-- End Table Nilai Persediaan Bahan Jadi -->
+									<!-- End Table Akumulasi Persediaan Bahan Jadi -->
 										           
                                 </div>
                             </div>
