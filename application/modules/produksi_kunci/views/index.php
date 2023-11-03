@@ -442,7 +442,7 @@
                     },
                     success: function(result) {
                         if (result.output) {
-                            table_hpp.ajax.reload();
+                            table_akumulasi_bahan_jadi.ajax.reload();
                             bootbox.alert('Berhasil Menghapus Akumulasi Bahan Jadi !!');
                         } else if (result.err) {
                             bootbox.alert(result.err);
