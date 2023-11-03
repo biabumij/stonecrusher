@@ -17,8 +17,8 @@
                         <ul class="breadcrumbs">
                             <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
                             <li>
-                                <a href="<?php echo site_url('admin/produksi');?>"> <i class="fa fa-sitemap" aria-hidden="true"></i> Produksi</a></li>
-                            <li><a>HPP</a></li>
+                                <a href="<?php echo site_url('admin/produksi');?>">Kunci & Approval</a></li>
+                            <li><a>Nilai Persediaan Bahan Jadi</a></li>
                         </ul>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                                 <form method="POST" action="<?php echo site_url('produksi/submit_hpp');?>" id="form-po" enctype="multipart/form-data" autocomplete="off">
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <label>Tanggal Persediaan Bahan Jadi</label>
+                                            <label>Tanggal</label>
                                         </div>
 										 <div class="col-sm-2">
                                             <input type="text" class="form-control dtpicker" name="date_hpp" required="" value="" />
@@ -47,15 +47,15 @@
                                             <thead>
                                                 <tr>
                                                     <th width="5%">NO.</th>
-                                                    <th width="50%" class="text-left">URAIAN</th>
-													<th width="45%" class="text-right">NILAI</th>
+                                                    <th width="50%" class="text-center">URAIAN</th>
+													<th width="45%" class="text-center">NILAI</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                  <tr>
 
                                                     <td class="text-center">1.</td>
-                                                    <td>Nilai</td>
+                                                    <td>Nilai Persedeiaan Bahan Jadi</td>
 													<td>
                                                         <input type="text" name="nilai" id="nilai" class="form-control text-right" required="" value="0"/>
                                                     </td>

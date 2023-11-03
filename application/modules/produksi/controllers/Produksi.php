@@ -1456,13 +1456,13 @@ class Produksi extends Secure_Controller {
 		if ($this->db->trans_status() === FALSE) {
 			# Something went wrong.
 			$this->db->trans_rollback();
-			$this->session->set_flashdata('notif_error', 'Gagal membuat Nilai Persediaan Bahan Jadi !!');
+			$this->session->set_flashdata('notif_error','<b>Data Gagal Disimpan</b>');
 			redirect('kunci_&_approval/hpp');
 		} else {
 			# Everything is Perfect. 
 			# Committing data to the database.
 			$this->db->trans_commit();
-			$this->session->set_flashdata('notif_success', 'Berhasil membuat Nilai Persediaan Bahan Jadi !!');
+			$this->session->set_flashdata('notif_success','<b>Data Berhasil Disimpan</b>');
 			redirect('admin/kunci_&_approval');
 		}
 	}

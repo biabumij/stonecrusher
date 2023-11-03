@@ -21,8 +21,8 @@
                         <ul class="breadcrumbs">
                             <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
                             <li>
-                                <a href="<?php echo site_url('admin/produksi');?>"> <i class="fa fa-sitemap" aria-hidden="true"></i> Produksi</a></li>
-                            <li><a>Buat HPP Bahan Baku</a></li>
+                                <a href="<?php echo site_url('admin/produksi');?>">Kunci & Approval</a></li>
+                            <li><a>HPP Pergerakan Bahan Baku</a></li>
                         </ul>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                         <div class="panel">
                             <div class="panel-header"> 
                                 <div class="">
-                                    <h3 class="">HPP Bahan Baku Baru</h3>
+                                    <h3 class="">HPP Pergerakan Bahan Baku Baru</h3>
                                     
                                 </div>
                             </div>
@@ -61,14 +61,14 @@
                                                     <td class="text-center">1.</td>
                                                     <td>Batu Boulder</td>
 													<td>
-                                                        <input type="text" name="boulder" id="boulder" class="form-control numberformat text-right" required="" autocomplete="off"/>
+                                                        <input type="text" name="boulder" id="boulder" class="form-control text-right" required="" autocomplete="off"/>
                                                     </td>
                                                 </tr>
 												<tr>
                                                     <td class="text-center">2.</td>
                                                     <td>Solar</td>
 													<td>
-                                                        <input type="text" name="bbm" id="bbm" class="form-control numberformat text-right"  required="" autocomplete="off"/>
+                                                        <input type="text" name="bbm" id="bbm" class="form-control text-right"  required="" autocomplete="off"/>
                                                     </td>
                                                 </tr>
                                             </tbody>

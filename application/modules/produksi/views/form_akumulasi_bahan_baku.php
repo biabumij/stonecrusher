@@ -21,8 +21,8 @@
                         <ul class="breadcrumbs">
                             <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
                             <li>
-                                <a href="<?php echo site_url('admin/produksi');?>"> <i class="fa fa-sitemap" aria-hidden="true"></i> Produksi</a></li>
-                            <li><a>Buat Akumulasi Pergerakan Bahan Baku</a></li>
+                                <a href="<?php echo site_url('admin/produksi');?>">Kunci & Approval</a></li>
+                            <li><a>Akumulasi Pergerakan Bahan Baku</a></li>
                         </ul>
                     </div>
                 </div>
@@ -62,13 +62,13 @@
                                                     <td>1.</td>
                                                     <td>Total Nilai Keluar Pergerakan Bahan Baku</td>
 													<td>
-                                                        <input type="text" name="total_nilai_keluar" id="total_nilai_keluar" class="form-control numberformat text-right" required="" />
+                                                        <input type="text" name="total_nilai_keluar" id="total_nilai_keluar" class="form-control text-right" required="" />
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="total_nilai_keluar_2" id="total_nilai_keluar_2" class="form-control numberformat text-right" required="" />
+                                                        <input type="text" name="total_nilai_keluar_2" id="total_nilai_keluar_2" class="form-control text-right" required="" />
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="total_nilai_akhir" id="total_nilai_akhir" class="form-control numberformat text-right" required="" />
+                                                        <input type="text" name="total_nilai_akhir" id="total_nilai_akhir" class="form-control text-right" required="" />
                                                     </td>
                                                 </tr>
                                                 <tr>

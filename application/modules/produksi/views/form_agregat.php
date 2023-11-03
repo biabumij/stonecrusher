@@ -11,19 +11,17 @@
 </head>
 
 <body>
-    <div class="wrap">
-        
+	<div class="wrap">
         <?php echo $this->Templates->PageHeader();?>
-
         <div class="page-body">
             <?php echo $this->Templates->LeftBar();?>
-            <div class="content" style="padding:0;">
+            <div class="content">
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
                             <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
                             <li>
-                                <a href="<?php echo site_url('admin/produksi');?>"> <i class="fa fa-sitemap" aria-hidden="true"></i> Produksi</a></li>
+							<a href="<?php echo site_url('admin/produksi');?>">Produksi</a></li>
                             <li><a>Komposisi Agregat</a></li>
                         </ul>
                     </div>
