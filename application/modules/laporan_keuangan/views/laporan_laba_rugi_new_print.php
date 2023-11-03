@@ -467,7 +467,6 @@
 
 			$nilai_hpp_siap_jual = $nilai_persediaan_bahan_jadi['nilai'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
 			$harga_siap_jual = ($nilai_persediaan_bahan_jadi['nilai'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
-			$harga_siap_jual_new = round($harga_siap_jual,0);
 			$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual;
 			$nilai_harga_pokok_penjualan = $nilai_hpp_siap_jual - $nilai_persediaan_akhir;
 
