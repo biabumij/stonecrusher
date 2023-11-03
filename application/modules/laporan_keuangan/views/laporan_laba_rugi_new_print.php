@@ -623,6 +623,99 @@
 			$biaya_lainnya_2 = $biaya_lainnya_biaya_2['total'] + $biaya_lainnya_jurnal_2['total'];
 	        ?>
 			<table width="98%" border="0" cellpadding="3">
+				<tr class="table-active" style="">
+					<td width="50%">
+						<div style="display: block;font-weight: bold;font-size: 10px;">Periode</div>
+					</td>
+					<td align="right" width="25%">
+						<div align="center" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date;?></div>
+					</td>
+					<td align="right" width="25%">
+						<div align="center" style="display: block;font-weight: bold;font-size: 10px;">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></div>
+					</td>
+				</tr>
+			</table>
+			<hr width="98%">
+			<tr class="table-active4">
+				<th width="100%" align="left"><b>Pendapatan Penjualan</b></th>
+	        </tr>
+			<tr class="table-active2">
+				<th width="10%" align="center"></th>
+				<th width="40%" align="left">Pendapatan</th>
+	            <th width="25%" align="center">
+					<table width="100%" border="0" cellpadding="0">
+						<tr>
+								<th align="left" width="20%">
+									<span>Rp.</span>
+								</th>
+								<th align="center" width="80%">
+									<span><?php echo number_format($total_penjualan_all,0,',','.');?></span>
+								</th>
+							</tr>
+					</table>
+				</th>
+				<th width="25%" align="center">
+					<table width="100%" border="0" cellpadding="0">
+						<tr>
+								<th align="left" width="20%">
+									<span>Rp.</span>
+								</th>
+								<th align="center" width="80%">
+									<span><?php echo number_format($total_penjualan_all_2,0,',','.');?></span>
+								</th>
+							</tr>
+					</table>
+				</th>
+	        </tr>
+			<hr width="98%">
+			<tr class="table-active2">
+				<th width="50%" align="left"><b>Total Pendapatan</b></th>
+	            <th width="25%" align="right">
+					<table width="100%" border="0" cellpadding="0">
+						<tr>
+								<th align="left" width="20%">
+									<span>Rp.</span>
+								</th>
+								<th align="center" width="80%">
+									<span><b><?php echo number_format($total_penjualan_all,0,',','.');?></b></span>
+								</th>
+							</tr>
+					</table>
+				</th>
+				<th width="25%" align="right">
+					<table width="100%" border="0" cellpadding="0">
+						<tr>
+								<th align="left" width="20%">
+									<span>Rp.</span>
+								</th>
+								<th align="center" width="80%">
+									<span><b><?php echo number_format($total_penjualan_all_2,0,',','.');?></b></span>
+								</th>
+							</tr>
+					</table>
+				</th>
+	        </tr>
+			<tr class="table-active3">
+				<th width="100%" align="left"></th>
+	        </tr>
+			<tr class="table-active4">
+				<th width="100%" align="left"><b>Beban Pokok Penjualan</b></th>
+	        </tr>
+			<tr class="table-active2">
+				<th width="10%" align="center"></th>
+				<th width="40%" align="left">Beban Pokok Penjualan</th>
+	            <th width="25%" align="center">
+					<table width="100%" border="0" cellpadding="0">
+						<tr>
+								<th align="left" width="20%">
+									<span>Rp.</span>
+								</th>
+								<th align="center" width="80%">
+									<span><?php echo number_format($total_harga_pokok_pendapatan,0,',','.');?></span>
+								</th>
+							</tr>
+					</table>
+				</th>
 				<th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
