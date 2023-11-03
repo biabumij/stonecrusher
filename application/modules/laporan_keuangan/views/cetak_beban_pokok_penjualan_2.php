@@ -500,7 +500,7 @@
 				$harga_siap_jual = (($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
 				$harga_siap_jual_new = round($harga_siap_jual,0);
 				?>
-				<th align="right" style="color:blue;"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
+				<th align="right"></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">5.</th>
