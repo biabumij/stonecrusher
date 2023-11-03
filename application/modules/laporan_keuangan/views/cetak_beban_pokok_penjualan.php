@@ -501,7 +501,7 @@
 				<th align="left">Persediaan Akhir Bahan Jadi</th>
 				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_akhir['volume'],2,',','.');?> (Ton)</th>
 				<?php
-				$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual;
+				$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * round($harga_siap_jual,2);
 				?>
 				<th align="right"><?php echo number_format($nilai_persediaan_akhir,0,',','.');?></th>
 				<th align="right"></th>
