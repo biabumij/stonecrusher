@@ -11023,7 +11023,7 @@ class Reports extends CI_Controller {
 	        </tr>
 			<tr class="table-active3">
 	            <th class="text-center"></th>
-				<th class="text-left" colspan="2">Beban Pokok Penjualan</th>
+				<th class="text-left" colspan="2">Beban Pokok Penjualan (Excl. Faktor Kehilangan)</th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
