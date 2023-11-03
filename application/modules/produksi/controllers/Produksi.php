@@ -1484,7 +1484,7 @@ class Produksi extends Secure_Controller {
 			foreach ($query->result_array() as $key => $row) {
                 $row['no'] = $key+1;
                 $row['date_hpp'] = date('d F Y',strtotime($row['date_hpp']));
-                $row['harga_satuan_bahan_jadi'] = number_format($row['harga_satuan_bahan_jadi'],0,',','.');
+                $row['nilai'] = number_format($row['nilai'],0,',','.');
 				$row['faktor_kehilangan'] = number_format($row['faktor_kehilangan'],0,',','.');
 				$row['status'] = $row['status'];
 				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
