@@ -1620,5 +1620,6 @@ class Produksi extends Secure_Controller {
 		echo json_encode($output);
 	}
 
+	
 }
 ?>
