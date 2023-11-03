@@ -10823,7 +10823,6 @@ class Reports extends CI_Controller {
 			->order_by('pp.date_hpp','desc')->limit(1)
 			->get()->row_array();
 
-			$harga_hpproduksi = ($total_rekapitulasi_produksi_harian!=0)?($total_rekapitulasi_produksi_harian * $harga_bpp) / $total_rekapitulasi_produksi_harian * 100:0;
 			$nilai_hpp_siap_jual = ($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
 			$harga_siap_jual = (($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
 			$harga_siap_jual_new = round($harga_siap_jual,0);
@@ -11362,7 +11361,6 @@ class Reports extends CI_Controller {
 				->where("(pp.date_hpp between '$date1' and '$date2')")
 				->get()->row_array();
 
-				$harga_hpproduksi = ($total_rekapitulasi_produksi_harian!=0)?($total_rekapitulasi_produksi_harian * $harga_bpp) / $total_rekapitulasi_produksi_harian * 100:0;
 				$nilai_hpp_siap_jual = ($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
 				$harga_siap_jual = (($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
 				$harga_siap_jual_new = round($harga_siap_jual,0);
