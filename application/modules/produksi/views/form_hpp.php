@@ -46,14 +46,14 @@
                                                 <tr>
                                                     <th width="5%">NO.</th>
                                                     <th width="50%" class="text-center">URAIAN</th>
-													<th width="45%" class="text-center">NILAI</th>
+													<th width="45%" class="text-center">TOTAL NILAI PERSEDIAAN BAHAN JADI</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                  <tr>
 
                                                     <td class="text-center">1.</td>
-                                                    <td>Nilai Persedeiaan Bahan Jadi</td>
+                                                    <td>Total Nilai Persediaan Bahan Jadi</td>
 													<td>
                                                         <input type="text" name="nilai" id="nilai" class="form-control text-right" required="" value="0"/>
                                                     </td>
