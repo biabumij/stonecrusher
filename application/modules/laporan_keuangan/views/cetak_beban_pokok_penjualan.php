@@ -104,16 +104,14 @@
 
 		<!-- HPProduksi -->
 		<!-- Bahan -->
-		<!-- Pergerakan Bahan Baku -->
 		<?php
-		$akumulasi_bahan_baku = $this->db->select('sum(pp.total_nilai_keluar) as total_nilai_keluar, sum(pp.total_nilai_keluar_2) as total_nilai_keluar_2')
+		$akumulasi_bahan_baku = $this->db->select('sum(pp.total_nilai_keluar) as boulder, sum(pp.total_nilai_keluar_2) as bbm')
 		->from('akumulasi_bahan_baku pp')
 		->where("(pp.date_akumulasi between '$date1' and '$date2')")
-		->order_by('pp.date_akumulasi','desc')->limit(1)
 		->get()->row_array();
 
-		$total_nilai_produksi_boulder = $akumulasi_bahan_baku['total_nilai_keluar'];
-		$total_nilai_produksi_solar = $akumulasi_bahan_baku['total_nilai_keluar_2'];
+		$total_nilai_produksi_boulder = $akumulasi_bahan_baku['boulder'];
+		$total_nilai_produksi_solar = $akumulasi_bahan_baku['bbm'];
 		?>
 
 		<!-- HPProduksi -->
