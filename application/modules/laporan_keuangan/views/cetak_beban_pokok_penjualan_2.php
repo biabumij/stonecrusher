@@ -506,7 +506,7 @@
 				<?php
 				$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual;
 				?>
-				<th align="right"><?php echo number_format($nilai_persediaan_akhir,2,',','.');?></th>
+				<th align="right"><?php echo number_format($nilai_persediaan_akhir,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 			<tr style="font-weight:bold;">
