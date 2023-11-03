@@ -1476,7 +1476,7 @@ class Produksi extends Secure_Controller {
 			$this->db->where('pp.date_hpp >=',date('Y-m-d',strtotime($arr_date[0])));
 			$this->db->where('pp.date_hpp <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
-        $this->db->select('pp.id, pp.date_hpp, pp.harga_satuan_bahan_jadi, pp.faktor_kehilangan, pp.status, pp.created_by, pp.created_on');
+        $this->db->select('pp.id, pp.date_hpp, pp.nilai, pp.faktor_kehilangan, pp.status, pp.created_by, pp.created_on');
 		$this->db->order_by('pp.date_hpp','desc');
 		$query = $this->db->get('hpp pp');
 		
