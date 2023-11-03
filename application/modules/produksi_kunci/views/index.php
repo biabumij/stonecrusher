@@ -443,7 +443,7 @@
                     success: function(result) {
                         if (result.output) {
                             table_hpp.ajax.reload();
-                            bootbox.alert('Berhasil Menghapus HPP Pergerakan Bahan Jadi !!');
+                            bootbox.alert('Berhasil Menghapus Akumulasi Bahan Jadi !!');
                         } else if (result.err) {
                             bootbox.alert(result.err);
                         }
