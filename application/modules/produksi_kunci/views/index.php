@@ -42,7 +42,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="<?= site_url('produksi/form_hpp_bahan_baku'); ?>">HPP Pergerakan Bahan Baku</a></li>
                                             <li><a href="<?= site_url('produksi/form_akumulasi_bahan_baku'); ?>">Akumulasi Pergerakan Bahan Baku</a></li>
-                                            <li><a href="<?= site_url('produksi/form_hpp'); ?>">Harga Satuan Bahan Jadi</a></li>
+                                            <li><a href="<?= site_url('produksi/form_hpp'); ?>">Nilai Persediaan Bahan Jadi</a></li>
                                         </ul>
                                     </div>
                                 </h3>
