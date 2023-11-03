@@ -491,7 +491,7 @@
 				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian,2,',','.');?> (Ton)</th>
 				<?php
 				$harga_siap_jual = (($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
-				$nilai_hpp_siap_jual = ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian) * round($harga_siap_jual,2);
+				$nilai_hpp_siap_jual = ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian) * round($harga_siap_jual,0);
 				?>
 				<th align="right"><?php echo number_format($nilai_hpp_siap_jual,0,',','.');?></th>
 				<th align="right" style="color:green;"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
@@ -501,7 +501,7 @@
 				<th align="left">Persediaan Akhir Bahan Jadi</th>
 				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_akhir['volume'],2,',','.');?> (Ton)</th>
 				<?php
-				$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * round($harga_siap_jual,2);
+				$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * round($harga_siap_jual,0);
 				?>
 				<th align="right"><?php echo number_format($nilai_persediaan_akhir,0,',','.');?></th>
 				<th align="right"></th>
