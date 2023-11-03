@@ -622,6 +622,7 @@
 			$biaya_umum_administratif_2 = $biaya_umum_administratif_biaya_2['total'] + $biaya_umum_administratif_jurnal_2['total'];
 			$biaya_lainnya_2 = $biaya_lainnya_biaya_2['total'] + $biaya_lainnya_jurnal_2['total'];
 	        ?>
+			<table width="98%" border="0" cellpadding="3">
 				<th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
