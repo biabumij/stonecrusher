@@ -27,7 +27,7 @@
                         <div class="panel">
                             <div class="panel-header"> 
                                 <div class="">
-                                    <h3 class="">HPP Baru</h3>
+                                    <h3 class="">Nilai Persediaan Bahan Jadi Baru</h3>
                                     
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                 <form method="POST" action="<?php echo site_url('produksi/submit_hpp');?>" id="form-po" enctype="multipart/form-data" autocomplete="off">
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <label>Tanggal HPP</label>
+                                            <label>Tanggal Persediaan Bahan Jadi</label>
                                         </div>
 										 <div class="col-sm-2">
                                             <input type="text" class="form-control dtpicker" name="date_hpp" required="" value="" />
