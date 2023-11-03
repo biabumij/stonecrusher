@@ -481,7 +481,10 @@
 				<th align="center">6.</th>
 				<th align="left">Jumlah Harga Pokok Penjualan</th>
 				<th align="right"><?php echo number_format(($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian) - $stock_opname_bahan_jadi_bulan_akhir['volume'],2,',','.');?> (Ton)</th>
-				<th align="right"><?php echo number_format($nilai_hpp_siap_jual - $nilai_persediaan_akhir,0,',','.');?></th>
+				<?php
+				$nilai_harga_pokok_penjualan = $nilai_hpp_siap_jual - $nilai_persediaan_akhir;
+				?>
+				<th align="right"><?php echo number_format($nilai_harga_pokok_penjualan,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 			<tr style="font-weight:bold;">

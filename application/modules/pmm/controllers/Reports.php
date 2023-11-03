@@ -10823,11 +10823,14 @@ class Reports extends CI_Controller {
 			->order_by('pp.date_hpp','desc')->limit(1)
 			->get()->row_array();
 
+			$harga_hpproduksi = ($total_rekapitulasi_produksi_harian!=0)?($total_rekapitulasi_produksi_harian * $harga_bpp) / $total_rekapitulasi_produksi_harian * 100:0;
+			$nilai_hpp_siap_jual = ($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
 			$harga_siap_jual = (($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
 			$harga_siap_jual_new = round($harga_siap_jual,0);
-			$beban_pokok_penjualan_new = (($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) - (round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual_new);
-			$faktor_kehilangan_new = $faktor_kehilangan['faktor_kehilangan'];
-			$beban_pokok_penjualan = $beban_pokok_penjualan_new - $faktor_kehilangan_new;
+			$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual;
+			$nilai_harga_pokok_penjualan = $nilai_hpp_siap_jual - $nilai_persediaan_akhir;
+
+			$beban_pokok_penjualan = $nilai_harga_pokok_penjualan - $faktor_kehilangan['faktor_kehilangan'];
 			?>
 			<!-- BEBAN POKOK PENJUALAN -->
 			
@@ -11359,11 +11362,14 @@ class Reports extends CI_Controller {
 				->where("(pp.date_hpp between '$date1' and '$date2')")
 				->get()->row_array();
 
+				$harga_hpproduksi = ($total_rekapitulasi_produksi_harian!=0)?($total_rekapitulasi_produksi_harian * $harga_bpp) / $total_rekapitulasi_produksi_harian * 100:0;
+				$nilai_hpp_siap_jual = ($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
 				$harga_siap_jual = (($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
 				$harga_siap_jual_new = round($harga_siap_jual,0);
-				$beban_pokok_penjualan_new_2 = (($stock_opname_bahan_jadi_bulan_lalu['volume'] * $harga_satuan_bahan_jadi_bulan_lalu['harga_satuan_bahan_jadi']) + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) - (round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual_new);
-				$faktor_kehilangan_new_2 = $faktor_kehilangan['faktor_kehilangan'];
-				$beban_pokok_penjualan_2 = $beban_pokok_penjualan_new_2 - $faktor_kehilangan_new_2;
+				$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual;
+				$nilai_harga_pokok_penjualan = $nilai_hpp_siap_jual - $nilai_persediaan_akhir;
+
+				$beban_pokok_penjualan_2 = $nilai_harga_pokok_penjualan - $faktor_kehilangan['faktor_kehilangan'];
 				?>
 				<!-- BEBAN POKOK PENJUALAN -->
 				
@@ -11390,7 +11396,7 @@ class Reports extends CI_Controller {
 									<span>Rp.</span>
 								</th>
 								<th class="text-right" width="90%">
-									<span><a target="_blank" href="<?= base_url("laporan/cetak_beban_pokok_penjualan?filter_date=".$filter_date_2 = date('d F Y',strtotime($date3)).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_harga_pokok_pendapatan_2,0,',','.');?></a></span>
+									<span><a target="_blank" href="<?= base_url("laporan/cetak_beban_pokok_penjualan_2?filter_date=".$filter_date_2 = date('d F Y',strtotime($date3)).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_harga_pokok_pendapatan_2,0,',','.');?></a></span>
 								</th>
 							</tr>
 					</table>
