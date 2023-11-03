@@ -10988,7 +10988,7 @@ class Reports extends CI_Controller {
 				<th width="90%" class="text-left" colspan="4">Pendapatan</th>
 	        </tr>
 			<tr class="table-active3">
-				<th class="text-left" colspan="2">Total Pendapatan</th>
+				<th class="text-left" colspan="2">Total Pendapatan (Excl. Limbah)</th>
 				<th class="text-right"><?php echo number_format($total_volume,2,',','.');?></th>
 	            <th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
