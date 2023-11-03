@@ -392,7 +392,7 @@
                     "data": "no"
                 },
 				{
-                    "data": "date_akumulasi_bahan_jadi"
+                    "data": "date_akumulasi"
                 },
 				{
                     "data": "nilai"
