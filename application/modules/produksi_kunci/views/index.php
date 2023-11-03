@@ -42,7 +42,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="<?= site_url('produksi/form_hpp_bahan_baku'); ?>">HPP Pergerakan Bahan Baku</a></li>
                                             <li><a href="<?= site_url('produksi/form_akumulasi_bahan_baku'); ?>">Akumulasi Pergerakan Bahan Baku</a></li>
-                                            <li><a href="<?= site_url('produksi/form_hpp'); ?>">Nilai Persediaan Bahan Jadi</a></li>
+                                            <li><a href="<?= site_url('produksi/form_hpp'); ?>">Akumulasi Persediaan Bahan Jadi</a></li>
                                         </ul>
                                     </div>
                                 </h3>
@@ -52,7 +52,7 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#hpp_bahan_baku" aria-controls="hpp_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Pergerakan Bahan Baku</a>
                                     <li role="presentation"><a href="#akumulasi_bahan_baku" aria-controls="akumulasi_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Pergerakan Bahan Baku</a>
-                                    <li role="presentation"><a href="#hpp" aria-controls="hpp" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Nilai Persediaan Bahan Jadi</a></li>
+                                    <li role="presentation"><a href="#hpp" aria-controls="hpp" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Persediaan Bahan Jadi</a></li>
                                 </ul>
 
                                 <div class="tab-content">

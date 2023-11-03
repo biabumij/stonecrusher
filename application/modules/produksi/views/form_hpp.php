@@ -18,7 +18,7 @@
                             <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
                             <li>
                                 <a href="<?php echo site_url('admin/produksi');?>">Kunci & Approval</a></li>
-                            <li><a>Nilai Persediaan Bahan Jadi</a></li>
+                            <li><a>Akumulasi Persediaan Bahan Jadi</a></li>
                         </ul>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                         <div class="panel">
                             <div class="panel-header"> 
                                 <div class="">
-                                    <h3 class="">Nilai Persediaan Bahan Jadi Baru</h3>
+                                    <h3 class="">Akumulasi Persediaan Bahan Jadi Baru</h3>
                                     
                                 </div>
                             </div>
