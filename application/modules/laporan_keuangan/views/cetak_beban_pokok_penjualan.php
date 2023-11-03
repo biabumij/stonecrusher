@@ -2,7 +2,42 @@
 <html>
 	<head>
 	  <title>Beban Pokok Penjualan</title>
-	  
+	  <?php
+		$search = array(
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+		);
+		
+		$replace = array(
+		'Januari',
+		'Februari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'Oktober',
+		'November',
+		'Desember'
+		);
+		
+		$subject = "$filter_date";
+
+		echo str_replace($search, $replace, $subject);
+
+	  ?>
 	  <style type="text/css">
 	  	table.minimalistBlack {
 		  border: 0px solid #000000;
@@ -377,7 +412,7 @@
 					<div style="display: block;font-weight: bold;font-size: 8px;">PERIODE</div>
 				</td>
 				<td align="right" width="50%">
-					<div style="display: block;font-weight: bold;font-size: 8px;"><?php echo $filter_date;?></div>
+					<div style="display: block;font-weight: bold;font-size: 8px;"><?php echo str_replace($search, $replace, $subject);?></div>
 				</td>
 			</tr>
 			<tr class="table-active3">
