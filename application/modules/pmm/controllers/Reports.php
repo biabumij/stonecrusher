@@ -10457,7 +10457,6 @@ class Reports extends CI_Controller {
 				<th class="text-center"><?php echo $filter_date = $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 	            <th class="text-center">SD. <?php echo $filter_date_2 = date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 	        </tr>
-
 			<?php
 			$penjualan_limbah = $this->db->select('SUM(pp.display_price) as price')
 			->from('pmm_productions pp')
@@ -10543,9 +10542,9 @@ class Reports extends CI_Controller {
 			->get()->row_array();
 
 			$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-			->from('hpp pp')
-			->where("(pp.date_hpp = '$tanggal_opening_balance')")
-			->order_by('pp.date_hpp','desc')->limit(1)
+			->from('akumulasi_bahan_jadi pp')
+			->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
+			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
 			?>
 
@@ -10818,9 +10817,9 @@ class Reports extends CI_Controller {
 			->get()->row_array();
 
 			$faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as faktor_kehilangan')
-			->from('hpp pp')
-			->where("(pp.date_hpp between '$date1' and '$date2')")
-			->order_by('pp.date_hpp','desc')->limit(1)
+			->from('akumulasi_bahan_jadi pp')
+			->where("(pp.date_akumulasi between '$date1' and '$date2')")
+			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
 
 			$nilai_hpp_siap_jual = $nilai_persediaan_bahan_jadi['nilai'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
@@ -10980,7 +10979,6 @@ class Reports extends CI_Controller {
 			$biaya_umum_administratif_2 = $biaya_umum_administratif_biaya_2['total'] + $biaya_umum_administratif_jurnal_2['total'];
 			$biaya_lainnya_2 = $biaya_lainnya_biaya_2['total'] + $biaya_lainnya_jurnal_2['total'];
 	        ?>
-
 			<tr class="table-active">
 	            <th width="100%" class="text-left" colspan="5">PENDAPATAN PENJUALAN</th>
 	        </tr>
@@ -11081,9 +11079,9 @@ class Reports extends CI_Controller {
 				->get()->row_array();
 
 				$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-				->from('hpp pp')
-				->where("(pp.date_hpp = '$tanggal_opening_balance')")
-				->order_by('pp.date_hpp','desc')->limit(1)
+				->from('akumulasi_bahan_jadi pp')
+				->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
+				->order_by('pp.date_akumulasi','desc')->limit(1)
 				->get()->row_array();
 				?>
 
@@ -11356,8 +11354,9 @@ class Reports extends CI_Controller {
 				->get()->row_array();
 
 				$faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as faktor_kehilangan')
-				->from('hpp pp')
-				->where("(pp.date_hpp between '$date1' and '$date2')")
+				->from('akumulasi_bahan_jadi pp')
+				->where("(pp.date_akumulasi between '$date1' and '$date2')")
+				->order_by('pp.date_akumulasi','desc')->limit(1)
 				->get()->row_array();
 
 				$nilai_hpp_siap_jual = $nilai_persediaan_bahan_jadi['nilai'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;

@@ -99,8 +99,7 @@
 		?>
 		
 		<table width="98%" border="0" cellpadding="3">
-		
-		<?php
+			<?php
 			$penjualan_limbah = $this->db->select('SUM(pp.display_price) as price')
 			->from('pmm_productions pp')
 			->join('penerima p', 'pp.client_id = p.id','left')
@@ -185,9 +184,9 @@
 			->get()->row_array();
 
 			$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-			->from('hpp pp')
-			->where("(pp.date_hpp = '$tanggal_opening_balance')")
-			->order_by('pp.date_hpp','desc')->limit(1)
+			->from('akumulasi_bahan_jadi pp')
+			->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
+			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
 			?>
 
@@ -460,9 +459,9 @@
 			->get()->row_array();
 
 			$faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as faktor_kehilangan')
-			->from('hpp pp')
-			->where("(pp.date_hpp between '$date1' and '$date2')")
-			->order_by('pp.date_hpp','desc')->limit(1)
+			->from('akumulasi_bahan_jadi pp')
+			->where("(pp.date_akumulasi between '$date1' and '$date2')")
+			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
 
 			$nilai_hpp_siap_jual = $nilai_persediaan_bahan_jadi['nilai'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
@@ -622,7 +621,6 @@
 			$biaya_umum_administratif_2 = $biaya_umum_administratif_biaya_2['total'] + $biaya_umum_administratif_jurnal_2['total'];
 			$biaya_lainnya_2 = $biaya_lainnya_biaya_2['total'] + $biaya_lainnya_jurnal_2['total'];
 	        ?>
-
 			<table width="98%" border="0" cellpadding="3">
 				<tr class="table-active" style="">
 					<td width="50%">
@@ -761,9 +759,9 @@
 				->get()->row_array();
 
 				$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-				->from('hpp pp')
-				->where("(pp.date_hpp = '$tanggal_opening_balance')")
-				->order_by('pp.date_hpp','desc')->limit(1)
+				->from('akumulasi_bahan_jadi pp')
+				->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
+				->order_by('pp.date_akumulasi','desc')->limit(1)
 				->get()->row_array();
 				?>
 
@@ -1036,8 +1034,9 @@
 				->get()->row_array();
 
 				$faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as faktor_kehilangan')
-				->from('hpp pp')
-				->where("(pp.date_hpp between '$date1' and '$date2')")
+				->from('akumulasi_bahan_jadi pp')
+				->where("(pp.date_akumulasi between '$date1' and '$date2')")
+				->order_by('pp.date_akumulasi','desc')->limit(1)
 				->get()->row_array();
 
 				$nilai_hpp_siap_jual = $nilai_persediaan_bahan_jadi['nilai'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
