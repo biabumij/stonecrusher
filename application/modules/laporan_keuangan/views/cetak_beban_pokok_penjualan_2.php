@@ -39,6 +39,9 @@
 
 	  ?>
 	  <style type="text/css">
+		body {
+			font-family: helvetica;
+		}
 	  	table.minimalistBlack {
 		  border: 0px solid #000000;
 		  width: 100%;
@@ -81,7 +84,7 @@
 			<tr>
 				<td align="center">
 					<div style="display: block;font-weight: bold;font-size: 12px;">BEBAN POKOK PENJUALAN</div>
-					<div style="display: block;font-weight: bold;font-size: 12px;">STONE CRUSHER</div>
+					<div style="display: block;font-weight: bold;font-size: 12px;">DIVISI STONE CRUSHER</div>
 				</td>
 			</tr>
 		</table>
