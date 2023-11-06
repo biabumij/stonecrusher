@@ -518,12 +518,12 @@
 				<th align="right"><?php echo number_format($nilai_harga_pokok_penjualan,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
+			
 			<?php
-			$akumulasi_faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as total')
-			->from('hpp pp')
-			->where("(pp.date_hpp between '$date1' and '$date2')")
+			$faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as total')
+			->from('akumulasi_bahan_jadi pp')
+			->where("(pp.date_akumulasi between '$date1' and '$date2')")
 			->get()->row_array();
-
 			$akumulasi_faktor_kehilangan = $akumulasi_faktor_kehilangan['total'];
 			?>
 			<tr style="font-weight:bold;">
