@@ -131,9 +131,9 @@
 		->get()->row_array();
 
 		$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-		->from('hpp pp')
-		->where("(pp.date_hpp = '$tanggal_opening_balance')")
-		->order_by('pp.date_hpp','desc')->limit(1)
+		->from('akumulasi_bahan_jadi pp')
+		->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
+		->order_by('pp.date_akumulasi','desc')->limit(1)
 		->get()->row_array();
 		?>
 
