@@ -4,6 +4,11 @@
 	  <title>LAPORAN PIUTANG</title>
 	  
 	  <style type="text/css">
+		body {
+			font-family: helvetica;
+			font-size: 8px;
+		}
+
 		table tr.table-judul{
 			background-color: #e69500;
 			font-weight: bold;

@@ -41,6 +41,11 @@
 	  ?>
 	  
 	  <style type="text/css">
+		body {
+			font-family: helvetica;
+			font-size: 8px;
+		}
+
 	  	table tr.table-active{
             background-color: #e69500;
 			font-size: 8px;
@@ -788,7 +793,7 @@
 			<td></td>
 		</tr>
 	</table>
-	<table width="98%" border="0" cellpadding="10">
+	<table width="98%" border="0" cellpadding="0">
 			<tr >
 				<td width="5%"></td>
 				<td width="90%">
@@ -816,11 +821,11 @@
 							$dirut = $this->pmm_model->GetNameGroup(6);
 						?>
 						<tr class="">
-							<td align="center" height="70px">
+							<td align="center" height="60px">
 							
 							</td>
 							<td align="center">
-								<img src="<?= $unit_head['admin_ttd']?>" width="70px">
+								<img src="<?= $unit_head['admin_ttd']?>" width="60px">
 							</td>
 						</tr>
 						<tr>

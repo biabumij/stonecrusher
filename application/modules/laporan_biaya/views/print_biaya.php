@@ -4,6 +4,10 @@
 	  <title>Laporan Biaya</title>
 	  
 	  <style type="text/css">
+		body {
+			font-family: helvetica;
+		}
+		
 	  	table.minimalistBlack {
 		  border: 0px solid #000000;
 		  width: 100%;

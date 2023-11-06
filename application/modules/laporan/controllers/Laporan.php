@@ -1488,39 +1488,6 @@ class Laporan extends Secure_Controller {
 	
 	}
 
-	public function laporan_laba_rugi_print()
-	{
-		$this->load->library('pdf');
-	
-
-		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->setPrintHeader(true);
-		$pdf->setPrintFooter(true);
-        $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
-		$pdf->setHtmlVSpace($tagvs);
-		        $pdf->AddPage('P');
-
-		$arr_date = $this->input->get('filter_date');
-		if(empty($arr_date)){
-			$filter_date = '-';
-		}else {
-			$arr_filter_date = explode(' - ', $arr_date);
-			$start_date = date('Y-m-d',strtotime($arr_filter_date[0]));
-			$end_date = date('Y-m-d',strtotime($arr_filter_date[1]));
-			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
-		}
-		$data['filter_date'] = $filter_date;
-		$data['start_date'] = $start_date;
-		$data['end_date'] = $end_date;
-        $html = $this->load->view('laporan_keuangan/laporan_laba_rugi_print',$data,TRUE);
-
-        
-        $pdf->SetTitle('BBJ - Laporan Laba Rugi');
-        $pdf->nsi_html($html);
-        $pdf->Output('laporan-laba-rugi.pdf', 'I');
-	
-	}
-
 	public function laporan_laba_rugi_new_print()
 	{
 		$this->load->library('pdf');
@@ -1583,34 +1550,6 @@ class Laporan extends Secure_Controller {
         $pdf->Output('beban-pokok-produksi.pdf', 'I');
 	
 	}
-	
-	public function pergerakan_bahan_baku_print()
-	{
-		$this->load->library('pdf');
-	
-
-		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->setPrintHeader(true);
-		$pdf->setPrintFooter(true);
-        $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
-		$pdf->setHtmlVSpace($tagvs);
-		$pdf->AddPage('P');
-
-		$arr_date = $this->input->get('filter_date');
-		if(empty($arr_date)){
-			$filter_date = '-';
-		}else {
-			$arr_filter_date = explode(' - ', $arr_date);
-			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
-		}
-		$data['filter_date'] = $filter_date;
-        $html = $this->load->view('beban_pokok_produksi/cetak_pergerakan_bahan_baku',$data,TRUE);
-
-        $pdf->SetTitle('BBJ - Pergerakan Bahan Baku');
-        $pdf->nsi_html($html);
-        $pdf->Output('pergerakan-bahan-baku.pdf', 'I');
-	
-	}
 
 	public function pergerakan_bahan_baku_penyesuaian_print()
 	{
@@ -1644,67 +1583,6 @@ class Laporan extends Secure_Controller {
         $pdf->Output('pergerakan-bahan-baku.pdf', 'I');
 	
 	}
-	
-	public function pergerakan_bahan_jadi_print()
-	{
-		$this->load->library('pdf');
-	
-		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->setPrintHeader(true);
-		$pdf->setPrintFooter(true);
-        $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
-		$pdf->setHtmlVSpace($tagvs);
-		$pdf->AddPage('P');
-
-		$arr_date = $this->input->get('filter_date');
-		if(empty($arr_date)){
-			$filter_date = '-';
-		}else {
-			$arr_filter_date = explode(' - ', $arr_date);
-			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
-		}
-		$data['filter_date'] = $filter_date;
-        $html = $this->load->view('beban_pokok_produksi/cetak_pergerakan_bahan_jadi',$data,TRUE);
-
-        
-        $pdf->SetTitle('BBJ - Pergerakan Bahan Jadi');
-        $pdf->nsi_html($html);
-        $pdf->Output('pergerakan-bahan-jadi.pdf', 'I');
-	
-	}
-
-	public function pergerakan_bahan_jadi_penyesuaian_print()
-	{
-		$this->load->library('pdf');
-	
-
-		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->setPrintHeader(true);
-		$pdf->setPrintFooter(true);
-        $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
-		$pdf->setHtmlVSpace($tagvs);
-		$pdf->AddPage('P');
-
-		$arr_date = $this->input->get('filter_date');
-		if(empty($arr_date)){
-			$filter_date = '-';
-		}else {
-			$arr_filter_date = explode(' - ', $arr_date);
-			$start_date = date('Y-m-d',strtotime($arr_filter_date[0]));
-			$end_date = date('Y-m-d',strtotime($arr_filter_date[1]));
-			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
-		}
-		$data['filter_date'] = $filter_date;
-		$data['start_date'] = $start_date;
-		$data['end_date'] = $end_date;
-        $html = $this->load->view('beban_pokok_produksi/cetak_pergerakan_bahan_jadi_penyesuaian',$data,TRUE);
-
-        
-        $pdf->SetTitle('BBJ - Pergerakan Bahan Jadi');
-        $pdf->nsi_html($html);
-        $pdf->Output('pergerakan-bahan-jadi.pdf', 'I');
-	
-	}
 
 	public function nilai_persediaan_bahan_jadi_print()
 	{
@@ -1730,37 +1608,6 @@ class Laporan extends Secure_Controller {
         $pdf->SetTitle('BBJ - Nilai Persedaiaan Bahan Jadi');
         $pdf->nsi_html($html);
         $pdf->Output('nilai-persediaan-bahan-jadi.pdf', 'I');
-	
-	}
-
-	public function evaluasi_nilai_persediaan_print()
-	{
-		$this->load->library('pdf');
-	
-		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->setPrintHeader(true);
-		$pdf->setPrintFooter(true);
-        $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
-		$pdf->setHtmlVSpace($tagvs);
-		$pdf->AddPage('P');
-
-		$arr_date = $this->input->get('filter_date');
-		if(empty($arr_date)){
-			$filter_date = '-';
-		}else {
-			$arr_filter_date = explode(' - ', $arr_date);
-			$start_date = date('Y-m-d',strtotime($arr_filter_date[0]));
-			$end_date = date('Y-m-d',strtotime($arr_filter_date[1]));
-			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
-		}
-		$data['filter_date'] = $filter_date;
-		$data['start_date'] = $start_date;
-		$data['end_date'] = $end_date;
-        $html = $this->load->view('laporan_ev_produksi/cetak_evaluasi_nilai_persediaan',$data,TRUE);
-
-        $pdf->SetTitle('BBJ - Evaluasi Nilai Persediaan');
-        $pdf->nsi_html($html);
-        $pdf->Output('evaluasi-nilai-persediaan.pdf', 'I');
 	
 	}
 

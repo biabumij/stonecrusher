@@ -41,6 +41,11 @@
 	  ?>
 	  
 	  <style type="text/css">
+		body {
+			font-family: helvetica;
+			font-size: 9px;
+		}
+
 	  	table tr.table-active{
             background-color: #e69500;
 			font-size: 9px;

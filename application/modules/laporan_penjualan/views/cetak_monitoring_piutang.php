@@ -4,8 +4,9 @@
 	  <title>MONITORING PIUTANG</title>
 	  
 	  <style type="text/css">
-		 body {
+		body {
 			font-family: helvetica;
+			font-size: 5px;
 		}
 
 		table.table-border-atas-full, th.table-border-atas-full, td.table-border-atas-full {

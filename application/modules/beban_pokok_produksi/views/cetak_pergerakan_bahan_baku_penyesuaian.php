@@ -41,41 +41,46 @@
 	?>
 	
 	<style type="text/css">
-	table tr.table-judul{
-		background-color: #e69500;
-		font-weight: bold;
-		font-size: 8px;
-		color: black;
-	}
-		
-	table tr.table-baris1{
-		background-color: #F0F0F0;
-		font-size: 8px;
-	}
+		body {
+			font-family: helvetica;
+			font-size: 8px;
+		}
 
-	table tr.table-baris1-bold{
-		background-color: #F0F0F0;
-		font-size: 8px;
-		font-weight: bold;
-	}
-		
-	table tr.table-baris2{
-		font-size: 8px;
-		background-color: #E8E8E8;
-	}
+		table tr.table-judul{
+			background-color: #e69500;
+			font-weight: bold;
+			font-size: 8px;
+			color: black;
+		}
+			
+		table tr.table-baris1{
+			background-color: #F0F0F0;
+			font-size: 8px;
+		}
 
-	table tr.table-baris2-bold{
-		font-size: 8px;
-		background-color: #E8E8E8;
-		font-weight: bold;
-	}
-		
-	table tr.table-total{
-		background-color: #cccccc;
-		font-weight: bold;
-		font-size: 8px;
-		color: black;
-	}
+		table tr.table-baris1-bold{
+			background-color: #F0F0F0;
+			font-size: 8px;
+			font-weight: bold;
+		}
+			
+		table tr.table-baris2{
+			font-size: 8px;
+			background-color: #E8E8E8;
+		}
+
+		table tr.table-baris2-bold{
+			font-size: 8px;
+			background-color: #E8E8E8;
+			font-weight: bold;
+		}
+			
+		table tr.table-total{
+			background-color: #cccccc;
+			font-weight: bold;
+			font-size: 8px;
+			color: black;
+		}
 	</style>
 
 	</head>

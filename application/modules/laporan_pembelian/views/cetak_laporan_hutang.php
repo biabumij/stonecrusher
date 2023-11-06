@@ -4,6 +4,11 @@
 	  <title>LAPORAN HUTANG</title>
 	  
 	  <style type="text/css">
+		body {
+			font-family: helvetica;
+			font-size: 7px;
+		}
+
 		table tr.table-judul{
 			background-color: #e69500;
 			font-weight: bold;

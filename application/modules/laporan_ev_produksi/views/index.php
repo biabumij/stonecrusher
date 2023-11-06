@@ -4,6 +4,10 @@
 <head>
     <?php echo $this->Templates->Header(); ?>
 	<style type="text/css">
+		body {
+			font-family: helvetica;
+		}
+
 		.mytable thead th {
 		  background-color:	#e69500;
 		  vertical-align: middle;
@@ -83,18 +87,13 @@
 													<div class="col-sm-5">
 														<p><h5>Laporan Evaluasi Kapasitas Produksi</h5></p>
                                                         <a href="#laporan_evaluasi_produksi" aria-controls="laporan_evaluasi_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-                                                    <div class="col-sm-5">
-														<p><h5>Evaluasi Nilai Persediaan</h5></p>
-                                                        <a href="#evaluasi_nilai_persediaan" aria-controls="evaluasi_nilai_persediaan" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>        													
+													</div>     													
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
 									<!-- Laporan Evaluasi Produksi -->
-									
 									<div role="tabpanel" class="tab-pane" id="laporan_evaluasi_produksi">
                                         <div class="col-sm-15">
                                             <div class="panel panel-default"> 
@@ -137,46 +136,7 @@
                                                 </div>
                                             </div>
                                         </div>
-									</div>
-
-                                    <!-- Evaluasi Nilai Persediaan -->
-									
-									<div role="tabpanel" class="tab-pane" id="evaluasi_nilai_persediaan">
-                                        <div class="col-sm-15">
-										<div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h3 class="panel-title">Evaluasi Nilai Persediaan</h3>
-													<a href="laporan_ev._produksi">Kembali</a>
-                                                </div>
-												<div style="margin: 20px">
-													<div class="row">
-														<form action="<?php echo site_url('laporan/evaluasi_nilai_persediaan_print');?>" target="_blank">
-															<div class="col-sm-3">
-																<input type="text" id="filter_date_evaluasi_nilai_persediaan" name="filter_date" class="form-control dtpicker"  autocomplete="off" placeholder="Filter By Date">
-															</div>
-															<div class="col-sm-3">
-																<button type="submit" class="btn btn-default" style="border-radius:10px; font-weight:bold;"><i class="fa fa-print"></i>  Print</button>
-															</div>
-														</form>
-														
-													</div>
-													<br />
-													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
-														<div class="fa-3x">
-														  <i class="fa fa-spinner fa-spin"></i>
-														</div>
-													</div>				
-													<div class="table-responsive" id="box-ajax-6b">													
-													
-                    
-													</div>
-												</div>
-										</div>
-										
-										</div>
-                                    </div>
-									
+									</div>								
 									
                                 </div>
                             </div>

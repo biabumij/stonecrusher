@@ -41,6 +41,11 @@
 	  ?>
 
 	  <style type="text/css">
+		body {
+			font-family: helvetica;
+			font-size: 8px;
+		}
+
 		table tr.table-judul{
 			background-color: #e69500;
 			font-weight: bold;
@@ -163,6 +168,13 @@
 					</tr>
             			<?php
             	}
+            }
+			else {
+            	?>
+            	<tr>
+            		<td width="100%" colspan="7" align="center">(Tidak Ada Data)</td>
+            	</tr>
+            	<?php
             }
             ?>
             <tr class="table-total">
