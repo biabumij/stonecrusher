@@ -534,7 +534,7 @@
 			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
 
-			$persedian_bahan_jadi  = $stock_opname_bahan_jadi_bulan_akhir['volume'] * ($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
+			$persedian_bahan_jadi = $nilai_persediaan_akhir;
 
 			$total = $laba_usaha + $nilai_akhir_pergerakan_bahan_baku['total_nilai_akhir'] + $persedian_bahan_jadi + $total_penjualan_limbah;
 			$persentase = ($total_penjualan_all!=0)?($laba_usaha / $total_penjualan_all)  * 100:0;
@@ -1064,7 +1064,7 @@
 				->order_by('pp.date_akumulasi','desc')->limit(1)
 				->get()->row_array();
 
-				$persedian_bahan_jadi_2  = $stock_opname_bahan_jadi_bulan_akhir['volume'] * ($total_akumulasi_bahan_jadi_bulan_lalu + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
+				$persedian_bahan_jadi_2 = $nilai_persediaan_akhir;
 				
 				$total_2 = $laba_usaha_2 + $nilai_akhir_pergerakan_bahan_baku_2['total_nilai_akhir'] + $persedian_bahan_jadi_2 + $total_penjualan_limbah_2;
 				$persentase_2 = ($total_penjualan_all_2!=0)?($laba_usaha_2 / $total_penjualan_all_2)  * 100:0;
