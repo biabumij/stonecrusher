@@ -3320,7 +3320,7 @@ class Reports extends CI_Controller {
 			$laba_kotor = $total_penjualan_all - $total_harga_pokok_pendapatan;
 			$laba_usaha = $laba_kotor - ($biaya_umum_administratif + $biaya_lainnya);
 
-			$nilai_akhir_pergerakan_bahan_baku = $this->db->select('sum(pp.total_nilai_akhir) as total_nilai_akhir')
+			$nilai_akhir_pergerakan_bahan_baku = $this->db->select('(pp.total_nilai_akhir) as total_nilai_akhir')
 			->from('akumulasi_bahan_baku pp')
 			->where("(pp.date_akumulasi between '$date1' and '$date2')")
 			->order_by('pp.date_akumulasi','desc')->limit(1)
@@ -3812,7 +3812,7 @@ class Reports extends CI_Controller {
 				$laba_kotor_2 = $total_penjualan_all_2 - $total_harga_pokok_pendapatan_2;
 				$laba_usaha_2 = $laba_kotor_2 - ($biaya_umum_administratif_2 + $biaya_lainnya_2);
 
-				$nilai_akhir_pergerakan_bahan_baku_2 = $this->db->select('sum(pp.total_nilai_akhir) as total_nilai_akhir')
+				$nilai_akhir_pergerakan_bahan_baku_2 = $this->db->select('(pp.total_nilai_akhir) as total_nilai_akhir')
 				->from('akumulasi_bahan_baku pp')
 				->where("(pp.date_akumulasi between '$date1' and '$date2')")
 				->order_by('pp.date_akumulasi','desc')->limit(1)
