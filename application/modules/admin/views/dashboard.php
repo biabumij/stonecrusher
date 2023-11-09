@@ -258,7 +258,7 @@
                 },
                 {  
                     name: 'Laba Rugi %',
-                    data: [ <?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',','); ?>],
+                    data: [ <?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>],
 
                     color: '#FF0000',
                     fontWeight: 'bold',
