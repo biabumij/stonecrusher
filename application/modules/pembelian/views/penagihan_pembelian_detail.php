@@ -99,7 +99,7 @@
                                     </tr>
                                     <tr>
                                         <th>Tanggal Invoice</th>
-                                        <th> style="font-weight:normal;"<?= date('d/m/Y', strtotime($row['tanggal_invoice'])); ?></th>
+                                        <th style="font-weight:normal;"><?= date('d/m/Y', strtotime($row['tanggal_invoice'])); ?></th>
                                     </tr>
                                     <tr>
                                         <th>Syarat Pembayaran</th>
@@ -107,7 +107,7 @@
                                     </tr>
                                     <!--<tr>
                                         <th>Tanggal Jatuh Tempo</th>
-                                        <th><?= date('d/m/Y', strtotime($row['tanggal_jatuh_tempo'])); ?></th>
+                                        <th style="font-weight:normal;"><?= date('d/m/Y', strtotime($row['tanggal_jatuh_tempo'])); ?></th>
                                     </tr>-->
                                     <tr>
                                         <th>Memo</th>
