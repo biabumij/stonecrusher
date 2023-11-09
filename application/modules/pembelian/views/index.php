@@ -2,8 +2,13 @@
 <html lang="en" class="fixed">
 
 <head>
-    <?php echo $this->Templates->Header(); ?>
+<?php echo $this->Templates->Header(); ?>
     <style type="text/css">
+        body {
+            font-family: helvetica;
+            font-size: 98%;
+        }
+
         .tab-pane {
             padding-top: 10px;
         }
@@ -11,66 +16,60 @@
         .select2-container--default .select2-results__option[aria-disabled=true] {
             display: none;
         }
+
+        #table-receipt_wrappertable.dataTable tbody>tr.selected,
+        #table-receipt_wrapper table.dataTable tbody>tr>.selected {
+            background-color: #c3c3c3;
+        }
+
+        #form-verif-dok label {
+            font-size: 12px;
+            text-align: left;
+        }
+
+        #form-verif-dok hr {
+            margin: 5px 0px;
+            margin-bottom: 10px;
+            border-top: 1px solid #9c9c9c;
+        }
+
+        .custom-file-input {
+            width: 0;
+            height: 0;
+            visibility: hidden !important;
+        }
+        blink {
+        -webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
+        animation: 2s linear infinite kedip;
+        }
+        /* for Safari 4.0 - 8.0 */
+        @-webkit-keyframes kedip { 
+        0% {
+            visibility: hidden;
+        }
+        50% {
+            visibility: hidden;
+        }
+        100% {
+            visibility: visible;
+        }
+        }
+        @keyframes kedip {
+        0% {
+            visibility: hidden;
+        }
+        50% {
+            visibility: hidden;
+        }
+        100% {
+            visibility: visible;
+        }
+        }
     </style>
-</head>
-<style type="text/css">
-    #table-receipt_wrappertable.dataTable tbody>tr.selected,
-    #table-receipt_wrapper table.dataTable tbody>tr>.selected {
-        background-color: #c3c3c3;
-    }
-
-    #form-verif-dok label {
-        font-size: 12px;
-        text-align: left;
-    }
-
-    #form-verif-dok hr {
-        margin: 5px 0px;
-        margin-bottom: 10px;
-        border-top: 1px solid #9c9c9c;
-    }
-
-    .custom-file-input {
-        width: 0;
-        height: 0;
-        visibility: hidden !important;
-    }
-
-    blink {
-    -webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
-    animation: 2s linear infinite kedip;
-    }
-    /* for Safari 4.0 - 8.0 */
-    @-webkit-keyframes kedip { 
-    0% {
-        visibility: hidden;
-    }
-    50% {
-        visibility: hidden;
-    }
-    100% {
-        visibility: visible;
-    }
-    }
-    @keyframes kedip {
-    0% {
-        visibility: hidden;
-    }
-    50% {
-        visibility: hidden;
-    }
-    100% {
-        visibility: visible;
-    }
-    }
-</style>
 
 <body>
     <div class="wrap">
-
         <?php echo $this->Templates->PageHeader(); ?>
-
-
         <div class="page-body">
             <?php echo $this->Templates->LeftBar(); ?>
             <div class="content">
@@ -129,7 +128,6 @@
                                 <div class="tab-content">
 
                                     <!-- Penawaran Pembelian -->
-
                                     <div role="tabpanel" class="tab-pane active" id="home">
                                         <div class="table-responsive">
                                             <div class="col-sm-3">
@@ -160,7 +158,6 @@
                                     </div>
 									
 									<!-- Permintaan Bahan & Alat -->
-									
 									<div role="tabpanel" class="tab-pane" id="chart">
 									<?php
 									    $suppliers= $this->db->order_by('nama','asc')->get_where('penerima',array('status'=>'PUBLISH','rekanan'=>1))->result_array();
@@ -209,8 +206,6 @@
                                 </div>
 								
 								<!-- Form Permintaan Bahan & Alat -->
-
-								
 								<div class="modal fade bd-example-modal-lg" id="modalRequest" role="dialog">
 									<div class="modal-dialog" role="document" >
 										<div class="modal-content">
@@ -296,7 +291,6 @@
 								</div>
 
                                 <!-- Pesanan Pembelian -->
-
                                 <div role="tabpanel" class="tab-pane" id="profile">
                                     <div class="table-responsive">
                                         <div class="col-sm-3">
@@ -332,7 +326,6 @@
                                 </div>
 
                                 <!-- Penerimaan Pembelian -->
-
                                 <div role="tabpanel" class="tab-pane" id="messages">
                                     <div class="row">
                                         <form action="<?php echo site_url('pmm/receipt_material/cetak_surat_jalan');?>" method="GET" target="_blank">
@@ -447,7 +440,6 @@
                                 </div>
 
                                 <!-- Tagihan Pembelian -->
-
                                 <div role="tabpanel" class="tab-pane" id="settings">
                                     <form action="<?php echo site_url('laporan/cetak_daftar_tagihan_pembelian');?>" method="GET" target="_blank">
                                         <div class="col-sm-3">
@@ -1055,12 +1047,6 @@
         </div>
     </div>
 
-
-
-    <script type="text/javascript">
-        var form_control = '';
-    </script>
-
     <?php echo $this->Templates->Footer(); ?>
 
     <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/moment.min.js"></script>
@@ -1068,10 +1054,15 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.css">
     <script src="<?php echo base_url(); ?>assets/back/theme/vendor/bootbox.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/back/theme/vendor/jquery.number.min.js"></script>
+
     <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 	
+    <script type="text/javascript">
+        var form_control = '';
+    </script>
+
     <!-- Script Penawaran Pembelian -->
     <script type="text/javascript">
 		
@@ -1092,10 +1083,11 @@
                 format: 'DD-MM-YYYY'
             }
         });
+
         $('.dtpicker-single').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('DD-MM-YYYY'));
-            // table.ajax.reload();
         });
+
         $('.dtpicker').daterangepicker({
             autoUpdateInput: false,
             locale: {
@@ -1158,6 +1150,7 @@
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": [1, 2, 6], "className": 'text-center'},
                 { "targets": 7, "className": 'text-right'},
             ],
             responsive: true,
@@ -1172,7 +1165,6 @@
     </script>
 
     <!-- Script Permintaan Bahan & Alat -->
-
     <script type="text/javascript">
 		
 		$('.filter_date_b').daterangepicker({
@@ -1224,7 +1216,8 @@
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": 6, "className": 'text-right'},
+                { "targets": [1, 2], "className": 'text-center'},
+                { "targets": [6, 7, 8, 9, 10], "className": 'text-right'},
             ],
             responsive: true,
             pageLength: 25,
@@ -1329,7 +1322,6 @@
     </script>
 		
 	<!-- Script Pesanan Pembelian -->
-
     <script type="text/javascript">
         var table_po = $('#table-po').DataTable( {"bAutoWidth": false,
             ajax: {
@@ -1389,6 +1381,7 @@
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": [1, 2], "className": 'text-center'},
                 { "targets": [6, 7, 8, 9, 10], "className": 'text-right'},
             ],
             responsive: true,
@@ -1402,7 +1395,6 @@
     </script>
 
 	<!-- Script Pengiriman Pembelian -->
-
     <script type="text/javascript">
 
     var table_receipt = $('#table-receipt').DataTable( {"bAutoWidth": false,
@@ -1477,7 +1469,6 @@
             style: 'multi'
         },
         responsive: true,
-        //paging : false,
         pageLength: 5,
             "columnDefs": [{
                 "targets": [0],
@@ -1485,6 +1476,7 @@
                 "className": 'select-checkbox',
             },
             { "width": "5%", "targets": 1, "className": 'text-center'},
+            { "targets": [2, 3], "className": 'text-center'},
             { "targets": 12, "className": 'text-right'},
         ],
     });
@@ -1520,7 +1512,6 @@
         var data = e.params.data;
         console.log(data);
         table_receipt.ajax.reload();
-        //GetPO();
 
         $('#filter_po_id option[data-client-id]').prop('disabled', true);
         $('#filter_po_id option[data-client-id="' + data.id + '"]').prop('disabled', false);
@@ -1569,7 +1560,6 @@
     </script>
     
 	<!-- Script Tagihan Pembelian -->
-
     <script type="text/javascript">
 
     var table_tagihan = $('#table-tagihan').DataTable( {"bAutoWidth": false,
@@ -1626,6 +1616,7 @@
         ],
         "columnDefs": [
             { "width": "5%", "targets": 0, "className": 'text-center'},
+            { "targets": [1, 2, 3, 6], "className": 'text-center'},
             { "targets": [8, 9, 10], "className": 'text-right'},
         ],
         responsive: true,
@@ -1664,7 +1655,6 @@
 
         $('#modalForm').modal('show');
         $('#id').val('');
-        // table_detail.ajax.reload();
 
         $('#id').val(id);
         getData(id);
@@ -1808,7 +1798,6 @@
     }
 
     $('#form-verif-dok').submit(function(event) {
-        // $('#btn-form').button('loading');
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('pembelian/verif_dok_penagihan_pembelian'); ?>/" + Math.random(),
@@ -1844,7 +1833,6 @@
         $('#no_po_edit').val(no_po);
         $('#change_status').val(status);
     }
-
 
     $('#modalDoc form').submit(function(event) {
         $('#btn-form-doc').button('loading');
@@ -1899,7 +1887,6 @@
                 if (result.output) {
                     $("#modalEditPo form").trigger("reset");
                     table_po.ajax.reload();
-                    // TableCustom();
 
                     $('#modalEditPo').modal('hide');
                 } else if (result.err) {
@@ -1914,7 +1901,6 @@
         event.preventDefault();
 
     });
-
 
     $(document).ready(function(e) {
         $('.custom-file-select').click(function(e) {
@@ -1988,5 +1974,4 @@
     </script>
 
 </body>
-
 </html>
