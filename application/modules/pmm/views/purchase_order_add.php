@@ -4,6 +4,9 @@
     <?php echo $this->Templates->Header();?>
 
     <style type="text/css">
+        body {
+            font-family: helvetica;
+        }
         .form-check{
             display: inline-block;;
         }
@@ -54,11 +57,11 @@
                                             </tr>
                                             <tr>
                                                 <th>Alamat</th>
-                                                <th><textarea id="address_supplier"  class="form-control" rows="5" readonly=""><?php echo $address_supplier;?></textarea></th>
+                                                <th style="font-weight:normal;"><textarea id="address_supplier"  class="form-control" rows="5" readonly=""><?php echo $address_supplier;?></textarea></th>
                                             </tr>
                                             <tr>
                                                 <th>NPWP</th>
-                                                <th><?php echo $npwp_supplier;?></th>
+                                                <th style="font-weight:normal;"><?php echo $npwp_supplier;?></th>
                                             </tr>
                                             <?php foreach ($details_pnw as $x): ?>
                                             <tr>
@@ -80,27 +83,27 @@
                                             </tr>
                                             <tr>
                                                 <th>Subjek</th>
-                                                <th><input type="text" class="form-control text-left" id="subject" value="<?php echo $data['subject'];?>" readonly=""></th>
+                                                <th style="font-weight:normal;"><input type="text" class="form-control text-left" id="subject" value="<?php echo $data['subject'];?>" readonly=""></th>
                                             </tr>
                                             <tr>
                                                 <th>Tanggal Pesanan Pembelian</th>
-                                                <th><input type="text" id="date_po" class="form-control dtpicker" value="<?php echo date('d-m-Y',strtotime($data['date_po']));?>" readonly=""></th>
+                                                <th style="font-weight:normal;"><input type="text" id="date_po" class="form-control dtpicker" value="<?php echo date('d-m-Y',strtotime($data['date_po']));?>" readonly=""></th>
                                             </tr>
                                             <tr>
                                                 <th>Memo</th>
-                                                <th class="text-left" colspan="6"><?php echo $data['memo'];?></th>
+                                                <th style="font-weight:normal;" class="text-left" colspan="6"><?php echo $data['memo'];?></th>
                                             </tr>
                                             <tr>
                                                 <th>Lampiran</th>
-                                                <th><a href="<?= base_url("uploads/purchase_order/".$data["document_po"]) ?>" target="_blank"><?php echo $data['document_po'];?></a></th>
+                                                <th style="font-weight:normal;"><a href="<?= base_url("uploads/purchase_order/".$data["document_po"]) ?>" target="_blank"><?php echo $data['document_po'];?></a></th>
                                             </tr>
                                             <tr>
                                                 <th>Dibuat Oleh</th>
-                                                <th><?php echo $this->crud_global->GetField('tbl_admin',array('admin_id'=>$data['created_by']),'admin_name');?></th>
+                                                <th style="font-weight:normal;"><?php echo $this->crud_global->GetField('tbl_admin',array('admin_id'=>$data['created_by']),'admin_name');?></th>
                                             </tr>
                                             <tr>
                                                 <th>Dibuat Tanggal</th>
-                                                <th><?= date('d/m/Y H:i:s',strtotime($data['created_on']));?></th>
+                                                <th style="font-weight:normal;"><?= date('d/m/Y H:i:s',strtotime($data['created_on']));?></th>
                                             </tr>
                                         </table>                
                                     </form>
