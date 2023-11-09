@@ -56,7 +56,7 @@
                                 <table class="table table-striped table-bordered" width="100%">
                                     <tr>
                                         <th width="15%" align="left">Nomor Penawaran</th>
-                                        <th width="85%" align="left"><label class="label label-info" style="font-size:14px;"><?= $row['nomor_penawaran'];?></label></th>
+                                        <th width="85%" align="left"><label class="label label-info" style="font-size:14px; font-weight:normal;"><?= $row['nomor_penawaran'];?></label></th>
                                     </tr>
                                     <tr>
                                         <th>Perihal</th>

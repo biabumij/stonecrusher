@@ -66,20 +66,20 @@
                                             <?php foreach ($details_pnw as $x): ?>
                                             <tr>
                                                 <th>No. Penawaran</th>
-                                                <th><a target="_blank" href="<?= base_url("pembelian/penawaran_pembelian_detail/".$x['penawaran_id']) ?>"><?php echo $this->crud_global->GetField('pmm_penawaran_pembelian',array('id'=>$x['penawaran_id']),'nomor_penawaran');?></a></th>   
+                                                <th style="font-weight:normal;"><a target="_blank" href="<?= base_url("pembelian/penawaran_pembelian_detail/".$x['penawaran_id']) ?>"><?php echo $this->crud_global->GetField('pmm_penawaran_pembelian',array('id'=>$x['penawaran_id']),'nomor_penawaran');?></a></th>   
                                             </tr>
                                             <?php endforeach; ?>
                                             <?php foreach ($details_req as $x): ?>
                                             <tr>
                                                 <th>No. Permintaan</th>
-                                                <th><a target="_blank" href="<?= base_url("pmm/request_materials/manage/".$x['request_material_id']) ?>"><?php echo $this->crud_global->GetField('pmm_request_materials',array('id'=>$x['request_material_id']),'request_no');?></a></th>   
+                                                <th style="font-weight:normal;"><a target="_blank" href="<?= base_url("pmm/request_materials/manage/".$x['request_material_id']) ?>"><?php echo $this->crud_global->GetField('pmm_request_materials',array('id'=>$x['request_material_id']),'request_no');?></a></th>   
                                             </tr>
                                             <?php endforeach; ?>
                                         </table>
                                         <table class="table table-striped table-bordered" width="100%">
                                             <tr>
                                                 <th width="20%" align="left">No. Pesanan Pembelian</th>
-                                                <th width="80%" align="left"><label class="label label-info" style="font-size:14px;"><?php echo $data['no_po'];?></label></th>
+                                                <th width="80%" align="left"><label class="label label-info" style="font-size:14px;font-weight:normal;"><?php echo $data['no_po'];?></label></th>
                                             </tr>
                                             <tr>
                                                 <th>Subjek</th>

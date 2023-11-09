@@ -50,7 +50,7 @@
                             <table class="table table-striped table-bordered">
                                 <tr>
                                     <th width="15%" align="left">No. Permintaan</th>
-                                    <td width="85% align="left"><label class="label label-info" style="font-size:14px;"><?php echo $data['request_no'];?></label></td>
+                                    <td width="85% align="left"><label class="label label-info" style="font-size:14px;font-weight:normal;"><?php echo $data['request_no'];?></label></td>
                                 </tr>
                                 <tr>
                                     <th>Subjek</th>
