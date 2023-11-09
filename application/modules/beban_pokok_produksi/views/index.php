@@ -9,7 +9,7 @@
 		}
 		
 		.mytable thead th {
-		  background-color:	#e69500;
+		  
 		  color: #ffffff;
 		  text-align: center;
 		  vertical-align: middle;

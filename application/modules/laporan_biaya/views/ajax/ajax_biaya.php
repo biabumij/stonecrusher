@@ -1,5 +1,5 @@
 <table class="table">
-	<tr bgcolor="#D3D3D3" style="color:black">
+	<tr style="background: linear-gradient(90deg, #fdcd3b 20%, #fdcd3b 40%, #e69500 80%);" style="color:black">
 		<th width="10%">PERIODE</th>
 		<th width="90%" colspan="5" class="text-right"><?= $filter_date;?></th>
 	</tr>
