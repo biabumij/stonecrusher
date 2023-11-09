@@ -148,8 +148,8 @@
                     backgroundColor: {
                         linearGradient: [500, 0, 0, 700],
                         stops: [
-                            [0, 'rgb(210,235,153)'],
-                            [1, 'rgb(150,194,131)']
+                            [0, 'rgb(182,150,119)'],
+                            [1, 'rgb(147,101,54)']
                         ]
                     },
                 },
@@ -260,7 +260,7 @@
                     name: 'Laba Rugi %',
                     data: [ <?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>],
 
-                    color: '#e69500',
+                    color: '#cc0000',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'arial',
