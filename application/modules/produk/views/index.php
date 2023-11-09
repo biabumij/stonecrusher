@@ -227,9 +227,8 @@
     <script type="text/javascript">
         var form_control = '';
     </script>
+    
 	<?php echo $this->Templates->Footer();?>
-
-    	
 
 	<script src="<?php echo base_url();?>assets/back/theme/vendor/bootbox.min.js"></script>
 
@@ -260,7 +259,6 @@
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
                 { "width": "35%", "targets": 1, "className": 'text-left'},
-                { "width": "20%", "targets": [2, 3, 4], "className": 'text-center'},
             ],
             responsive: true,
         });
@@ -285,7 +283,6 @@
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
                 { "width": "35%", "targets": 1, "className": 'text-left'},
-                { "width": "20%", "targets": [2, 3, 4], "className": 'text-center'},
             ],
             responsive: true,
         });
@@ -310,7 +307,6 @@
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
                 { "width": "35%", "targets": 1, "className": 'text-left'},
-                { "width": "20%", "targets": [2, 3, 4], "className": 'text-center'},
             ],
             responsive: true,
         });
@@ -335,7 +331,6 @@
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
                 { "width": "35%", "targets": 1, "className": 'text-left'},
-                { "width": "20%", "targets": [2, 3, 4], "className": 'text-center'},
             ],
             responsive: true,
         });
@@ -361,7 +356,6 @@
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
                 { "width": "35%", "targets": 1, "className": 'text-left'},
-                { "width": "20%", "targets": [2, 3, 4], "className": 'text-center'},
             ],
             responsive: true,
         });
@@ -386,7 +380,6 @@
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
                 { "width": "35%", "targets": 1, "className": 'text-left'},
-                { "width": "20%", "targets": [2, 3, 4], "className": 'text-center'},
             ],
             responsive: true,
         });
@@ -411,7 +404,6 @@
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
                 { "width": "35%", "targets": 1, "className": 'text-left'},
-                { "width": "20%", "targets": [2, 3, 4], "className": 'text-center'},
             ],
             responsive: true,
         });
@@ -436,7 +428,6 @@
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
                 { "width": "35%", "targets": 1, "className": 'text-left'},
-                { "width": "20%", "targets": [2, 3, 4], "className": 'text-center'},
             ],
             responsive: true,
         });
