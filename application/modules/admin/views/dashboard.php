@@ -148,7 +148,7 @@
                     backgroundColor: {
                         linearGradient: [500, 0, 0, 700],
                         stops: [
-                            [0, 'rgb(182,150,119)'],
+                            [0, 'rgb(147,101,54)'],
                             [1, 'rgb(147,101,54)']
                         ]
                     },
