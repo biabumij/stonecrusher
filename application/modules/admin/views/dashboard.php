@@ -249,7 +249,7 @@
         
                 series: [{  
                     name: '0 %',  
-                    data: [0,0],
+                    data: [0,0,0,0,0,0,0,0,0,0,0],
 
                     color: '#000000',
                     fontWeight: 'bold',
