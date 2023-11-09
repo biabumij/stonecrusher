@@ -4,6 +4,10 @@
 <head>
     <?php echo $this->Templates->Header(); ?>
     <style type="text/css">
+        body {
+            font-family: helvetica;
+        }
+
         .tab-pane {
             padding-top: 20px;
         }
@@ -70,11 +74,9 @@
 									
 										
 									<!-- Table Kalibrasi -->
-									
 									<?php			
 										$judul = $this->db->order_by('id', 'asc')->get_where('pmm_kalibrasi', array('status' => 'PUBLISH'))->result_array();
 									?>
-									
                                     <div role="tabpanel" class="tab-pane active" id="kalibrasi">
 										<div class="col-sm-4">
 											<input type="text" id="filter_date_kalibrasi" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
@@ -119,11 +121,8 @@
                                             </table>
                                         </div>
 									</div>
-										
-									<!-- End Table Kalibrasi -->
 
                                     <!-- Table Komposisi Agregat -->
-									
                                     <div role="tabpanel" class="tab-pane" id="komposisi_agregat">
 										<div class="col-sm-4">
 											<input type="text" id="filter_date_agregat" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
@@ -156,10 +155,7 @@
                                         </div>
 									</div>
 										
-									<!-- End Table Komposisi Agregat -->
-										
 									<!-- Table Produksi Harian -->
-										
 									<div role="tabpanel" class="tab-pane" id="produksi_harian">
 										<div class="col-sm-4">
 											<input type="text" id="filter_date_produksi_harian" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
@@ -193,15 +189,11 @@
                                             </table>
                                         </div>
 									</div>
-										
-									<!-- End Table Produksi Harian -->
 									
 									<!-- Table Produksi Campuran -->
-									
 									<?php			
 										$no_prod = $this->db->order_by('id', 'asc')->get_where('pmm_produksi_campuran', array('status' => 'PUBLISH'))->result_array();
 									?>
-										
 									<div role="tabpanel" class="tab-pane" id="produksi_campuran">
 										<div class="col-sm-4">
 											<input type="text" id="filter_date_produksi_campuran" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
@@ -247,8 +239,6 @@
                                             </table>
                                         </div>
 									</div>
-										
-									<!-- End Table Produksi Campuran -->
 										           
                                 </div>
                             </div>
@@ -263,7 +253,6 @@
     <?php echo $this->Templates->Footer(); ?>
 
     <script src="<?php echo base_url(); ?>assets/back/theme/vendor/jquery.number.min.js"></script>
-    
     <script src="<?php echo base_url(); ?>assets/back/theme/vendor/bootbox.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
