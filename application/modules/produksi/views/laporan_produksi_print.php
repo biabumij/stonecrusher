@@ -5,10 +5,10 @@
 	  
 	  <style type="text/css">
 	  	body{
-	  	font-family: "Calibri Light", sans-serif;
-		}
+			font-family: helvetica;
+	  	}
 	  	
-		table.minimalistBlack 
+		table.minimalistBlack {
 		  width: 100%;
 		  text-align: left;	
 		}

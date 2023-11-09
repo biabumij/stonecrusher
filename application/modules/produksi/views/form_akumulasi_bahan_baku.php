@@ -4,6 +4,10 @@
     <?php echo $this->Templates->Header();?>
 
     <style type="text/css">
+        body{
+			font-family: helvetica;
+	  	}
+        
         .table-center th{
             text-align:center;
         }

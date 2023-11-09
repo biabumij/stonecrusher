@@ -5,6 +5,10 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
     <style type="text/css">
+        body{
+			font-family: helvetica;
+	  	}
+        
         .table-center th, .table-center td{
             text-align:center;
         }
