@@ -6,7 +6,7 @@
 	  
 	  <style type="text/css">
 	  	body{
-			font-family: helvetica;
+	  		font-family: "Open Sans", Arial, sans-serif;
 	  	}
 	  	table.minimalistBlack {
 		  border: 0px solid #000000;
@@ -210,8 +210,8 @@
 			$overhead_ton = $rumus_overhead / $rumus_overhead_ton;
 			$overhead = $overhead_ton;
 
-			$total = $nilai_boulder + $nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan + $overhead;
-			$total_ton = $nilai_boulder_ton + $nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $overhead_ton;
+			$total = $nilai_boulder + $nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan + $overhead + $nilai_bbm_solar;
+			$total_ton = $nilai_boulder_ton + $nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $overhead_ton + $nilai_bbm_solar_ton;
 			?>
 			<tr class="table-active2">
 				<td align="center">A.</td>
@@ -311,8 +311,8 @@
 			</tr>
 			<tr class="table-active3">
 				<td align="right" colspan="7">JUMLAH HARGA PERALATAN</td>
-				<td align="right"><?php echo number_format($nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan,0,',','.');?></td>
-				<td align="right"><?php echo number_format($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton,0,',','.');?></td>
+				<td align="right"><?php echo number_format($nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan + $nilai_bbm_solar,0,',','.');?></td>
+				<td align="right"><?php echo number_format($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton,0,',','.');?></td>
 			</tr>
 			<tr class="table-active2">
 				<td align="center">C.</td>
