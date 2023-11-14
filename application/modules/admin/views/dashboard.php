@@ -163,7 +163,7 @@
                         color: '#000000',
                         fontWeight: 'bold',
                         fontSize: '14px',
-                        fontFamily: 'arial'
+                        fontFamily: 'helvetica'
                     },
                     text: 'LABA RUGI',
                     x: -20 //center            
@@ -173,7 +173,7 @@
                     color: '#000000',
                     fontWeight: 'bold',
                     fontSize: '14px',
-                    fontFamily: 'arial'
+                    fontFamily: 'helvetica'
                     },
                     text: 'PT. BIA BUMI JAYENDRA - SC (<?php echo $date_now = date('Y', strtotime($date_now));?>)',
                     x: -20
@@ -184,7 +184,7 @@
                             color: '#000000',
                             fontWeight: 'bold',
                             fontSize: '10px',
-                            fontFamily: 'arial'
+                            fontFamily: 'helvetica'
                         }
                     },
                     categories: ['November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24','Juni 24','Juli 24','Agustus 24','September 24','Oktober 24']
@@ -195,7 +195,7 @@
                             color: '#000000',
                             fontWeight: 'bold',
                             fontSize: '10px',
-                            fontFamily: 'arial'
+                            fontFamily: 'helvetica'
                         },
                         text: 'Presentase'           
                     },
@@ -209,7 +209,7 @@
                             color: '#000000',
                             fontWeight: 'bold',
                             fontSize: '10px',
-                            fontFamily: 'arial'
+                            fontFamily: 'helvetica'
                         },
                         format: '{value} %'
                     },
@@ -259,7 +259,7 @@
                     color: '#000000',
                     fontWeight: 'bold',
                     fontSize: '10px',
-                    fontFamily: 'arial'
+                    fontFamily: 'helvetica'
                 },
                 {  
                     name: 'Laba Rugi %',
@@ -268,7 +268,7 @@
                     color: '#cc0000',
                     fontWeight: 'bold',
                     fontSize: '10px',
-                    fontFamily: 'arial',
+                    fontFamily: 'helvetica',
 
                     zones: [{
                     
