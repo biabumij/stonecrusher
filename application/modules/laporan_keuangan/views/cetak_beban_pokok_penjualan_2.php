@@ -523,7 +523,7 @@
 			</tr>
 			
 			<?php
-			$faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as total')
+			$akumulasi_faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as total')
 			->from('akumulasi_bahan_jadi pp')
 			->where("(pp.date_akumulasi between '$date1' and '$date2')")
 			->get()->row_array();
