@@ -1288,77 +1288,56 @@ class Reports extends CI_Controller {
 		<table class="table table-bordered" width="100%">
 			<style type="text/css">
 			table tr.table-active{
-				background-color: #F0F0F0;
-				font-size: 11px;
-				font-weight: bold;
-				color: black;
-			}
-				
-			table tr.table-active2{
-				background-color: #E8E8E8;
-				font-size: 11px;
-				font-weight: bold;
-			}
-				
-			table tr.table-active3{
-				font-size: 11px;
-				background-color: #F0F0F0;
-			}
-				
-			table tr.table-active4{
-				background: linear-gradient(90deg, #fdcd3b 20%, #fdcd3b 40%, #e69500 80%);
-				font-weight: bold;
-				font-size: 12px;
-				color: black;
-			}
-			table tr.table-active5{
-				background-color: #cccccc;
-				color: black;
-				font-size: 11px;
-				font-weight: bold;
-			}
-			table tr.table-activeago1{
-				background-color: #ffd966;
-				font-weight: bold;
-				font-size: 11px;
-				color: black;
-			}
-			table tr.table-activeopening{
-				background-color: #2986cc;
-				font-weight: bold;
-				font-size: 11px;
-				color: black;
-			}
+					background: linear-gradient(90deg, #333333 5%, #696969 50%, #333333 100%);
+					font-size: 10px;
+					font-weight: bold;
+					color: white;
+				}
+					
+				table tr.table-active2{
+					background: linear-gradient(90deg, #fdcd3b 20%, #fdcd3b 40%, #e69500 80%);
+					font-size: 10px;
+					font-weight: bold;
+					color: black;
+				}
 
-			blink {
-			-webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
-			animation: 2s linear infinite kedip;
-			}
-			/* for Safari 4.0 - 8.0 */
-			@-webkit-keyframes kedip { 
-			0% {
-				visibility: hidden;
-			}
-			50% {
-				visibility: hidden;
-			}
-			100% {
-				visibility: visible;
-			}
-			}
-			@keyframes kedip {
-			0% {
-				visibility: hidden;
-			}
-			50% {
-				visibility: hidden;
-			}
-			100% {
-				visibility: visible;
-			}
-			}
+				table tr.table-active3{
+					background-color: #F0F0F0;
+					font-size: 10px;
+					font-weight: bold;
+					color: black;
+				}
+
+
+				blink {
+				-webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
+				animation: 2s linear infinite kedip;
+				}
+				/* for Safari 4.0 - 8.0 */
+				@-webkit-keyframes kedip { 
+				0% {
+					visibility: hidden;
+				}
+				50% {
+					visibility: hidden;
+				}
+				100% {
+					visibility: visible;
+				}
+				}
+				@keyframes kedip {
+				0% {
+					visibility: hidden;
+				}
+				50% {
+					visibility: hidden;
+				}
+				100% {
+					visibility: visible;
+				}
+				}
 			</style>
-	        <tr class="table-active2">
+	        <tr class="table-active3">
 	            <th colspan="3">Periode</th>
 	            <th class="text-center" colspan="9"><?php echo $filter_date;?></th>
 	        </tr>
@@ -1511,7 +1490,7 @@ class Reports extends CI_Controller {
 			$total_nilai_akhir = $total_nilai_produksi_loss_akhir + $total_nilai_produksi_akhir_solar;
 	        ?>
 			
-			<tr class="table-active4">
+			<tr class="table-active">
 				<th width="30%" class="text-center" rowspan="2" style="vertical-align:middle">TANGGAL</th>
 				<th width="20%" class="text-center" rowspan="2" style="vertical-align:middle">URAIAN</th>
 				<th width="10%" class="text-center" rowspan="2" style="vertical-align:middle">SATUAN</th>
@@ -1519,7 +1498,7 @@ class Reports extends CI_Controller {
 				<th width="20%" class="text-center" colspan="3">KELUAR</th>
 				<th width="20%" class="text-center" colspan="3">AKHIR</th>
 	        </tr>
-			<tr class="table-active4">
+			<tr class="table-active">
 				<th class="text-center">VOLUME</th>
 				<th class="text-center">HARGA</th>
 				<th class="text-center">NILAI</th>
@@ -1658,7 +1637,7 @@ class Reports extends CI_Controller {
 				<th class="text-right"><?php echo number_format($total_harga_produksi_akhir_solar,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_nilai_produksi_akhir_solar,0,',','.');?></th>		
 	        </tr>
-			<tr class="table-active5">
+			<tr class="table-active2">
 	            <th class="text-center" colspan="3">TOTAL</th>
 				<th class="text-center"></th>
 				<th class="text-right"></th>
