@@ -1606,16 +1606,16 @@ class Reports extends CI_Controller {
 	            <th class="text-center" colspan="12"></th>
 	        </tr>
 			<tr class="table-active2">
-	            <th class="text-center" colspan="12">BAHAN BAKU</th>
+	            <th class="text-active" colspan="12">RINGKASAN PERGERAKAN BAHAN BAKU</th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active">
 				<th class="text-center" style="vertical-align:middle"><?php echo $date2_ago;?></th>
 	            <th class="text-left" colspan="8"><i>Opening Balance</i></th>
 				<th class="text-center"></th>
 				<th class="text-right"></th>
 				<th class="text-right"><?php echo number_format($opening_balance_bahan_baku,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active">
 	            <th class="text-center"style="vertical-align:middle"><?php echo $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 				<th class="text-left"><i>Batu Boulder</i></th>
 				<th class="text-center">Ton</th>
@@ -1629,7 +1629,7 @@ class Reports extends CI_Controller {
 				<th class="text-right"><?php echo number_format($total_harga_produksi_loss_akhir,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_nilai_produksi_loss_akhir,0,',','.');?></th>		
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active">
 	            <th class="text-center"style="vertical-align:middle"><?php echo $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 				<th class="text-left"><i>BBM Solar</i></th>
 				<th class="text-center">Liter</th>
