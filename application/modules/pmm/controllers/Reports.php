@@ -1486,7 +1486,7 @@ class Reports extends CI_Controller {
 
 			//Total
 			$total_nilai_masuk = $total_nilai_pembelian + $total_nilai_pembelian_solar;
-			$total_nilai_keluar = $total_nilai_produksi + $total_nilai_produksi_solar;
+			$total_nilai_keluar = $total_nilai_produksi + $total_nilai_produksi_loss + $total_nilai_produksi_solar;
 			$total_nilai_akhir = $total_nilai_produksi_loss_akhir + $total_nilai_produksi_akhir_solar;
 	        ?>
 			
