@@ -1606,7 +1606,7 @@ class Reports extends CI_Controller {
 	            <th class="text-center" colspan="12"></th>
 	        </tr>
 			<tr class="table-active">
-	            <th class="text-active" colspan="12">TOTAL PERGERAKAN BAHAN BAKU</th>
+	            <th class="text-center" colspan="12">TOTAL PERGERAKAN BAHAN BAKU</th>
 	        </tr>
 			<tr class="table-active">
 				<th class="text-center" style="vertical-align:middle"><?php echo $date2_ago;?></th>
