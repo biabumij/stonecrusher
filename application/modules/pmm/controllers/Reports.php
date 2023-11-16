@@ -1561,6 +1561,9 @@ class Reports extends CI_Controller {
 				<th class="text-right"><?php echo number_format($total_harga_produksi_loss_akhir,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_nilai_produksi_loss_akhir,0,',','.');?></th>
 	        </tr>
+			<tr class="table-active3">
+	            <th class="text-center" colspan="12"></th>
+	        </tr>
 			<tr class="table-active2">
 	            <th class="text-center" colspan="12">BBM SOLAR</th>
 	        </tr>
@@ -1598,6 +1601,9 @@ class Reports extends CI_Controller {
 				<th class="text-center"><?php echo number_format($total_volume_produksi_akhir_solar,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_harga_produksi_akhir_solar,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_nilai_produksi_akhir_solar,0,',','.');?></th>
+	        </tr>
+			<tr class="table-active3">
+	            <th class="text-center" colspan="12"></th>
 	        </tr>
 			<tr class="table-active2">
 	            <th class="text-center" colspan="12">BAHAN BAKU</th>
