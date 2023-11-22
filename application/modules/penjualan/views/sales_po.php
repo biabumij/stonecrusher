@@ -4,8 +4,8 @@
     <?php echo $this->Templates->Header();?>
 
     <style type="text/css">
-        .table-center th, .table-center td{
-            text-align:center;
+        body {
+            font-family: helvetica;
         }
     </style>
 </head>

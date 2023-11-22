@@ -10,10 +10,6 @@
         body {
             font-family: helvetica;
         }
-        
-        .form-approval {
-            display: inline-block;
-        }
     </style>
 </head>
 

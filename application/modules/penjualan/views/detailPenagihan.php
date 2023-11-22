@@ -8,15 +8,6 @@
         body {
             font-family: helvetica;
         }
-        
-        .table-center th,
-        .table-center td {
-            text-align: center;
-        }
-
-        .form-approval {
-            display: inline-block;
-        } 
     </style>
 </head>
 
