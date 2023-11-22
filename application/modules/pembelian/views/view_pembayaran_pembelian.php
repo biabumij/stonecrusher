@@ -8,10 +8,6 @@
         body {
 			font-family: helvetica;
 		}
-        .table-center th,
-        .table-center td {
-            text-align: center;
-        }
     </style>
 </head>
 
@@ -24,10 +20,9 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin'); ?>">Dashboard</a></li>
-                            <li><a href="<?php echo site_url('admin/pembelian');?>"> Pembelian</a></li>
-                            <li><a href="<?php echo site_url('admin/pembelian');?>"> Tagihan Pembelian</a></li>
-                            <li><a>Detail Penerimaan Pembelian</a></li>
+                            <li><a> Pembelian</a></li>
+                            <li><a> Tagihan Pembelian</a></li>
+                            <li><a> Detail Penerimaan Pembelian</a></li>
                         </ul>
                     </div>
                 </div>
@@ -116,7 +111,7 @@
                                     $sisa_tagihan = ($dpp['total'] + $tax['total']) - $total_bayar_all['total'] - $pembayaran['uang-muka'];
                                     ?>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-condensed table-center">
+                                        <table class="table table-bordered table-striped table-condensed text-center">
                                             <thead>
                                                 <tr>
                                                     <th>Nilai Invoice</th>

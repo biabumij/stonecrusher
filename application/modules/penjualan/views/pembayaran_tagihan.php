@@ -7,9 +7,6 @@
         body{
 			font-family: helvetica;
 	  	}
-        .table-center th, .table-center td{
-            text-align:center;
-        }
     </style>
 </head>
 
@@ -22,10 +19,9 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
-                            <li><a href="<?php echo site_url('admin/penjualan'); ?>"> Penjualan</a></li>
-                            <li><a href="<?= base_url('penjualan/detailPenagihan/' . $pembayaran["id"]) ?>"> Tagihan Penjualan</a></li>
-                            <li><a href="">Buat Penerimaan Penjualan</a></li>
+                            <li><a> Penjualan</a></li>
+                            <li><a> Tagihan Penjualan</a></li>
+                            <li><a> Buat Penerimaan Penjualan</a></li>
                         </ul>
                     </div>
                 </div>
@@ -94,7 +90,7 @@
 
                                      ?>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-condensed">
+                                        <table class="table table-bordered table-striped table-condensed text-center">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">Tanggal Invoice</th>
