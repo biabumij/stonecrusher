@@ -206,9 +206,8 @@
                                         if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
                                         ?>
                                             <form class="form-check" action="<?= base_url("pembelian/closed_penawaran_pembelian/".$row["id"]) ?>">
-                                            <button type="submit" class="btn btn-danger" style="width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-briefcase"></i> Closed</button>     
+                                            <button type="submit" class="btn btn-danger" style="width:200px; font-weight:bold; border-radius:10px; border-bottom:0px;"><i class="fa fa-briefcase"></i> Closed</button>     
                                             </form>
-                                            <br />
                                             <form class="form-check" action="<?= base_url("pembelian/reject_penawaran_pembelian/".$row["id"]) ?>">
                                                 <button type="submit" class="btn btn-warning" style="width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> Reject</button>        
                                             </form>	
