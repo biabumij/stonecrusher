@@ -19,9 +19,9 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><a href=""> Penjualan</a></li>
-                            <li><a href=""> Sales Order</a></li>
-                            <li><a href="">Buat Sales Order</a></li>
+                            <li><a> Penjualan</a></li>
+                            <li><a> Sales Order</a></li>
+                            <li><a> Buat Sales Order</a></li>
                         </ul>
                     </div>
                 </div>

@@ -5,9 +5,6 @@
     <?php echo $this->Templates->Header(); ?>
 
     <style type="text/css">
-        body{
-			font-family: helvetica;
-	  	}
         .table-center th,
         .table-center td {
             text-align: center;
@@ -28,10 +25,9 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin'); ?>">Dashboard</a></li>
-                            <li><a href="<?php echo site_url('admin/penjualan'); ?>"> Penjualan</a></li>
-                            <li><a href="<?php echo site_url('admin/penjualan'); ?>"> Tagihan Penjualan</a></li>
-                            <li><a href="">Detail Tagihan Penjualan</a></li>
+                            <li><a> Penjualan</a></li>
+                            <li><a> Tagihan Penjualan</a></li>
+                            <li><a> Detail Tagihan Penjualan</a></li>
                         </ul>
                     </div>
                 </div>
