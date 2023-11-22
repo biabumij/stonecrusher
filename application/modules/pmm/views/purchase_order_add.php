@@ -7,18 +7,6 @@
         body {
             font-family: helvetica;
         }
-
-        .form-check{
-            display: inline-block;;
-        }
-
-        .form-detail a{
-            margin-top: 10px;
-        }
-        
-        #form-po .control-label{
-            text-align: left;
-        }
     </style>
 </head>
 
