@@ -83,7 +83,7 @@
 
                                     ?>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-condensed">
+                                        <table class="table table-bordered table-striped table-condensed text-center">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">Tanggal Invoice</th>
