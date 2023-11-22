@@ -21,10 +21,9 @@
             <div class="content-header">
                 <div class="leftside-content-header">
                     <ul class="breadcrumbs">
-                        <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
-                        <li><a href="<?php echo site_url('admin/pembelian');?>"> Pembelian</a></li>
-                        <li><a href="<?php echo site_url('admin/pembelian');?>"> Permintaan Bahan & Alat</a></li>
-                        <li><a href=""> Detail Permintaan Bahan & Alat</a></li>
+                        <li><a> Pembelian</a></li>
+                        <li><a> Permintaan Bahan & Alat</a></li>
+                        <li><a> Detail Permintaan Bahan & Alat</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,7 +49,7 @@
                             <table class="table table-striped table-bordered">
                                 <tr>
                                     <th width="15%" align="left">No. Permintaan</th>
-                                    <td width="85% align="left"><label class="label label-info" style="font-size:14px;font-weight:normal;"><?php echo $data['request_no'];?></label></td>
+                                    <td width="85% align="left"><label class="label label-info" style="font-size:14px;"><?php echo $data['request_no'];?></label></td>
                                 </tr>
                                 <tr>
                                     <th>Subjek</th>

@@ -4,12 +4,14 @@
     <?php echo $this->Templates->Header();?>
 
     <style type="text/css">
-        body{
-			font-family: helvetica;
-	  	}
+        body {
+            font-family: helvetica;
+        }
+
         .table-center th{
             text-align:center;
         }
+
         .form-group{
             margin-bottom: 10px;
         }
@@ -25,10 +27,8 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
-                            <li><a href="<?php echo site_url('admin/pembelian');?>"> Pembelian</a></li>
-                            <li><a href="<?php echo site_url('admin/pembelian');?>"> Tagihan Pembelian</a></li>
-                            <li><a href="">Tagihan Pembelian</a></li>
+                            <li><a> Pembelian</a></li>
+                            <li><a> Tagihan Pembelian</a></li>
                         </ul>
                     </div>
                 </div>
@@ -53,15 +53,15 @@
                                         </tr>
                                         <tr>
                                             <th>Alamat Rekanan</th>
-                                            <th style="font-weight:normal;"><textarea class="form-control" name="alamat_pelanggan" rows="5" readonly=""><?= $po['supplier_address'];?></textarea></th>
+                                            <th><textarea class="form-control" name="alamat_pelanggan" rows="5" readonly=""><?= $po['supplier_address'];?></textarea></th>
                                         </tr>
                                         <tr>
                                             <th>Tanggal Pesanan Pembelian</th>
-                                            <th style="font-weight:normal;"><input type="text" class="form-control" name="tanggal_po" required="" value="<?= date("d-m-Y", strtotime($po['date_po'])) ?>" required="" readonly=""/></th>
+                                            <th><input type="text" class="form-control" name="tanggal_po" required="" value="<?= date("d-m-Y", strtotime($po['date_po'])) ?>" required="" readonly=""/></th>
                                         </tr>
                                         <tr>
                                             <th>Nomor Pesanan Pembelian</th>
-                                            <th style="font-weight:normal;"><input type="text" class="form-control" name="no_po" value="<?= $po['no_po'];?>" readonly="">
+                                            <th><input type="text" class="form-control" name="no_po" value="<?= $po['no_po'];?>" readonly="">
                                             <input type="hidden" name="purchase_order_id" value="<?= $po['id'];?>">
                                             </th>
                                         </tr>
@@ -70,15 +70,15 @@
                                     <table class="table table-striped table-bordered" width="100%">
                                         <tr>
                                             <th width="35%" align="left">Tanggal Invoice<span class="required" aria-required="true">*</span></th>
-                                            <th width="65%" align="left" style="font-weight:normal;"><input type="text" class="form-control dtpicker" name="tanggal_invoice" id="tanggal_invoice" required="" ></th>
+                                            <th width="65%" align="left"><input type="text" class="form-control dtpicker" name="tanggal_invoice" id="tanggal_invoice" required="" ></th>
                                         </tr>
                                         <tr>
                                             <th>Nomor Invoice<span class="required" aria-required="true">*</span></th>
-                                            <th style="font-weight:normal;"><input type="text" class="form-control" name="nomor_invoice" required=""/></th>
+                                            <th><input type="text" class="form-control" name="nomor_invoice" required=""/></th>
                                         </tr>
                                         <tr>
                                             <th>Syarat Pembayaran<span class="required" aria-required="true">*</span><br>(Ketik Angka Saja, Tanpa Hari)</th>
-                                            <th style="font-weight:normal;"><input type="text" class="form-control" name="syarat_pembayaran" id="syarat_pembayaran" value="<?= $po['syarat_pembayaran'];?>" required=""/></th>
+                                            <th><input type="text" class="form-control" name="syarat_pembayaran" id="syarat_pembayaran" value="<?= $po['syarat_pembayaran'];?>" required=""/></th>
                                         </tr>
                                         </tr>
                                     </table>

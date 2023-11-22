@@ -7,12 +7,15 @@
         body {
             font-family: helvetica;
         }
+
         .form-check{
             display: inline-block;;
         }
+
         .form-detail a{
             margin-top: 10px;
         }
+        
         #form-po .control-label{
             text-align: left;
         }
@@ -30,9 +33,9 @@
             <div class="content-header">
                 <div class="leftside-content-header">
                     <ul class="breadcrumbs">
-                        <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
-                        <li><a href="<?php echo site_url('admin/pembelian');?>"> Pesanan Pembelian</a></li>
-                        <li><a href="">Detail Pemesanan Pembelian</a></li>
+                        <li><a> Pembelian</a></li>
+                        <li><a> Pesanan Pembelian</a></li>
+                        <li><a> Detail Pemesanan Pembelian</a></li>
                     </ul>
                 </div>
             </div>
@@ -57,53 +60,53 @@
                                             </tr>
                                             <tr>
                                                 <th>Alamat</th>
-                                                <th style="font-weight:normal;"><textarea id="address_supplier"  class="form-control" rows="5" readonly=""><?php echo $address_supplier;?></textarea></th>
+                                                <th><textarea id="address_supplier"  class="form-control" rows="5" readonly=""><?php echo $address_supplier;?></textarea></th>
                                             </tr>
                                             <tr>
                                                 <th>NPWP</th>
-                                                <th style="font-weight:normal;"><?php echo $npwp_supplier;?></th>
+                                                <th><?php echo $npwp_supplier;?></th>
                                             </tr>
                                             <?php foreach ($details_pnw as $x): ?>
                                             <tr>
                                                 <th>No. Penawaran</th>
-                                                <th style="font-weight:normal;"><a target="_blank" href="<?= base_url("pembelian/penawaran_pembelian_detail/".$x['penawaran_id']) ?>"><?php echo $this->crud_global->GetField('pmm_penawaran_pembelian',array('id'=>$x['penawaran_id']),'nomor_penawaran');?></a></th>   
+                                                <th><a target="_blank" href="<?= base_url("pembelian/penawaran_pembelian_detail/".$x['penawaran_id']) ?>"><?php echo $this->crud_global->GetField('pmm_penawaran_pembelian',array('id'=>$x['penawaran_id']),'nomor_penawaran');?></a></th>   
                                             </tr>
                                             <?php endforeach; ?>
                                             <?php foreach ($details_req as $x): ?>
                                             <tr>
                                                 <th>No. Permintaan</th>
-                                                <th style="font-weight:normal;"><a target="_blank" href="<?= base_url("pmm/request_materials/manage/".$x['request_material_id']) ?>"><?php echo $this->crud_global->GetField('pmm_request_materials',array('id'=>$x['request_material_id']),'request_no');?></a></th>   
+                                                <th><a target="_blank" href="<?= base_url("pmm/request_materials/manage/".$x['request_material_id']) ?>"><?php echo $this->crud_global->GetField('pmm_request_materials',array('id'=>$x['request_material_id']),'request_no');?></a></th>   
                                             </tr>
                                             <?php endforeach; ?>
                                         </table>
                                         <table class="table table-striped table-bordered" width="100%">
                                             <tr>
                                                 <th width="20%" align="left">No. Pesanan Pembelian</th>
-                                                <th width="80%" align="left"><label class="label label-info" style="font-size:14px;font-weight:normal;"><?php echo $data['no_po'];?></label></th>
+                                                <th width="80%" align="left"><label class="label label-info" style="font-size:14px;"><?php echo $data['no_po'];?></label></th>
                                             </tr>
                                             <tr>
                                                 <th>Subjek</th>
-                                                <th style="font-weight:normal;"><input type="text" class="form-control text-left" id="subject" value="<?php echo $data['subject'];?>" readonly=""></th>
+                                                <th><input type="text" class="form-control text-left" id="subject" value="<?php echo $data['subject'];?>" readonly=""></th>
                                             </tr>
                                             <tr>
                                                 <th>Tanggal Pesanan Pembelian</th>
-                                                <th style="font-weight:normal;"><input type="text" id="date_po" class="form-control dtpicker" value="<?php echo date('d-m-Y',strtotime($data['date_po']));?>" readonly=""></th>
+                                                <th><input type="text" id="date_po" class="form-control dtpicker" value="<?php echo date('d-m-Y',strtotime($data['date_po']));?>" readonly=""></th>
                                             </tr>
                                             <tr>
                                                 <th>Memo</th>
-                                                <th style="font-weight:normal;" class="text-left" colspan="6"><?php echo $data['memo'];?></th>
+                                                <th class="text-left" colspan="6"><?php echo $data['memo'];?></th>
                                             </tr>
                                             <tr>
                                                 <th>Lampiran</th>
-                                                <th style="font-weight:normal;"><a href="<?= base_url("uploads/purchase_order/".$data["document_po"]) ?>" target="_blank"><?php echo $data['document_po'];?></a></th>
+                                                <th><a href="<?= base_url("uploads/purchase_order/".$data["document_po"]) ?>" target="_blank"><?php echo $data['document_po'];?></a></th>
                                             </tr>
                                             <tr>
                                                 <th>Dibuat Oleh</th>
-                                                <th style="font-weight:normal;"><?php echo $this->crud_global->GetField('tbl_admin',array('admin_id'=>$data['created_by']),'admin_name');?></th>
+                                                <th><?php echo $this->crud_global->GetField('tbl_admin',array('admin_id'=>$data['created_by']),'admin_name');?></th>
                                             </tr>
                                             <tr>
                                                 <th>Dibuat Tanggal</th>
-                                                <th style="font-weight:normal;"><?= date('d/m/Y H:i:s',strtotime($data['created_on']));?></th>
+                                                <th><?= date('d/m/Y H:i:s',strtotime($data['created_on']));?></th>
                                             </tr>
                                         </table>                
                                     </form>

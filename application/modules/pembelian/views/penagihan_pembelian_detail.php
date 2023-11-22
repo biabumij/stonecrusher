@@ -8,6 +8,7 @@
         body {
             font-family: helvetica;
         }
+
         .table-center th,
         .table-center td {
             text-align: center;
@@ -16,10 +17,12 @@
         .form-approval {
             display: inline-block;
         }
+
         blink {
         -webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
         animation: 2s linear infinite kedip;
         }
+
         /* for Safari 4.0 - 8.0 */
         @-webkit-keyframes kedip { 
         0% {
@@ -55,10 +58,9 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin'); ?>">Dashboard</a></li>
-                            <li><a href="<?php echo site_url('admin/pembelian');?>"> Pembelian</a></li>
-                            <li><a href="<?php echo site_url('admin/pembelian');?>"> Tagihan Pembelian</a></li>
-                            <li><a href="">Detail Tagihan Pembelian</a></li>
+                            <li><a> Pembelian</a></li>
+                            <li><a> Tagihan Pembelian</a></li>
+                            <li><a> Detail Tagihan Pembelian</a></li>
                         </ul>
                     </div>
                 </div>
@@ -80,42 +82,42 @@
                                     </tr>
                                     <tr>
                                         <th>Alamat</th>
-                                        <th style="font-weight:normal;"><textarea class="form-control" name="alamat_supplier" id="alamat_supplier"  rows="5" readonly=""><?= $row['supplier_address']; ?></textarea></th>
+                                        <th><textarea class="form-control" name="alamat_supplier" id="alamat_supplier"  rows="5" readonly=""><?= $row['supplier_address']; ?></textarea></th>
                                     </tr>
                                     <tr>
                                         <th>No. Pesanan Pembelian</th>
-                                        <th style="font-weight:normal;"><a target="_blank" href="<?= base_url("pmm/purchase_order/manage/".$row['purchase_order_id']) ?>"><?php echo $this->crud_global->GetField('pmm_purchase_order',array('id'=>$row['purchase_order_id']),'no_po');?></a></th>
+                                        <th><a target="_blank" href="<?= base_url("pmm/purchase_order/manage/".$row['purchase_order_id']) ?>"><?php echo $this->crud_global->GetField('pmm_purchase_order',array('id'=>$row['purchase_order_id']),'no_po');?></a></th>
                                     </tr>
                                     <tr>
                                         <th>Tanggal Pesanan Pembelian</th>
-                                        <th style="font-weight:normal;"><?php echo date('d/m/Y',strtotime($row['tanggal_po']));?></th>
+                                        <th><?php echo date('d/m/Y',strtotime($row['tanggal_po']));?></th>
                                     </tr>
                                 </table>
                                 <br />
                                 <table class="table table-striped table-bordered" width="100%">
                                     <tr>
                                         <th width="20%" align="left">Nomor Invoice</th>
-                                        <th width="80%" align="left" style="font-weight:normal;"><label class="label label-info" style="font-size:14px;"><?= $row['nomor_invoice']; ?></label></th>
+                                        <th width="80%" align="left"><label class="label label-info" style="font-size:14px;"><?= $row['nomor_invoice']; ?></label></th>
                                     </tr>
                                     <tr>
                                         <th>Tanggal Invoice</th>
-                                        <th style="font-weight:normal;"><?= date('d/m/Y', strtotime($row['tanggal_invoice'])); ?></th>
+                                        <th><?= date('d/m/Y', strtotime($row['tanggal_invoice'])); ?></th>
                                     </tr>
                                     <tr>
                                         <th>Syarat Pembayaran</th>
-                                        <th style="font-weight:normal;"><?= $row['syarat_pembayaran']; ?> Hari</th>
+                                        <th><?= $row['syarat_pembayaran']; ?> Hari</th>
                                     </tr>
                                     <!--<tr>
                                         <th>Tanggal Jatuh Tempo</th>
-                                        <th style="font-weight:normal;"><?= date('d/m/Y', strtotime($row['tanggal_jatuh_tempo'])); ?></th>
+                                        <th><?= date('d/m/Y', strtotime($row['tanggal_jatuh_tempo'])); ?></th>
                                     </tr>-->
                                     <tr>
                                         <th>Memo</th>
-                                        <th style="font-weight:normal;"><?= $row["memo"]; ?></th>
+                                        <th><?= $row["memo"]; ?></th>
                                     </tr>
                                     <tr>
                                         <th>Lampiran</th>
-                                        <th style="font-weight:normal;">
+                                        <th>
                                         <?php
                                             $dataLampiran = $this->db->get_where('pmm_lampiran_penagihan_pembelian', array('penagihan_pembelian_id' => $row['id']))->result_array();
                                             if (!empty($dataLampiran)) {
@@ -130,11 +132,11 @@
                                     </tr>
                                     <tr>
                                         <th>Dibuat Oleh</th>
-                                        <th style="font-weight:normal;"><?php echo $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');?></th>
+                                        <th><?php echo $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');?></th>
                                     </tr>
                                     <tr>
                                         <th>Dibuat Tanggal</th>
-                                        <th style="font-weight:normal;"><?= date('d/m/Y H:i:s',strtotime($row['created_on']));?></th>
+                                        <th><?= date('d/m/Y H:i:s',strtotime($row['created_on']));?></th>
                                     </tr>
                                 </table>
 

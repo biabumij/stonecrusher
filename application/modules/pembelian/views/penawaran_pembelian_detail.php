@@ -10,9 +10,11 @@
         body {
             font-family: helvetica;
         }
+        
         .form-check {
             display: inline-block;
         }
+
     </style>
 </head>
 
@@ -27,10 +29,9 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
-                            <li><a href="<?php echo site_url('admin/pembelian');?>"> Pembelian</a></li>
-                            <li><a href="<?php echo site_url('admin/pembelian');?>"> Penawaran Pembelian</a></li>
-                            <li><a href=""> Detail Penawaran Pembelian</a></li>
+                            <li><a> Pembelian</a></li>
+                            <li><a> Penawaran Pembelian</a></li>
+                            <li><a> Detail Penawaran Pembelian</a></li>
                         </ul>
                     </div>
                 </div>
@@ -50,41 +51,41 @@
                                     </tr>
                                     <tr>
                                         <th>Alamat Rekanan</th>
-                                        <th style="font-weight:normal;"><textarea class="form-control" name="alamat_supplier" id="alamat_supplier" rows="5" readonly=""><?= $row['client_address'];?></textarea></th>
+                                        <th><textarea class="form-control" name="alamat_supplier" id="alamat_supplier" rows="5" readonly=""><?= $row['client_address'];?></textarea></th>
                                     </tr>
                                 </table>
                                 <table class="table table-striped table-bordered" width="100%">
                                     <tr>
                                         <th width="15%" align="left">Nomor Penawaran</th>
-                                        <th width="85%" align="left"><label class="label label-info" style="font-size:14px; font-weight:normal;"><?= $row['nomor_penawaran'];?></label></th>
+                                        <th width="85%" align="left"><label class="label label-info" style="font-size:14px;"><?= $row['nomor_penawaran'];?></label></th>
                                     </tr>
                                     <tr>
                                         <th>Perihal</th>
-                                        <th style="font-weight:normal;"><?= $row['jenis_pembelian'];?></th>
+                                        <th><?= $row['jenis_pembelian'];?></th>
                                     </tr>
                                     <tr>
                                         <th>Tanggal Penawaran</th>
-                                        <th style="font-weight:normal;"><?= date('d/m/Y',strtotime($row['tanggal_penawaran']));?></th>
+                                        <th><?= date('d/m/Y',strtotime($row['tanggal_penawaran']));?></th>
                                     </tr>
                                     <tr>
                                         <th>Berlaku Hingga</th>
-                                        <th style="font-weight:normal;"><?= date('d/m/Y',strtotime($row['berlaku_hingga']));?></th>
+                                        <th><?= date('d/m/Y',strtotime($row['berlaku_hingga']));?></th>
                                     </tr>
                                     <tr>
                                         <th>Syarat Pembayaran</th>
-                                        <th style="font-weight:normal;"><?= $row['syarat_pembayaran'];?> Hari</th>
+                                        <th><?= $row['syarat_pembayaran'];?> Hari</th>
                                     </tr>
                                     <tr>
                                         <th>Metode Pembayaran</th>
-                                        <th style="font-weight:normal;"><?= $row['metode_pembayaran'];?></th>
+                                        <th><?= $row['metode_pembayaran'];?></th>
                                     </tr>
                                     <tr>
                                         <th>Memo</th>
-                                        <th style="font-weight:normal;"><?= $row["memo"]; ?></th>
+                                        <th><?= $row["memo"]; ?></th>
                                     </tr>
                                     <tr>
                                         <th>Lampiran</th>
-                                        <th style="font-weight:normal;"><?php
+                                        <th><?php
                                                 $dataLampiran = $this->db->get_where('pmm_lampiran_penawaran_pembelian',array('penawaran_pembelian_id'=>$row['id']))->result_array();
                                                 if(!empty($dataLampiran)){
                                                     foreach ($dataLampiran as $key => $lampiran) {
@@ -98,11 +99,11 @@
                                     </tr>
                                     <tr>
                                         <th>Dibuat Oleh</th>
-                                        <th style="font-weight:normal;"><?php echo $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');?></th>
+                                        <th><?php echo $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');?></th>
                                     </tr>
                                     <tr>
                                         <th>Dibuat Tanggal</th>
-                                        <th style="font-weight:normal;"><?= date('d/m/Y H:i:s',strtotime($row['created_on']));?></th>
+                                        <th><?= date('d/m/Y H:i:s',strtotime($row['created_on']));?></th>
                                     </tr>
                                 </table>
                                 <table id="table-product" class="table table-bordered table-striped table-condensed table-center">
