@@ -205,7 +205,7 @@
                                     <?php
                                         if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
                                         ?>
-                                            <br />
+                                            <br /><br />
                                             <form class="form-check" action="<?= base_url("pembelian/closed_penawaran_pembelian/".$row["id"]) ?>">
                                                 <button type="submit" class="btn btn-danger" style="width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-briefcase"></i> Closed</button>     
                                             </form>
