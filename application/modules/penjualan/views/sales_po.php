@@ -4,9 +4,6 @@
     <?php echo $this->Templates->Header();?>
 
     <style type="text/css">
-        body{
-			font-family: helvetica;
-	  	}
         .table-center th, .table-center td{
             text-align:center;
         }
@@ -22,9 +19,8 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
-                            <li><a href="<?php echo site_url('admin/penjualan');?>"> Penjualan</a></li>
-                            <li><a href="<?php echo site_url('admin/penjualan');?>"> Sales Order</a></li>
+                            <li><a href=""> Penjualan</a></li>
+                            <li><a href=""> Sales Order</a></li>
                             <li><a href="">Buat Sales Order</a></li>
                         </ul>
                     </div>
@@ -34,7 +30,7 @@
                         <div class="panel">
                             <div class="panel-header"> 
                                 <div class="">
-                                    <h3 class="">Sales Order Baru</h3>
+                                    <h3 class="">Sales Order</h3>
                                     
                                 </div>
                             </div>
@@ -108,7 +104,7 @@
                                                         <input type="text" name="nama_produk_1" id="nama_produk-1" class="form-control input-sm text-center" onchange="changeData(1)" readonly=""/>
                                                     </td> 
                                                     <td>
-                                                        <input type="text" name="qty_1" id="qty-1" class="form-control numberformat input-sm text-center" onchange="changeData(1)" required="" />
+                                                        <input type="text" name="qty_1" id="qty-1" class="form-control numberformat input-sm text-right" onchange="changeData(1)" required="" />
                                                     </td>                                                   
                                                     <td>
                                                         <input type="text" name="measure_1" id="measure-1" class="form-control input-sm text-center" onchange="changeData(1)" readonly=""/>
