@@ -10,11 +10,6 @@
         body {
             font-family: helvetica;
         }
-        
-        .form-check {
-            display: inline-block;
-        }
-
     </style>
 </head>
 
@@ -106,7 +101,7 @@
                                         <th><?= date('d/m/Y H:i:s',strtotime($row['created_on']));?></th>
                                     </tr>
                                 </table>
-                                <table id="table-product" class="table table-bordered table-striped table-condensed table-center">
+                                <table id="table-product" class="table table-bordered table-striped table-condensed tex-center">
                                     <thead>
                                         <tr>
                                             <th class="text-center" width="5%">No</th>
