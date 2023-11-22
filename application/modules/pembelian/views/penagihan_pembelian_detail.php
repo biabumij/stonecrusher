@@ -425,7 +425,7 @@
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="menu1">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover" id="table-surat-jalan" width="100%">
+                                            <table class="table table-striped table-hover text-center" id="table-surat-jalan" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>Tanggal</th>
@@ -433,7 +433,7 @@
                                                         <th>Produk</th>
                                                         <th>No. Kendaraan</th>
                                                         <th>Supir</th>
-                                                        <th class="text-right">Volume</th>
+                                                        <th>Volume</th>
                                                         <th>Satuan</th>
                                                     </tr>
                                                 </thead>
@@ -468,7 +468,7 @@
                                     <div role="tabpanel" class="tab-pane" id="menu2">
                                         <br>
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover" id="table-pembayaran" width="100%">
+                                            <table class="table table-striped table-hover text-center" id="table-pembayaran" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>Tanggal</th>
