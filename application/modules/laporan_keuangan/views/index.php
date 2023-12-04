@@ -30,9 +30,7 @@
 
 <body>
     <div class="wrap">
-
         <?php echo $this->Templates->PageHeader(); ?>
-
         <div class="page-body">
             <?php echo $this->Templates->LeftBar(); ?>
             <div class="content">
@@ -167,7 +165,6 @@
         </div>
 
         <?php echo $this->Templates->Footer(); ?>
-
         <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/moment.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.js"></script>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.css">
@@ -177,94 +174,91 @@
 		
 		<!-- Script Laba Rugi -->
 		<script type="text/javascript">
-        $('#filter_date').daterangepicker({
-            autoUpdateInput : false,
-			showDropdowns: true,
-            locale: {
-              format: 'DD-MM-YYYY'
-            },
-            ranges: {
-               'Today': [moment(), moment()],
-               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-               'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-               'This Month': [moment().startOf('month'), moment().endOf('month')],
-               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            }
-        });
-
-        $('#filter_date').on('apply.daterangepicker', function(ev, picker) {
-              $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-              TableDateLabaRugi();
-        });
-
-
-        function TableDateLabaRugi()
-        {
-            $('#wait').fadeIn('fast');   
-            $.ajax({
-                type    : "POST",
-                url     : "<?php echo site_url('pmm/reports/laba_rugi'); ?>/"+Math.random(),
-                dataType : 'html',
-                data: {
-                    filter_date : $('#filter_date').val(),
+            $('#filter_date').daterangepicker({
+                autoUpdateInput : false,
+                showDropdowns: true,
+                locale: {
+                format: 'DD-MM-YYYY'
                 },
-                success : function(result){
-                    $('#box-ajax').html(result);
-                    $('#wait').fadeOut('fast');
+                ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                 }
             });
-        }
 
-        //TableDateLabaRugi();
-		
+            $('#filter_date').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                TableDateLabaRugi();
+            });
+
+
+            function TableDateLabaRugi()
+            {
+                $('#wait').fadeIn('fast');   
+                $.ajax({
+                    type    : "POST",
+                    url     : "<?php echo site_url('pmm/reports/laba_rugi'); ?>/"+Math.random(),
+                    dataType : 'html',
+                    data: {
+                        filter_date : $('#filter_date').val(),
+                    },
+                    success : function(result){
+                        $('#box-ajax').html(result);
+                        $('#wait').fadeOut('fast');
+                    }
+                });
+            }
+
+            //TableDateLabaRugi();
 		</script>
 
         <!-- Script Laba Rugi Baru-->
 		<script type="text/javascript">
-        $('#filter_date_new').daterangepicker({
-            autoUpdateInput : false,
-			showDropdowns: true,
-            locale: {
-              format: 'DD-MM-YYYY'
-            },
-            ranges: {
-               'Today': [moment(), moment()],
-               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-               'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-               'This Month': [moment().startOf('month'), moment().endOf('month')],
-               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            }
-        });
-
-        $('#filter_date_new').on('apply.daterangepicker', function(ev, picker) {
-              $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-              TableDateLabaRugiNew();
-        });
-
-
-        function TableDateLabaRugiNew()
-        {
-            $('#wait').fadeIn('fast');   
-            $.ajax({
-                type    : "POST",
-                url     : "<?php echo site_url('pmm/reports/laba_rugi_new'); ?>/"+Math.random(),
-                dataType : 'html',
-                data: {
-                    filter_date : $('#filter_date_new').val(),
+            $('#filter_date_new').daterangepicker({
+                autoUpdateInput : false,
+                showDropdowns: true,
+                locale: {
+                format: 'DD-MM-YYYY'
                 },
-                success : function(result){
-                    $('#box-ajax-new').html(result);
-                    $('#wait').fadeOut('fast');
+                ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                 }
             });
-        }
 
-        //TableDateLabaRugiNew();
-		
+            $('#filter_date_new').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                TableDateLabaRugiNew();
+            });
+
+
+            function TableDateLabaRugiNew()
+            {
+                $('#wait').fadeIn('fast');   
+                $.ajax({
+                    type    : "POST",
+                    url     : "<?php echo site_url('pmm/reports/laba_rugi_new'); ?>/"+Math.random(),
+                    dataType : 'html',
+                    data: {
+                        filter_date : $('#filter_date_new').val(),
+                    },
+                    success : function(result){
+                        $('#box-ajax-new').html(result);
+                        $('#wait').fadeOut('fast');
+                    }
+                });
+            }
+
+            //TableDateLabaRugiNew();
 		</script>
-
+    </div>
 </body>
-
 </html>

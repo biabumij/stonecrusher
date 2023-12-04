@@ -3,16 +3,15 @@
 
 <head>
     <?php echo $this->Templates->Header(); ?>
-
 	<style type="text/css">
         body {
 			font-family: helvetica;
 		}
 		
 		.mytable thead tr {
-          background: linear-gradient(90deg, #fdcd3b 20%, #fdcd3b 40%, #e69500 80%);
+          background-color: #666666;
 		  vertical-align: middle;
-          color: black;
+          color: white;
 		}
 		
 		.mytable tbody td {
@@ -57,9 +56,7 @@
 
 <body>
     <div class="wrap">
-
         <?php echo $this->Templates->PageHeader(); ?>
-
         <div class="page-body">
             <?php echo $this->Templates->LeftBar(); ?>
             <div class="content">
@@ -178,19 +175,20 @@
                                                         </div>
                                                         <table class="mytable table table-hover table-center table-bordered" id="penerimaan-pembelian" style="display:none;">
                                                             <thead>
-                                                            <tr>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
-                                                                <th class="text-center">REKANAN</th>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">SATUAN</th>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">VOLUME</th>
-																<th class="text-center" rowspan="2" style="vertical-align:middle;">HARGA SATUAN</th>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">NILAI</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="text-center">PRODUK</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
+                                                                    <th class="text-center">REKANAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">SATUAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">VOLUME</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">HARGA SATUAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">NILAI</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="text-center">PRODUK</th>
+                                                                </tr>
                                                             </thead>
                                                             <tbody></tbody>
+                                                            <tfoot class="mytable table-hover table-center table-bordered table-condensed"></tfoot>
                                                         </table>
                                                     </div>
                                                 </div>
@@ -251,20 +249,20 @@
                                                         </div>
                                                         <table class="mytable table table-hover table-center table-bordered" id="laporan-hutang" style="display:none; font-size:11px;" width="100%";>
                                                             <thead>
-                                                            <tr>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
-                                                                <th class="text-center">REKANAN</th>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">PENERIMAAN</th>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">TAGIHAN</th>
-																<th class="text-center" rowspan="2" style="vertical-align:middle;">TAGIHAN BRUTO</th>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">PEMBAYARAN</th>
-                                                                <th class="text-center"colspan="2">SISA HUTANG</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="text-center">NO. PESANAN PEMBELIAN</th>
-                                                                <th class="text-center">PENERIMAAN</th>
-                                                                <th class="text-center">TAGIHAN</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
+                                                                    <th class="text-center">REKANAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">PENERIMAAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">TAGIHAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">TAGIHAN BRUTO</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">PEMBAYARAN</th>
+                                                                    <th class="text-center"colspan="2">SISA HUTANG</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="text-center">NO. PESANAN PEMBELIAN</th>
+                                                                    <th class="text-center">PENERIMAAN</th>
+                                                                    <th class="text-center">TAGIHAN</th>
+                                                                </tr>
 															</thead>
                                                             <tbody></tbody>
 															<tfoot class="mytable table-hover table-center table-bordered table-condensed"></tfoot>
@@ -341,37 +339,37 @@
                                                         </div>
                                                         <table class="mytable table table-hover table-center table-bordered" id="monitoring-hutang" style="display:none; font-size:11px;" width="100%";>
                                                             <thead>
-                                                            <tr>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
-                                                                <th class="text-center">REKANAN</th>
-                                                                <th class="text-center">TANGGAL</th>
-                                                                <th class="text-center">JENIS</th>
-																<th class="text-center">TANGGAL</th>
-                                                                <th class="text-center">SYARAT</th>
-                                                                <th class="text-center" colspan="3">TAGIHAN</th>
-                                                                <th class="text-center" colspan="4">PEMBAYARAN</th>
-                                                                <th class="text-center" colspan="3">SISA HUTANG</th>
-                                                                <th class="text-center" rowspan="2" style="vertical-align:middle;">STATUS</th>
-                                                                <th class="text-center">TANGGAL</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="text-center">NO. TAGIHAN</th>
-                                                                <th class="text-center">TAGIHAN</th>
-                                                                <th class="text-center">PEMBELIAN</th>
-                                                                <th class="text-center">VERIFIKASI</th>
-                                                                <th class="text-center">PEMBAYARAN</th>
-                                                                <th class="text-center">DPP</th>
-                                                                <th class="text-center">PPN</th>
-                                                                <th class="text-center">JUMLAH</th>
-                                                                <th class="text-center">DPP</th>
-                                                                <th class="text-center">PPN</th>
-                                                                <th class="text-center">PPH</th>
-                                                                <th class="text-center">JUMLAH</th>
-                                                                <th class="text-center">DPP</th>
-                                                                <th class="text-center">PPN</th>
-                                                                <th class="text-center">JUMLAH</th>
-                                                                <th class="text-center">JATUH TEMPO</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
+                                                                    <th class="text-center">REKANAN</th>
+                                                                    <th class="text-center">TANGGAL</th>
+                                                                    <th class="text-center">JENIS</th>
+                                                                    <th class="text-center">TANGGAL</th>
+                                                                    <th class="text-center">SYARAT</th>
+                                                                    <th class="text-center" colspan="3">TAGIHAN</th>
+                                                                    <th class="text-center" colspan="4">PEMBAYARAN</th>
+                                                                    <th class="text-center" colspan="3">SISA HUTANG</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">STATUS</th>
+                                                                    <th class="text-center">TANGGAL</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="text-center">NO. TAGIHAN</th>
+                                                                    <th class="text-center">TAGIHAN</th>
+                                                                    <th class="text-center">PEMBELIAN</th>
+                                                                    <th class="text-center">VERIFIKASI</th>
+                                                                    <th class="text-center">PEMBAYARAN</th>
+                                                                    <th class="text-center">DPP</th>
+                                                                    <th class="text-center">PPN</th>
+                                                                    <th class="text-center">JUMLAH</th>
+                                                                    <th class="text-center">DPP</th>
+                                                                    <th class="text-center">PPN</th>
+                                                                    <th class="text-center">PPH</th>
+                                                                    <th class="text-center">JUMLAH</th>
+                                                                    <th class="text-center">DPP</th>
+                                                                    <th class="text-center">PPN</th>
+                                                                    <th class="text-center">JUMLAH</th>
+                                                                    <th class="text-center">JATUH TEMPO</th>
+                                                                </tr>
 															</thead>
                                                             <tbody></tbody>
 															<tfoot class="mytable table-hover table-center table-bordered table-condensed"></tfoot>
@@ -411,17 +409,17 @@
                                                         </div>
                                                         <table class="mytable table table-hover table-center table-bordered" id="table-daftar-pembayaran" style="display:none" width="100%";>
                                                             <thead>
-                                                            <tr>
-																<th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
-																<th class="text-center">REKANAN</th>
-																<th class="text-center" rowspan="2" style="vertical-align:middle;">NO. TRANSAKSI</th>
-																<th class="text-center" rowspan="2" style="vertical-align:middle;">TANGGAL TAGIHAN</th>
-																<th class="text-center" rowspan="2" style="vertical-align:middle;">NO. TAGIHAN</th>
-																<th class="text-center" rowspan="2" style="vertical-align:middle;">PEMBAYARAN</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="text-center">TGL. BAYAR</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
+                                                                    <th class="text-center">REKANAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">NO. TRANSAKSI</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">TANGGAL TAGIHAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">NO. TAGIHAN</th>
+                                                                    <th class="text-center" rowspan="2" style="vertical-align:middle;">PEMBAYARAN</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="text-center">TGL. BAYAR</th>
+                                                                </tr>
 															</thead>
                                                             <tbody></tbody>
 															<tfoot class="mytable table-hover table-center table-bordered table-condensed"></tfoot>
@@ -442,7 +440,6 @@
         </div>
 
         <?php echo $this->Templates->Footer(); ?>
-
         <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/moment.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.js"></script>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.css">
@@ -559,7 +556,6 @@
             $('#filter_kategori_b').change(function() {
                 PenerimaanPembelian();
             });
-
         </script>
 
         <!-- Script Hutang -->
@@ -663,7 +659,6 @@
                 symbol: 'none',
 				minimumFractionDigits : '0'
             });
-
         </script>
 
         <!-- Script Monitoring Hutang -->
@@ -778,7 +773,6 @@
                 symbol: 'none',
 				minimumFractionDigits : '0'
             });
-
         </script>
 
         <!-- Script Daftar Pembayaran -->
@@ -856,8 +850,7 @@
                 symbol: 'none',
 				minimumFractionDigits : '0'
             });
-
         </script>
-
+    </div>
 </body>
 </html>

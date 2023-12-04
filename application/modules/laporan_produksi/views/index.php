@@ -7,11 +7,11 @@
         body {
 			font-family: helvetica;
 		}
-
+		
 		.mytable thead tr {
-          background: linear-gradient(90deg, #fdcd3b 20%, #fdcd3b 40%, #e69500 80%);
+          background-color: #666666;
 		  vertical-align: middle;
-          color: black;
+          color: white;
 		}
 		
 		.mytable tbody td {
@@ -56,9 +56,7 @@
 
 <body>
     <div class="wrap">
-
         <?php echo $this->Templates->PageHeader(); ?>
-
         <div class="page-body">
             <?php echo $this->Templates->LeftBar(); ?>
             <div class="content">
@@ -155,7 +153,6 @@
 									</div>
 
                                     <!-- Laporan Campuran -->
-                                    
 									<div role="tabpanel" class="tab-pane" id="laporan_produksi_campuran">
                                         <div class="col-sm-15">
                                             <div class="panel panel-default"> 
@@ -184,14 +181,16 @@
                                                         </div>
                                                         <table class="mytable table-hover table-center table-condensed" id="table-date-campuran" style="display:none" width="100%";>
                                                             <thead>
-																<th align="center">NO.</th>
-																<th align="center">TANGGAL</th>
-                                                                <th align="center">PRODUKSI CAMPURAN</th>
-                                                                <th align="center">SATUAN</th>
-																<th align="center">VOLUME</th>
-																<th align="center">FRAKSI</th>
-																<th align="center">KOMPOSISI</th>
-																<th align="center">VOLUME</th>
+                                                                <tr>
+                                                                    <th align="center">NO.</th>
+                                                                    <th align="center">TANGGAL</th>
+                                                                    <th align="center">PRODUKSI CAMPURAN</th>
+                                                                    <th align="center">SATUAN</th>
+                                                                    <th align="center">VOLUME</th>
+                                                                    <th align="center">FRAKSI</th>
+                                                                    <th align="center">KOMPOSISI</th>
+                                                                    <th align="center">VOLUME</th>
+                                                                </tr>
 															</thead>
                                                             <tbody></tbody>
 															<tfoot class="mytable table-hover table-center table-condensed"></tfoot>
@@ -203,7 +202,6 @@
 									</div>
 									
 									<!-- Rekaputulasi -->
-									
 									<div role="tabpanel" class="tab-pane" id="rekapitulasi_laporan_produksi">
                                         <div class="col-sm-15">
                                             <div class="panel panel-default"> 
@@ -232,11 +230,13 @@
                                                         </div>
                                                         <table class="mytable table-hover table-center table-condensed" id="table-date8b" style="display:none" width="100%";>
                                                             <thead>
-																<th class="text-center">NO.</th>
-																<th class="text-center">URAIAN</th>
-																<th class="text-right">SATUAN</th>
-																<th class="text-right">PRESENTASE</th>
-																<th class="text-right">VOLUME</th>
+                                                                <tr>
+                                                                    <th class="text-center">NO.</th>
+                                                                    <th class="text-center">URAIAN</th>
+                                                                    <th class="text-right">SATUAN</th>
+                                                                    <th class="text-right">PRESENTASE</th>
+                                                                    <th class="text-right">VOLUME</th>
+                                                                </tr>
 															</thead>
                                                             <tbody></tbody>
 															<tfoot class="mytable table-hover table-center table-condensed"></tfoot>
@@ -248,7 +248,6 @@
 									</div>
 
 									<!-- Nilai Persediaan Barang -->
-									
                                     <div role="tabpanel" class="tab-pane" id="nilai_persediaan_bahan_baku">
                                         <div class="col-sm-15">
 										<div class="panel panel-default">
@@ -286,7 +285,6 @@
                                     </div>
 
 									<!-- Nilai Persediaan Bahan Jadi -->
-									
 									<div role="tabpanel" class="tab-pane" id="nilai_persediaan_bahan_jadi">
                                         <div class="col-sm-15">
 										<div class="panel panel-default">
@@ -334,7 +332,6 @@
         </div>
 
         <?php echo $this->Templates->Footer(); ?>
-
         <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/moment.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.js"></script>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.css">
@@ -400,16 +397,14 @@
                 console.log('.mats-' + id);
                 $('.mats-' + id).slideToggle();
             }
+        </script>
 
-            </script>
-
-            <!-- Script Laporan Produksi Campuran -->
-
-            <script type="text/javascript">
+        <!-- Script Laporan Produksi Campuran -->
+        <script type="text/javascript">
             $('input.numberformat').number(true, 4, ',', '.');
             $('#filter_date_campuran').daterangepicker({
                 autoUpdateInput: false,
-				showDropdowns : true,
+                showDropdowns : true,
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
@@ -462,15 +457,14 @@
                 console.log('.mats-' + id);
                 $('.mats-' + id).slideToggle();
             }
-            </script>
+        </script>
 
-			<!-- Script Rekepitulasi -->
-			
-            <script type="text/javascript">
-			$('input.numberformat').number(true, 4, ',', '.');
+        <!-- Script Rekepitulasi -->
+        <script type="text/javascript">
+            $('input.numberformat').number(true, 4, ',', '.');
             $('#filter_date_rekapitulasi').daterangepicker({
                 autoUpdateInput: false,
-				showDropdowns : true,
+                showDropdowns : true,
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
@@ -523,11 +517,10 @@
                 console.log('.mats-' + id);
                 $('.mats-' + id).slideToggle();
             }
-            </script>
+        </script>
 
-			<!-- Script Nilai Persediaan Barang -->
-
-			<script type="text/javascript">
+		<!-- Script Nilai Persediaan Barang -->
+		<script type="text/javascript">
 			$('#filter_date_nilai').daterangepicker({
             autoUpdateInput : false,
 			showDropdowns: true,
@@ -567,55 +560,51 @@
 					});
 				}
 
-				//TableNilaiPersediaanBahanBaku();
-			
-            </script>
+			//TableNilaiPersediaanBahanBaku();
+        </script>
 
-			<!-- Script Nilai Persediaan Bahan Jadi -->
-			
-            <script type="text/javascript">
-			$('#filter_date_nilai_bahan_jadi').daterangepicker({
-				autoUpdateInput : false,
-				showDropdowns: true,
-				locale: {
-				  format: 'DD-MM-YYYY'
-				},
-				ranges: {
-				   'Today': [moment(), moment()],
-				   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-				   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-				   'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-				   'This Month': [moment().startOf('month'), moment().endOf('month')],
-				   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-				}
-			});
+        <!-- Script Nilai Persediaan Bahan Jadi -->
+        <script type="text/javascript">
+            $('#filter_date_nilai_bahan_jadi').daterangepicker({
+                autoUpdateInput : false,
+                showDropdowns: true,
+                locale: {
+                    format: 'DD-MM-YYYY'
+                },
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            });
 
-			$('#filter_date_nilai_bahan_jadi').on('apply.daterangepicker', function(ev, picker) {
-				  $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-				  TableNilaiPersediaanBahanJadi();
-			});
-			
-			function TableNilaiPersediaanBahanJadi()
-			{
-				$('#wait').fadeIn('fast');   
-				$.ajax({
-					type    : "POST",
-					url     : "<?php echo site_url('pmm/reports/nilai_persediaan_bahan_jadi'); ?>/"+Math.random(),
-					dataType : 'html',
-					data: {
-						filter_date : $('#filter_date_nilai_bahan_jadi').val(),
-					},
-					success : function(result){
-						$('#box-ajax-6d').html(result);
-						$('#wait').fadeOut('fast');
-					}
-				});
-			}
+            $('#filter_date_nilai_bahan_jadi').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                    TableNilaiPersediaanBahanJadi();
+            });
+            
+            function TableNilaiPersediaanBahanJadi()
+            {
+                $('#wait').fadeIn('fast');   
+                $.ajax({
+                    type    : "POST",
+                    url     : "<?php echo site_url('pmm/reports/nilai_persediaan_bahan_jadi'); ?>/"+Math.random(),
+                    dataType : 'html',
+                    data: {
+                        filter_date : $('#filter_date_nilai_bahan_jadi').val(),
+                    },
+                    success : function(result){
+                        $('#box-ajax-6d').html(result);
+                        $('#wait').fadeOut('fast');
+                    }
+                });
+            }
 
-			//TableNilaiPersediaanBahanJadi();
-			
-            </script>			
-
+        //TableNilaiPersediaanBahanJadi();
+        </script>			
+    </div>
 </body>
-
 </html>
