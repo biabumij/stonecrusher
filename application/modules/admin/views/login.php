@@ -6,7 +6,7 @@
 	<head>
 	    <meta charset="UTF-8">
 		<meta name="description" key="description" content="Sistem Stone Crusher">
-		<meta name="title" key="title" content="CRUSHER">
+		<meta name="title" key="title" content="Stone Crusher">
 		<meta name="author" content="Ginanjar Bayu Bimantoro">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	    <title><?php echo $this->m_themes->GetThemes('site_name');?> - LOGIN</title>
