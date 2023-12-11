@@ -225,7 +225,7 @@
                                 <?php if($sales_po["status"] === "OPEN") : ?>
                                 <a href="<?= base_url("penjualan/cetak_sales_order/".$sales_po["id"]) ?>" target="_blank" class="btn btn-default" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-print"></i> Print</a>
                                
-                                <a href="<?= base_url("penjualan/uang_muka/".$sales_po["id"]) ?>" target="_blank" class="btn btn-warning" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-money"></i> Uang Muka</a>
+                                <a href="<?= base_url("penjualan/uang_muka/".$sales_po["id"]) ?>" target="_blank" class="btn btn-default" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-money"></i> Uang Muka</a>
 
                                 <a href="<?= base_url("pmm/productions/add?po_id=".$sales_po["id"]) ?>"  class="btn btn-success" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-truck"></i> Kirim Produk</a>
 								

@@ -237,7 +237,7 @@
                                 if($data['status'] == 'PUBLISH'){
                                     ?>
 
-                                    <a href="<?= site_url('pembelian/uang_muka/'.$id);?>" class="btn btn-warning" style="width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-money"></i> Uang Muka</a>
+                                    <a href="<?= site_url('pembelian/uang_muka/'.$id);?>" class="btn btn-default" style="width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-money"></i> Uang Muka</a>
 
                                     <a href="<?= site_url('pmm/purchase_order/get_pdf/'.$id);?>" target="_blank" class="btn btn-default" style="width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-print"></i> Print</a>
                                     

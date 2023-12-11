@@ -250,12 +250,6 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-7 control-label">PEMBAYARAN</label>
-                                            <div class="col-sm-5 text-right">
-                                                <label id="sub-total"><?= number_format($penagihan['pembayaran'],0,',','.'); ?></label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <label class="col-sm-7 control-label">SISA TAGIHAN</label>
                                             <div class="col-sm-5 text-right">
                                                 <label id="total"><?= number_format($total - $penagihan['pembayaran']); ?></label>
@@ -271,10 +265,10 @@
                                             if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 15){
                                                 ?>
                                                 <form class="form-approval" action="<?= base_url("penjualan/approvePenagihan/" . $penagihan["id"]) ?>">
-                                                    <button type="submit" class="btn btn-success btn-sm" style="width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-check"></i> Setujui</button>
+                                                    <button type="submit" class="btn btn-success btn-sm" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-check"></i> Setujui</button>
                                                 </form>
                                                 <form class="form-approval" action="<?= base_url("penjualan/rejectPenagihan/" . $penagihan["id"]) ?>">
-                                                    <button type="submit" class="btn btn-danger btn-sm" style="width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> Tolak</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> Tolak</button>
                                                 </form>
                                             <?php
                                             }
@@ -288,7 +282,7 @@
                                         <?php
                                             if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 10 || $this->session->userdata('admin_group_id') == 13 || $this->session->userdata('admin_group_id') == 14 || $this->session->userdata('admin_group_id') == 15){
                                             ?>
-                                            <a class="btn btn-warning" style="width:15%; font-weight:bold; border-radius:10px;" href="<?= base_url("penjualan/halaman_pembayaran/" . $penagihan["id"]) ?>"><i class="fa fa-money"></i> Terima Pembayaran</a>
+                                            <a class="btn btn-default" style="width:15%; font-weight:bold; border-radius:10px;" href="<?= base_url("penjualan/halaman_pembayaran/" . $penagihan["id"]) ?>"><i class="fa fa-money"></i> Terima Pembayaran</a>
                                             <a class="btn btn-success" style="width:15%; font-weight:bold; border-radius:10px;" href="<?= site_url('penjualan/closed_pembayaran_penagihan/' . $penagihan['id']); ?>"><i class="fa fa-check"></i> Pembayaran Lunas</a>
                                             <?php
                                             }
@@ -339,15 +333,15 @@
                                 </div>
                                 <br /><br /><br />
                                 <div class="text-center">
-                                    <a href="<?php echo site_url('admin/penjualan#settings'); ?>" class="btn btn-info" style="width:15%; font-weight:bold; border-radius:10px;"><i class="fa fa-arrow-left"></i> Kembali</a>
+                                    <a href="<?php echo site_url('admin/penjualan#settings'); ?>" class="btn btn-info" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-arrow-left"></i> Kembali</a>
                                 </div>
                                 <br />
                                 <br />
                             </div>
                             <div class="container-fluid">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#menu1" aria-controls="menu2" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px;">Daftar Surat Jalan</a></li>
-                                    <li role="presentation"><a href="#menu2" aria-controls="menu2" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px;">Daftar Penerimaan</a></li>
+                                    <li role="presentation" class="active"><a href="#menu1" aria-controls="menu2" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Daftar Surat Jalan</a></li>
+                                    <li role="presentation"><a href="#menu2" aria-controls="menu2" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Daftar Penerimaan</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="menu1">
