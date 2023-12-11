@@ -284,7 +284,7 @@
                                     if($this->session->userdata('admin_group_id') == 1){
                                         ?>
                                         <form class="form-check" action="<?= site_url("pmm/purchase_order/delete/".$id);?>">
-                                            <button type="submit" class="btn btn-danger" style="width:200px; font-weight:bold; margin-bottom:10px; border-radius:10px;"><i class="fa fa-trash"></i> Hapus</button>        
+                                            <button type="submit" class="btn btn-danger" style="width:150px; font-weight:bold; margin-bottom:10px; border-radius:10px;"><i class="fa fa-trash"></i> Hapus</button>        
                                         </form>	
                                         <?php
                                     }
