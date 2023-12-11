@@ -236,6 +236,19 @@
                                                 <label id="total"><?= number_format($total,0,',','.'); ?></label>
                                             </div>
                                         </div>
+                                        <br />
+                                        <div class="row">
+                                            <label class="col-sm-7 control-label">UANG MUKA</label>
+                                            <div class="col-sm-5 text-right">
+                                                <label id="sub-total"><?= number_format($penagihan['uang_muka'],0,',','.'); ?></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-7 control-label">PEMBAYARAN</label>
+                                            <div class="col-sm-5 text-right">
+                                                <label id="sub-total"><?= number_format($penagihan['pembayaran'] - $penagihan['uang_muka'],0,',','.'); ?></label>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <label class="col-sm-7 control-label">PEMBAYARAN</label>
                                             <div class="col-sm-5 text-right">
@@ -245,7 +258,7 @@
                                         <div class="row">
                                             <label class="col-sm-7 control-label">SISA TAGIHAN</label>
                                             <div class="col-sm-5 text-right">
-                                                <label id="total"><?= number_format($total - $sisa_tagihan - $penagihan['pembayaran']); ?></label>
+                                                <label id="total"><?= number_format($total - $penagihan['pembayaran']); ?></label>
                                             </div>
                                         </div>
                                     </div>
