@@ -186,10 +186,18 @@
                                     }
                                     $total = $subtotal + $tax_ppn - $tax_pph + $tax_ppn11;
                                     ?>
+
+                                    <?php
+                                    $presentase_uang_muka = ($sales_po['uang_muka'] / $total) * 100;
+                                    ?>
                                     
                                     <tr>
-                                        <th colspan="5" class="text-right">TOTAL</th>
+                                        <th colspan="5" class="text-right">Total</th>
                                         <th  class="text-right"><?= number_format($total,0,',','.'); ?></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5" class="text-right">Uang Muka (<?= number_format($presentase_uang_muka,0,',','.'); ?>%)</th>
+                                        <th  class="text-right"><?= number_format($sales_po['uang_muka'],0,',','.'); ?></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -217,9 +225,11 @@
                                 <?php if($sales_po["status"] === "OPEN") : ?>
                                 <a href="<?= base_url("penjualan/cetak_sales_order/".$sales_po["id"]) ?>" target="_blank" class="btn btn-default" style="margin-top:10px; width:200px; width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-print"></i> Print</a>
                                
+                                <a href="<?= base_url("penjualan/uang_muka/".$sales_po["id"]) ?>" target="_blank" class="btn btn-warning" style="margin-top:10px; width:200px; width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-money"></i> Uang Muka</a>
+
                                 <a href="<?= base_url("pmm/productions/add?po_id=".$sales_po["id"]) ?>"  class="btn btn-success" style="margin-top:10px; width:200px; width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-truck"></i> Kirim Produk</a>
 								
-                                <a href="<?= base_url("pmm/productions/add_retur?po_id=".$sales_po["id"]) ?>"  class="btn btn-primary" style="margin-top:10px; width:200px; width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-truck"></i> Retur</a>
+                                <a href="<?= base_url("pmm/productions/add_retur?po_id=".$sales_po["id"]) ?>"  class="btn btn-warning" style="margin-top:20px; width:200px; width:200px; font-weight:bold; border-radius:10px;"><i class="fa fa-truck"></i> Retur</a>
                                 
                                 <?php
                                     if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
