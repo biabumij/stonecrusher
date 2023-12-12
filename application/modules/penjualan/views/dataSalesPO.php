@@ -235,7 +235,7 @@
                                     if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
                                     ?>
                                     <form class="form-approval" action="<?= base_url("penjualan/closed_sales_order/".$sales_po["id"]) ?>">
-                                        <button type="submit" class="btn btn-danger" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-briefcase"></i> Closed</button>        
+                                        <button type="submit" class="btn btn-danger" style="margin-top:0px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-briefcase"></i> Closed</button>        
                                     </form>					
                                     <?php
                                     }
