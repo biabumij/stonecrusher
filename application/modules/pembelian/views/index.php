@@ -1469,7 +1469,7 @@
             style: 'multi'
         },
         responsive: true,
-        pageLength: 5,
+        pageLength: 10,
             "columnDefs": [{
                 "targets": [0],
                 "orderable": false,
