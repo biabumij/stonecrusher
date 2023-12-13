@@ -480,7 +480,7 @@ class Purchase_order extends CI_Controller {
 		if ($this->db->trans_status() === FALSE) {
             # Something went wrong.
             $this->db->trans_rollback();
-            $this->session->set_flashdata('notif_error','Gagal Hapus Pesanan Pembelian');
+            $this->session->set_flashdata('notif_error','<b>Gagal Hapus Pesanan Pembelian</b>');
             redirect('admin/pembelian');
         } 
         else {
