@@ -249,6 +249,40 @@
                                                         <input type="number" step=".01" min="0" name="presentase_e" id="presentase_e" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" />
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td>6.</td>
+                                                    <td>														
+                                                        <select id="produk_f" class="form-control form-select2" name="produk_f" required="" >
+                                                            <option value="">Pilih Produk</option>
+                                                            <?php
+                                                            if(!empty($products)){
+                                                                foreach ($products as $row) {
+                                                                    ?>
+                                                                    <option value="<?php echo $row['id'];?>"><?php echo $row['nama_produk'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="measure_f" class="form-control form-select2" name="measure_f" required="" >
+                                                            <option value="">Pilih Satuan</option>
+                                                            <?php
+                                                            if(!empty($measures)){
+                                                                foreach ($measures as $ms) {
+                                                                    ?>
+                                                                    <option value="<?php echo $ms['id'];?>"><?php echo $ms['measure_name'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </td>
+													<td>
+                                                        <input type="number" step=".01" min="0" name="presentase_f" id="presentase_f" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" />
+                                                    </td>
+                                                </tr>
 												<tr>
                                                     <td colspan="3"><b>TOTAL</b></td>														                                               
 													<td>
@@ -383,6 +417,11 @@
                 $('#produk_e').prop('selectedIndex', 5).trigger('change');
             }, 1000);
         });	
+        $(document).ready(function() {
+            setTimeout(function(){
+                $('#produk_f').prop('selectedIndex', 13).trigger('change');
+            }, 1000);
+        });	
 		$(document).ready(function() {
             setTimeout(function(){
                 $('#measure_a').prop('selectedIndex', 3).trigger('change');
@@ -408,6 +447,11 @@
                 $('#measure_e').prop('selectedIndex', 3).trigger('change');
             }, 1000);
         });
+        $(document).ready(function() {
+            setTimeout(function(){
+                $('#measure_f').prop('selectedIndex', 3).trigger('change');
+            }, 1000);
+        });
 		
 		function sum() {
 		var txtFirstNumberValue = document.getElementById('presentase_a').value;
@@ -415,7 +459,8 @@
 		var txtThirdNumberValue = document.getElementById('presentase_c').value;
 		var txtFourthNumberValue = document.getElementById('presentase_d').value;
 		var txtFifthNumberValue = document.getElementById('presentase_e').value;
-		var result = parseInt(txtFourthNumberValue) + parseInt(txtSecondNumberValue) + parseInt(txtThirdNumberValue) + parseInt(txtFirstNumberValue) + parseInt(txtFifthNumberValue);
+        var txtSixthNumberValue = document.getElementById('presentase_f').value;
+		var result = parseInt(txtFourthNumberValue) + parseInt(txtSecondNumberValue) + parseInt(txtThirdNumberValue) + parseInt(txtFirstNumberValue) + parseInt(txtFifthNumberValue) + parseInt(txtSixthNumberValue);
 		if (!isNaN(result)) {
 		 document.getElementById('total_presentase').value = result;
 			}

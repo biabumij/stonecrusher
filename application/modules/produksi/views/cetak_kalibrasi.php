@@ -85,7 +85,7 @@
             </tr>
 			<?php
 			$total = 0;
-			$total = $row["presentase_a"] + $row["presentase_b"] + $row["presentase_c"] + $row["presentase_d"] + $row["presentase_e"];
+			$total = $row["presentase_a"] + $row["presentase_b"] + $row["presentase_c"] + $row["presentase_d"] + $row["presentase_e"] + $row["presentase_f"];
 			?>
                <tr>
 					<td align="center">1.</td>
@@ -116,6 +116,12 @@
 					<td align="left"><?= $row["produk_e"] = $this->crud_global->GetField('produk',array('id'=>$row['produk_e']),'nama_produk'); ?></td>
 					<td align="center"><?= $row["measure_e"]  = $this->crud_global->GetField('pmm_measures',array('id'=>$row['measure_e']),'measure_name'); ?></td>
 					<td align="center"><?= $row["presentase_e"]; ?> %</td>
+				</tr>
+				<tr>
+					<td align="center">6.</td>
+					<td align="left"><?= $row["produk_f"] = $this->crud_global->GetField('produk',array('id'=>$row['produk_f']),'nama_produk'); ?></td>
+					<td align="center"><?= $row["measure_f"]  = $this->crud_global->GetField('pmm_measures',array('id'=>$row['measure_f']),'measure_name'); ?></td>
+					<td align="center"><?= $row["presentase_f"]; ?> %</td>
 				</tr>
 				<tr>
 					<td class="text-center" colspan="3"><b>TOTAL</b></td>

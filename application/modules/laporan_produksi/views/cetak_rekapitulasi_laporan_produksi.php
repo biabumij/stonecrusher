@@ -112,8 +112,8 @@
 					$subtotal_volume = 0;
 					?>
 					<?php
-					$subtotal_presentase = $sups['presentase_a'] + $sups['presentase_b'] + $sups['presentase_c'] + $sups['presentase_d'] + $sups['presentase_e'];
-					$subtotal_volume = str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_a']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_b']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_c']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_d']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_e']);
+					$subtotal_presentase = $sups['presentase_a'] + $sups['presentase_b'] + $sups['presentase_c'] + $sups['presentase_d'] + $sups['presentase_e'] + $sups['presentase_f'];
+					$subtotal_volume = str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_a']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_b']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_c']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_d']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_e']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_f']);
 					?>
             		<tr class="table-baris1">
             			<td align="center"><?php echo $key + 1;?></td>
@@ -150,7 +150,14 @@
 						<td align="center"><?php echo $sups['presentase_e'];?> %</td>
 						<td align="right"><?php echo $sups['jumlah_pemakaian_e'];?></td>
 					</tr>
-            			<?php
+					<tr class="table-baris1">
+						<td align="center"><?php echo $key + 6;?></td>			
+						<td align="left"><?php echo $sups['produk_f'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_f']),'nama_produk'); ?></td>
+						<td align="center"><?php echo $sups['measure_f'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_f']),'measure_name'); ?></td>
+						<td align="center"><?php echo $sups['presentase_f'];?> %</td>
+						<td align="right"><?php echo $sups['jumlah_pemakaian_f'];?></td>
+					</tr>
+            		<?php
             	}
             }
             ?>
