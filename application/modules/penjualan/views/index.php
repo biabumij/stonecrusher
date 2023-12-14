@@ -175,7 +175,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="text-left">
                                                         <button type="submit" class="btn btn-default" style="width:100px; font-weight:bold; border-radius:10px;"><i class="fa fa-print"></i> Print</button>
-                                                        <button type="button" id="btn_production" class="btn btn-success" style="width:200px; font-weight:bold; border-radius:10px;">Penagihan Penjualan</button>
+                                                        <button type="button" id="btn_production" class="btn btn-success" style="width:150px; font-weight:bold; border-radius:10px;">Penagihan Penjualan</button>
                                                     </div>
                                                 </div>
                                                 <br />

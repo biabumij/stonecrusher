@@ -125,7 +125,7 @@
                                                 <tr>
                                                     <td><?= $key + 1 ?>.</td>
                                                     <td style="text-align: left !important;"><?= $product; ?></td>
-                                                    <td><?= $row['qty']; ?></td>
+                                                    <td style="text-align: right !important;"><?= $row['qty']; ?></td>
                                                     <td><?= $row['measure']; ?></td>
                                                     <td style="text-align: right !important;"><?= number_format($row['price'],0,',','.'); ?></td>
                                                     <td><?= $taxs; ?></td>
