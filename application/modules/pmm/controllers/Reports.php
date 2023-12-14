@@ -3240,18 +3240,12 @@ class Reports extends CI_Controller {
 			->order_by('date','desc')->limit(1)
 			->get()->row_array();
 
-			$faktor_kehilangan = $this->db->select('sum(pp.faktor_kehilangan) as faktor_kehilangan')
-			->from('akumulasi_bahan_jadi pp')
-			->where("(pp.date_akumulasi between '$date1' and '$date2')")
-			->order_by('pp.date_akumulasi','desc')->limit(1)
-			->get()->row_array();
-
 			$nilai_hpp_siap_jual = $nilai_persediaan_bahan_jadi['nilai'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
 			$harga_siap_jual = ($nilai_persediaan_bahan_jadi['nilai'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($stock_opname_bahan_jadi_bulan_lalu['volume'] + $total_rekapitulasi_produksi_harian);
 			$nilai_persediaan_akhir = round($stock_opname_bahan_jadi_bulan_akhir['volume'],2) * $harga_siap_jual;
 			$nilai_harga_pokok_penjualan = $nilai_hpp_siap_jual - $nilai_persediaan_akhir;
 
-			$beban_pokok_penjualan = $nilai_harga_pokok_penjualan - $faktor_kehilangan['faktor_kehilangan'];
+			$beban_pokok_penjualan = $nilai_harga_pokok_penjualan;
 			?>
 			<!-- BEBAN POKOK PENJUALAN -->
 			

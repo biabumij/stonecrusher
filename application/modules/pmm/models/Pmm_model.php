@@ -3659,9 +3659,9 @@ class Pmm_model extends CI_Model {
             $this->db->where('pph.date_prod <=',$end_date);
         }
 		
-		if(!empty($supplier_id)){
-            $this->db->where('pph.no_prod',$supplier_id);
-        }
+		//if(!empty($supplier_id)){
+            //$this->db->where('pph.no_prod',$supplier_id);
+        //}
         if(!empty($purchase_order_no)){
             $this->db->where('pph.id',$purchase_order_no);
         }
@@ -3671,6 +3671,7 @@ class Pmm_model extends CI_Model {
 		$this->db->where('pph.status','PUBLISH');
 		$this->db->group_by('pph.id');
         $query = $this->db->get('pmm_produksi_harian pph');
+        file_put_contents("D:\\test.txt", $this->db->last_query());
 		
         $output = $query->result_array();
         return $output;
