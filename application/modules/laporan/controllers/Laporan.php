@@ -2453,4 +2453,91 @@ class Laporan extends Secure_Controller {
         $pdf->Output('beban_pokok_penjualan.pdf', 'I');
 	}
 
+	public function cetak_bahan()
+	{
+		$this->load->library('pdf');
+	
+		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->setPrintHeader(true); 
+        $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
+		$pdf->setHtmlVSpace($tagvs);
+		$pdf->AddPage('P');
+
+		$arr_date = $this->input->get('filter_date');
+		if(empty($arr_date)){
+			$filter_date = '-';
+		}else {
+			$arr_filter_date = explode(' - ', $arr_date);
+			$start_date = date('Y-m-d',strtotime($arr_filter_date[0]));
+			$end_date = date('Y-m-d',strtotime($arr_filter_date[1]));
+			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
+		}
+		$data['filter_date'] = $filter_date;
+		$data['date1'] = $start_date;
+		$data['date2'] = $end_date;
+        $html = $this->load->view('laporan_keuangan/cetak_bahan',$data,TRUE);
+        
+        $pdf->SetTitle('BBJ - Bahan');
+        $pdf->nsi_html($html);
+        $pdf->Output('bahan.pdf', 'I');
+	}
+
+	public function cetak_alat()
+	{
+		$this->load->library('pdf');
+	
+		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->setPrintHeader(true); 
+        $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
+		$pdf->setHtmlVSpace($tagvs);
+		$pdf->AddPage('P');
+
+		$arr_date = $this->input->get('filter_date');
+		if(empty($arr_date)){
+			$filter_date = '-';
+		}else {
+			$arr_filter_date = explode(' - ', $arr_date);
+			$start_date = date('Y-m-d',strtotime($arr_filter_date[0]));
+			$end_date = date('Y-m-d',strtotime($arr_filter_date[1]));
+			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
+		}
+		$data['filter_date'] = $filter_date;
+		$data['date1'] = $start_date;
+		$data['date2'] = $end_date;
+        $html = $this->load->view('laporan_keuangan/cetak_alat',$data,TRUE);
+        
+        $pdf->SetTitle('BBJ - Alat');
+        $pdf->nsi_html($html);
+        $pdf->Output('alat.pdf', 'I');
+	}
+
+	public function cetak_overhead()
+	{
+		$this->load->library('pdf');
+	
+		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->setPrintHeader(true); 
+        $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
+		$pdf->setHtmlVSpace($tagvs);
+		$pdf->AddPage('P');
+
+		$arr_date = $this->input->get('filter_date');
+		if(empty($arr_date)){
+			$filter_date = '-';
+		}else {
+			$arr_filter_date = explode(' - ', $arr_date);
+			$start_date = date('Y-m-d',strtotime($arr_filter_date[0]));
+			$end_date = date('Y-m-d',strtotime($arr_filter_date[1]));
+			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
+		}
+		$data['filter_date'] = $filter_date;
+		$data['date1'] = $start_date;
+		$data['date2'] = $end_date;
+        $html = $this->load->view('laporan_keuangan/cetak_overhead',$data,TRUE);
+        
+        $pdf->SetTitle('BBJ - Overhead');
+        $pdf->nsi_html($html);
+        $pdf->Output('overhead.pdf', 'I');
+	}
+
 }
