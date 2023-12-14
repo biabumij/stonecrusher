@@ -1235,7 +1235,6 @@ class Penjualan extends Secure_Controller
 		}
 	}
 
-
 	public function detailPenagihan($id)
 	{
 		$check = $this->m_admin->check_login();
