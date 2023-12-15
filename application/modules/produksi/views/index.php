@@ -75,7 +75,7 @@
 										
 									<!-- Table Kalibrasi -->
 									<?php			
-										$judul = $this->db->order_by('id', 'asc')->get_where('pmm_kalibrasi', array('status' => 'PUBLISH'))->result_array();
+										$judul = $this->db->order_by('id', 'asc')->get_where('pmm_kalibrasi')->result_array();
 									?>
                                     <div role="tabpanel" class="tab-pane active" id="kalibrasi">
 										<div class="col-sm-4">
