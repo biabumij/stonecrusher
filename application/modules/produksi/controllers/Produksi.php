@@ -140,6 +140,10 @@ class Produksi extends Secure_Controller {
 		if ($this->db->insert('pmm_kalibrasi', $arr_insert)) {
 			$kalibrasi_id = $this->db->insert_id();
 
+			if (!file_exists('uploads/kalibrasi')) {
+			    mkdir('uploads/kalibrasi', 0777, true);
+			}
+
 			$data = [];
 			$count = count($_FILES['files']['name']);
 			for ($i = 0; $i < $count; $i++) {
@@ -180,13 +184,13 @@ class Produksi extends Secure_Controller {
 		if ($this->db->trans_status() === FALSE) {
 			# Something went wrong.
 			$this->db->trans_rollback();
-			$this->session->set_flashdata('notif_error', 'Gagal membuat Kalibrasi !!');
+			$this->session->set_flashdata('notif_error', '<b>Gagal membuat Kalibrasi</b>');
 			redirect('produksi/kalibrasi');
 		} else {
 			# Everything is Perfect. 
 			# Committing data to the database.
 			$this->db->trans_commit();
-			$this->session->set_flashdata('notif_success', 'Berhasil membuat Kalibrasi !!');
+			$this->session->set_flashdata('notif_success', '<b>Berhasil membuat Kalibrasi</b>');
 			redirect('admin/produksi');
 		}
 	}
@@ -218,13 +222,19 @@ class Produksi extends Secure_Controller {
 				$row['jobs_type'] = $row["jobs_type"];
                 $row['tanggal_kalibrasi'] = date('d F Y',strtotime($row['date_kalibrasi']));
                 $row['no_kalibrasi'] = $row['no_kalibrasi'];
-				$row['lampiran'] = "<a href=" . base_url('uploads/kalibrasi/' . $row["lampiran"]) . ">" . $row["lampiran"] . "</a>";  
+				$row['lampiran'] = "<a  target='_blank' href=" . base_url('uploads/kalibrasi/' . $row["lampiran"]) . ">" . $row["lampiran"] . "</a>";  
                 $row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
                 $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
 				$row['status'] = $this->pmm_model->GetStatus4($row['status']);
 				$row['view'] = '<a href="'.site_url().'produksi/data_kalibrasi/'.$row['id'].'" class="btn btn-warning" style="border-radius:10px";><i class="glyphicon glyphicon-folder-open"></i> </a>';
 				$row['print'] = '<a href="'.site_url().'produksi/cetak_kalibrasi/'.$row['id'].'" target="_blank" class="btn btn-info" style="border-radius:10px"><i class="fa fa-print"></i> </a>';
-
+				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
+					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteDataKalibrasi('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+				}else {
+					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
+				}
+				$row['lampiran'] = '<a href="' . base_url('uploads/kalibrasi/' . $row['lampiran']) .'" target="_blank">' . $row['lampiran'] . '</a>';   
+				
                 $data[] = $row;
             }
 
@@ -1619,6 +1629,19 @@ class Produksi extends Secure_Controller {
 		$id = $this->input->post('id');
 		if(!empty($id)){
 			$this->db->delete('akumulasi_bahan_baku',array('id'=>$id));
+			{
+				$output['output'] = true;
+			}
+		}
+		echo json_encode($output);
+	}
+
+	public function delete_kalibrasi()
+	{
+		$output['output'] = false;
+		$id = $this->input->post('id');
+		if(!empty($id)){
+			$this->db->delete('pmm_kalibrasi',array('id'=>$id));
 			{
 				$output['output'] = true;
 			}

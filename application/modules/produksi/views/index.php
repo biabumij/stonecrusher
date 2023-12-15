@@ -106,7 +106,7 @@
 														<th>Lampiran</th>
                                                         <th>Dibuat Oleh</th>
                                                         <th>Dibuat Tanggal</th>
-                                                        <th>Lihat Data</th>
+                                                        <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>
 														
@@ -316,7 +316,7 @@
 					"data": "created_on"
 				},
                 {
-					"data": "view"
+					"data": "actions"
 				},
                 {
 					"data": "print"
@@ -326,7 +326,7 @@
                 }
             ],
             "columnDefs": [{
-                    "targets": [0, 7, 8, 9],
+                    "targets": [0],
                     "className": 'text-center',
                 }
             ],
@@ -340,6 +340,30 @@
         $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
         table_kalibrasi.ajax.reload();
 		});
+
+        function DeleteDataKalibrasi(id) {
+        bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
+            // console.log('This was logged in the callback: ' + result); 
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('produksi/delete_kalibrasi'); ?>",
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    success: function(result) {
+                        if (result.output) {
+                            table_kalibrasi.ajax.reload();
+                            bootbox.alert('<b>Berhasil Menghapus Kalibrasi</b>');
+                        } else if (result.err) {
+                            bootbox.alert(result.err);
+                        }
+                    }
+                });
+            }
+            });
+        }
 
         var table_agregat = $('#table_agregat').DataTable({
             ajax: {
