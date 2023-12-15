@@ -392,11 +392,11 @@
 		$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
 		->from('pmm_produksi_harian pph ')
 		->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-		->join('pmm_kalibrasi pk', 'pk.id = pk.id')
+		->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
 		->where("(pph.date_prod between '$date1' and '$date2')")
 		->where('pph.status','PUBLISH')
 		->get()->row_array();
-		$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+		$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
 		?>
 
 		<!-- Persediaan Akhir Bahan Jadi -->
@@ -404,7 +404,7 @@
 		$stock_opname_bahan_jadi_bulan_akhir = $this->db->select('sum(cat.volume) as volume')
 		->from('pmm_remaining_materials_cat cat ')
 		->where("(cat.date = '$date2')")
-		->where("cat.material_id in (3, 4, 7, 8)")
+		->where("cat.material_id in (3, 4, 7, 8, 63)")
 		->where("cat.status = 'PUBLISH'")
 		->order_by('date','desc')->limit(1)
 		->get()->row_array();
@@ -441,7 +441,7 @@
 				<th align="right"><?php echo number_format($total_volume,2,',','.');?> (Ton)</th>
 				<th align="right"><?php echo number_format($total_penjualan,0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><?php echo number_format($total_penjualan / round($total_volume,2),0,',','.');?></th>
+				<th align="right"><?php echo number_format((round($total_volume,2)!=0)?$total_penjualan / round($total_volume,2) * 1:0,0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">2.</th>
@@ -457,7 +457,7 @@
 				<th align="right"><?php echo number_format($stock_opname_bahan_jadi_bulan_lalu['volume'],2,',','.');?> (Ton)</th>
 				<th align="right"><?php echo number_format($nilai_persediaan_bahan_jadi['nilai'],0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><?php echo number_format($nilai_persediaan_bahan_jadi['nilai'] / round($stock_opname_bahan_jadi_bulan_lalu['volume'],2),0,',','.');?></th>
+				<th align="right"><?php echo number_format(( round($stock_opname_bahan_jadi_bulan_lalu['volume'],2)!=0)?$nilai_persediaan_bahan_jadi['nilai'] / round($stock_opname_bahan_jadi_bulan_lalu['volume'],2) * 1:0,0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">3.</th>
@@ -620,11 +620,11 @@
 			?>
 			<tr style="font-weight:bold;">
 				<th align="center"></th>
-				<th align="left">&nbsp;&nbsp;&nbsp;Jumlah HPProduksi (Tanpa Limbah)</th>
+				<th align="left">&nbsp;&nbsp;&nbsp;Jumlah HPProduksi</th>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?> (Ton)</th>
 				<th align="right"><?php echo number_format($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional,0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><?php echo number_format(($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
+				<th align="right"><?php echo number_format((round($total_rekapitulasi_produksi_harian,2)!=0)?($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / round($total_rekapitulasi_produksi_harian,2) * 1:0,0,',','.');?></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">4.</th>

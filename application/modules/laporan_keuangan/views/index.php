@@ -224,6 +224,9 @@
                 locale: {
                 format: 'DD-MM-YYYY'
                 },
+                minDate: new Date(2023, 07, 01), 
+			    //maxDate: new Date(2022, 04, 31)		
+            
                 ranges: {
                 'Today': [moment(), moment()],
                 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
