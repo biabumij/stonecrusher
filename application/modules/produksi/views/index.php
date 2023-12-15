@@ -140,7 +140,7 @@
 														<th>Lampiran</th>
                                                         <th>Dibuat Oleh</th>
                                                         <th>Dibuat Tanggal</th>
-                                                        <th>Lihat Data</th>
+                                                        <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>
                                                     </tr>
@@ -403,7 +403,7 @@
 					"data": "created_on"
 				},
                 {
-					"data": "view"
+					"data": "actions"
 				},
                 {
 					"data": "print"
@@ -413,7 +413,7 @@
                 }
             ],
             "columnDefs": [{
-                "targets": [0, 7, 8, 9],
+                "targets": [0],
                     "className": 'text-center',
                 }
             ],
@@ -423,6 +423,30 @@
         $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
         table_agregat.ajax.reload();
 		});
+
+        function DeleteAgregat(id) {
+        bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
+            // console.log('This was logged in the callback: ' + result); 
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('produksi/delete_kalibrasi'); ?>",
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    success: function(result) {
+                        if (result.output) {
+                            table_agregat.ajax.reload();
+                            bootbox.alert('<b>Berhasil Menghapus Komposisi Agregat</b>');
+                        } else if (result.err) {
+                            bootbox.alert(result.err);
+                        }
+                    }
+                });
+            }
+            });
+        }
 		
 		var table_produksi_harian = $('#table_produksi_harian').DataTable({
             ajax: {
