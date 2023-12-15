@@ -1406,7 +1406,7 @@ class Laporan extends Secure_Controller {
         }
 		
 		$this->db->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left');
-		$this->db->join('pmm_kalibrasi pk', 'pk.id = pk.id');
+		$this->db->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id','left');
 		$this->db->where('pph.status','PUBLISH');
 		$query = $this->db->get('pmm_produksi_harian pph');
 		
