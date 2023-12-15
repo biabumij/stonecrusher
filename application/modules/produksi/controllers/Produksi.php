@@ -355,6 +355,10 @@ class Produksi extends Secure_Controller {
 		if ($this->db->insert('pmm_produksi_harian', $arr_insert)) {
 			$produksi_harian_id = $this->db->insert_id();
 
+			if (!file_exists('uploads/produksi_harian')) {
+			    mkdir('uploads/produksi_harian', 0777, true);
+			}
+
 			$data = [];
 			$count = count($_FILES['files']['name']);
 			for ($i = 0; $i < $count; $i++) {
@@ -462,13 +466,18 @@ class Produksi extends Secure_Controller {
 				$row['used'] = $row['used'];
 				$row['capacity'] = number_format($row['capacity'],2,',','.');
 				$row['memo'] = $row['memo'];
-				//$row['lampiran'] = "<a href=" . base_url('uploads/produksi_harian/' . $row["lampiran"]) . ">" . $row["lampiran"] . "</a>";
+				$row['lampiran'] = "<a target='_blank' href=" . base_url('uploads/produksi_harian/' . $row["lampiran"]) . ">" . $row["lampiran"] . "</a>";
 				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
                 $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
 				$row['status'] = $this->pmm_model->GetStatus4($row['status']);
 				$row['view'] = '<a href="'.site_url().'produksi/data_produksi_harian/'.$row['id'].'" class="btn btn-warning" style="border-radius:10px"><i class="glyphicon glyphicon-folder-open"></i> </a>';
 				$row['print'] = '<a href="'.site_url().'produksi/cetak_produksi_harian/'.$row['id'].'" target="_blank" class="btn btn-info" style="border-radius:10px"><i class="fa fa-print"></i> </a>';
-                
+                if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
+					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteProduksiHarian('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+				}else {
+					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
+				}
+
                 $data[] = $row;
             }
 
@@ -741,7 +750,7 @@ class Produksi extends Secure_Controller {
 				$row['view'] = '<a href="'.site_url().'produksi/data_komposisi_agregat/'.$row['id'].'" class="btn btn-warning" style="border-radius:10px"><i class="glyphicon glyphicon-folder-open"></i> </a>';
 				$row['print'] = '<a href="'.site_url().'produksi/cetak_komposisi_agregat/'.$row['id'].'" target="_blank" class="btn btn-info" style="border-radius:10px"><i class="fa fa-print"></i> </a>';
 				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
-					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteDataAgregat('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteAgregat('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
 				}else {
 					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
 				}
@@ -1062,6 +1071,10 @@ class Produksi extends Secure_Controller {
 		if ($this->db->insert('pmm_produksi_campuran', $arr_insert)) {
 			$produksi_campuran_id = $this->db->insert_id();
 
+			if (!file_exists('uploads/produksi_campuran')) {
+			    mkdir('uploads/produksi_campuran', 0777, true);
+			}
+
 			$data = [];
 			$count = count($_FILES['files']['name']);
 			for ($i = 0; $i < $count; $i++) {
@@ -1276,13 +1289,18 @@ class Produksi extends Secure_Controller {
 				$row['measure_convert'] = $row['measure_convert'];
 				$row['volume_convert'] = number_format($row['volume_convert'],2,',','.');
 				$row['memo'] = $row['memo'];
-				//$row['lampiran'] = "<a href=" . base_url('uploads/produksi_harian/' . $row["lampiran"]) . ">" . $row["lampiran"] . "</a>";
+				$row['lampiran'] = "<a target='_blank' href=" . base_url('uploads/produksi_harian/' . $row["lampiran"]) . ">" . $row["lampiran"] . "</a>";
 				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
                 $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
 				$row['status'] = $this->pmm_model->GetStatus4($row['status']);
 				$row['view'] = '<a href="'.site_url().'produksi/data_produksi_campuran/'.$row['id'].'" class="btn btn-warning" style="border-radius:10px"><i class="glyphicon glyphicon-folder-open"></i> </a>';
 				$row['print'] = '<a href="'.site_url().'produksi/cetak_produksi_campuran/'.$row['id'].'" target="_blank" class="btn btn-info" style="border-radius:10px"><i class="fa fa-print"></i> </a>';
-                
+                if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
+					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteProduksiCampuran('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+				}else {
+					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
+				}
+
                 $data[] = $row;
             }
 
@@ -1648,6 +1666,18 @@ class Produksi extends Secure_Controller {
 	{
 		$output['output'] = false;
 		$id = $this->input->post('id');
+
+		$file = $this->db->select('lk.lampiran')
+		->from('pmm_lampiran_kalibrasi lk')
+		->where("lk.kalibrasi_id = $id")
+		->get()->row_array();
+
+		$path = './uploads/kalibrasi/'.$file['lampiran'];
+		chmod($path, 0777);
+		unlink($path);
+
+		$this->db->delete('pmm_lampiran_kalibrasi', array('kalibrasi_id' => $id));
+
 		if(!empty($id)){
 			$this->db->delete('pmm_kalibrasi',array('id'=>$id));
 			{
@@ -1661,8 +1691,72 @@ class Produksi extends Secure_Controller {
 	{
 		$output['output'] = false;
 		$id = $this->input->post('id');
+
+		$file = $this->db->select('lk.lampiran')
+		->from('pmm_lampiran_agregat lk')
+		->where("lk.agregat_id = $id")
+		->get()->row_array();
+
+		$path = './uploads/agregat/'.$file['lampiran'];
+		chmod($path, 0777);
+		unlink($path);
+
+		$this->db->delete('pmm_lampiran_agregat', array('agregat_id' => $id));
+
 		if(!empty($id)){
 			$this->db->delete('pmm_agregat',array('id'=>$id));
+			{
+				$output['output'] = true;
+			}
+		}
+		echo json_encode($output);
+	}
+
+	public function delete_produksi_harian()
+	{
+		$output['output'] = false;
+		$id = $this->input->post('id');
+
+		$file = $this->db->select('lk.lampiran')
+		->from('pmm_lampiran_produksi_harian lk')
+		->where("lk.produksi_harian_id = $id")
+		->get()->row_array();
+
+		$path = './uploads/produksi_harian/'.$file['lampiran'];
+		chmod($path, 0777);
+		unlink($path);
+
+		$this->db->delete('pmm_lampiran_produksi_harian', array('produksi_harian_id' => $id));
+		
+		if(!empty($id)){
+			$this->db->delete('pmm_produksi_harian_detail',array('produksi_harian_id'=>$id));
+			$this->db->delete('pmm_produksi_harian',array('id'=>$id));
+			{
+				$output['output'] = true;
+			}
+		}
+		echo json_encode($output);
+	}
+
+	public function delete_produksi_campuran()
+	{
+		$output['output'] = false;
+		$id = $this->input->post('id');
+
+		$file = $this->db->select('lk.lampiran')
+		->from('pmm_lampiran_produksi_campuran lk')
+		->where("lk.produksi_campuran_id = $id")
+		->get()->row_array();
+
+		$path = './uploads/produksi_campuran/'.$file['lampiran'];
+		chmod($path, 0777);
+		unlink($path);
+
+		$this->db->delete('pmm_lampiran_produksi_campuran', array('produksi_campuran_id' => $id));
+
+		if(!empty($id)){
+			$this->db->delete('pmm_produksi_campuran_detail',array('produksi_campuran_id'=>$id));
+			$this->db->delete('pmm_produksi_campuran',array('id'=>$id));
 			{
 				$output['output'] = true;
 			}

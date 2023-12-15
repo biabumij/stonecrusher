@@ -42,11 +42,11 @@
                             <div class="panel-content">
                                 <form method="POST" action="<?php echo site_url('produksi/submit_produksi_harian');?>" id="form-po" enctype="multipart/form-data" autocomplete="off">
                                     <div class="row">
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <label>Tanggal Produksi Harian</label>
                                             <input type="text" class="form-control dtpicker" name="date_prod" required="" value="" />
                                         </div>
-										<div class="col-sm-6">
+										<div class="col-sm-3">
                                             <label>Nomor Produksi Harian</label>
                                             <input type="text" class="form-control" name="no_prod" required="" value="<?= $this->pmm_model->GetNoProd();?>">
                                         </div>   
