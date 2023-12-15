@@ -219,7 +219,7 @@ class Produksi extends Secure_Controller {
 			foreach ($query->result_array() as $key => $row) {
                 $row['no'] = $key+1;
 				$row['jobs_type'] = $row["jobs_type"];
-                $row['tanggal_kalibrasi'] = date('d F Y',strtotime($row['date_kalibrasi']));
+                $row['tanggal_kalibrasi'] = date('d-m-Y',strtotime($row['date_kalibrasi']));
                 $row['no_kalibrasi'] = $row['no_kalibrasi'];
 				$row['lampiran'] = "<a  target='_blank' href=" . base_url('uploads/kalibrasi/' . $row["lampiran"]) . ">" . $row["lampiran"] . "</a>";  
                 $row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
