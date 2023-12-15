@@ -130,32 +130,32 @@
 						<td align="right"><?php echo $sups['jumlah_pemakaian_b'];?></td>
 					</tr>
 					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 3;?></td>						
+						<td align="center"><?php echo $key + 3;?></td>			
+						<td align="left"><?php echo $sups['produk_f'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_f']),'nama_produk'); ?></td>
+						<td align="center"><?php echo $sups['measure_f'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_f']),'measure_name'); ?></td>
+						<td align="center"><?php echo $sups['presentase_f'];?> %</td>
+						<td align="right"><?php echo $sups['jumlah_pemakaian_f'];?></td>
+					</tr>
+					<tr class="table-baris1">
+						<td align="center"><?php echo $key + 4;?></td>						
 						<td align="left"><?php echo $sups['produk_c'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_c']),'nama_produk'); ?></td>
 						<td align="center"><?php echo $sups['measure_c'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_c']),'measure_name'); ?></td>
 						<td align="center"><?php echo $sups['presentase_c'];?> %</td>
 						<td align="right"><?php echo $sups['jumlah_pemakaian_c'];?></td>
 					</tr>
 					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 4;?></td>					
+						<td align="center"><?php echo $key + 5;?></td>					
 						<td align="left"><?php echo $sups['produk_d'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_d']),'nama_produk'); ?></td>
 						<td align="center"><?php echo $sups['measure_d'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_d']),'measure_name'); ?></td>
 						<td align="center"><?php echo $sups['presentase_d'];?> %</td>
 						<td align="right"><?php echo $sups['jumlah_pemakaian_d'];?></td>
 					</tr>
 					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 5;?></td>			
+						<td align="center"><?php echo $key + 6;?></td>			
 						<td align="left"><?php echo $sups['produk_e'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_e']),'nama_produk'); ?></td>
 						<td align="center"><?php echo $sups['measure_e'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_e']),'measure_name'); ?></td>
 						<td align="center"><?php echo $sups['presentase_e'];?> %</td>
 						<td align="right"><?php echo $sups['jumlah_pemakaian_e'];?></td>
-					</tr>
-					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 6;?></td>			
-						<td align="left"><?php echo $sups['produk_f'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_f']),'nama_produk'); ?></td>
-						<td align="center"><?php echo $sups['measure_f'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_f']),'measure_name'); ?></td>
-						<td align="center"><?php echo $sups['presentase_f'];?> %</td>
-						<td align="right"><?php echo $sups['jumlah_pemakaian_f'];?></td>
 					</tr>
             		<?php
             	}
