@@ -110,7 +110,7 @@
                                                         </select>
                                                     </td>-->
 													<td>
-                                                        <input type="number" step=".01" min="0" name="presentase_a" id="presentase_a" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" />
+                                                        <input type="number" step=".01" min="0" name="presentase_a" id="presentase_a" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" value="0"/>
                                                     </td>
                                                 </tr>
 												<tr>
@@ -148,7 +148,7 @@
                                                         </select>
                                                     </td>-->
 													<td>
-                                                        <input type="number" step=".01" min="0" name="presentase_b" id="presentase_b" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" />
+                                                        <input type="number" step=".01" min="0" name="presentase_b" id="presentase_b" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" value="0"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -186,7 +186,7 @@
                                                         </select>
                                                     </td>-->
 													<td>
-                                                        <input type="number" step=".01" min="0" name="presentase_f" id="presentase_f" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" />
+                                                        <input type="number" step=".01" min="0" name="presentase_f" id="presentase_f" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" value="0"/>
                                                     </td>
                                                 </tr>
 												<tr>
@@ -224,7 +224,7 @@
                                                         </select>
                                                     </td>-->
 													<td>
-                                                        <input type="number" step=".01" min="0" name="presentase_c" id="presentase_c" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" />
+                                                        <input type="number" step=".01" min="0" name="presentase_c" id="presentase_c" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" value="0"/>
                                                     </td>
                                                 </tr>
 												<tr>
@@ -262,7 +262,7 @@
                                                         </select>
                                                     </td>-->
 													<td>
-                                                        <input type="number" step=".01" min="0" name="presentase_d" id="presentase_d" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" />
+                                                        <input type="number" step=".01" min="0" name="presentase_d" id="presentase_d" class="form-control input-sm text-center numberformat" onkeyup="sum();" required="" value="0"/>
                                                     </td>
                                                 </tr>
 												<tr>
