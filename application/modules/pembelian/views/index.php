@@ -144,10 +144,7 @@
                                                         <th>Nomor</th>
                                                         <th>Rekanan</th>
                                                         <th>Jenis Pembelian</th>
-                                                        <th>Berlaku Hingga</th>
-														<th>Jumlah</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>                                                   
+														<th>Nilai</th>                                                 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -192,10 +189,8 @@
                                                     <th>Subyek</th>
                                                     <th>Rekanan</th>                               
                                                     <th>Volume</th>
-                                                    <th>Tindakan</th>
-                                                    <th>Hapus</th>
-                                                    <th>Dibuat Oleh</th>
-                                                    <th>Dibuat Tanggal</th>     
+                                                    <th>Lihat</th>
+                                                    <th>Hapus</th>  
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -314,8 +309,6 @@
                                                     <th>Total Terima</th>
                                                     <th>Lampiran</th>
                                                     <th>Tindakan</th>
-                                                    <th>Dibuat Oleh</th>
-                                                    <th>Dibuat Tanggal</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -393,14 +386,9 @@
                                                     <th>No. Pesanan Pembelian</th>
                                                     <th>No. Surat Jalan</th>
                                                     <th>Surat Jalan</th>
-                                                    <th>No. Kendaraan</th>
-                                                    <th>Nama Supir</th>
                                                     <th>Produk</th>
                                                     <th>Satuan</th>                                                   
                                                     <th>Volume</th>
-                                                    <th>Memo</th>
-                                                    <th>Dibuat Oleh</th>
-                                                    <th>Dibuat Tanggal</th>
                                                     <th>Upload Surat Jalan</th>
                                                 </tr>
                                             </thead>
@@ -479,8 +467,6 @@
                                                     <th>Total</th>
                                                     <th>Pembayaran</th>
                                                     <th>Sisa Tagihan</th>
-                                                    <th>Dibuat Oleh</th>
-                                                    <th>Dibuat Tanggal</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1135,23 +1121,13 @@
                 {
                     "data": "jenis_pembelian"
                 },
-                {
-                    "data": "berlaku_hingga"
-                },
 				{
                     "data": "total"
-                },
-                {
-                    "data": "admin_name"
-                },
-                {
-                    "data": "created_on"
                 }
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": [1, 2, 6], "className": 'text-center'},
-                { "targets": 7, "className": 'text-right'},
+                { "targets": 6, "className": 'text-right'},
             ],
             responsive: true,
             pageLength: 25,
@@ -1210,14 +1186,11 @@
                 { "data": "supplier_name" }, 
                 { "data": "volume" },
                 { "data": "actions" },
-                { "data": "delete" },
-                { "data": "admin_name" },
-                { "data": "created_on" }
+                { "data": "delete" }
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": [1, 2], "className": 'text-center'},
-                { "targets": [6, 7, 8, 9, 10], "className": 'text-right'},
+                { "targets": [6], "className": 'text-right'},
             ],
             responsive: true,
             pageLength: 25,
@@ -1371,17 +1344,10 @@
                 },
                 {
                     "data": "actions"
-                },
-                {
-                    "data": "admin_name"
-                },
-                {
-                    "data": "created_on"
                 }
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": [1, 2], "className": 'text-center'},
                 { "targets": [6, 7, 8, 9, 10], "className": 'text-right'},
             ],
             responsive: true,
@@ -1438,12 +1404,6 @@
                 "data": "surat_jalan_file"
             },
             {
-                "data": "no_kendaraan"
-            },
-            {
-                "data": "driver"
-            },
-            {
                 "data": "material_name"
             },
             {
@@ -1451,15 +1411,6 @@
             },
             {
                 "data": "display_volume"
-            },
-            {
-                "data": "memo"
-            },
-            {
-                "data": "admin_name"
-            },
-            {
-                "data": "created_on"
             },
             {
                 "data": "uploads_surat_jalan"
@@ -1476,8 +1427,7 @@
                 "className": 'select-checkbox',
             },
             { "width": "5%", "targets": 1, "className": 'text-center'},
-            { "targets": [2, 3], "className": 'text-center'},
-            { "targets": 12, "className": 'text-right'},
+            { "targets": 10, "className": 'text-right'},
         ],
     });
 
@@ -1606,17 +1556,10 @@
             },
             {
                 "data": "sisa_tagihan"
-            },
-            {
-                "data": "admin_name"
-            },
-            {
-                "data": "created_on"
-            },
+            }
         ],
         "columnDefs": [
             { "width": "5%", "targets": 0, "className": 'text-center'},
-            { "targets": [1, 2, 3, 6], "className": 'text-center'},
             { "targets": [8, 9, 10], "className": 'text-right'},
         ],
         responsive: true,

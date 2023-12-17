@@ -68,13 +68,11 @@
                                             <table class="table table-striped table-hover" id="table_rap" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%" class="text-center">No</th>
+                                                        <th>No</th>
 														<th>Tanggal</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
-                                                        <th width="5%">Cetak</th>
-                                                        <th width="5%">Edit</th>
-                                                        <th width="5%">Hapus</th>
+                                                        <th>Cetak</th>
+                                                        <th>Edit</th>
+                                                        <th>Hapus</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -104,14 +102,12 @@
                                             <table class="table table-striped table-hover" id="table_penyusutan" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%" class="text-center">No</th>
+                                                        <th>No</th>
 														<th>Tanggal</th>
                                                         <th>Produk</th>
                                                         <th>Harga Perolehan</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
-                                                        <th width="5%">Cetak</th>
-                                                        <th width="5%">Hapus</th>
+                                                        <th>Cetak</th>
+                                                        <th>Hapus</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -197,12 +193,6 @@
                     "data": "tanggal_rap"
                 },
                 {
-					"data": "created_by"
-				},
-				{
-					"data": "created_on"
-				},
-                {
                     "data": "print"
                 },
                 {
@@ -212,10 +202,8 @@
                     "data": "delete"
                 }
             ],
-            "columnDefs": [{
-                    "targets": [0, 4, 5, 6],
-                    "className": 'text-center',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
             ],
         });
 
@@ -278,26 +266,15 @@
                     "data": "nilai_penyusutan"
                 },
                 {
-					"data": "created_by"
-				},
-				{
-					"data": "created_on"
-				},
-                {
                     "data": "print"
                 },
                 {
                     "data": "delete"
                 }
             ],
-            "columnDefs": [{
-                    "targets": [0, 6, 7],
-                    "className": 'text-center',
-                },
-                {
-                    "targets": [3],
-                    "className": 'text-right',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": 3, "className": 'text-right'},
             ],
         });
 

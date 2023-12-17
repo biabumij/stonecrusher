@@ -99,13 +99,11 @@
                                             <table class="table table-striped table-hover table-center" id="table_kalibrasi" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%">No</th>
+                                                        <th>No</th>
 														<th>Tanggal</th>
 														<th>Nomor Kalibrasi</th>
                                                         <th>Judul</th>
 														<th>Lampiran</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
                                                         <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>
@@ -133,13 +131,11 @@
                                             <table class="table table-striped table-hover table-center" id="table_agregat" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%">No</th>
+                                                        <th>No</th>
 														<th>Tanggal</th>
 														<th>Nomor Komposisi</th>
                                                         <th>Judul</th>
 														<th>Lampiran</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
                                                         <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>
@@ -166,15 +162,13 @@
                                             <table class="table table-striped table-hover table-center" id="table_produksi_harian" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%">No</th>	
+                                                        <th>No</th>	
                                                         <th>Tanggal</th>
 														<th>Nomor Produksi Harian</th>	
 														<th>Durasi Produksi (Jam)</th>
 														<th>Pemakaian Bahan Baku (Ton)</th>
 														<th>Kapasitas Produksi (Ton/Jam)</th>
 														<th>Keterangan</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
                                                         <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>												
@@ -216,15 +210,13 @@
                                             <table class="table table-striped table-hover table-center" id="table_produksi_campuran" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%">No</th>	
+                                                        <th>No</th>	
                                                         <th>Tanggal</th>
 														<th>Nomor Produksi Campuran</th>	
 														<th>Uraian</th>
 														<th>Satuan</th>
 														<th>Volume</th>
 														<th>Keterangan</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
                                                         <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>											
@@ -310,12 +302,6 @@
                     "data": "lampiran"
                 },
                 {
-					"data": "admin_name"
-				},
-				{
-					"data": "created_on"
-				},
-                {
 					"data": "actions"
 				},
                 {
@@ -325,10 +311,8 @@
                     "data": "status"
                 }
             ],
-            "columnDefs": [{
-                    "targets": [0],
-                    "className": 'text-center',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
             ],
         });
 		
@@ -397,12 +381,6 @@
                     "data": "lampiran"
                 },
                 {
-					"data": "admin_name"
-				},
-				{
-					"data": "created_on"
-				},
-                {
 					"data": "actions"
 				},
                 {
@@ -412,10 +390,8 @@
                     "data": "status"
                 }
             ],
-            "columnDefs": [{
-                "targets": [0],
-                    "className": 'text-center',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
             ],
         });
 		
@@ -486,12 +462,6 @@
                     "data": "memo"
                 },
                 {
-					"data": "admin_name"
-				},
-				{
-					"data": "created_on"
-				},
-                {
 					"data": "actions"
 				},
                 {
@@ -501,14 +471,9 @@
                     "data": "status"
                 }
             ],
-            "columnDefs": [{
-                    "targets": [0, 9, 10, 11],
-                    "className": 'text-center',
-                },
-                {
-                    "targets": [3, 4, 5],
-                    "className": 'text-right',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": [3, 4, 5], "className": 'text-right'},
             ],
         });
 		
@@ -580,12 +545,6 @@
                     "data": "memo"
                 },
                 {
-					"data": "admin_name"
-				},
-				{
-					"data": "created_on"
-				},
-                {
 					"data": "actions"
 				},
                 {
@@ -595,14 +554,9 @@
                     "data": "status"
                 }
             ],
-            "columnDefs": [{
-                    "targets": [0, 9, 10, 11],
-                    "className": 'text-center',
-                },
-                {
-                    "targets": [5],
-                    "className": 'text-right',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": 5, "className": 'text-right'},
             ],
         });
 		
@@ -638,54 +592,6 @@
             }
             });
         }
-		
-		
-		var table_laporan_produksi_harian = $('#table_laporan_produksi_harian').DataTable({
-            ajax: {
-                processing: true,
-                serverSide: true,
-                url: '<?php echo site_url('produksi/table_laporan_produksi_harian'); ?>',
-                type: 'POST',
-                data: function(d) {
-                    d.filter_date = $('#filter_date_lph').val();
-                }
-            },
-            responsive: true,
-            "deferRender": true,
-            "language": {
-                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
-            },
-            columns: [
-				{
-                    "data": "no"
-                },
-				{
-                    "data": "no_kalibrasi"
-                },
-				{
-                    "data": "date_prod"
-                },
-				{
-                    "data": "no_prod"
-                },
-				{
-                    "data": "duration"
-                },
-				{
-                    "data": "capacity"
-                }
-            ],
-            "columnDefs": [{
-                    "targets": [0, 4, 5],
-                    "className": 'text-center',
-                }
-            ],
-        });
-		
-		$('#filter_date_lph').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_laporan_produksi_harian.ajax.reload();
-		});
 	
     </script>
 

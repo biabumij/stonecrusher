@@ -526,7 +526,6 @@ class Produksi extends Secure_Controller {
 
 		$this->load->library('pdf');
 	
-
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->setPrintHeader(true);
         $pdf->SetFont('helvetica','',7); 
@@ -536,49 +535,20 @@ class Produksi extends Secure_Controller {
 
 		$data['row'] = $this->db->get_where('pmm_produksi_harian',array('id'=>$id))->row_array();
 		$data['data'] = $this->db->query("SELECT * FROM `pmm_produksi_harian_detail` INNER JOIN pmm_kalibrasi ON pmm_produksi_harian_detail.product_id = pmm_kalibrasi.id WHERE produksi_harian_id = '$id'")->result_array();
-		
+		$data['detail'] = $this->db->select('pph.id, (SUM(pphd.capacity) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.capacity) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.capacity) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.capacity) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.capacity) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.capacity) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+		->from('pmm_produksi_harian pph ')
+		->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+		->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id','left')
+		->where("(pph.id = '$id')")
+		->where('pph.status','PUBLISH')
+		->get()->result_array();
         $html = $this->load->view('produksi/cetak_produksi_harian',$data,TRUE);
         $row = $this->db->get_where('pmm_produksi_harian',array('id'=>$id))->row_array();
-
-
         
         $pdf->SetTitle($row['no_prod']);
         $pdf->nsi_html($html);
         $pdf->Output($row['no_prod'].'.pdf', 'I');
 	}
-	
-	public function table_laporan_produksi_harian()
-	{   
-        $data = array();
-		$filter_date = $this->input->post('filter_date');
-		if(!empty($filter_date)){
-			$arr_date = explode(' - ', $filter_date);
-			$this->db->where('kb.date_prod >=',date('Y-m-d',strtotime($arr_date[0])));
-			$this->db->where('kb.date_prod <=',date('Y-m-d',strtotime($arr_date[1])));
-		}
-        $this->db->select('kb.id, kb.date_prod, kb.no_prod, pk.no_kalibrasi, SUM(phd.duration) as duration, SUM(phd.capacity) as capacity');
-		$this->db->join('pmm_produksi_harian_detail phd','kb.id = phd.produksi_harian_id','left');
-		$this->db->join('pmm_kalibrasi pk','phd.product_id = pk.id','left');
-		$this->db->group_by('kb.id');	
-		$this->db->order_by('kb.created_on','desc');		
-		$query = $this->db->get('pmm_produksi_harian kb');
-		
-       if($query->num_rows() > 0){
-			foreach ($query->result_array() as $key => $row) {
-                $row['no'] = $key+1;
-                $row['date_prod'] = date('d-m-Y',strtotime($row['date_prod']));
-				$row['no_kalibrasi'] = $row['no_kalibrasi'];
-				$row['no_prod'] = "<a href=" . base_url('produksi/cetak_laporan_produksi_harian/' . $row["id"]) . ">" . $row["no_prod"] . "</a>";
-				$row['duration'] = $row['duration'];
-				$row['capacity'] = $row['capacity'];
-              
-                
-                $data[] = $row;
-            }
-
-        }
-        echo json_encode(array('data'=>$data));
-    }
 	
 	public function cetak_laporan_produksi_harian($id){
 	
