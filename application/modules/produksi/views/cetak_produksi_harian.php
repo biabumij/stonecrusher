@@ -86,7 +86,8 @@
 			$total_capacity = 0;
            		foreach ($data as $no => $dt) {
 				$total_duration += $dt['duration'];
-				$total_capacity += $dt['capacity'];
+				$total_use += $dt['use'];
+				$total_capacity = ($total_duration!=0)?($total_use / $total_duration)  * 1:0;	
                ?>  
                <tr>
                    <td align="center"><?php echo $no + 1;?></td>
@@ -110,7 +111,7 @@
                 <th width="25%" align="left">Uraian</th>
                 <th width="20%">Satuan</th>
                 <th width="25%" align="right">Presentase</th>
-				<th width="25%" align="right">Volume</th>
+				<th width="25%" align="right">Volume Kalibrasi</th>
             </tr>
             <?php
            	$no = 1;

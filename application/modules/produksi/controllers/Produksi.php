@@ -535,7 +535,7 @@ class Produksi extends Secure_Controller {
 
 		$data['row'] = $this->db->get_where('pmm_produksi_harian',array('id'=>$id))->row_array();
 		$data['data'] = $this->db->query("SELECT * FROM `pmm_produksi_harian_detail` INNER JOIN pmm_kalibrasi ON pmm_produksi_harian_detail.product_id = pmm_kalibrasi.id WHERE produksi_harian_id = '$id'")->result_array();
-		$data['detail'] = $this->db->select('pph.id, (SUM(pphd.capacity) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.capacity) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.capacity) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.capacity) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.capacity) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.capacity) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+		$data['detail'] = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
 		->from('pmm_produksi_harian pph ')
 		->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
 		->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id','left')
@@ -551,10 +551,8 @@ class Produksi extends Secure_Controller {
 	}
 	
 	public function cetak_laporan_produksi_harian($id){
-	
 
 		$this->load->library('pdf');
-	
 
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->setPrintHeader(true);
@@ -568,8 +566,6 @@ class Produksi extends Secure_Controller {
 		
         $html = $this->load->view('produksi/cetak_produksi_harian',$data,TRUE);
         $row = $this->db->get_where('pmm_produksi_harian',array('id'=>$id))->row_array();
-
-
         
         $pdf->SetTitle($row['no_prod']);
         $pdf->nsi_html($html);
