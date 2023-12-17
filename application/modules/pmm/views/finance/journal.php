@@ -150,7 +150,7 @@
             showDropdowns: true,
 		});	
 		
-        var table_jurnal = $('#table_jurnal').DataTable( {
+        var table_jurnal = $('#table_jurnal').DataTable( {"bAutoWidth": false,
             ajax: {
                 processing: true,
                 serverSide: true,

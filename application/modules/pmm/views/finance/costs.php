@@ -149,7 +149,7 @@
         showDropdowns: true,
     });	
 		
-        var table_biaya = $('#table_biaya').DataTable( {
+        var table_biaya = $('#table_biaya').DataTable( {"bAutoWidth": false,
             ajax: {
                 processing: true,
                 serverSide: true,

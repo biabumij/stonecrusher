@@ -31,7 +31,7 @@
         showDropdowns: true,
     });
 
-    var table = $('#on-site-table').DataTable({
+    var table = $('#on-site-table').DataTable( {"bAutoWidth": false,
         ajax: {
             processing: true,
             serverSide: true,

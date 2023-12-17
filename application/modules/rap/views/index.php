@@ -169,7 +169,7 @@
             showDropdowns: true,
         });
 		
-		var table_rap = $('#table_rap').DataTable({
+		var table_rap = $('#table_rap').DataTable( {"bAutoWidth": false,
             ajax: {
                 processing: true,
                 serverSide: true,
@@ -236,7 +236,7 @@
             });
         }
 
-        var table_penyusutan = $('#table_penyusutan').DataTable({
+        var table_penyusutan = $('#table_penyusutan').DataTable( {"bAutoWidth": false,
             ajax: {
                 processing: true,
                 serverSide: true,

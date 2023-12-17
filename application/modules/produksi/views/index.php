@@ -269,7 +269,7 @@
         showDropdowns: true,
 		});
 		
-		var table_kalibrasi = $('#table_kalibrasi').DataTable({
+		var table_kalibrasi = $('#table_kalibrasi').DataTable( {"bAutoWidth": false,
             ajax: {
                 processing: true,
                 serverSide: true,
@@ -349,7 +349,7 @@
             });
         }
 
-        var table_agregat = $('#table_agregat').DataTable({
+        var table_agregat = $('#table_agregat').DataTable( {"bAutoWidth": false,
             ajax: {
                 processing: true,
                 serverSide: true,
@@ -424,7 +424,7 @@
             });
         }
 		
-		var table_produksi_harian = $('#table_produksi_harian').DataTable({
+		var table_produksi_harian = $('#table_produksi_harian').DataTable( {"bAutoWidth": false,
             ajax: {
                 processing: true,
                 serverSide: true,
@@ -506,7 +506,7 @@
             });
         }
 		
-		var table_produksi_campuran = $('#table_produksi_campuran').DataTable({
+		var table_produksi_campuran = $('#table_produksi_campuran').DataTable( {"bAutoWidth": false,
             ajax: {
                 processing: true,
                 serverSide: true,
