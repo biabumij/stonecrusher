@@ -56,20 +56,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <tr>
+                                                    <td class="text-center">1.</td>
+                                                    <td>Total Volume Persediaan Bahan Jadi</td>
+													<td>
+                                                        <input type="text" name="volume" id="volume" class="form-control text-right" required="" value="0"/>
+                                                    </td>
+                                                </tr>
                                                  <tr>
 
-                                                    <td class="text-center">1.</td>
+                                                    <td class="text-center">2.</td>
                                                     <td>Total Nilai Persediaan Bahan Jadi</td>
 													<td>
                                                         <input type="text" name="nilai" id="nilai" class="form-control text-right" required="" value="0"/>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-
-                                                    <td class="text-center">2.</td>
-                                                    <td>Faktor Kehilangan</td>
-													<td>
-                                                        <input type="text" name="faktor_kehilangan" id="faktor_kehilangan" class="form-control text-right" required="" value="0"/>
                                                     </td>
                                                 </tr>
                                             </tbody>

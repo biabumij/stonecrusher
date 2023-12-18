@@ -139,8 +139,8 @@
                                                     <tr>
                                                         <th width="5%" class="text-center">No</th>
 														<th>Tanggal</th>
+                                                        <th class="text-right">Volume Persediaan Bahan Jadi</th>
 														<th class="text-right">Nilai Persediaan Bahan Jadi</th>
-                                                        <th class="text-right">Faktor Kehilangan</th>
 														<th class="text-center">Status</th>
                                                         <th>Dibuat Oleh</th>
                                                         <th>Dibuat Tanggal</th>
@@ -399,10 +399,10 @@
                     "data": "date_akumulasi"
                 },
 				{
-                    "data": "nilai"
+                    "data": "volume"
                 },
 				{
-                    "data": "faktor_kehilangan"
+                    "data": "nilai"
                 },
                 {
                     "data": "status"

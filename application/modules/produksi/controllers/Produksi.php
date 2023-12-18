@@ -1444,16 +1444,16 @@ class Produksi extends Secure_Controller {
 	public function submit_akumulasi_bahan_jadi()
 	{
 		$date_akumulasi = $this->input->post('date_akumulasi');
+		$volume = str_replace('.', '', $this->input->post('volume'));
 		$nilai = str_replace('.', '', $this->input->post('nilai'));
-		$faktor_kehilangan = str_replace('.', '', $this->input->post('faktor_kehilangan'));
 
 		$this->db->trans_start(); # Starting Transaction
 		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
 
 		$arr_insert = array(
 			'date_akumulasi' => date('Y-m-d', strtotime($date_akumulasi)),
+			'volume' => $volume,
 			'nilai' => $nilai,
-			'faktor_kehilangan' => $faktor_kehilangan,
 			'status' => 'PUBLISH',
 			'created_by' => $this->session->userdata('admin_id'),
 			'created_on' => date('Y-m-d H:i:s')
@@ -1484,7 +1484,7 @@ class Produksi extends Secure_Controller {
 			$this->db->where('pp.date_akumulasi >=',date('Y-m-d',strtotime($arr_date[0])));
 			$this->db->where('pp.date_akumulasi <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
-        $this->db->select('pp.id, pp.date_akumulasi, pp.nilai, pp.faktor_kehilangan, pp.status, pp.created_by, pp.created_on');
+        $this->db->select('pp.id, pp.date_akumulasi, pp.volume, pp.nilai, pp.status, pp.created_by, pp.created_on');
 		$this->db->order_by('pp.date_akumulasi','desc');
 		$query = $this->db->get('akumulasi_bahan_jadi pp');
 		
@@ -1492,8 +1492,8 @@ class Produksi extends Secure_Controller {
 			foreach ($query->result_array() as $key => $row) {
                 $row['no'] = $key+1;
                 $row['date_akumulasi'] = date('d F Y',strtotime($row['date_akumulasi']));
+				$row['volume'] = number_format($row['volume'],2,',','.');
                 $row['nilai'] = number_format($row['nilai'],0,',','.');
-				$row['faktor_kehilangan'] = number_format($row['faktor_kehilangan'],0,',','.');
 				$row['status'] = $row['status'];
 				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
                 $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
