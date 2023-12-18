@@ -353,12 +353,9 @@
 				<td align="right"><?php echo number_format(($total + ($total * $row['laba']) / 100),0,',','.');?></td>
 				<td align="right"><?php echo number_format(($total_ton + ($total_ton * $row['laba']) / 100),0,',','.');?></td>
 			</tr>
-		</table>
-		
+		</table>	
 		<br />
-		
 	    <p><b>Keterangan</b> :</p>
 		<p><?= $row["memo"] ?></p>
-
 	</body>
 </html>
