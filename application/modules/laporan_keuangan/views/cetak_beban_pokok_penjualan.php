@@ -421,12 +421,12 @@
 			</tr>
 			<tr class="table-active3">
 				<th align="center" width="5%"><b>NO.</b></th>
-				<th align="left" width="30%"><b>URAIAN</b></th>
-				<th align="right" width="15%"><b>VOLUME</b></th>
-				<th align="right" width="15%"><b>RELASISASI</b></th>
-				<th align="right" width="10%"><b>HARGA SATUAN</b></th>
-				<th align="right" width="15%"><b>RAP</b></th>
-				<th align="right" width="10%"><b>HARGA SATUAN</b></th>
+				<th align="center" width="30%"><b>URAIAN</b></th>
+				<th align="center" width="15%"><b>VOLUME</b></th>
+				<th align="center" width="15%"><b>RELASISASI</b></th>
+				<th align="center" width="10%"><b>HARSAT</b></th>
+				<th align="center" width="15%"><b>RAP</b></th>
+				<th align="center" width="10%"><b>HARSAT</b></th>
 			</tr>
 			<tr style="font-weight:bold;">
 				<th align="center">1.</th>
