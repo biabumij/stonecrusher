@@ -121,7 +121,7 @@
                 ?>
                <tr class="table-active3">
                    <td align="center"><?php echo $no;?></td>
-                   <td align="center"><?= $nama_produk; ?></td>
+                   <td align="left"><?= $nama_produk; ?></td>
 	               <td align="center"><?= $dt["qty"]; ?></td>
 	               <td align="center"><?= $dt["measure"]; ?></td>
 	               <td align="right"><?= number_format($dt['price'],0,',','.'); ?></td>
@@ -191,15 +191,6 @@
 
             $total = $subtotal + $tax_ppn - $tax_pph + $tax_ppn11;
             ?>
-
-			<?php
-				$presentase_uang_muka = ($penagihan['uang_muka'] / $total) * 100;
-			?>
-
-			<tr>
-				<th colspan="5" align="right">Uang Muka (<?= number_format($presentase_uang_muka,0,',','.'); ?>%)</th>
-				<th  align="right"><?= number_format($penagihan['uang_muka'],0,',','.'); ?></th>
-			</tr>
 			<tr>
 				<th colspan="4"></th>
                 <th class="table-active">TOTAL</th>

@@ -2836,7 +2836,7 @@ class Reports extends CI_Controller {
 		$date2 = '';
 
 		if(count($arr_filter_date) == 2){
-			$date3 	= date('2021-02-27',strtotime($date3));
+			$date3 	= date('2023-09-01',strtotime($date3));
 			$date1 	= date('Y-m-d',strtotime($arr_filter_date[0]));
 			$date2 	= date('Y-m-d',strtotime($arr_filter_date[1]));
 			$filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));
@@ -2879,7 +2879,7 @@ class Reports extends CI_Controller {
 	        <tr class="table-active2">
 	            <th colspan="3">PERIODE</th>
 				<th class="text-center"><?php echo $filter_date = $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
-	            <th class="text-center">SD. <?php echo $filter_date_2 = date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
+	            <th class="text-center" colspan="2"><?php echo $filter_date = $filter_date_2 = date('d/m/Y',strtotime($date3)).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 	        </tr>
 			<?php
 			$penjualan_limbah = $this->db->select('SUM(pp.display_price) as price')
@@ -3398,11 +3398,11 @@ class Reports extends CI_Controller {
 			$biaya_lainnya_2 = $biaya_lainnya_biaya_2['total'] + $biaya_lainnya_jurnal_2['total'];
 	        ?>
 			<tr class="table-active">
-	            <th width="100%" class="text-left" colspan="5">PENDAPATAN PENJUALAN</th>
+	            <th width="100%" class="text-left" colspan="6">PENDAPATAN PENJUALAN</th>
 	        </tr>
 			<tr class="table-active3">
 	            <th width="10%" class="text-center"></th>
-				<th width="90%" class="text-left" colspan="4">Pendapatan</th>
+				<th width="90%" class="text-left" colspan="5">Pendapatan</th>
 	        </tr>
 			<tr class="table-active3">
 				<th class="text-left" colspan="2">Total Pendapatan (Excl. Limbah)</th>
@@ -3419,6 +3419,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"><?php echo number_format($total_volume_2,2,',','.');?></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -3433,10 +3434,10 @@ class Reports extends CI_Controller {
 				</th>
 	        </tr>
 			<tr class="table-active3">
-				<th colspan="5"></th>
+				<th colspan="6"></th>
 			</tr>
 			<tr class="table-active">
-				<th class="text-left" colspan="5">BEBAN POKOK PENJUALAN</th>
+				<th class="text-left" colspan="6">BEBAN POKOK PENJUALAN</th>
 	        </tr>
 			<tr class="table-active3">
 	            <th class="text-center"></th>
@@ -3456,7 +3457,7 @@ class Reports extends CI_Controller {
 				<!--BEBAN POKOK PENJUALAN-->
 				<!-- Total Pendapatan / Penjualan -->
 				<?php
-				$date1 = date('2021-02-27',strtotime($date1));
+				$date1 = date('2023-09-01',strtotime($date1));
 				$penjualan = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
 				->from('pmm_productions pp')
 				->join('penerima p', 'pp.client_id = p.id','left')
@@ -3801,6 +3802,7 @@ class Reports extends CI_Controller {
 				$total_2 = $laba_usaha_2 + $nilai_akhir_pergerakan_bahan_baku_2['total_nilai_akhir'] + $persedian_bahan_jadi_2 + $total_penjualan_limbah_2;
 				$persentase_2 = ($total_penjualan_all_2!=0)?($laba_usaha_2 / $total_penjualan_all_2)  * 100:0;
 				?>
+				<th class="text-right"></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -3828,6 +3830,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>				
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -3842,7 +3845,7 @@ class Reports extends CI_Controller {
 				</th>
 	        </tr>
 			<tr class="table-active3">
-				<th colspan="5"></th>
+				<th colspan="6"></th>
 			</tr>
 			<?php
 				$styleColor = $laba_kotor < 0 ? 'color:red' : 'color:black';
@@ -3862,6 +3865,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right" style="<?php echo $styleColor2 ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -3876,7 +3880,7 @@ class Reports extends CI_Controller {
 				</th>
 	        </tr>
 			<tr class="table-active3">
-				<th colspan="5"></th>
+				<th colspan="6"></th>
 			</tr>
 			<tr class="table-active3">
 	            <th class="text-left" colspan="3">Biaya Umum & Administratif</th>
@@ -3892,6 +3896,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -3919,6 +3924,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -3933,7 +3939,7 @@ class Reports extends CI_Controller {
 				</th>
 			</tr>
 			<tr class="table-active3">
-				<th colspan="5"></th>
+				<th colspan="6"></th>
 			</tr>
 			<?php
 				$styleColor = $laba_usaha < 0 ? 'color:red' : 'color:black';
@@ -3953,6 +3959,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right" style="<?php echo $styleColor2 ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -3984,6 +3991,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right" style="<?php echo $styleColor2 ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -3998,7 +4006,7 @@ class Reports extends CI_Controller {
 				</th>
 	        </tr>
 			<tr class="table-active3">
-				<th colspan="5"></th>
+				<th colspan="6"></th>
 			</tr>
 			<tr class="table-active4">
 	            <th colspan="3" class="text-left">Persediaan Bahan Baku</th>
@@ -4014,6 +4022,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -4041,6 +4050,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -4068,6 +4078,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -4082,7 +4093,7 @@ class Reports extends CI_Controller {
 				</th>
 	        </tr>
 			<tr class="table-active3">
-				<th colspan="5"></th>
+				<th colspan="6"></th>
 			</tr>
 			<?php
 				$styleColor = $total < 0 ? 'color:red' : 'color:black';
@@ -4102,6 +4113,7 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
+				<th class="text-right"></th>
 				<th class="text-right" style="<?php echo $styleColor2 ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>

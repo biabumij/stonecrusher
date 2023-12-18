@@ -94,7 +94,7 @@
 		$date2 = '';
 
 		if(count($arr_filter_date) == 2){
-			$date3 	= date('2021-01-01',strtotime($date3));
+			$date3 	= date('2023-09-01',strtotime($date3));
 			$date1 	= date('Y-m-d',strtotime($arr_filter_date[0]));
 			$date2 	= date('Y-m-d',strtotime($arr_filter_date[1]));
 			$filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));
@@ -450,7 +450,7 @@
 			->where("(pph.date_prod between '$date1' and '$date2')")
 			->where('pph.status','PUBLISH')
 			->get()->row_array();
-			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
 			?>
 
 			<!-- Persediaan Akhir Bahan Jadi -->
@@ -629,7 +629,7 @@
 						<div align="center" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date;?></div>
 					</td>
 					<td align="right" width="25%">
-						<div align="center" style="display: block;font-weight: bold;font-size: 10px;">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></div>
+						<div align="center" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date = $filter_date_2 = date('d/m/Y',strtotime($date3)).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></div>
 					</td>
 				</tr>
 			</table>
@@ -717,7 +717,7 @@
 				<!--BEBAN POKOK PENJUALAN-->
 				<!-- Total Pendapatan / Penjualan -->
 				<?php
-				$date1 = date('2021-02-27',strtotime($date1));
+				$date1 = date('2023-09-01',strtotime($date1));
 				$penjualan = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
 				->from('pmm_productions pp')
 				->join('penerima p', 'pp.client_id = p.id','left')
@@ -1019,7 +1019,7 @@
 				->where("(pph.date_prod between '$date1' and '$date2')")
 				->where('pph.status','PUBLISH')
 				->get()->row_array();
-				$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+				$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
 				?>
 
 				<!-- Persediaan Akhir Bahan Jadi -->
