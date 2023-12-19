@@ -54,7 +54,6 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <label>Tanggal Penawaran<span class="required" aria-required="true">*</span></label>
-
                                             <input type="date" class="form-control" name="tanggal_penawaran" required="">
                                         </div>
                                         <div class="col-sm-3">
@@ -63,7 +62,7 @@
                                         </div>
                                         <div class="col-sm-10">
                                             <label >Alamat Rekanan<span class="required" aria-required="true">*</span></label>
-                                            <textarea class="form-control" rows="4" name="alamat_supplier" id="alamat_supplier" readonly="" ></textarea>
+                                            <textarea class="form-control" rows="4" name="alamat_supplier" id="alamat_supplier" readonly=""></textarea>
                                         </div>
                                         <br />
                                         <div class="col-sm-10">
@@ -252,10 +251,6 @@
         </div>
     </div>
     
-    <script type="text/javascript">
-        var form_control = '';
-    </script>
-    
     <?php echo $this->Templates->Footer();?>
     <script src="<?php echo base_url();?>assets/back/theme/vendor/jquery.number.min.js"></script>
     <script src="<?php echo base_url();?>assets/back/theme/vendor/daterangepicker/moment.min.js"></script>
@@ -263,6 +258,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/theme/vendor/daterangepicker/daterangepicker.css">
     <script src="<?php echo base_url();?>assets/back/theme/vendor/bootbox.min.js"></script>
     <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script type="text/javascript">
+        var form_control = '';
+    </script>
 
     <script type="text/javascript">
         
@@ -310,7 +308,6 @@
             });
         }
 
-
         function changeData(id)
         {
             var product = $('#product-'+id).val();
@@ -334,8 +331,6 @@
                     $('#qty-'+id).val(1);
                     qty = $('#qty-'+id).val();
                 }
-
-                
 
                 // $('#price-'+id).val(product_price);
                 total = ( qty * price);
@@ -419,7 +414,6 @@
             $('#sub-total-val').val(sub_total);
             $('#sub-total').text($.number( sub_total, 0,',','.' ));
 
-
             $('#tax-val-3').val(tax_3);
             $('#tax-total-3 h5').text($.number( tax_3, 2,',','.' ));
 
@@ -475,7 +469,6 @@
         }); 
 
     </script>
-
 
 </body>
 </html>
