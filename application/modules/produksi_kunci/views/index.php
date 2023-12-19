@@ -250,14 +250,9 @@
                     "data": "actions"
                 }
             ],
-            "columnDefs": [{
-                    "targets": [0, 4, 7],
-                    "className": 'text-center',
-                },
-                {
-                    "targets": [2, 3],
-                    "className": 'text-right',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": [2, 3], "className": 'text-right'},
             ],
         });
 
@@ -335,14 +330,9 @@
                     "data": "actions"
                 }
             ],
-            "columnDefs": [{
-                    "targets": [0, 5, 8],
-                    "className": 'text-center',
-                },
-                {
-                    "targets": [2, 3, 4],
-                    "className": 'text-center',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": [2, 3, 4], "className": 'text-right'},
             ],
         });
 	
@@ -417,14 +407,9 @@
                     "data": "actions"
                 }
             ],
-            "columnDefs": [{
-                    "targets": [0, 7],
-                    "className": 'text-center',
-                },
-                {
-                    "targets": [2, 3],
-                    "className": 'text-right',
-                }
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": [2, 3], "className": 'text-right'},
             ],
         });
 
