@@ -187,7 +187,7 @@
                             fontFamily: 'helvetica'
                         }
                     },
-                    categories: ['November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24','Juni 24','Juli 24','Agustus 24','September 24','Oktober 24']
+                    categories: ['September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24','Juni 24','Juli 24','Agustus 24','September 24','Oktober 24']
                 },
                 yAxis: {
                     title: {
@@ -263,7 +263,7 @@
                 },
                 {  
                     name: 'Laba Rugi %',
-                    data: [ <?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>],
+                    data: [ <?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>],
 
                     color: '#cc0000',
                     fontWeight: 'bold',

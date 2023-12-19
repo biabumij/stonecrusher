@@ -605,7 +605,7 @@
 			<tr class="table-active2" style="font-weight:bold;">
 				<th align="center">4.</th>
 				<th align="left">Harga Pokok Penjualan (Siap Jual)</th>
-				<th align="right"><?php echo number_format($akumulasi_bahan_jadi_volume + $total_rekapitulasi_produksi_harian,2,',','.');?> (Ton)</th>
+				<th align="right"><?php echo number_format(round($akumulasi_bahan_jadi_volume,2) + round($total_rekapitulasi_produksi_harian,2),2,',','.');?> (Ton)</th>
 				<?php
 				$nilai_hpp_siap_jual = $akumulasi_bahan_jadi_nilai + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
 				?>
@@ -620,14 +620,12 @@
 			<tr class="table-active2" style="font-weight:bold;">
 				<th align="center">5.</th>
 				<th align="left">Persediaan Akhir Bahan Jadi</th>
-				<th align="right"><?php echo number_format($akumulasi_bahan_jadi_volume + $total_rekapitulasi_produksi_harian - $total_volume,2,',','.');?> (Ton)</th>
+				<th align="right"><?php echo number_format(round($akumulasi_bahan_jadi_volume,2) + round($total_rekapitulasi_produksi_harian,2) - round($total_volume,2),2,',','.');?> (Ton)</th>
 				<?php
-				$nilai_hpp_siap_jual = $akumulasi_bahan_jadi_nilai + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional - $total_penjualan;
+				$harga_siap_jual = ($akumulasi_bahan_jadi_nilai + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / (round($akumulasi_bahan_jadi_volume,2) + round($total_rekapitulasi_produksi_harian,2));
+				$nilai_hpp_siap_jual = (round($akumulasi_bahan_jadi_volume,2) + round($total_rekapitulasi_produksi_harian,2) - round($total_volume,2))  * round($harga_siap_jual,0) ;
 				?>
 				<th align="right"><?php echo number_format($nilai_hpp_siap_jual,0,',','.');?></th>
-				<?php
-				$harga_siap_jual = ($akumulasi_bahan_jadi_nilai + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($akumulasi_bahan_jadi_volume + $total_rekapitulasi_produksi_harian);
-				?>
 				<th align="right"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
 				<th align="right"></th>
 				<th align="right"></th>
