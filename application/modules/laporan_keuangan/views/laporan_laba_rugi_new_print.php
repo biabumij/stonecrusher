@@ -621,7 +621,7 @@
 	        </tr>
 			<?php
 				$styleColor = $laba_usaha < 0 ? 'color:red' : 'color:black';
-				$styleColorw = $laba_usaha_2 < 0 ? 'color:red' : 'color:black';
+				$styleColor2 = $laba_usaha_2 < 0 ? 'color:red' : 'color:black';
 			?>	
 			<tr class="table-active3">
 	            <th width="50%" align="left"><b>Laba / Rugi Usaha</b></th>
