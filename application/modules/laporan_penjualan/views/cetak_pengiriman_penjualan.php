@@ -100,19 +100,15 @@
 		<table cellpadding="2" width="98%">
 			<tr class="table-judul">
                 <th align="center" width="5%">NO.</th>
-                <th align="center" width="35%">URAIAN</th>
+                <th align="left" width="35%">URAIAN</th>
 				<th align="center" width="10%">SATUAN</th>
-                <th align="center" width="15%">VOLUME</th>
-				<th align="center" width="15%">HARGA SATUAN</th>
-                <th align="center" width="20%">NILAI</th>
+                <th align="right" width="15%">VOLUME</th>
+				<th align="right" width="15%">HARGA SATUAN</th>
+                <th align="right" width="20%">NILAI</th>
             </tr>
             <?php
-			$vol_jasa_angkut = 0;
-			$jasa_angkut = 0;
 			$total_vol = 0;
 			$total = 0;
-			$total_vol_jasa_angkut = 0;
-			$total_jasa_angkut = 0;
             if(!empty($data)){
             	foreach ($data as $key => $row) {
             		?>
@@ -160,10 +156,6 @@
 	            			</td>
 	            		</tr>
             			<?php
-						$total_vol_jasa_angkut += str_replace(['.', ','], ['', '.'], $mat['real']);
-						$vol_jasa_angkut = $total_vol_jasa_angkut - $total_vol;
-						$total_jasa_angkut += str_replace(['.', ','], ['', '.'], $mat['total_price']);
-						$jasa_angkut = $total_jasa_angkut - $total;
             		}		
             	}
             }else {
@@ -175,7 +167,7 @@
             }
             ?>	
             <tr class="table-baris2-bold">
-            	<th align="right" width="50%" colspan="3">TOTAL MATERIAL</th>
+            	<th align="center" width="50%" colspan="3">TOTAL</th>
 				<th align="right" width="15%"><?php echo number_format($total_vol,2,',','.');?></th>
 				<th align="right" width="15%"></th>
             	<th align="right" width="20%">
@@ -187,30 +179,6 @@
     				</table>
             	</th>
             </tr>
-			<tr class="table-baris2-bold">
-            	<th align="right" width="50%" colspan="3">JASA ANGKUT</th>
-				<th align="right" width="15%"><?php echo number_format($vol_jasa_angkut,2,',','.');?></th>
-				<th align="right" width="15%"></th>
-            	<th align="right" width="20%">
-            		<table cellpadding="0" width="100%" border="0">
-    					<tr>
-    						<td width="20%" align="left">Rp.</td>
-    						<td width="80%" align="right"><?php echo number_format($jasa_angkut,0,',','.');?></td>
-    					</tr>
-    				</table>
-            	</th>
-            </tr>
-			<tr class="table-total">
-            	<th align="right" width="80%" colspan="5">TOTAL MATERIAL + JASA ANGKUT</th>
-            	<th align="right" width="20%">
-            		<table cellpadding="0" width="100%" border="0">
-    					<tr>
-    						<td width="20%" align="left">Rp.</td>
-    						<td width="80%" align="right"><?php echo number_format($total_jasa_angkut,0,',','.');?></td>
-    					</tr>
-    				</table>
-            	</th>
-            </tr> 
              
 		</table>
 		<br />
