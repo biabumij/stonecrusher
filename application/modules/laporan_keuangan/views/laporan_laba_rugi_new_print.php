@@ -110,7 +110,7 @@
 			->join('penerima p', 'pp.client_id = p.id','left')
 			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
 			->where("pp.date_production between '$date1' and '$date2'")
-			->where("pp.product_id in (3,4,7,8,14,24)")
+			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
 			->where("pp.status = 'PUBLISH'")
 			->where("ppo.status in ('OPEN','CLOSED')")
 			->group_by("pp.client_id")
@@ -127,7 +127,6 @@
 
 			$total_penjualan_all = 0;
 			$total_penjualan_all = $total_penjualan;
-
 			?>
 
 			<?php
@@ -256,7 +255,7 @@
 			?>
 
 			<?php
-			$beban_pokok_penjualan = $total_volume * round($total_ton,0);
+			$beban_pokok_penjualan = round($total_volume,2) * round($total_ton,0);
 			?>
 			
 			<?php
@@ -312,7 +311,7 @@
 			->join('penerima p', 'pp.client_id = p.id','left')
 			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
 			->where("pp.date_production between '$date3' and '$date2'")
-			->where("pp.product_id in (3,4,7,8,14,24)")
+			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
 			->where("pp.status = 'PUBLISH'")
 			->where("ppo.status in ('OPEN','CLOSED')")
 			->group_by("pp.client_id")
@@ -379,15 +378,7 @@
 			$laba_kotor_2 = $total_penjualan_all_2 - $total_harga_pokok_pendapatan_2;
 			$laba_usaha_2 = $laba_kotor_2 - ($biaya_umum_administratif_2 + $biaya_lainnya_2);
 
-			$nilai_akhir_pergerakan_bahan_baku_2 = $this->db->select('(pp.total_nilai_akhir) as total_nilai_akhir')
-			->from('akumulasi_bahan_baku pp')
-			->where("(pp.date_akumulasi between '$date1' and '$date2')")
-			->order_by('pp.date_akumulasi','desc')->limit(1)
-			->get()->row_array();
-
-			$persedian_bahan_jadi_2 = $nilai_persediaan_akhir;
-			
-			$total_2 = $laba_usaha_2 + $nilai_akhir_pergerakan_bahan_baku_2['total_nilai_akhir'] + $persedian_bahan_jadi_2 + $total_penjualan_limbah_2;
+			$total_2 = $laba_usaha_2;
 			$persentase_2 = ($total_penjualan_all_2!=0)?($laba_usaha_2 / $total_penjualan_all_2)  * 100:0;
 			?>
 			<table width="98%" border="0" cellpadding="3">

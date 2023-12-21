@@ -602,7 +602,7 @@ class Laporan extends Secure_Controller {
 		$this->db->join('pmm_productions pp','ppo.id = pp.salesPo_id','left');
 		$this->db->where("ppo.status in ('OPEN','CLOSED')");
 		$this->db->where('pp.status','PUBLISH');
-		$this->db->where("pp.product_id in (3,4,7,8,9,14,24,35,36,37,38,63)");
+		$this->db->where("pp.product_id in (3,4,7,8,9,14,24,63)");
 		$this->db->group_by('ppo.client_id');
 		$query = $this->db->get('pmm_sales_po ppo');
 		
@@ -1820,8 +1820,8 @@ class Laporan extends Secure_Controller {
 
 		$this->db->select('ppp.supplier_id, ps.nama');
 		if(!empty($start_date) && !empty($end_date)){
-            $this->db->where('ppp.created_on >=',$start_date.' 23:59:59');
-            $this->db->where('ppp.created_on <=',$end_date.' 23:59:59');
+            $this->db->where('ppp.tanggal_invoice >=',$start_date.' 23:59:59');
+            $this->db->where('ppp.tanggal_invoice <=',$end_date.' 23:59:59');
         }
         if(!empty($supplier_id)){
             $this->db->where('ppp.supplier_id',$supplier_id);
@@ -1926,8 +1926,8 @@ class Laporan extends Secure_Controller {
 
 		$this->db->select('ppp.client_id, ps.nama');
 		if(!empty($start_date) && !empty($end_date)){
-            $this->db->where('ppp.created_on >=',$start_date);
-            $this->db->where('ppp.created_on <=',$end_date);
+            $this->db->where('ppp.tanggal_invoice >=',$start_date);
+            $this->db->where('ppp.tanggal_invoice <=',$end_date);
         }
         if(!empty($supplier_id)){
             $this->db->where('ppp.client_id',$supplier_id);

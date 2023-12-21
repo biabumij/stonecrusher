@@ -72,14 +72,12 @@
                                             <table class="table table-striped table-hover" id="table_hpp_bahan_baku" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%" class="text-center">No</th>
+                                                        <th>No</th>
 														<th>Tanggal</th>
-														<th class="text-right">Boulder</th>
-                                                        <th class="text-right">BBM</th>
-														<th class="text-center">Status</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
-                                                        <th width="5%" class="text-center">Hapus</th>
+														<th>Boulder</th>
+                                                        <th>BBM</th>
+														<th>Status</th>
+                                                        <th>Hapus</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -104,15 +102,13 @@
                                             <table class="table table-striped table-hover" id="table_akumulasi_bahan_baku" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%">No</th>
+                                                        <th>No</th>
 														<th>Tanggal</th>
-														<th class="text-right">Total Nilai Keluar Boulder</th>
-                                                        <th class="text-right">Total Nilai Keluar Solar</th>
-                                                        <th class="text-right">Total Nilai Persediaan Akhir</th>
-														<th class="text-center">Status</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
-                                                        <th width="5%" class="text-center">Hapus</th>
+														<th>Total Nilai Keluar Boulder</th>
+                                                        <th>Total Nilai Keluar Solar</th>
+                                                        <th>Total Nilai Persediaan Akhir</th>
+														<th>Status</th>
+                                                        <th>Hapus</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -137,14 +133,12 @@
                                             <table class="table table-striped table-hover" id="table_akumulasi_bahan_jadi" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="5%" class="text-center">No</th>
+                                                        <th>No</th>
 														<th>Tanggal</th>
-                                                        <th class="text-right">Volume Persediaan Bahan Jadi</th>
-														<th class="text-right">Nilai Persediaan Bahan Jadi</th>
-														<th class="text-center">Status</th>
-                                                        <th>Dibuat Oleh</th>
-                                                        <th>Dibuat Tanggal</th>
-                                                        <th width="5%" class="text-center">Hapus</th>
+                                                        <th>Volume Persediaan Bahan Jadi</th>
+														<th>Nilai Persediaan Bahan Jadi</th>
+														<th>Status</th>
+                                                        <th>Hapus</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -238,12 +232,6 @@
                     "data": "bbm"
                 },
                 {
-                    "data": "status"
-                },
-                {
-                    "data": "admin_name"
-                },
-                {
                     "data": "created_on"
                 },
                 {
@@ -321,12 +309,6 @@
                     "data": "status"
                 },
                 {
-                    "data": "admin_name"
-                },
-                {
-                    "data": "created_on"
-                },
-                {
                     "data": "actions"
                 }
             ],
@@ -396,12 +378,6 @@
                 },
                 {
                     "data": "status"
-                },
-                {
-                    "data": "admin_name"
-                },
-                {
-                    "data": "created_on"
                 },
                 {
                     "data": "actions"

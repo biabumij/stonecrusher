@@ -211,7 +211,8 @@ class Produksi extends Secure_Controller {
 			$this->db->where('kb.jobs_type',$jobs_type);
 		}
         $this->db->select('kb.id, kb.jobs_type, kb.no_kalibrasi, kb.date_kalibrasi, lk.kalibrasi_id, lk.lampiran, kb.created_by, kb.created_on, kb.status');
-		$this->db->join('pmm_lampiran_kalibrasi lk', 'kb.id = lk.kalibrasi_id','left');	
+		$this->db->join('pmm_lampiran_kalibrasi lk', 'kb.id = lk.kalibrasi_id','left');
+		$this->db->where('kb.date_kalibrasi >=', date('2023-08-01'));
 		$this->db->order_by('kb.created_on','desc');		
 		$query = $this->db->get('pmm_kalibrasi kb');
 		
@@ -452,6 +453,7 @@ class Produksi extends Secure_Controller {
         $this->db->select('kb.id, kb.date_prod, kb.no_prod, SUM(phd.duration) as duration, SUM(phd.use) as used, SUM(phd.use) / SUM(phd.duration) as capacity, lk.produksi_harian_id, lk.lampiran, kb.memo, kb.created_by, kb.created_on, kb.status');
 		$this->db->join('pmm_produksi_harian_detail phd','kb.id = phd.produksi_harian_id','left');
 		$this->db->join('pmm_lampiran_produksi_harian lk', 'kb.id = lk.produksi_harian_id','left');
+		$this->db->where('kb.date_prod >=', date('2023-08-01'));
 		$this->db->where('kb.status','PUBLISH');
 		$this->db->group_by('kb.id');	
 		$this->db->order_by('kb.date_prod','desc');			
@@ -699,7 +701,8 @@ class Produksi extends Secure_Controller {
 			$this->db->where('ag.date_agregat <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
         $this->db->select('ag.id, ag.jobs_type, ag.date_agregat, ag.no_komposisi, lk.agregat_id, lk.lampiran, ag.created_by, ag.created_on, ag.status');
-		$this->db->join('pmm_lampiran_agregat lk', 'ag.id = lk.agregat_id','left');		
+		$this->db->join('pmm_lampiran_agregat lk', 'ag.id = lk.agregat_id','left');
+		$this->db->where('ag.date_agregat >=', date('2023-08-01'));
 		$this->db->order_by('ag.date_agregat','desc');		
 		$query = $this->db->get('pmm_agregat ag');
 		
@@ -1241,6 +1244,7 @@ class Produksi extends Secure_Controller {
         $this->db->select('ppc.id, ppc.date_prod, ppc.no_prod, ppcd.uraian, ppcd.measure_convert, SUM(ppcd.volume_convert) as volume_convert, lk.produksi_campuran_id, lk.lampiran, ppc.memo, ppc.created_by, ppc.created_on, ppc.status');
 		$this->db->join('pmm_produksi_campuran_detail ppcd','ppc.id = ppcd.produksi_campuran_id','left');
 		$this->db->join('pmm_lampiran_produksi_campuran lk', 'ppc.id = lk.produksi_campuran_id','left');
+		$this->db->where('ppc.date_prod >=', date('2023-08-01'));
 		$this->db->where('ppc.status','PUBLISH');
 		$this->db->group_by('ppc.id');	
 		$this->db->order_by('ppc.date_prod','desc');			
@@ -1365,7 +1369,7 @@ class Produksi extends Secure_Controller {
 			'created_on' => date('Y-m-d H:i:s')
 		);
 
-		$this->db->insert('hpp_bahan_baku', $arr_insert);
+		$this->db->insert('hpp_bahan_baku_new', $arr_insert);
 
 		if ($this->db->trans_status() === FALSE) {
 			# Something went wrong.
@@ -1392,7 +1396,7 @@ class Produksi extends Secure_Controller {
 		}
         $this->db->select('pp.id, pp.date_hpp, pp.boulder, pp.bbm, pp.status, pp.created_by, pp.created_on');
 		$this->db->order_by('pp.date_hpp','desc');
-		$query = $this->db->get('hpp_bahan_baku pp');
+		$query = $this->db->get('hpp_bahan_baku_new pp');
 		
        if($query->num_rows() > 0){
 			foreach ($query->result_array() as $key => $row) {
@@ -1459,7 +1463,7 @@ class Produksi extends Secure_Controller {
 			'created_on' => date('Y-m-d H:i:s')
 		);
 
-		$this->db->insert('akumulasi_bahan_jadi', $arr_insert);
+		$this->db->insert('akumulasi_bahan_jadi_new', $arr_insert);
 
 		if ($this->db->trans_status() === FALSE) {
 			# Something went wrong.
@@ -1486,7 +1490,7 @@ class Produksi extends Secure_Controller {
 		}
         $this->db->select('pp.id, pp.date_akumulasi, pp.volume, pp.nilai, pp.status, pp.created_by, pp.created_on');
 		$this->db->order_by('pp.date_akumulasi','desc');
-		$query = $this->db->get('akumulasi_bahan_jadi pp');
+		$query = $this->db->get('akumulasi_bahan_jadi_new pp');
 		
        if($query->num_rows() > 0){
 			foreach ($query->result_array() as $key => $row) {
@@ -1562,7 +1566,7 @@ class Produksi extends Secure_Controller {
 			'created_on' => date('Y-m-d H:i:s')
 		);
 
-		$this->db->insert('akumulasi_bahan_baku', $arr_insert);
+		$this->db->insert('akumulasi_bahan_baku_new', $arr_insert);
 
 		if ($this->db->trans_status() === FALSE) {
 			# Something went wrong.
@@ -1589,7 +1593,7 @@ class Produksi extends Secure_Controller {
 		}
         $this->db->select('pp.id, pp.date_akumulasi, pp.total_nilai_keluar, , pp.total_nilai_keluar_2, pp.total_nilai_akhir, pp.status, pp.created_by, pp.created_on');
 		$this->db->order_by('pp.date_akumulasi','desc');
-		$query = $this->db->get('akumulasi_bahan_baku pp');
+		$query = $this->db->get('akumulasi_bahan_baku_new pp');
 		
        if($query->num_rows() > 0){
 			foreach ($query->result_array() as $key => $row) {

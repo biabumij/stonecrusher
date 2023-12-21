@@ -246,82 +246,7 @@
                                             </div>
                                         </div>
 									</div>
-
-									<!-- Nilai Persediaan Barang -->
-                                    <div role="tabpanel" class="tab-pane" id="nilai_persediaan_bahan_baku">
-                                        <div class="col-sm-15">
-										<div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h3 class="panel-title">Nilai Persediaan Bahan Baku</h3>
-													<a href="laporan_produksi">Kembali</a>
-                                                </div>
-												<div style="margin: 20px">
-													<div class="row">
-														<form action="<?php echo site_url('laporan/nilai_persediaan_bahan_baku_print');?>" target="_blank">
-															<div class="col-sm-3">
-																<input type="text" id="filter_date_nilai" name="filter_date" class="form-control dtpicker"  autocomplete="off" placeholder="Filter By Date">
-															</div>
-															<div class="col-sm-3">
-																<button type="submit" class="btn btn-default"><i class="fa fa-print"></i>  Print</button>
-															</div>
-														</form>
-														
-													</div>
-													<br />
-													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
-														<div class="fa-3x">
-														  <i class="fa fa-spinner fa-spin"></i>
-														</div>
-													</div>				
-													<div class="table-responsive" id="box-ajax-3">													
-													
-                    
-													</div>
-												</div>
-										</div>
-										
-										</div>
-                                    </div>
-
-									<!-- Nilai Persediaan Bahan Jadi -->
-									<div role="tabpanel" class="tab-pane" id="nilai_persediaan_bahan_jadi">
-                                        <div class="col-sm-15">
-										<div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h3 class="panel-title">Nilai Persediaan Bahan Jadi</h3>
-													<a href="laporan_produksi">Kembali</a>
-                                                </div>
-												<div style="margin: 20px">
-													<div class="row">
-														<form action="<?php echo site_url('laporan/nilai_persediaan_bahan_jadi_print');?>" target="_blank">
-															<div class="col-sm-3">
-																<input type="text" id="filter_date_nilai_bahan_jadi" name="filter_date" class="form-control dtpicker"  autocomplete="off" placeholder="Filter By Date">
-															</div>
-															<div class="col-sm-3">
-																<button type="submit" class="btn btn-default"><i class="fa fa-print"></i>  Print</button>
-															</div>
-														</form>
-														
-													</div>
-													<br />
-													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
-														<div class="fa-3x">
-														  <i class="fa fa-spinner fa-spin"></i>
-														</div>
-													</div>				
-													<div class="table-responsive" id="box-ajax-6d">													
-													
-                    
-													</div>
-												</div>
-										</div>
-										
-										</div>
-                                    </div>
-									
-									
+		
                                 </div>
                             </div>
                         </div>
@@ -347,6 +272,7 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
+                minDate: new Date(2023, 08, 01),
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -408,6 +334,7 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
+                minDate: new Date(2023, 08, 01),
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -468,6 +395,7 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
+                minDate: new Date(2023, 08, 01),
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -517,94 +445,7 @@
                 console.log('.mats-' + id);
                 $('.mats-' + id).slideToggle();
             }
-        </script>
-
-		<!-- Script Nilai Persediaan Barang -->
-		<script type="text/javascript">
-			$('#filter_date_nilai').daterangepicker({
-            autoUpdateInput : false,
-			showDropdowns: true,
-            locale: {
-              format: 'DD-MM-YYYY'
-            },
-            ranges: {
-               'Today': [moment(), moment()],
-               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-               'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-               'This Month': [moment().startOf('month'), moment().endOf('month')],
-               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-					}
-				});
-
-				$('#filter_date_nilai').on('apply.daterangepicker', function(ev, picker) {
-					  $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-					  TableNilaiPersediaanBahanBaku();
-				});
-
-
-				function TableNilaiPersediaanBahanBaku()
-				{
-					$('#wait').fadeIn('fast');   
-					$.ajax({
-						type    : "POST",
-						url     : "<?php echo site_url('pmm/reports/nilai_persediaan_bahan_baku'); ?>/"+Math.random(),
-						dataType : 'html',
-						data: {
-							filter_date : $('#filter_date_nilai').val(),
-						},
-						success : function(result){
-							$('#box-ajax-3').html(result);
-							$('#wait').fadeOut('fast');
-						}
-					});
-				}
-
-			//TableNilaiPersediaanBahanBaku();
-        </script>
-
-        <!-- Script Nilai Persediaan Bahan Jadi -->
-        <script type="text/javascript">
-            $('#filter_date_nilai_bahan_jadi').daterangepicker({
-                autoUpdateInput : false,
-                showDropdowns: true,
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                }
-            });
-
-            $('#filter_date_nilai_bahan_jadi').on('apply.daterangepicker', function(ev, picker) {
-                    $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-                    TableNilaiPersediaanBahanJadi();
-            });
-            
-            function TableNilaiPersediaanBahanJadi()
-            {
-                $('#wait').fadeIn('fast');   
-                $.ajax({
-                    type    : "POST",
-                    url     : "<?php echo site_url('pmm/reports/nilai_persediaan_bahan_jadi'); ?>/"+Math.random(),
-                    dataType : 'html',
-                    data: {
-                        filter_date : $('#filter_date_nilai_bahan_jadi').val(),
-                    },
-                    success : function(result){
-                        $('#box-ajax-6d').html(result);
-                        $('#wait').fadeOut('fast');
-                    }
-                });
-            }
-
-        //TableNilaiPersediaanBahanJadi();
-        </script>			
+        </script>		
     </div>
 </body>
 </html>

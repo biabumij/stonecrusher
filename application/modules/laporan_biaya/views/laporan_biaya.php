@@ -71,6 +71,7 @@
             locale: {
               format: 'DD-MM-YYYY'
             },
+            minDate: new Date(2023, 08, 01), 
             ranges: {
                'Today': [moment(), moment()],
                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],

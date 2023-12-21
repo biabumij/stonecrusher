@@ -1659,267 +1659,6 @@ class Reports extends CI_Controller {
 		<?php
 	}
 	
-	public function nilai_persediaan_bahan_baku($arr_date)
-	{
-		$data = array();
-		
-		$arr_date = $this->input->post('filter_date');
-		$arr_filter_date = explode(' - ', $arr_date);
-		$date1 = '';
-		$date2 = '';
-
-		if(count($arr_filter_date) == 2){
-			$date1 	= date('Y-m-d',strtotime($arr_filter_date[0]));
-			$date2 	= date('Y-m-d',strtotime($arr_filter_date[1]));
-			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
-		}
-
-	    ?>
-		
-		<table class="table table-bordered" width="100%">
-		<style type="text/css">
-		table tr.table-active{
-			background-color: #F0F0F0;
-			font-size: 12px;
-			font-weight: bold;
-			color: black;
-		}
-			
-		table tr.table-active2{
-			background-color: #E8E8E8;
-			font-size: 12px;
-			font-weight: bold;
-		}
-			
-		table tr.table-active3{
-			font-size: 12px;
-			background-color: #F0F0F0;
-		}
-			
-		table tr.table-active4{
-			background-color: #e69500;
-			font-weight: bold;
-			font-size: 12px;
-			color: black;
-		}
-		table tr.table-active5{
-			background-color: #cccccc;
-			font-weight: bold;
-			font-size: 12px;
-			color: black;
-		}
-		table tr.table-activeago1{
-			background-color: #ffd966;
-			font-weight: bold;
-			font-size: 12px;
-			color: black;
-		}
-		table tr.table-activeopening{
-			background-color: #2986cc;
-			font-weight: bold;
-			font-size: 12px;
-			color: black;
-		}
-		</style>
-
-		<?php
-
-		//Opening Balance
-		$date1_ago = date('2020-01-01');
-		$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
-		$date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date1)));
-		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
-
-		$stock_opname_batu_boulder_ago = $this->db->select('(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat cat ')
-		->where("(cat.date = '$tanggal_opening_balance')")
-		->where("cat.material_id = 15")
-		->where("cat.reset = 1")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-
-		$stock_opname_batu_boulder_ago_2 = $this->db->select('(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat_2 cat ')
-		->where("(cat.date = '$tanggal_opening_balance')")
-		->where("cat.material_id = 15")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-
-		$harga_hpp_bahan_baku = $this->db->select('pp.date_hpp, pp.boulder, pp.bbm')
-		->from('hpp_bahan_baku pp')
-		->where("(pp.date_hpp between '$date3_ago' and '$date2_ago')")
-		->order_by('pp.date_hpp','desc')->limit(1)
-		->get()->row_array();
-
-		$volume_opening_balance = $stock_opname_batu_boulder_ago['volume'] + $stock_opname_batu_boulder_ago_2['volume'];
-		$harga_opening_balance = $harga_hpp_bahan_baku['boulder'];
-		$nilai_opening_balance = $volume_opening_balance * $harga_opening_balance;
-
-		$stock_opname_solar_ago = $this->db->select('(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat cat ')
-		->where("(cat.date = '$tanggal_opening_balance')")
-		->where("cat.material_id = 13")
-		->where("cat.reset = 1")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-
-		$stock_opname_solar_ago_2 = $this->db->select('(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat_2 cat ')
-		->where("(cat.date = '$tanggal_opening_balance')")
-		->where("cat.material_id = 13")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-
-		$volume_opening_balance_solar = $stock_opname_solar_ago['volume'] + $stock_opname_solar_ago_2['volume'];	
-		$harga_opening_balance_solar = $harga_hpp_bahan_baku['bbm'];
-		$nilai_opening_balance_solar = $volume_opening_balance_solar * $harga_opening_balance_solar;
-
-		//Now
-		//Bahan Baku			
-		$pergerakan_bahan_baku = $this->db->select('
-		p.nama_produk, 
-		prm.display_measure as satuan, 
-		SUM(prm.display_volume) as volume, 
-		(prm.display_price / prm.display_volume) as harga, 
-		SUM(prm.display_price) as nilai')
-		->from('pmm_receipt_material prm')
-		->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-		->join('produk p', 'prm.material_id = p.id','left')
-		->where("prm.date_receipt between '$date1' and '$date2'")
-		->where("prm.material_id = 15")
-		->group_by('prm.material_id')
-		->get()->row_array();
-
-		$total_volume_pembelian = $pergerakan_bahan_baku['volume'];
-		$total_nilai_pembelian =  $pergerakan_bahan_baku['nilai'];
-		$total_harga_pembelian = ($total_volume_pembelian!=0)?$total_nilai_pembelian / $total_volume_pembelian * 1:0;
-
-		$total_volume_pembelian_akhir  = round($volume_opening_balance + $total_volume_pembelian,2);
-		$total_harga_pembelian_akhir = ($total_volume_pembelian_akhir!=0)?($nilai_opening_balance + $total_nilai_pembelian) / $total_volume_pembelian_akhir * 1:0;
-		$total_nilai_pembelian_akhir =  $total_volume_pembelian_akhir * $total_harga_pembelian_akhir;			
-
-		$stock_opname_batu_boulder = $this->db->select('(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat cat ')
-		->where("(cat.date = '$date2')")
-		->where("cat.material_id = 15")
-		->where("cat.reset = 1")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-
-		$stock_opname_batu_boulder_2 = $this->db->select('(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat_2 cat ')
-		->where("(cat.date = '$date2')")
-		->where("cat.material_id = 15")
-		->where("cat.reset = 1")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-
-		$total_volume_produksi_akhir = $stock_opname_batu_boulder['volume'] + $stock_opname_batu_boulder_2['volume'];
-		$total_harga_produksi_akhir = round($total_harga_pembelian_akhir,0);
-		$total_nilai_produksi_akhir = $total_volume_produksi_akhir * $total_harga_produksi_akhir;
-
-		$total_volume_produksi = round($total_volume_pembelian_akhir - $total_volume_produksi_akhir,2);
-		$total_harga_produksi = $total_harga_produksi_akhir;
-		$total_nilai_produksi = $total_volume_produksi * $total_harga_produksi;
-
-		//BBM Solar
-		$pergerakan_bahan_baku_solar = $this->db->select('
-		p.nama_produk, 
-		prm.display_measure as satuan, 
-		SUM(prm.display_volume) as volume, 
-		(prm.display_price / prm.display_volume) as harga, 
-		SUM(prm.display_price) as nilai')
-		->from('pmm_receipt_material prm')
-		->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-		->join('produk p', 'prm.material_id = p.id','left')
-		->where("prm.date_receipt between '$date1' and '$date2'")
-		->where("prm.material_id = 13")
-		->group_by('prm.material_id')
-		->get()->row_array();
-
-		$total_volume_pembelian_solar = $pergerakan_bahan_baku_solar['volume'];
-		$total_nilai_pembelian_solar =  $pergerakan_bahan_baku_solar['nilai'];
-		$total_harga_pembelian_solar = ($total_volume_pembelian_solar!=0)?$total_nilai_pembelian_solar / $total_volume_pembelian_solar * 1:0;
-
-		$total_volume_pembelian_akhir_solar  = round($volume_opening_balance_solar + $total_volume_pembelian_solar,2);
-		$total_harga_pembelian_akhir_solar = ($total_volume_pembelian_akhir_solar!=0)?($nilai_opening_balance_solar + $total_nilai_pembelian_solar) / $total_volume_pembelian_akhir_solar * 1:0;
-		$total_nilai_pembelian_akhir_solar =  $total_volume_pembelian_akhir_solar * $total_harga_pembelian_akhir_solar;
-
-		$stock_opname_solar = $this->db->select('(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat cat ')
-		->where("(cat.date = '$date2')")
-		->where("cat.material_id = 13")
-		->where("cat.reset = 1")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-
-		$stock_opname_solar_2 = $this->db->select('(cat.volume) as volume')
-		->from('pmm_remaining_materials_cat_2 cat ')
-		->where("(cat.date = '$date2')")
-		->where("cat.material_id = 13")
-		->where("cat.reset = 1")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-
-		$total_volume_produksi_akhir_solar = $stock_opname_solar['volume'] + $stock_opname_solar_2['volume'];
-		$total_harga_produksi_akhir_solar = round($total_harga_pembelian_akhir_solar,0);
-		$total_nilai_produksi_akhir_solar = $total_volume_produksi_akhir_solar * $total_harga_produksi_akhir_solar;
-
-		$total_volume_produksi_solar = round($total_volume_pembelian_akhir_solar - $total_volume_produksi_akhir_solar,2);
-		$total_harga_produksi_solar =  $total_harga_produksi_akhir_solar;
-		$total_nilai_produksi_solar =  $total_volume_produksi_solar * $total_harga_produksi_solar;
-
-		//Total Opening Balance
-		$opening_balance_bahan_baku = $nilai_opening_balance + $nilai_opening_balance_solar;
-
-		//Total
-		$total_nilai_masuk = $total_nilai_pembelian + $total_nilai_pembelian_solar;
-		$total_nilai_keluar = $total_nilai_produksi + $total_nilai_produksi_solar;
-		$total_nilai_akhir = $total_nilai_produksi_akhir + $total_nilai_produksi_akhir_solar;
-
-		?>
-
-		<tr class="table-active2">
-			<th colspan="3">Periode</th>
-			<th class="text-center" colspan="9"><?php echo $filter_date;?></th>
-		</tr>
-		<tr class="table-active4">
-			<th width="10%" class="text-center" >TANGGAL</th>
-			<th width="20%" class="text-center" >URAIAN</th>
-			<th width="30%" class="text-center" >STOK BARANG</th>
-			<th width="20%" class="text-center" >HARGA SATUAN</th>
-			<th width="20%" class="text-center" >NILAI</th>
-		</tr>
-		<tr class="table-active3">
-			<th class="text-center"><?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
-			<th class="text-left">Batu Boulder</th>
-			<th class="text-center"><?php echo number_format($total_volume_produksi_akhir,2,',','.');?></th>
-			<th class="text-right"><?php echo number_format($total_harga_produksi_akhir,0,',','.');?></th>
-			<th class="text-right"><?php echo number_format($total_nilai_produksi_akhir,0,',','.');?></th>
-		</tr>
-		<tr class="table-active3">
-			<th class="text-center"><?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
-			<th class="text-left">BBM Solar</th>
-			<th class="text-center"><?php echo number_format($total_volume_produksi_akhir_solar,2,',','.');?></th>
-			<th class="text-right"><?php echo number_format($total_harga_produksi_akhir_solar,0,',','.');?></th>
-			<th class="text-right"><?php echo number_format($total_nilai_produksi_akhir_solar,0,',','.');?></th>
-		</tr>
-		<tr class="table-active5">
-			<th class="text-right" colspan="4">TOTAL</th>
-			<th class="text-right"><?php echo number_format($total_nilai_akhir,0,',','.');?></th>
-		</tr>
-	</table>
-	<?php
-	}
-	
 	public function beban_pokok_produksi($arr_date)
 	{
 		$data = array();
@@ -2887,7 +2626,7 @@ class Reports extends CI_Controller {
 			->join('penerima p', 'pp.client_id = p.id','left')
 			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
 			->where("pp.date_production between '$date1' and '$date2'")
-			->where("pp.product_id in (3,4,7,8,14,24)")
+			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
 			->where("pp.status = 'PUBLISH'")
 			->where("ppo.status in ('OPEN','CLOSED')")
 			->group_by("pp.client_id")
@@ -2904,7 +2643,6 @@ class Reports extends CI_Controller {
 
 			$total_penjualan_all = 0;
 			$total_penjualan_all = $total_penjualan;
-
 			?>
 
 			<?php
@@ -3033,7 +2771,7 @@ class Reports extends CI_Controller {
 			?>
 
 			<?php
-			$beban_pokok_penjualan = $total_volume * round($total_ton,0);
+			$beban_pokok_penjualan = round($total_volume,2) * round($total_ton,0);
 			?>
 			
 			<?php
@@ -3089,7 +2827,7 @@ class Reports extends CI_Controller {
 			->join('penerima p', 'pp.client_id = p.id','left')
 			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
 			->where("pp.date_production between '$date3' and '$date2'")
-			->where("pp.product_id in (3,4,7,8,14,24)")
+			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
 			->where("pp.status = 'PUBLISH'")
 			->where("ppo.status in ('OPEN','CLOSED')")
 			->group_by("pp.client_id")
@@ -3156,15 +2894,7 @@ class Reports extends CI_Controller {
 			$laba_kotor_2 = $total_penjualan_all_2 - $total_harga_pokok_pendapatan_2;
 			$laba_usaha_2 = $laba_kotor_2 - ($biaya_umum_administratif_2 + $biaya_lainnya_2);
 
-			$nilai_akhir_pergerakan_bahan_baku_2 = $this->db->select('(pp.total_nilai_akhir) as total_nilai_akhir')
-			->from('akumulasi_bahan_baku pp')
-			->where("(pp.date_akumulasi between '$date1' and '$date2')")
-			->order_by('pp.date_akumulasi','desc')->limit(1)
-			->get()->row_array();
-
-			$persedian_bahan_jadi_2 = $nilai_persediaan_akhir;
-			
-			$total_2 = $laba_usaha_2 + $nilai_akhir_pergerakan_bahan_baku_2['total_nilai_akhir'] + $persedian_bahan_jadi_2 + $total_penjualan_limbah_2;
+			$total_2 = $laba_usaha_2;
 			$persentase_2 = ($total_penjualan_all_2!=0)?($laba_usaha_2 / $total_penjualan_all_2)  * 100:0;
 			?>
 			<tr class="table-active">
@@ -9109,6 +8839,18 @@ class Reports extends CI_Controller {
 	            <th class="text-center" colspan="2">PERIODE</th>
 				<th class="text-center" colspan="9"><?php echo $filter_date = $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 	        </tr>
+			<!--  Jumlah HPProduksi -->
+			<?php
+			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+			->from('pmm_produksi_harian pph ')
+			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+			->where("(pph.date_prod between '$date1' and '$date2')")
+			->where('pph.status','PUBLISH')
+			->get()->row_array();
+			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+			?>
+			
 			<!-- Total Pendapatan / Penjualan -->
 			<?php
 			$penjualan = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
@@ -9116,7 +8858,7 @@ class Reports extends CI_Controller {
 			->join('penerima p', 'pp.client_id = p.id','left')
 			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
 			->where("pp.date_production between '$date1' and '$date2'")
-			->where("pp.product_id in (3,4,7,8,14,24)")
+			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
 			->where("pp.status = 'PUBLISH'")
 			->where("ppo.status in ('OPEN','CLOSED')")
 			->group_by("pp.client_id")
@@ -9136,22 +8878,12 @@ class Reports extends CI_Controller {
 			<?php
 			$last_production = $this->db->select('date')->order_by('date','desc')->limit(1,5)->get_where('pmm_remaining_materials_cat',array('status'=>'PUBLISH','material_id'=>'4'))->row_array();
 			$last_production_2 = $this->db->select('date')->order_by('date','desc')->limit(1,3)->get_where('pmm_remaining_materials_cat',array('status'=>'PUBLISH','material_id'=>'4'))->row_array();
-
 			$date1_old = date('Y-m-d', strtotime('+1 days', strtotime($last_production['date'])));
 			$date2_old = date('Y-m-d', strtotime($last_production_2['date']));
-
 			$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
 
-			$stock_opname_bahan_jadi_bulan_lalu = $this->db->select('sum(cat.volume) as volume')
-			->from('pmm_remaining_materials_cat cat ')
-			->where("(cat.date = '$tanggal_opening_balance')")
-			->where("cat.material_id in (3, 4, 7, 8)")
-			->where("cat.status = 'PUBLISH'")
-			->order_by('date','desc')->limit(1)
-			->get()->row_array();
-
 			$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-			->from('akumulasi_bahan_jadi pp')
+			->from('akumulasi_bahan_jadi_new pp')
 			->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
 			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
@@ -9161,7 +8893,7 @@ class Reports extends CI_Controller {
 			<!-- Bahan -->
 			<?php
 			$akumulasi_bahan_baku = $this->db->select('sum(pp.total_nilai_keluar) as boulder, sum(pp.total_nilai_keluar_2) as bbm')
-			->from('akumulasi_bahan_baku pp')
+			->from('akumulasi_bahan_baku_new pp')
 			->where("(pp.date_akumulasi between '$date1' and '$date2')")
 			->get()->row_array();
 
@@ -9402,29 +9134,6 @@ class Reports extends CI_Controller {
 
 			$total_operasional = $gaji_upah + $konsumsi + $thr_bonus + $perbaikan + $akomodasi_tamu + $pengujian + $listrik_internet;
 			?>
-
-			<!--  Jumlah HPProduksi (Tanpa Limbah)  -->
-			<?php
-			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-			->from('pmm_produksi_harian pph ')
-			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-			->where("(pph.date_prod between '$date1' and '$date2')")
-			->where('pph.status','PUBLISH')
-			->get()->row_array();
-			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
-			?>
-
-			<!-- Persediaan Akhir Bahan Jadi -->
-			<?php
-			$stock_opname_bahan_jadi_bulan_akhir = $this->db->select('sum(cat.volume) as volume')
-			->from('pmm_remaining_materials_cat cat ')
-			->where("(cat.date = '$date2')")
-			->where("cat.material_id in (3, 4, 7, 8, 63)")
-			->where("cat.status = 'PUBLISH'")
-			->order_by('date','desc')->limit(1)
-			->get()->row_array();
-			?>
 			<tr class="table-active">
 	            <th class="text-center" rowspan="2" style="vertical-align:middle;">NO.</th>
 				<th class="text-center" rowspan="2" style="vertical-align:middle;">URAIAN</th>
@@ -9434,13 +9143,13 @@ class Reports extends CI_Controller {
 	        </tr>
 			<tr class="table-active">
 	            <th class="text-right">VOL (TON)</th>
-				<th class="text-right">HARSAT</th>
+				<th class="text-right">HARSAT (TON)</th>
 				<th class="text-right">NILAI</th>
 				<th class="text-right">VOL (TON)</th>
-				<th class="text-right">HARSAT</th>
+				<th class="text-right">HARSAT (TON)</th>
 				<th class="text-right">NILAI</th>
 				<th class="text-right">VOL (TON)</th>
-				<th class="text-right">HARSAT</th>
+				<th class="text-right">HARSAT (TON)</th>
 				<th class="text-right">NILAI</th>
 	        </tr>
 			<?php
@@ -9640,26 +9349,26 @@ class Reports extends CI_Controller {
 				<th class="text-right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_overhead < 0 ? "(".number_format(-$nilai_evaluasi_overhead,0,',','.').")" : number_format($nilai_evaluasi_overhead,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active4">
-			<th class="text-right" colspan="2">TOTAL</th>
-			<th class="text-right"></th>
-			<th class="text-right"></th>
-			<?php
-				$total_rap = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) + (($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2)) + ($overhead_ton * round($total_rekapitulasi_produksi_harian,2));
-			?>
-			<th class="text-right"><?php echo number_format($total_rap,0,',','.');?></th>
-			<th class="text-right"></th>
-			<th class="text-right"></th>
-			<?php
-				$total_realisasi = ($total_nilai_produksi_boulder) + ($total_biaya_peralatan + $total_nilai_produksi_solar) + ($total_operasional);
-			?>
-			<th class="text-right"><?php echo number_format($total_realisasi,0,',','.');?></th>
-			<th class="text-right"></th>
-			<th class="text-right"></th>
-			<?php
-				$total_evaluasi = ($total_rap) - ($total_realisasi);
-				$styleColor = $total_evaluasi < 0 ? 'color:red' : 'color:black';
-			?>
-			<th class="text-right" style="<?php echo $styleColor ?>"><?php echo $total_evaluasi < 0 ? "(".number_format(-$total_evaluasi,0,',','.').")" : number_format($total_evaluasi,0,',','.');?></th>
+				<th class="text-right" colspan="2">TOTAL</th>
+				<th class="text-right"></th>
+				<th class="text-right"></th>
+				<?php
+					$total_rap = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) + (($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2)) + ($overhead_ton * round($total_rekapitulasi_produksi_harian,2));
+				?>
+				<th class="text-right"><?php echo number_format($total_rap,0,',','.');?></th>
+				<th class="text-right"></th>
+				<th class="text-right"></th>
+				<?php
+					$total_realisasi = ($total_nilai_produksi_boulder) + ($total_biaya_peralatan + $total_nilai_produksi_solar) + ($total_operasional);
+				?>
+				<th class="text-right"><?php echo number_format($total_realisasi,0,',','.');?></th>
+				<th class="text-right"></th>
+				<th class="text-right"></th>
+				<?php
+					$total_evaluasi = ($total_rap) - ($total_realisasi);
+					$styleColor = $total_evaluasi < 0 ? 'color:red' : 'color:black';
+				?>
+				<th class="text-right" style="<?php echo $styleColor ?>"><?php echo $total_evaluasi < 0 ? "(".number_format(-$total_evaluasi,0,',','.').")" : number_format($total_evaluasi,0,',','.');?></th>
 			</tr>
 	    </table>
 		<?php

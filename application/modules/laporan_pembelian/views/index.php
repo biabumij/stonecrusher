@@ -456,6 +456,7 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
+                minDate: new Date(2023, 08, 01), 
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -568,6 +569,7 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
+                minDate: new Date(2023, 08, 01), 
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -579,7 +581,7 @@
             });
 
             $('#filter_date_hutang').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('01-01-2021') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                $(this).val(picker.startDate.format('01-08-2023') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
                 LaporanHutang();
             });
 
@@ -671,6 +673,7 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
+                minDate: new Date(2023, 08, 01), 
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -682,7 +685,7 @@
             });
 
             $('#filter_date_monitoring_hutang').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('01-01-2021') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                $(this).val(picker.startDate.format('01-08-2023') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
                 LaporanMonitoringHutang();
             });
 
@@ -784,6 +787,7 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 },
+                minDate: new Date(2023, 08, 01), 
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],

@@ -105,14 +105,26 @@
 		?>
 
 		<table width="98%" border="0" cellpadding="3">
-		<!-- Total Pendapatan / Penjualan -->
-		<?php
+			<!--  Jumlah HPProduksi -->
+			<?php
+			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+			->from('pmm_produksi_harian pph ')
+			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+			->where("(pph.date_prod between '$date1' and '$date2')")
+			->where('pph.status','PUBLISH')
+			->get()->row_array();
+			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+			?>
+			
+			<!-- Total Pendapatan / Penjualan -->
+			<?php
 			$penjualan = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
 			->from('pmm_productions pp')
 			->join('penerima p', 'pp.client_id = p.id','left')
 			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
 			->where("pp.date_production between '$date1' and '$date2'")
-			->where("pp.product_id in (3,4,7,8,14,24)")
+			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
 			->where("pp.status = 'PUBLISH'")
 			->where("ppo.status in ('OPEN','CLOSED')")
 			->group_by("pp.client_id")
@@ -132,22 +144,12 @@
 			<?php
 			$last_production = $this->db->select('date')->order_by('date','desc')->limit(1,5)->get_where('pmm_remaining_materials_cat',array('status'=>'PUBLISH','material_id'=>'4'))->row_array();
 			$last_production_2 = $this->db->select('date')->order_by('date','desc')->limit(1,3)->get_where('pmm_remaining_materials_cat',array('status'=>'PUBLISH','material_id'=>'4'))->row_array();
-
 			$date1_old = date('Y-m-d', strtotime('+1 days', strtotime($last_production['date'])));
 			$date2_old = date('Y-m-d', strtotime($last_production_2['date']));
-
 			$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
 
-			$stock_opname_bahan_jadi_bulan_lalu = $this->db->select('sum(cat.volume) as volume')
-			->from('pmm_remaining_materials_cat cat ')
-			->where("(cat.date = '$tanggal_opening_balance')")
-			->where("cat.material_id in (3, 4, 7, 8)")
-			->where("cat.status = 'PUBLISH'")
-			->order_by('date','desc')->limit(1)
-			->get()->row_array();
-
 			$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-			->from('akumulasi_bahan_jadi pp')
+			->from('akumulasi_bahan_jadi_new pp')
 			->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
 			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
@@ -157,7 +159,7 @@
 			<!-- Bahan -->
 			<?php
 			$akumulasi_bahan_baku = $this->db->select('sum(pp.total_nilai_keluar) as boulder, sum(pp.total_nilai_keluar_2) as bbm')
-			->from('akumulasi_bahan_baku pp')
+			->from('akumulasi_bahan_baku_new pp')
 			->where("(pp.date_akumulasi between '$date1' and '$date2')")
 			->get()->row_array();
 
@@ -397,29 +399,6 @@
 			$listrik_internet = $listrik_internet_biaya['total'] + $listrik_internet_jurnal['total'];
 
 			$total_operasional = $gaji_upah + $konsumsi + $thr_bonus + $perbaikan + $akomodasi_tamu + $pengujian + $listrik_internet;
-			?>
-
-			<!--  Jumlah HPProduksi (Tanpa Limbah)  -->
-			<?php
-			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-			->from('pmm_produksi_harian pph ')
-			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-			->where("(pph.date_prod between '$date1' and '$date2')")
-			->where('pph.status','PUBLISH')
-			->get()->row_array();
-			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
-			?>
-
-			<!-- Persediaan Akhir Bahan Jadi -->
-			<?php
-			$stock_opname_bahan_jadi_bulan_akhir = $this->db->select('sum(cat.volume) as volume')
-			->from('pmm_remaining_materials_cat cat ')
-			->where("(cat.date = '$date2')")
-			->where("cat.material_id in (3, 4, 7, 8, 63)")
-			->where("cat.status = 'PUBLISH'")
-			->order_by('date','desc')->limit(1)
-			->get()->row_array();
 			?>
 			<tr class="table-active">
 	            <th width="5%" align="center" rowspan="2">&nbsp; <br />NO.</th>

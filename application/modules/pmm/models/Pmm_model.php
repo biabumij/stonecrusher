@@ -1596,7 +1596,8 @@ class Pmm_model extends CI_Model {
             $this->db->where('date_po <=',date('Y-m-d',strtotime($end_date)));  
         }
 		
-		 $this->db->order_by('created_on','DESC');
+        $this->db->where('date_po >=', date('2023-08-01'));
+		$this->db->order_by('created_on','DESC');
         $query = $this->db->get('pmm_purchase_order');
         if($query->num_rows() > 0){
             foreach ($query->result_array() as $key => $row) {
@@ -3424,7 +3425,7 @@ class Pmm_model extends CI_Model {
 		
 		$this->db->where('pp.status','PUBLISH');
         $this->db->where("ppo.status in ('OPEN','CLOSED')");
-        $this->db->where("pp.product_id in (3,4,7,8,9,14,24,35,36,37,38,63)");
+        $this->db->where("pp.product_id in (3,4,7,8,9,14,24,63)");
         $this->db->order_by('p.nama_produk','asc');
         $this->db->group_by('pp.product_id');
         $query = $this->db->get('pmm_productions pp');
@@ -3687,8 +3688,8 @@ class Pmm_model extends CI_Model {
 		$this->db->join('pmm_penagihan_pembelian_detail ppd', 'ppp.id = ppd.penagihan_pembelian_id', 'left');
         
 		if(!empty($start_date) && !empty($end_date)){
-            $this->db->where('ppp.created_on >=',$start_date);
-            $this->db->where('ppp.created_on <=',$end_date);
+            $this->db->where('ppp.tanggal_invoice >=',$start_date);
+            $this->db->where('ppp.tanggal_invoice <=',$end_date);
         }
 		
 		if(!empty($supplier_id)){
@@ -3711,8 +3712,8 @@ class Pmm_model extends CI_Model {
 		$this->db->join('pmm_penagihan_penjualan_detail ppd', 'ppp.id = ppd.penagihan_id', 'left');
         
 		if(!empty($start_date) && !empty($end_date)){
-            $this->db->where('ppp.created_on >=',$start_date);
-            $this->db->where('ppp.created_on <=',$end_date);
+            $this->db->where('ppp.tanggal_invoice >=',$start_date);
+            $this->db->where('ppp.tanggal_invoice <=',$end_date);
         }
 		
 		if(!empty($supplier_id)){
