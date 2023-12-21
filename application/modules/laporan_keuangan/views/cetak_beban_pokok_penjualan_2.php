@@ -56,7 +56,8 @@
         }
 
 		table tr.table-active3{
-            background-color: #ccc;
+            background-color: #666;
+			color:white;
         }
 	  </style>
 
@@ -383,14 +384,14 @@
 				<th align="center" width="30%" rowspan="2">&nbsp; <br /><b>URAIAN</b></th>
 				<th align="center" width="15%" rowspan="2">&nbsp; <br /><b>VOLUME</b></th>
 				
-				<th align="center" width="25%" colspan="2"><b>RAP</b></th>
-				<th align="center" width="25%" colspan="2"><b>REALISASI</b></th>
+				<th align="center" width="25%" colspan="2" style="background-color:blue; color:white;"><b>RAP</b></th>
+				<th align="center" width="25%" colspan="2" style="background-color:green; color:white;"><b>REALISASI</b></th>
 			</tr>
 			<tr class="table-active3">
-				<th align="right" width="15%"><b>NILAI</b></th>
-				<th align="right" width="10%"><b>HARSAT</b></th>
-				<th align="right" width="15%"><b>NILAI</b></th>
-				<th align="right" width="10%"><b>HARSAT</b></th>
+				<th align="center" width="15%" style="background-color:blue; color:white;"><b>NILAI</b></th>
+				<th align="center" width="10%" style="background-color:blue; color:white;"><b>HARSAT</b></th>
+				<th align="center" width="15%" style="background-color:green; color:white;"><b>NILAI</b></th>
+				<th align="center" width="10%" style="background-color:green; color:white;"><b>HARSAT</b></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
 				<th align="center">1.</th>
