@@ -1448,7 +1448,7 @@ class Produksi extends Secure_Controller {
 	public function submit_akumulasi_bahan_jadi()
 	{
 		$date_akumulasi = $this->input->post('date_akumulasi');
-		$volume = str_replace('.', '', $this->input->post('volume'));
+		$volume = $this->input->post('volume');
 		$nilai = str_replace('.', '', $this->input->post('nilai'));
 
 		$this->db->trans_start(); # Starting Transaction

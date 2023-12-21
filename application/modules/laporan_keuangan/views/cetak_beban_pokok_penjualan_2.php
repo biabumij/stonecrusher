@@ -115,7 +115,7 @@
 		<!-- Bahan -->
 		<?php
 		$akumulasi_bahan_baku = $this->db->select('sum(pp.total_nilai_keluar) as boulder, sum(pp.total_nilai_keluar_2) as bbm')
-		->from('akumulasi_bahan_baku pp')
+		->from('akumulasi_bahan_baku_new pp')
 		->where("(pp.date_akumulasi between '$date1' and '$date2')")
 		->get()->row_array();
 

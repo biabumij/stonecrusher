@@ -60,7 +60,7 @@
                                                     <td class="text-center">1.</td>
                                                     <td>Total Volume Persediaan Bahan Jadi</td>
 													<td>
-                                                        <input type="text" name="volume" id="volume" class="form-control text-right" required="" value="0"/>
+                                                        <input type="number" step=".01" min="0" name="volume" id="volume" class="form-control text-right numberformat" required="" value="0"/>
                                                     </td>
                                                 </tr>
                                                  <tr>
@@ -110,7 +110,7 @@
         
         $('.form-select2').select2();
 
-        $('input.numberformat').number( true, 0,',','.' );
+        $('input.numberformat').number( true, 2,',','.' );
         tinymce.init({
           selector: 'textarea#about_text',
           height: 200,
