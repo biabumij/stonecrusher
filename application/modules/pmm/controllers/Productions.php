@@ -903,7 +903,7 @@ class Productions extends Secure_Controller {
 			$end_date = date('Y-m-d',strtotime($arr_date[1]));
 		}
 
-		$this->db->select('ppo.client_id, pp.convert_measure as convert_measure, ps.nama as name, SUM(pp.display_volume) as total, SUM(pp.display_price) as total_price');
+		$this->db->select('ppo.client_id, pp.product_id, pp.convert_measure as convert_measure, ps.nama as name, SUM(pp.display_volume) as total, SUM(pp.display_price) as total_price');
 		if(!empty($start_date) && !empty($end_date)){
             $this->db->where('pp.date_production >=',$start_date);
             $this->db->where('pp.date_production <=',$end_date);
@@ -938,9 +938,10 @@ class Productions extends Secure_Controller {
 					foreach ($materials as $key => $row) {
 						$arr['no'] = $key + 1;
 						$arr['measure'] = $row['measure'];
+						$arr['product_id'] = $row['product_id'];
 						$arr['nama_produk'] = $row['nama_produk'];
 						$arr['salesPo_id'] = '<a href="'.base_url().'penjualan/dataSalesPO/'.$row['salesPo_id'].'" target="_blank">'.$row['salesPo_id'] = $this->crud_global->GetField('pmm_sales_po',array('id'=>$row['salesPo_id']),'contract_number').'</a>';
-						$arr['real'] = number_format($row['total'],2,',','.');
+						$arr['real'] = '<a href="'.base_url().'pmm/productions/detail_transaction/'.$start_date.'/'.$end_date.'/'.$row['client_id'].'/'.$row['product_id'].'" target="_blank">'.number_format($row['total'],2,',','.').'</a>';
 						$arr['price'] = number_format($row['price'],0,',','.');
 						$arr['total_price'] = number_format($row['total_price'],0,',','.');
 						
@@ -1324,5 +1325,28 @@ class Productions extends Secure_Controller {
 
 		echo json_encode(array('data'=>$data,'total'=>number_format($total,0,',','.')));	
 	}
+
+	public function detail_transaction($start_date,$end_date,$id,$product_id)
+    {
+        $check = $this->m_admin->check_login();
+        if($check == true){
+
+            $this->db->select('ppo.*, SUM(pp.display_volume) as volume');
+			$this->db->join('pmm_productions pp','ppo.id = pp.salesPo_id');
+			$this->db->where('pp.date_production >=',$start_date);
+            $this->db->where('pp.date_production <=',$end_date);
+            $this->db->where('ppo.client_id',$id);
+			$this->db->where('pp.product_id',$product_id);
+			$this->db->group_by('ppo.id');
+            $query = $this->db->get('pmm_sales_po ppo');
+			file_put_contents("D:\\test.txt", $this->db->last_query());
+
+            $data['row'] = $query->result_array();
+            $this->load->view('laporan_penjualan/detail_transaction',$data);
+            
+        }else {
+            redirect('admin');
+        }
+    }
 	
 }

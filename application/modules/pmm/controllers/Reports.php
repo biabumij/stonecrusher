@@ -2575,7 +2575,7 @@ class Reports extends CI_Controller {
 		$date2 = '';
 
 		if(count($arr_filter_date) == 2){
-			$date3 	= date('2023-09-01',strtotime($date3));
+			$date3 	= date('2023-08-01',strtotime($date3));
 			$date1 	= date('Y-m-d',strtotime($arr_filter_date[0]));
 			$date2 	= date('Y-m-d',strtotime($arr_filter_date[1]));
 			$filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));
@@ -2627,14 +2627,31 @@ class Reports extends CI_Controller {
 			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
 			->where("pp.date_production between '$date1' and '$date2'")
 			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
-			->where("pp.status = 'PUBLISH'")
+			->where("pp.salesPo_id <> 536 ")
+			->where("pp.salesPo_id <> 532 ")
+			->where("pp.salesPo_id <> 537 ")
+			->where("pp.salesPo_id <> 533 ")
+			->where("pp.salesPo_id <> 534 ")
+			->where("pp.salesPo_id <> 535 ")
+			->where("pp.salesPo_id <> 546 ")
+			->where("pp.salesPo_id <> 542 ")
+			->where("pp.salesPo_id <> 547 ")
+			->where("pp.salesPo_id <> 543 ")
+			->where("pp.salesPo_id <> 548 ")
+			->where("pp.salesPo_id <> 538 ")
+			->where("pp.salesPo_id <> 544 ")
+			->where("pp.salesPo_id <> 549 ")
+			->where("pp.salesPo_id <> 539 ")
+			->where("pp.salesPo_id <> 545 ")
+			->where("pp.salesPo_id <> 541 ")
+			->where("pp.salesPo_id <> 530 ")
+			->where("pp.salesPo_id <> 531 ")
 			->where("ppo.status in ('OPEN','CLOSED')")
-			->group_by("pp.client_id")
+			->group_by('pp.salesPo_id')
 			->get()->result_array();
 			
 			$total_penjualan = 0;
 			$total_volume = 0;
-			$measure = 0;
 
 			foreach ($penjualan as $x){
 				$total_penjualan += $x['price'];
@@ -2643,135 +2660,59 @@ class Reports extends CI_Controller {
 
 			$total_penjualan_all = 0;
 			$total_penjualan_all = $total_penjualan;
+
+			$penjualan_limbah = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+			->from('pmm_productions pp')
+			->join('penerima p', 'pp.client_id = p.id','left')
+			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+			->where("pp.date_production between '$date1' and '$date2'")
+			->where("pp.product_id in (9)")
+			->where("ppo.status in ('OPEN','CLOSED')")
+			->group_by('pp.salesPo_id')
+			->get()->result_array();
+
+			$total_penjualan_limbah = 0;
+			$total_volume_limbah = 0;
+
+			foreach ($penjualan_limbah as $x){
+				$total_penjualan_limbah += $x['price'];
+				$total_volume_limbah += $x['volume'];
+			}
+
+			$penjualan_lain_lain = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+			->from('pmm_productions pp')
+			->join('penerima p', 'pp.client_id = p.id','left')
+			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+			->where("pp.date_production between '$date1' and '$date2'")
+			->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
+			->where("ppo.status in ('OPEN','CLOSED')")
+			->group_by('pp.salesPo_id')
+			->get()->result_array();
+
+			$total_penjualan_lain_lain = 0;
+			$total_volume_lain_lain = 0;
+
+			foreach ($penjualan_lain_lain as $x){
+				$total_penjualan_lain_lain += $x['price'];
+				$total_volume_lain_lain += $x['volume'];
+			}
+
+			$total_penjualan_all_lain_lain = 0;
+			$total_penjualan_all_lain_lain = $total_penjualan_lain_lain;
 			?>
 
 			<?php
 			$row = $this->db->select('r.*')
-			->from('rap r')
-			->group_by("r.tanggal_rap")->limit(1)
-			->order_by('r.tanggal_rap','desc')
+			->from('harga_jual r')
+			->where("(r.tanggal_harga_jual <= '$date2')")
+			->group_by("r.tanggal_harga_jual")->limit(1)
+			->order_by('r.tanggal_harga_jual','desc')
 			->get()->row_array();
-
-			$penyusutan_tangki = $this->db->select('r.*, p.nama_produk')
-			->from('penyusutan r')
-			->join('produk p','r.produk = p.id','left')
-			->where("r.status = 'PUBLISH'")
-			->where("r.produk = '23'")
-			->order_by('p.nama_produk','asc')
-			->group_by("p.nama_produk")->limit(1)
-			->get()->row_array();
-			$penyusutan_tangki = (($penyusutan_tangki['nilai_penyusutan'] / 48) / 25) / 7;
-
-			$penyusutan_sc = $this->db->select('r.*, p.nama_produk')
-			->from('penyusutan r')
-			->join('produk p','r.produk = p.id','left')
-			->where("r.status = 'PUBLISH'")
-			->where("r.produk = '16'")
-			->order_by('p.nama_produk','asc')
-			->group_by("p.nama_produk")->limit(1)
-			->get()->row_array();
-			$penyusutan_sc = (($penyusutan_sc['nilai_penyusutan'] / 48) / 25) / 7;
-
-			$penyusutan_gns = $this->db->select('r.*, p.nama_produk')
-			->from('penyusutan r')
-			->join('produk p','r.produk = p.id','left')
-			->where("r.status = 'PUBLISH'")
-			->where("r.produk = '19'")
-			->order_by('p.nama_produk','asc')
-			->group_by("p.nama_produk")->limit(1)
-			->get()->row_array();
-			$penyusutan_gns = (($penyusutan_gns['nilai_penyusutan'] / 48) / 25) / 7;
-
-			$penyusutan_wl = $this->db->select('r.*, p.nama_produk')
-			->from('penyusutan r')
-			->join('produk p','r.produk = p.id','left')
-			->where("r.status = 'PUBLISH'")
-			->where("r.produk = '17'")
-			->order_by('p.nama_produk','asc')
-			->group_by("p.nama_produk")->limit(1)
-			->get()->row_array();
-			$penyusutan_wl = (($penyusutan_wl['nilai_penyusutan'] / 48) / 25) / 7;
-
-			$penyusutan_timbangan = $this->db->select('r.*, p.nama_produk')
-			->from('penyusutan r')
-			->join('produk p','r.produk = p.id','left')
-			->where("r.status = 'PUBLISH'")
-			->where("r.produk = '39'")
-			->order_by('p.nama_produk','asc')
-			->group_by("p.nama_produk")->limit(1)
-			->get()->row_array();
-			$penyusutan_timbangan = (($penyusutan_timbangan['nilai_penyusutan'] / 48) / 25) / 7;
-
-			//M3
-			$berat_isi_boulder = 1/$row['berat_isi_boulder'];
-			$harsat_boulder = $row['price_boulder'] / $berat_isi_boulder;
-			$nilai_boulder = $harsat_boulder * $row['vol_boulder'];
-			//Ton
-			$vol_boulder = $row['vol_boulder'];
-			$nilai_boulder_ton = $vol_boulder * $row['price_boulder'];
-			
-			//M3
-			$sc_a = $row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc'];
-			$sc_b = $sc_a / $row['berat_isi_batu_pecah'];
-			$vol_sc = 1 / $sc_b;
-			$nilai_sc = $vol_sc * $penyusutan_sc;
-			//Ton
-			$vol_sc_ton = 1 / $sc_a;
-			$nilai_sc_ton = $vol_sc_ton * $penyusutan_sc;
-			
-			//M3
-			$vol_tangki = $vol_sc;
-			$nilai_tangki = $vol_tangki * $penyusutan_tangki;
-			//Ton
-			$vol_tangki_ton = $vol_sc_ton;
-			$nilai_tangki_ton = $vol_tangki_ton * $penyusutan_tangki;
-			
-			//M3
-			$vol_gns = $vol_sc;
-			$nilai_gns = $vol_gns * $penyusutan_gns;
-			//Ton
-			$vol_gns_ton = $vol_sc_ton;
-			$nilai_gns_ton = $vol_gns_ton * $penyusutan_gns;
-
-			//M3
-			$wl_a = $row['kapasitas_alat_wl'] * $row['efisiensi_alat_wl'];
-			$wl_b = (60 / $row['waktu_siklus']) * $wl_a;
-			$vol_wl = 1 / $wl_b;
-			$nilai_wl = $vol_wl * $penyusutan_wl;
-			//Ton
-			$vol_wl_ton_rumus = (($wl_a / $row['waktu_siklus']) * 60) * $row['berat_isi_batu_pecah'];
-			$vol_wl_ton = 1 / $vol_wl_ton_rumus;
-			$nilai_wl_ton = $vol_wl_ton * $penyusutan_wl;
-
-			//M3
-			$vol_timbangan =  $vol_sc;
-			$nilai_timbangan = $vol_timbangan * $penyusutan_timbangan;
-			//Ton
-			$vol_timbangan_ton = $vol_sc_ton;
-			$nilai_timbangan_ton = $vol_timbangan_ton * $penyusutan_timbangan;
-
-			//Ton
-			$vol_bbm_solar_ton = $row['vol_bbm_solar'];
-			$nilai_bbm_solar_ton = $vol_bbm_solar_ton * $row['price_bbm_solar'];
-
-			//M3
-			$vol_bbm_solar =  $vol_bbm_solar_ton * $row['berat_isi_boulder'];
-			$nilai_bbm_solar = $vol_bbm_solar * $row['price_bbm_solar'];
-
-			$rumus_overhead = ($row['overhead'] / 25) / 8;
-			$rumus_overhead_1 = ($row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc']) / $row['berat_isi_batu_pecah'] ;
-			//$overhead = $rumus_overhead / $rumus_overhead_1;
-
-			$rumus_overhead_ton = $row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc'];
-			$overhead_ton = $rumus_overhead / $rumus_overhead_ton;
-			$overhead = $overhead_ton;
-
-			$total = $nilai_boulder + $nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan + $overhead + $nilai_bbm_solar;
-			$total_ton = $nilai_boulder_ton + $nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $overhead_ton + $nilai_bbm_solar_ton;
+			$harga_jual = $row['nilai_jual'];
 			?>
 
 			<?php
-			$beban_pokok_penjualan = round($total_volume,2) * round($total_ton,0);
+			$beban_pokok_penjualan = round($total_volume,2) * round($harga_jual,0);
 			?>
 			
 			<?php
@@ -2815,11 +2756,11 @@ class Reports extends CI_Controller {
 			$biaya_lainnya = $biaya_lainnya_biaya['total'] + $biaya_lainnya_jurnal['total'];
 
 			$total_harga_pokok_pendapatan = $beban_pokok_penjualan;
-			$laba_kotor = $total_penjualan_all - $total_harga_pokok_pendapatan;
+			$laba_kotor = ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain) - $total_harga_pokok_pendapatan;
 			$laba_usaha = $laba_kotor - ($biaya_umum_administratif + $biaya_lainnya);
 
 			$total = $laba_usaha;
-			$persentase = ($total_penjualan_all!=0)?($laba_usaha / $total_penjualan_all)  * 100:0;
+			$persentase = ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain!=0)?($laba_kotor / ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain))  * 100:0;
 
 			//AKUMULASI 2
 			$penjualan_2 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
@@ -2828,6 +2769,25 @@ class Reports extends CI_Controller {
 			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
 			->where("pp.date_production between '$date3' and '$date2'")
 			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
+			->where("pp.salesPo_id <> 536 ")
+			->where("pp.salesPo_id <> 532 ")
+			->where("pp.salesPo_id <> 537 ")
+			->where("pp.salesPo_id <> 533 ")
+			->where("pp.salesPo_id <> 534 ")
+			->where("pp.salesPo_id <> 535 ")
+			->where("pp.salesPo_id <> 546 ")
+			->where("pp.salesPo_id <> 542 ")
+			->where("pp.salesPo_id <> 547 ")
+			->where("pp.salesPo_id <> 543 ")
+			->where("pp.salesPo_id <> 548 ")
+			->where("pp.salesPo_id <> 538 ")
+			->where("pp.salesPo_id <> 544 ")
+			->where("pp.salesPo_id <> 549 ")
+			->where("pp.salesPo_id <> 539 ")
+			->where("pp.salesPo_id <> 545 ")
+			->where("pp.salesPo_id <> 541 ")
+			->where("pp.salesPo_id <> 530 ")
+			->where("pp.salesPo_id <> 531 ")
 			->where("pp.status = 'PUBLISH'")
 			->where("ppo.status in ('OPEN','CLOSED')")
 			->group_by("pp.client_id")
@@ -2844,10 +2804,48 @@ class Reports extends CI_Controller {
 			$total_penjualan_all_2 = 0;
 			$total_penjualan_all_2 = $total_penjualan_2;
 
+			$penjualan_limbah_2 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+			->from('pmm_productions pp')
+			->join('penerima p', 'pp.client_id = p.id','left')
+			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+			->where("pp.date_production between '$date3' and '$date2'")
+			->where("pp.product_id in (9)")
+			->where("ppo.status in ('OPEN','CLOSED')")
+			->group_by('pp.salesPo_id')
+			->get()->result_array();
+
+			$total_penjualan_limbah_2 = 0;
+			$total_volume_limbah_2 = 0;
+
+			foreach ($penjualan_limbah_2 as $x){
+				$total_penjualan_limbah_2 += $x['price'];
+				$total_volume_limbah_2 += $x['volume'];
+			}
+
+			$penjualan_lain_lain_2 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+			->from('pmm_productions pp')
+			->join('penerima p', 'pp.client_id = p.id','left')
+			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+			->where("pp.date_production between '$date3' and '$date2'")
+			->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
+			->where("ppo.status in ('OPEN','CLOSED')")
+			->group_by('pp.salesPo_id')
+			->get()->result_array();
+
+			$total_penjualan_lain_lain_2 = 0;
+			$total_volume_lain_lain_2 = 0;
+
+			foreach ($penjualan_lain_lain_2 as $x){
+				$total_penjualan_lain_lain_2 += $x['price'];
+				$total_volume_lain_lain_2 += $x['volume'];
+			}
+
+			$total_penjualan_all_lain_lain_2 = 0;
+			$total_penjualan_all_lain_lain_2 = $total_penjualan_lain_lain_2;
 			?>
 
 			<?php
-			$beban_pokok_penjualan_2 = $total_volume_2 * round($total_ton,0);
+			$beban_pokok_penjualan_2 = $total_volume_2 * round($harga_jual,0);
 			?>
 
 			<?php
@@ -2891,22 +2889,34 @@ class Reports extends CI_Controller {
 			$biaya_lainnya_2 = $biaya_lainnya_biaya_2['total'] + $biaya_lainnya_jurnal_2['total'];
 	
 			$total_harga_pokok_pendapatan_2 = $beban_pokok_penjualan_2;
-			$laba_kotor_2 = $total_penjualan_all_2 - $total_harga_pokok_pendapatan_2;
+			$laba_kotor_2 = ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2) - $total_harga_pokok_pendapatan_2;
 			$laba_usaha_2 = $laba_kotor_2 - ($biaya_umum_administratif_2 + $biaya_lainnya_2);
 
 			$total_2 = $laba_usaha_2;
-			$persentase_2 = ($total_penjualan_all_2!=0)?($laba_usaha_2 / $total_penjualan_all_2)  * 100:0;
+			$persentase_2 = ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2!=0)?($laba_kotor_2 / ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2))  * 100:0;
 			?>
 			<tr class="table-active">
-	            <th width="100%" class="text-left" colspan="6">PENDAPATAN PENJUALAN</th>
+	            <th width="100%" class="text-left" colspan="6">PENDAPATAN USAHA</th>
 	        </tr>
 			<tr class="table-active3">
 	            <th width="10%" class="text-center"></th>
-				<th width="90%" class="text-left" colspan="5">Pendapatan</th>
+				<th class="text-left">Pendapatan Penjualan</th>
+				<th class="text-right"><?php echo number_format($total_volume,2,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_penjualan_all,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_volume_2,2,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_penjualan_all_2,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
-				<th class="text-left" colspan="2">Total Pendapatan (Excl. Limbah)</th>
-				<th class="text-right"><?php echo number_format($total_volume,2,',','.');?></th>
+	            <th width="10%" class="text-center"></th>
+				<th class="text-left">Pendapatan Lain - Lain</th>
+				<th class="text-right"><?php echo number_format($total_volume_limbah + $total_volume_lain_lain,2,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_penjualan_all_limbah + $total_penjualan_all_lain_lain,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_volume_limbah_2 + $total_volume_lain_lain_2,2,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2,0,',','.');?></th>
+	        </tr>
+			<tr class="table-active3">
+				<th class="text-left" colspan="2">Total Pendapatan</th>
+				<th class="text-right"><?php echo number_format($total_volume + $total_volume_limbah + $total_volume_lain_lain,2,',','.');?></th>
 	            <th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -2914,12 +2924,12 @@ class Reports extends CI_Controller {
 									<span>Rp.</span>
 								</th>
 								<th class="text-right" width="90%">
-									<span><a target="_blank" href="<?= base_url("laporan/cetak_pengiriman_penjualan?filter_date=".$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_penjualan_all,0,',','.');?></a></span>
+									<span><a target="_blank" href="<?= base_url("laporan/cetak_pengiriman_penjualan?filter_date=".$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_lain_lain,0,',','.');?></a></span>
 								</th>
 							</tr>
 					</table>
 				</th>
-				<th class="text-right"><?php echo number_format($total_volume_2,2,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_volume_2 + $total_limbah_2 + $total_volume_lain_lain_2,2,',','.');?></th>
 				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -2927,7 +2937,7 @@ class Reports extends CI_Controller {
 									<span>Rp.</span>
 								</th>
 								<th class="text-right" width="90%">
-									<span><a target="_blank" href="<?= base_url("laporan/cetak_pengiriman_penjualan?filter_date=".$filter_date_2 = date('d F Y',strtotime($date3)).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_penjualan_all_2,0,',','.');?></a></span>
+									<span><a target="_blank" href="<?= base_url("laporan/cetak_pengiriman_penjualan?filter_date=".$filter_date_2 = date('d F Y',strtotime($date3)).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain,0,',','.');?></a></span>
 								</th>
 							</tr>
 					</table>
@@ -3031,7 +3041,7 @@ class Reports extends CI_Controller {
 					</table>
 				</th>
 	        </tr>
-			<tr class="table-active3">
+			<!--<tr class="table-active3">
 				<th colspan="6"></th>
 			</tr>
 			<tr class="table-active3">
@@ -3089,11 +3099,11 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
-			</tr>
+			</tr>-->
 			<tr class="table-active3">
 				<th colspan="6"></th>
 			</tr>
-			<?php
+			<!--<?php
 				$styleColor = $laba_usaha < 0 ? 'color:red' : 'color:black';
 				$styleColor2 = $laba_usaha_2 < 0 ? 'color:red' : 'color:black';
 			?>
@@ -3124,13 +3134,13 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
-	        </tr>
+	        </tr>-->
 			<?php
 				$styleColor = $persentase < 0 ? 'color:red' : 'color:black';
 				$styleColor2 = $persentase_2 < 0 ? 'color:red' : 'color:black';
 			?>
 			<tr class="table-active3">
-	            <th colspan="3" class="text-left">Presentase Laba / Rugi Usaha Terhadap Pendapatan</th>
+	            <th colspan="3" class="text-left">Presentase Laba / Rugi Kotor Terhadap Pendapatan</th>
 	            <th class="text-right" style="<?php echo $styleColor ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -8795,7 +8805,7 @@ class Reports extends CI_Controller {
 		$date2 = '';
 
 		if(count($arr_filter_date) == 2){
-			$date3 	= date('2023-09-01',strtotime($date3));
+			$date3 	= date('2023-08-01',strtotime($date3));
 			$date1 	= date('Y-m-d',strtotime($arr_filter_date[0]));
 			$date2 	= date('Y-m-d',strtotime($arr_filter_date[1]));
 			$filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));

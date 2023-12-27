@@ -1365,7 +1365,7 @@ class Pmm extends CI_Controller {
 	{	
 		$data = array();
 
-		$this->db->where('date >=', date('2023-09-01'));
+		$this->db->where('date >=', date('2023-08-01'));
 		$this->db->where('status','PUBLISH');
 		$this->db->order_by('date','desc');
 		$this->db->order_by('id','desc');

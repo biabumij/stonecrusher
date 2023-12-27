@@ -533,5 +533,52 @@ class Rap extends Secure_Controller {
         $pdf->Output('penyusutan'.'.pdf', 'I');
 	}
 
+	public function form_harga_jual()
+	{
+		$check = $this->m_admin->check_login();
+		if ($check == true) {
+			$data['products'] = $this->db->select('*')->order_by('nama_produk','asc')->get_where('produk', array('status' => 'PUBLISH', 'asset' => 1))->result_array();
+			$this->load->view('rap/form_harga_jual', $data);
+		} else {
+			redirect('admin');
+		}
+	}
+
+	public function submit_harga_jual()
+	{
+		$tanggal_harga_jual = $this->input->post('tanggal_harga_jual');
+		$nilai_jual = str_replace('.', '', $this->input->post('nilai_jual'));
+
+		$this->db->trans_start(); # Starting Transaction
+		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
+
+		$arr_insert = array(
+			'tanggal_harga_jual' => date('Y-m-d', strtotime($tanggal_harga_jual)),	
+			'nilai_jual' => $nilai_jual,
+			'status' => 'PUBLISH',
+			'status' => 'PUBLISH',
+			'created_by' => $this->session->userdata('admin_id'),
+			'created_on' => date('Y-m-d H:i:s')
+		);
+
+		if ($this->db->insert('harga_jual', $arr_insert)) {
+	
+		}
+
+
+		if ($this->db->trans_status() === FALSE) {
+			# Something went wrong.
+			$this->db->trans_rollback();
+			$this->session->set_flashdata('notif_error','<b>Data Gagal Disimpan</b>');
+			redirect('rap/rap');
+		} else {
+			# Everything is Perfect. 
+			# Committing data to the database.
+			$this->db->trans_commit();
+			$this->session->set_flashdata('notif_success','<b>Data Berhasil Disimpan</b>');
+			redirect('admin/rap');
+		}
+	}
+
 }
 ?>

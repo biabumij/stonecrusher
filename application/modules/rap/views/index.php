@@ -46,6 +46,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="<?= site_url('rap/form_rap'); ?>">Analisa Harga Satuan</a></li>
                                             <li><a href="<?= site_url('rap/form_penyusutan'); ?>">Penyusutan</a></li>
+                                            <li><a href="<?= site_url('rap/form_harga_jual'); ?>">Harga Jual</a></li>
                                         </ul>
                                     </div>
                                 </h3>

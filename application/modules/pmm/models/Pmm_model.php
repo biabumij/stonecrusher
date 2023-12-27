@@ -3406,7 +3406,7 @@ class Pmm_model extends CI_Model {
     {
         $output = array();
 
-        $this->db->select('pp.salesPo_id, pp.measure, p.nama_produk, SUM(pp.display_volume) as total, SUM(pp.display_price) / SUM(pp.display_volume) as price, SUM(pp.display_price) as total_price');
+        $this->db->select('ppo.client_id, pp.salesPo_id, pp.product_id, pp.measure, p.nama_produk, SUM(pp.display_volume) as total, SUM(pp.display_price) / SUM(pp.display_volume) as price, SUM(pp.display_price) as total_price');
         $this->db->join('produk p','pp.product_id = p.id','left');
         $this->db->join('pmm_sales_po ppo','pp.salesPo_id = ppo.id','left');
         if(!empty($start_date) && !empty($end_date)){
@@ -3429,6 +3429,7 @@ class Pmm_model extends CI_Model {
         $this->db->order_by('p.nama_produk','asc');
         $this->db->group_by('pp.product_id');
         $query = $this->db->get('pmm_productions pp');
+        
         $output = $query->result_array();
 		
         return $output;
