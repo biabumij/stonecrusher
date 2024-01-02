@@ -1365,7 +1365,6 @@ class Pmm extends CI_Controller {
 	{	
 		$data = array();
 
-		$this->db->where('date >=', date('2023-08-01'));
 		$this->db->where('status','PUBLISH');
 		$this->db->order_by('date','desc');
 		$this->db->order_by('id','desc');
@@ -1378,7 +1377,7 @@ class Pmm extends CI_Controller {
 			$this->db->where('date >=',date('Y-m-d',strtotime($arr_date[0])));
 			$this->db->where('date <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
-		$query = $this->db->get('pmm_remaining_materials_cat');
+		$query = $this->db->get('pmm_remaining_materials_cat_new');
 		if($query->num_rows() > 0){
 			foreach ($query->result_array() as $key => $row) {
 				$row['no'] = $key+1;
@@ -1430,7 +1429,7 @@ class Pmm extends CI_Controller {
 
 		$get_m = $this->crud_global->GetField('produk',array('id'=>$material_id,'status'=>'PUBLISH'),'satuan');
 
-		$last_remaining = $this->db->select('date')->order_by('date','desc')->limit(1)->get_where('pmm_remaining_materials_cat',array('status'=>'PUBLISH','material_id'=>$material_id,'date <'=>$date))->row_array();
+		$last_remaining = $this->db->select('date')->order_by('date','desc')->limit(1)->get_where('pmm_remaining_materials_cat_new',array('status'=>'PUBLISH','material_id'=>$material_id,'date <'=>$date))->row_array();
 
 		$mat_id = array();
 		$mats = $this->db->select('id')->get_where('pmm_penawaran_pembelian_detail',array('material_id'=>$material_id))->result_array();
@@ -1516,7 +1515,7 @@ class Pmm extends CI_Controller {
 		if(!empty($id)){
 			$arr['updated_by'] = $this->session->userdata('admin_id');
 			$arr['updated_on'] = date('Y-m-d H:i:s');
-			$this->db->update('pmm_remaining_materials_cat',$arr,array('id'=>$id));
+			$this->db->update('pmm_remaining_materials_cat_new',$arr,array('id'=>$id));
 
 			$this->db->delete('pmm_remaining_materials',array('cat_id'=>$id));
 
@@ -1552,7 +1551,7 @@ class Pmm extends CI_Controller {
 		}else{
 			$arr['created_by'] = $this->session->userdata('admin_id');
 			$arr['created_on'] = date('Y-m-d H:i:s');
-			$this->db->insert('pmm_remaining_materials_cat',$arr);
+			$this->db->insert('pmm_remaining_materials_cat_new',$arr);
 			//$this->db->insert('pmm_remaining_materials_cat_2',$arr);
 			$id = $this->db->insert_id();
 			if(!empty($get_mats) && !empty($all_mats['volume'])){
@@ -1593,7 +1592,7 @@ class Pmm extends CI_Controller {
 		if(!empty($id)){
 
 			$this->db->where('id',$id);
-			$data = $this->db->get('pmm_remaining_materials_cat')->row_array();
+			$data = $this->db->get('pmm_remaining_materials_cat_new')->row_array();
 			$data['date'] = date('d-m-Y',strtotime($data['date']));
 			$output['output'] = $data;
 		}
@@ -1659,7 +1658,7 @@ class Pmm extends CI_Controller {
 		$output['output'] = false;
 		$id = $this->input->post('id');
 		if(!empty($id)){
-			$this->db->delete('pmm_remaining_materials_cat',array('id'=>$id));
+			$this->db->delete('pmm_remaining_materials_cat_new',array('id'=>$id));
 			{
 				$output['output'] = true;
 			}

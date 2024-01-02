@@ -48,7 +48,7 @@
 											<li><a href="<?= site_url('produksi/form_agregat'); ?>">Komposisi Agregat</a></li>
 											<li><a href="<?= site_url('produksi/form_produksi_harian'); ?>">Produksi Harian</a></li>
 											<li><a href="<?= site_url('produksi/form_produksi_campuran'); ?>">Produksi Campuran</a></li>
-                                            <li><a href="javascript:void(0);" onclick="OpenForm()">Stock Opname</a></li>
+                                            <li><a href="javascript:void(0);" onclick="OpenForm()">Stock Opname</a></li>z
                                         </ul>
                                     </div>
                                 </h3>

@@ -158,13 +158,14 @@
 			<!-- HPProduksi -->
 			<!-- Bahan -->
 			<?php
-			$akumulasi_bahan_baku = $this->db->select('sum(pp.total_nilai_keluar) as boulder, sum(pp.total_nilai_keluar_2) as bbm')
-			->from('akumulasi_bahan_baku_new pp')
-			->where("(pp.date_akumulasi between '$date1' and '$date2')")
+			$pemakaian_bahan_baku = $this->db->select('pp.nilai_pemakaian_boulder as nilai_pemakaian_boulder, pp.nilai_pemakaian_bbm as nilai_pemakaian_bbm')
+			->from('hpp_bahan_baku_new pp')
+			->where("(pp.date_hpp between '$date1' and '$date2')")
+			->order_by('pp.date_hpp','desc')->limit(1)
 			->get()->row_array();
 
-			$total_nilai_produksi_boulder = $akumulasi_bahan_baku['boulder'];
-			$total_nilai_produksi_solar = $akumulasi_bahan_baku['bbm'];
+			$total_nilai_produksi_boulder = $pemakaian_bahan_baku['nilai_pemakaian_boulder'];
+			$total_nilai_produksi_solar = $pemakaian_bahan_baku['nilai_pemakaian_bbm'];
 			?>
 
 			<!-- HPProduksi -->
@@ -584,14 +585,14 @@
 		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
 
 		$stock_opname_batu_boulder_ago = $this->db->select('(cat.volume) as volume, cat.measure as measure')
-		->from('pmm_remaining_materials_cat cat ')
+		->from('pmm_remaining_materials_cat_new cat ')
 		->where("(cat.date = '$tanggal_opening_balance')")
 		->where("cat.material_id = 15")
 		->where("cat.status = 'PUBLISH'")
 		->order_by('date','desc')->limit(1)
 		->get()->row_array();
-
-		$harga_boulder = $this->db->select('pp.*')
+		
+		$harga_boulder = $this->db->select('pp.nilai_boulder as nilai_boulder')
 		->from('hpp_bahan_baku_new pp')
 		->where("(pp.date_hpp between '$date3_ago' and '$date2_ago')")
 		->order_by('pp.date_hpp','desc')->limit(1)
@@ -619,7 +620,10 @@
 			<tr class="table-active4">
 				<th align="left" width="25%">Stok Boulder Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
 				<th align="right" width="10%"><?php echo number_format($stock_opname_batu_boulder_ago['volume'],2,',','.');?> (<?php echo $stock_opname_batu_boulder_ago['measure'] = $this->crud_global->GetField('pmm_measures',array('id'=>$stock_opname_batu_boulder_ago['measure']),'measure_name');?>)</th>
-				<th align="right" width="10%"><?php echo number_format($harga_boulder['nilai_boulder'] / round($stock_opname_batu_boulder_ago['volume'],2),0,',','.');?></th>
+				<?php
+				$harsat_boulder = (round($stock_opname_batu_boulder_ago['volume'],2)!=0)?$harga_boulder['nilai_boulder'] / round($stock_opname_batu_boulder_ago['volume'],2) * 1:0;
+				?>
+				<th align="right" width="10%"><?php echo number_format($harsat_boulder,0,',','.');?></th>
 				<th align="right" width="10%"><?php echo number_format($harga_boulder['nilai_boulder'],0,',','.');?></th>
 			</tr>
 			<tr class="table-active4">
@@ -634,7 +638,7 @@
 			<tr class="table-active">
 				<th align="left">Total Stok Boulder Bulan Ini</th>
 				<th align="right"><?php echo number_format($stock_opname_batu_boulder_ago['volume'] + $pembelian_boulder['volume'],2,',','.');?> (Ton)</th>
-				<th align="right" width="10%"><?php echo number_format($harga_baru,0,',','.');?></th>
+				<th align="right" width="10%" style="color:green"><?php echo number_format($harga_baru,0,',','.');?></th>
 				<th align="right" width="10%"><?php echo number_format($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai'],0,',','.');?></th>
 			</tr>
 			<tr class="table-active4">

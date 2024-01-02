@@ -26,7 +26,7 @@
                             <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
                             <li>
                                 <a href="<?php echo site_url('admin/produksi');?>">Kunci & Approval</a></li>
-                            <li><a>HPP Pergerakan Bahan Baku</a></li>
+                            <li><a>HPP Bahan Baku</a></li>
                         </ul>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         <div class="panel">
                             <div class="panel-header"> 
                                 <div class="">
-                                    <h3 class="">HPP Pergerakan Bahan Baku Baru</h3>
+                                    <h3 class="">HPP Bahan Baku Baru</h3>
                                     
                                 </div>
                             </div>
@@ -55,17 +55,24 @@
                                             <thead>
                                                 <tr>
                                                     <th width="5%">NO.</th>
-                                                    <th width="50%">URAIAN</th>
-													<th width="45%">HARGA SATUAN</th>
+                                                    <th width="20%">URAIAN</th>
+													<th width="25%">HARGA SATUAN BARU</th>
+                                                    <th width="25%">NILAI PEMAKAIAN BAHAN BAKU</th>
+                                                    <th width="25%">NILAI BAHAN BAKU AKHIR</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                 <tr>
-
+                                                <tr>
                                                     <td class="text-center">1.</td>
                                                     <td>Batu Boulder</td>
 													<td>
                                                         <input type="text" name="boulder" id="boulder" class="form-control text-right" required="" autocomplete="off"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="nilai_pemakaian_boulder" id="nilai_pemakaian_boulder" class="form-control text-right" required="" autocomplete="off"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="nilai_boulder" id="nilai_boulder" class="form-control text-right" required="" autocomplete="off"/>
                                                     </td>
                                                 </tr>
 												<tr>
@@ -73,6 +80,12 @@
                                                     <td>Solar</td>
 													<td>
                                                         <input type="text" name="bbm" id="bbm" class="form-control text-right"  required="" autocomplete="off"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="nilai_pemakaian_bbm" id="nilai_pemakaian_bbm" class="form-control text-right" required="" autocomplete="off"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="nilai_bbm" id="nilai_bbm" class="form-control text-right" required="" autocomplete="off"/>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -128,8 +141,7 @@
             }
         });
         $('.dtpicker').on('apply.daterangepicker', function(ev, picker) {
-              $(this).val(picker.startDate.format('DD-MM-YYYY'));
-              // table.ajax.reload();
+            $(this).val(picker.startDate.format('DD-MM-YYYY'));
         });
 
 
@@ -164,13 +176,7 @@
                 $('#produk_a').prop('selectedIndex', 2).trigger('change');
             }, 1000);
         });
-		$(document).ready(function() {
-            setTimeout(function(){
-                $('#produk_b').prop('selectedIndex', 1).trigger('change');
-            }, 1000);
-        });
     </script>
-
 
 </body>
 </html>

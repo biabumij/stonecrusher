@@ -44,9 +44,8 @@
                                             <i class="fa fa-plus"></i> Buat <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="<?= site_url('produksi/form_hpp_bahan_baku'); ?>">HPP Pergerakan Bahan Baku</a></li>
-                                            <li><a href="<?= site_url('produksi/form_akumulasi_bahan_baku'); ?>">Akumulasi Pergerakan Bahan Baku</a></li>
-                                            <li><a href="<?= site_url('produksi/form_akumulasi_bahan_jadi'); ?>">Akumulasi Persediaan Bahan Jadi</a></li>
+                                            <li><a href="<?= site_url('produksi/form_hpp_bahan_baku'); ?>">HPP Bahan Baku</a></li>
+                                            <li><a href="<?= site_url('produksi/form_akumulasi_bahan_jadi'); ?>">HPP Persediaan Bahan Jadi</a></li>
                                         </ul>
                                     </div>
                                 </h3>
@@ -54,9 +53,8 @@
                             </div>
                             <div class="panel-content">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#hpp_bahan_baku" aria-controls="hpp_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Pergerakan Bahan Baku</a>
-                                    <li role="presentation"><a href="#akumulasi_bahan_baku" aria-controls="akumulasi_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Pergerakan Bahan Baku</a>
-                                    <li role="presentation"><a href="#akumulasi_bahan_jadi" aria-controls="akumulasi_bahan_jadi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Akumulasi Persediaan Bahan Jadi</a></li>
+                                    <li role="presentation" class="active"><a href="#hpp_bahan_baku" aria-controls="hpp_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Bahan Baku</a>
+                                    <li role="presentation"><a href="#akumulasi_bahan_jadi" aria-controls="akumulasi_bahan_jadi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Persediaan Bahan Jadi</a></li>
                                 </ul>
 
                                 <div class="tab-content">
@@ -74,8 +72,10 @@
                                                     <tr>
                                                         <th>No</th>
 														<th>Tanggal</th>
-														<th>Boulder</th>
-                                                        <th>BBM</th>
+														<th>Nilai Pemakaian Boulder</th>
+                                                        <th>Nilai Pemakaian BBM</th>
+                                                        <th>Nilai Akhir Boulder</th>
+                                                        <th>Nilai Akhir BBM</th>
 														<th>Status</th>
                                                         <th>Hapus</th>
                                                     </tr>
@@ -91,38 +91,7 @@
 									</div>
 									<!-- End Table HPP Bahan Baku -->
 
-                                    <!-- Akumulasi Bahan Baku -->
-                                    <div role="tabpanel" class="tab-pane" id="akumulasi_bahan_baku">
-										<div class="col-sm-4">
-											<input type="text" id="filter_date_akumulasi_bahan_baku" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
-										</div>
-										<br />
-										<br />										
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover" id="table_akumulasi_bahan_baku" style="width:100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-														<th>Tanggal</th>
-														<th>Total Nilai Keluar Boulder</th>
-                                                        <th>Total Nilai Keluar Solar</th>
-                                                        <th>Total Nilai Persediaan Akhir</th>
-														<th>Status</th>
-                                                        <th>Hapus</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                                <tfoot>
-                                                   
-                                                </tfoot>
-                                            </table>
-                                        </div>
-									</div>	
-									<!-- End Akumulasi Bahan Baku -->
-
-                                    <!-- Akumulasi Persediaan Bahan Jadi -->
+                                    <!-- HPP Table HPP Persediaan Bahan Jadi -->
                                     <div role="tabpanel" class="tab-pane" id="akumulasi_bahan_jadi">
 										<div class="col-sm-4">
 											<input type="text" id="filter_date_akumulasi_bahan_jadi" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
@@ -150,7 +119,7 @@
                                             </table>
                                         </div>
 									</div>
-									<!-- End Table Akumulasi Persediaan Bahan Jadi -->
+									<!-- End Table HPP Persediaan Bahan Jadi -->
 										           
                                 </div>
                             </div>
@@ -226,10 +195,16 @@
                     "data": "date_hpp"
                 },
 				{
-                    "data": "boulder"
+                    "data": "nilai_pemakaian_boulder"
                 },
 				{
-                    "data": "bbm"
+                    "data": "nilai_pemakaian_bbm"
+                },
+                {
+                    "data": "nilai_boulder"
+                },
+				{
+                    "data": "nilai_bbm"
                 },
                 {
                     "data": "created_on"
@@ -240,7 +215,7 @@
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": [2, 3], "className": 'text-right'},
+                { "targets": [2, 3, 4, 5], "className": 'text-right'},
             ],
         });
 
@@ -264,80 +239,6 @@
                         if (result.output) {
                             table_hpp_bahan_baku.ajax.reload();
                             bootbox.alert('Berhasil Menghapus HPP Pergerakan Bahan Baku !!');
-                        } else if (result.err) {
-                            bootbox.alert(result.err);
-                        }
-                    }
-                });
-            }
-            });
-        }
-
-        var table_akumulasi_bahan_baku = $('#table_akumulasi_bahan_baku').DataTable({
-            ajax: {
-                processing: true,
-                serverSide: true,
-                url: '<?php echo site_url('produksi/table_akumulasi_bahan_baku'); ?>',
-                type: 'POST',
-                data: function(d) {
-                    d.filter_date = $('#filter_date_akumulasi_bahan_baku').val();
-                }
-            },
-            responsive: true,
-            paging: false,
-            "deferRender": true,
-            "language": {
-                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
-            },
-            columns: [
-				{
-                    "data": "no"
-                },
-				{
-                    "data": "date_akumulasi"
-                },
-				{
-                    "data": "total_nilai_keluar"
-                },
-                {
-                    "data": "total_nilai_keluar_2"
-                },
-                {
-                    "data": "total_nilai_akhir"
-                },
-                {
-                    "data": "status"
-                },
-                {
-                    "data": "actions"
-                }
-            ],
-            "columnDefs": [
-                { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": [2, 3, 4], "className": 'text-right'},
-            ],
-        });
-	
-        $('.dtpickerange').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_akumulasi_bahan_baku.ajax.reload();
-        });
-
-        function DeleteDataAkumulasiBahanBaku(id) {
-        bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
-            // console.log('This was logged in the callback: ' + result); 
-            if (result) {
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo site_url('produksi/delete_akumulasi_bahan_baku'); ?>",
-                    dataType: 'json',
-                    data: {
-                        id: id
-                    },
-                    success: function(result) {
-                        if (result.output) {
-                            table_akumulasi_bahan_baku.ajax.reload();
-                            bootbox.alert('Berhasil Menghapus Akumulasi Pergerakan Bahan Baku !!');
                         } else if (result.err) {
                             bootbox.alert(result.err);
                         }

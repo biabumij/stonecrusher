@@ -1355,7 +1355,11 @@ class Produksi extends Secure_Controller {
 	{
 		$date_hpp = $this->input->post('date_hpp');
 		$boulder = str_replace('.', '', $this->input->post('boulder'));
+		$nilai_pemakaian_boulder = str_replace('.', '', $this->input->post('nilai_bonilai_pemakaian_boulderulder'));
+		$nilai_boulder = str_replace('.', '', $this->input->post('nilai_boulder'));
 		$bbm = str_replace('.', '', $this->input->post('bbm'));
+		$nilai_pemakaian_bbm = str_replace('.', '', $this->input->post('nilai_pemakaian_bbm'));
+		$nilai_bbm = str_replace('.', '', $this->input->post('nilai_bbm'));
 
 		$this->db->trans_start(); # Starting Transaction
 		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
@@ -1364,6 +1368,10 @@ class Produksi extends Secure_Controller {
 			'date_hpp' => date('Y-m-d', strtotime($date_hpp)),
 			'boulder' => $boulder,
 			'bbm' => $bbm,
+			'nilai_pemakaian_boulder' => $nilai_pemakaian_boulder,
+			'nilai_boulder' => $nilai_boulder,
+			'nilai_pemakaian_bbm' => $nilai_pemakaian_bbm,
+			'nilai_bbm' => $nilai_bbm,
 			'status' => 'PUBLISH',
 			'created_by' => $this->session->userdata('admin_id'),
 			'created_on' => date('Y-m-d H:i:s')
@@ -1394,7 +1402,7 @@ class Produksi extends Secure_Controller {
 			$this->db->where('pp.date_hpp >=',date('Y-m-d',strtotime($arr_date[0])));
 			$this->db->where('pp.date_hpp <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
-        $this->db->select('pp.id, pp.date_hpp, pp.boulder, pp.bbm, pp.status, pp.created_by, pp.created_on');
+        $this->db->select('pp.id, pp.date_hpp, pp.nilai_pemakaian_boulder, pp.nilai_pemakaian_bbm, pp.nilai_boulder, pp.nilai_bbm, pp.status, pp.created_by, pp.created_on');
 		$this->db->order_by('pp.date_hpp','desc');
 		$query = $this->db->get('hpp_bahan_baku_new pp');
 		
@@ -1402,8 +1410,10 @@ class Produksi extends Secure_Controller {
 			foreach ($query->result_array() as $key => $row) {
                 $row['no'] = $key+1;
                 $row['date_hpp'] = date('d F Y',strtotime($row['date_hpp']));
-                $row['boulder'] = number_format($row['boulder'],0,',','.');
-				$row['bbm'] = number_format($row['bbm'],0,',','.');
+                $row['nilai_pemakaian_boulder'] = number_format($row['nilai_pemakaian_boulder'],0,',','.');
+				$row['nilai_pemakaian_bbm'] = number_format($row['nilai_pemakaian_bbm'],0,',','.');
+				$row['nilai_boulder'] = number_format($row['nilai_boulder'],0,',','.');
+				$row['nilai_bbm'] = number_format($row['nilai_bbm'],0,',','.');
 				$row['status'] = $row['status'];
 				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
                 $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
@@ -1521,110 +1531,6 @@ class Produksi extends Secure_Controller {
 		$id = $this->input->post('id');
 		if(!empty($id)){
 			$this->db->delete('akumulasi_bahan_jadi',array('id'=>$id));
-			{
-				$output['output'] = true;
-			}
-		}
-		echo json_encode($output);
-	}
-
-	public function form_akumulasi_bahan_baku()
-	{
-		$check = $this->m_admin->check_login();
-		if ($check == true) {
-			$data['products'] = $this->db->select('*')->get_where('produk', array('status' => 'PUBLISH', 'agregat' => 1))->result_array();
-			$this->load->view('produksi/form_akumulasi_bahan_baku', $data);
-		} else {
-			redirect('admin');
-		}
-	}
-
-	public function submit_akumulasi_bahan_baku()
-	{
-		$date_akumulasi = $this->input->post('date_akumulasi');
-		$total_nilai_keluar = str_replace('.', '', $this->input->post('total_nilai_keluar'));
-		$total_nilai_keluar_2 = str_replace('.', '', $this->input->post('total_nilai_keluar_2'));
-		$total_nilai_akhir = str_replace('.', '', $this->input->post('total_nilai_akhir'));
-		$bpp = $this->input->post('bpp');
-
-		$this->db->trans_start(); # Starting Transaction
-		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
-
-		$arr_insert = array(
-			'date_akumulasi' => date('Y-m-d', strtotime($date_akumulasi)),
-			'total_nilai_keluar' => $total_nilai_keluar,
-			'total_nilai_keluar_2' => $total_nilai_keluar_2,
-			'total_nilai_akhir' => $total_nilai_akhir,
-			'bpp' => $bpp,
-			'unit_head' => 39,
-			'logistik' => 27,
-			'admin' => 27,
-			'keu_1' => 37,
-			'keu_2' => 36,
-			'status' => 'PUBLISH',
-			'created_by' => $this->session->userdata('admin_id'),
-			'created_on' => date('Y-m-d H:i:s')
-		);
-
-		$this->db->insert('akumulasi_bahan_baku_new', $arr_insert);
-
-		if ($this->db->trans_status() === FALSE) {
-			# Something went wrong.
-			$this->db->trans_rollback();
-			$this->session->set_flashdata('notif_error','<b>Data Gagal Disimpan</b>');
-			redirect('kunci_&_approval/akumulasi_bahan_baku');
-		} else {
-			# Everything is Perfect. 
-			# Committing data to the database.
-			$this->db->trans_commit();
-			$this->session->set_flashdata('notif_success','<b>Data Berhasil Disimpan</b>');
-			redirect('admin/kunci_&_approval');
-		}
-	}
-
-	public function table_akumulasi_bahan_baku()
-	{   
-        $data = array();
-		$filter_date = $this->input->post('filter_date');
-		if(!empty($filter_date)){
-			$arr_date = explode(' - ', $filter_date);
-			$this->db->where('pp.date_akumulasi >=',date('Y-m-d',strtotime($arr_date[0])));
-			$this->db->where('pp.date_akumulasi <=',date('Y-m-d',strtotime($arr_date[1])));
-		}
-        $this->db->select('pp.id, pp.date_akumulasi, pp.total_nilai_keluar, , pp.total_nilai_keluar_2, pp.total_nilai_akhir, pp.status, pp.created_by, pp.created_on');
-		$this->db->order_by('pp.date_akumulasi','desc');
-		$query = $this->db->get('akumulasi_bahan_baku_new pp');
-		
-       if($query->num_rows() > 0){
-			foreach ($query->result_array() as $key => $row) {
-                $row['no'] = $key+1;
-                $row['date_akumulasi'] = date('d F Y',strtotime($row['date_akumulasi']));
-                $row['total_nilai_keluar'] = number_format($row['total_nilai_keluar'],0,',','.');
-				$row['total_nilai_keluar_2'] = number_format($row['total_nilai_keluar_2'],0,',','.');
-				$row['total_nilai_akhir'] = number_format($row['total_nilai_akhir'],0,',','.');
-				$row['status'] = $row['status'];
-				$row['admin_name'] = $this->crud_global->GetField('tbl_admin',array('admin_id'=>$row['created_by']),'admin_name');
-                $row['created_on'] = date('d/m/Y H:i:s',strtotime($row['created_on']));
-
-				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
-				$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteDataAkumulasiBahanBaku('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
-				}else {
-					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
-				}
-
-                $data[] = $row;
-            }
-
-        }
-        echo json_encode(array('data'=>$data));
-    }
-
-	public function delete_akumulasi_bahan_baku()
-	{
-		$output['output'] = false;
-		$id = $this->input->post('id');
-		if(!empty($id)){
-			$this->db->delete('akumulasi_bahan_baku',array('id'=>$id));
 			{
 				$output['output'] = true;
 			}

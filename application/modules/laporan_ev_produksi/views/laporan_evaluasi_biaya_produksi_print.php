@@ -158,13 +158,14 @@
 			<!-- HPProduksi -->
 			<!-- Bahan -->
 			<?php
-			$akumulasi_bahan_baku = $this->db->select('sum(pp.total_nilai_keluar) as boulder, sum(pp.total_nilai_keluar_2) as bbm')
-			->from('akumulasi_bahan_baku_new pp')
-			->where("(pp.date_akumulasi between '$date1' and '$date2')")
+			$pemakaian_bahan_baku = $this->db->select('pp.nilai_pemakaian_boulder as nilai_pemakaian_boulder, pp.nilai_pemakaian_bbm as nilai_pemakaian_bbm')
+			->from('hpp_bahan_baku_new pp')
+			->where("(pp.date_hpp between '$date1' and '$date2')")
+			->order_by('pp.date_hpp','desc')->limit(1)
 			->get()->row_array();
 
-			$total_nilai_produksi_boulder = $akumulasi_bahan_baku['boulder'];
-			$total_nilai_produksi_solar = $akumulasi_bahan_baku['bbm'];
+			$total_nilai_produksi_boulder = $pemakaian_bahan_baku['nilai_pemakaian_boulder'];
+			$total_nilai_produksi_solar = $pemakaian_bahan_baku['nilai_pemakaian_bbm'];
 			?>
 
 			<!-- HPProduksi -->
@@ -531,12 +532,14 @@
 			$vol_bbm_solar =  $vol_bbm_solar_ton * $row['berat_isi_boulder'];
 			$nilai_bbm_solar = $vol_bbm_solar * $row['price_bbm_solar'];
 
-			$rumus_overhead = ($row['overhead'] / 25) / 8;
-			$rumus_overhead_1 = ($row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc']) / $row['berat_isi_batu_pecah'] ;
-			//$overhead = $rumus_overhead / $rumus_overhead_1;
+			$total_overhead = $row['konsumsi'] + $row['gaji'] + $row['pengujian'] + $row['perbaikan'] + $row['akomodasi'] + $row['listrik'] + $row['thr'] + $row['bensin'] + $row['dinas'] + $row['komunikasi'] + $row['pakaian'] + $row['tulis'] + $row['keamanan'] + $row['perlengkapan'] + $row['beban'] + $row['adm'] + $row['lain'] + $row['sewa'] + $row['bpjs'] + $row['penyusutan'] + $row['iuran'] + $row['kendaraan'] + $row['pajak'] + $row['solar'] + $row['donasi'] + $row['legal'] + $row['pengobatan'] + $row['lembur'] + $row['pelatihan'];
 
-			$rumus_overhead_ton = $row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc'];
-			$overhead_ton = $rumus_overhead / $rumus_overhead_ton;
+			//$rumus_overhead = ($row['overhead'] / 25) / 8;
+			//$rumus_overhead_1 = ($row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc']) / $row['berat_isi_batu_pecah'] ;
+			//$overhead = $rumus_overhead / $rumus_overhead_1;
+			//$rumus_overhead_ton = $row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc'];
+			
+			$overhead_ton = $total_overhead / 5000;
 			$overhead = $overhead_ton;
 
 			$total = $nilai_boulder + $nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan + $overhead + $nilai_bbm_solar;
