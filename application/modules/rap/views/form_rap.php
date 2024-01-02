@@ -199,7 +199,8 @@
 												</thead>
 												<tbody>
 													<tr>
-														<td style="text-align: left !important;" colspan="4"><b>Overhead</b></td>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;" colspan="2">Overhead</td>
 													</tr>
 													<tr>
 														<td class="text-center"></td>
