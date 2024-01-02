@@ -2707,7 +2707,6 @@ class Reports extends CI_Controller {
 			->where("pp.date_akumulasi between '$date1' and '$date2'")
 			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
-			file_put_contents("D:\\test.txt", $this->db->last_query());
 			$akumulasi_bahan_jadi_volume = $akumulasi_bahan_jadi['volume'];
 			$akumulasi_bahan_jadi_nilai = $akumulasi_bahan_jadi['nilai'];
 			$hpp =  $akumulasi_bahan_jadi_nilai / round($akumulasi_bahan_jadi_volume,2);
