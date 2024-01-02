@@ -202,12 +202,14 @@
 			$vol_bbm_solar =  $vol_bbm_solar_ton * $row['berat_isi_boulder'];
 			$nilai_bbm_solar = $vol_bbm_solar * $row['price_bbm_solar'];
 
-			$rumus_overhead = ($row['overhead'] / 25) / 8;
-			$rumus_overhead_1 = ($row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc']) / $row['berat_isi_batu_pecah'] ;
+			$total_overhead = $row['konsumsi'] + $row['gaji'] + $row['pengujian'] + $row['perbaikan'] + $row['akomodasi'] + $row['listrik'] + $row['thr'] + $row['bensin'] + $row['dinas'] + $row['komunikasi'] + $row['pakaian'] + $row['tulis'] + $row['keamanan'] + $row['perlengkapan'] + $row['beban'] + $row['adm'] + $row['lain'] + $row['sewa'] + $row['bpjs'] + $row['penyusutan'] + $row['iuran'] + $row['kendaraan'] + $row['pajak'] + $row['solar'] + $row['donasi'] + $row['legal'] + $row['pengobatan'] + $row['lembur'] + $row['pelatihan'];
+
+			//$rumus_overhead = ($row['overhead'] / 25) / 8;
+			//$rumus_overhead_1 = ($row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc']) / $row['berat_isi_batu_pecah'] ;
 			//$overhead = $rumus_overhead / $rumus_overhead_1;
 
 			$rumus_overhead_ton = $row['kapasitas_alat_sc'] * $row['efisiensi_alat_sc'];
-			$overhead_ton = $rumus_overhead / $rumus_overhead_ton;
+			$overhead_ton = $total_overhead / 5000;
 			$overhead = $overhead_ton;
 
 			$total = $nilai_boulder + $nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan + $overhead + $nilai_bbm_solar;

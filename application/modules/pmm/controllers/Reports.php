@@ -2700,19 +2700,21 @@ class Reports extends CI_Controller {
 			$total_penjualan_all_lain_lain = 0;
 			$total_penjualan_all_lain_lain = $total_penjualan_lain_lain;
 			?>
-
+			
 			<?php
-			$row = $this->db->select('r.*')
-			->from('harga_jual r')
-			->where("(r.tanggal_harga_jual <= '$date2')")
-			->group_by("r.tanggal_harga_jual")->limit(1)
-			->order_by('r.tanggal_harga_jual','desc')
+			$akumulasi_bahan_jadi = $this->db->select('sum(pp.volume) as volume, sum(pp.nilai) as nilai')
+			->from('akumulasi_bahan_jadi_new pp')
+			->where("pp.date_akumulasi between '$date1' and '$date2'")
+			->order_by('pp.date_akumulasi','desc')->limit(1)
 			->get()->row_array();
-			$harga_jual = $row['nilai_jual'];
+			file_put_contents("D:\\test.txt", $this->db->last_query());
+			$akumulasi_bahan_jadi_volume = $akumulasi_bahan_jadi['volume'];
+			$akumulasi_bahan_jadi_nilai = $akumulasi_bahan_jadi['nilai'];
+			$hpp =  $akumulasi_bahan_jadi_nilai / round($akumulasi_bahan_jadi_volume,2);
 			?>
 
 			<?php
-			$beban_pokok_penjualan = round($total_volume,2) * round($harga_jual,0);
+			$beban_pokok_penjualan = round($total_volume,2) * round($hpp,0);
 			?>
 			
 			<?php
@@ -2845,7 +2847,7 @@ class Reports extends CI_Controller {
 			?>
 
 			<?php
-			$beban_pokok_penjualan_2 = $total_volume_2 * round($harga_jual,0);
+			$beban_pokok_penjualan_2 = $total_volume_2 * round($hpp,0);
 			?>
 
 			<?php

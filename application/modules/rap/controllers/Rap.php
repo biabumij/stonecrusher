@@ -105,7 +105,36 @@ class Rap extends Secure_Controller {
 		$tax_id_bbm_solar = $this->input->post('tax_id_bbm_solar');
 		$pajak_id_bbm_solar = $this->input->post('pajak_id_bbm_solar');
 		
-		$overhead = str_replace('.', '', $this->input->post('overhead'));
+		$konsumsi = str_replace('.', '', $this->input->post('konsumsi'));
+		$gaji = str_replace('.', '', $this->input->post('gaji'));
+		$pengujian = str_replace('.', '', $this->input->post('pengujian'));
+		$perbaikan = str_replace('.', '', $this->input->post('perbaikan'));
+		$akomodasi = str_replace('.', '', $this->input->post('akomodasi'));
+		$listrik = str_replace('.', '', $this->input->post('listrik'));
+		$thr = str_replace('.', '', $this->input->post('thr'));
+		$bensin = str_replace('.', '', $this->input->post('bensin'));
+		$dinas = str_replace('.', '', $this->input->post('dinas'));
+		$komunikasi = str_replace('.', '', $this->input->post('komunikasi'));
+		$pakaian = str_replace('.', '', $this->input->post('pakaian'));
+		$tulis = str_replace('.', '', $this->input->post('tulis'));
+		$keamanan = str_replace('.', '', $this->input->post('keamanan'));
+		$perlengkapan = str_replace('.', '', $this->input->post('perlengkapan'));
+		$beban = str_replace('.', '', $this->input->post('beban'));
+		$adm = str_replace('.', '', $this->input->post('adm'));
+		$lain = str_replace('.', '', $this->input->post('lain'));
+		$sewa = str_replace('.', '', $this->input->post('sewa'));
+		$bpjs = str_replace('.', '', $this->input->post('bpjs'));
+		$penyusutan = str_replace('.', '', $this->input->post('penyusutan'));
+		$iuran = str_replace('.', '', $this->input->post('iuran'));
+		$kendaraan = str_replace('.', '', $this->input->post('kendaraan'));
+		$pajak = str_replace('.', '', $this->input->post('pajak'));
+		$solar = str_replace('.', '', $this->input->post('solar'));
+		$donasi = str_replace('.', '', $this->input->post('donasi'));
+		$legal = str_replace('.', '', $this->input->post('legal'));
+		$pengobatan = str_replace('.', '', $this->input->post('pengobatan'));
+		$lembur = str_replace('.', '', $this->input->post('lembur'));
+		$pelatihan = str_replace('.', '', $this->input->post('pelatihan'));
+
 		$laba = str_replace('.', '', $this->input->post('laba'));
 
 		$kapasitas_alat_sc =  str_replace('.', '', $this->input->post('kapasitas_alat_sc'));
@@ -149,7 +178,36 @@ class Rap extends Secure_Controller {
 			'tax_id_bbm_solar' => $tax_id_bbm_solar,
 			'pajak_id_bbm_solar' => $pajak_id_bbm_solar,
 
-			'overhead' => $overhead,
+			'konsumsi' => $konsumsi,
+			'gaji' => $gaji,
+			'pengujian' => $pengujian,
+			'perbaikan' => $perbaikan,
+			'akomodasi' => $akomodasi,
+			'listrik' => $listrik,
+			'thr' => $thr,
+			'bensin' => $bensin,
+			'dinas' => $dinas,
+			'komunikasi' => $komunikasi,
+			'pakaian' => $pakaian,
+			'tulis' => $tulis,
+			'keamanan' => $keamanan,
+			'perlengkapan' => $perlengkapan,
+			'beban' => $beban,
+			'adm' => $adm,
+			'lain' => $lain,
+			'sewa' => $sewa,
+			'bpjs' => $bpjs,
+			'penyusutan' => $penyusutan,
+			'iuran' => $iuran,
+			'kendaraan' => $kendaraan,
+			'pajak' => $pajak,
+			'solar' => $solar,
+			'donasi' => $donasi,
+			'legal' => $legal,
+			'pengobatan' => $pengobatan,
+			'lembur' => $lembur,
+			'pelatihan' => $pelatihan,
+
 			'laba' => $laba,
 
 			'kapasitas_alat_sc' => $kapasitas_alat_sc,
@@ -291,7 +349,36 @@ class Rap extends Secure_Controller {
 		$tax_id_bbm_solar = $this->input->post('tax_id_bbm_solar');
 		$pajak_id_bbm_solar = $this->input->post('pajak_id_bbm_solar');
 		
-		$overhead = str_replace('.', '', $this->input->post('overhead'));
+		$konsumsi = str_replace('.', '', $this->input->post('konsumsi'));
+		$gaji = str_replace('.', '', $this->input->post('gaji'));
+		$pengujian = str_replace('.', '', $this->input->post('pengujian'));
+		$perbaikan = str_replace('.', '', $this->input->post('perbaikan'));
+		$akomodasi = str_replace('.', '', $this->input->post('akomodasi'));
+		$listrik = str_replace('.', '', $this->input->post('listrik'));
+		$thr = str_replace('.', '', $this->input->post('thr'));
+		$bensin = str_replace('.', '', $this->input->post('bensin'));
+		$dinas = str_replace('.', '', $this->input->post('dinas'));
+		$komunikasi = str_replace('.', '', $this->input->post('komunikasi'));
+		$pakaian = str_replace('.', '', $this->input->post('pakaian'));
+		$tulis = str_replace('.', '', $this->input->post('tulis'));
+		$keamanan = str_replace('.', '', $this->input->post('keamanan'));
+		$perlengkapan = str_replace('.', '', $this->input->post('perlengkapan'));
+		$beban = str_replace('.', '', $this->input->post('beban'));
+		$adm = str_replace('.', '', $this->input->post('adm'));
+		$lain = str_replace('.', '', $this->input->post('lain'));
+		$sewa = str_replace('.', '', $this->input->post('sewa'));
+		$bpjs = str_replace('.', '', $this->input->post('bpjs'));
+		$penyusutan = str_replace('.', '', $this->input->post('penyusutan'));
+		$iuran = str_replace('.', '', $this->input->post('iuran'));
+		$kendaraan = str_replace('.', '', $this->input->post('kendaraan'));
+		$pajak = str_replace('.', '', $this->input->post('pajak'));
+		$solar = str_replace('.', '', $this->input->post('solar'));
+		$donasi = str_replace('.', '', $this->input->post('donasi'));
+		$legal = str_replace('.', '', $this->input->post('legal'));
+		$pengobatan = str_replace('.', '', $this->input->post('pengobatan'));
+		$lembur = str_replace('.', '', $this->input->post('lembur'));
+		$pelatihan = str_replace('.', '', $this->input->post('pelatihan'));
+
 		$laba = str_replace('.', '', $this->input->post('laba'));
 
 		$kapasitas_alat_sc =  str_replace('.', '', $this->input->post('kapasitas_alat_sc'));
@@ -333,7 +420,36 @@ class Rap extends Secure_Controller {
 			'tax_id_bbm_solar' => $tax_id_bbm_solar,
 			'pajak_id_bbm_solar' => $pajak_id_bbm_solar,
 
-			'overhead' => $overhead,
+			'konsumsi' => $konsumsi,
+			'gaji' => $gaji,
+			'pengujian' => $pengujian,
+			'perbaikan' => $perbaikan,
+			'akomodasi' => $akomodasi,
+			'listrik' => $listrik,
+			'thr' => $thr,
+			'bensin' => $bensin,
+			'dinas' => $dinas,
+			'komunikasi' => $komunikasi,
+			'pakaian' => $pakaian,
+			'tulis' => $tulis,
+			'keamanan' => $keamanan,
+			'perlengkapan' => $perlengkapan,
+			'beban' => $beban,
+			'adm' => $adm,
+			'lain' => $lain,
+			'sewa' => $sewa,
+			'bpjs' => $bpjs,
+			'penyusutan' => $penyusutan,
+			'iuran' => $iuran,
+			'kendaraan' => $kendaraan,
+			'pajak' => $pajak,
+			'solar' => $solar,
+			'donasi' => $donasi,
+			'legal' => $legal,
+			'pengobatan' => $pengobatan,
+			'lembur' => $lembur,
+			'pelatihan' => $pelatihan,
+			
 			'laba' => $laba,
 
 			'kapasitas_alat_sc' => $kapasitas_alat_sc,

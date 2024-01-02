@@ -1339,7 +1339,6 @@ class Productions extends Secure_Controller {
 			$this->db->where('pp.product_id',$product_id);
 			$this->db->group_by('ppo.id');
             $query = $this->db->get('pmm_sales_po ppo');
-			file_put_contents("D:\\test.txt", $this->db->last_query());
 
             $data['row'] = $query->result_array();
             $this->load->view('laporan_penjualan/detail_transaction',$data);

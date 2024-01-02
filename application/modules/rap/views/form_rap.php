@@ -199,10 +199,209 @@
 												</thead>
 												<tbody>
 													<tr>
-														<td class="text-center">1.</td>
-														<td style="text-align: left !important;">Overhead</td>
+														<td style="text-align: left !important;" colspan="4"><b>Overhead</b></td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Konsumsi</td>
 														<td colspan="2">
-															<input type="text" id="overhead" name="overhead" class="form-control rupiahformat text-right" value="" autocomplete="off">
+															<input type="text" id="konsumsi" name="konsumsi" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Gaji / Upah</td>
+														<td colspan="2">
+															<input type="text" id="gaji" name="gaji" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Pengujian Material dan Laboratorium</td>
+														<td colspan="2">
+															<input type="text" id="pengujian" name="pengujian" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Perbaikan dan Pemeliharaan</td>
+														<td colspan="2">
+															<input type="text" id="perbaikan" name="perbaikan" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Akomodasi Tamu</td>
+														<td colspan="2">
+															<input type="text" id="akomodasi" name="akomodasi" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Listrik & Internet</td>
+														<td colspan="2">
+															<input type="text" id="listrik" name="listrik" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">THR & Bonus</td>
+														<td colspan="2">
+															<input type="text" id="thr" name="thr" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Bensin, Tol & Parkir - Umum</td>
+														<td colspan="2">
+															<input type="text" id="bensin" name="bensin" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Perjalanan Dinas - Umum</td>
+														<td colspan="2">
+															<input type="text" id="dinas" name="dinas" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Komunikasi - Umum</td>
+														<td colspan="2">
+															<input type="text" id="komunikasi" name="komunikasi" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Pakaian Dinas & K3</td>
+														<td colspan="2">
+															<input type="text" id="pakaian" name="pakaian" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Alat Tulis Kantor & Printing</td>
+														<td colspan="2">
+															<input type="text" id="tulis" name="tulis" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Keamanan dan Kebersihan</td>
+														<td colspan="2">
+															<input type="text" id="keamanan" name="keamanan" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Perlengkapan Kantor</td>
+														<td colspan="2">
+															<input type="text" id="perlengkapan" name="perlengkapan" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Beban Kirim</td>
+														<td colspan="2">
+															<input type="text" id="beban" name="beban" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Beban Adm Bank</td>
+														<td colspan="2">
+															<input type="text" id="adm" name="adm" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Beban Lain-lain</td>
+														<td colspan="2">
+															<input type="text" id="lain" name="lain" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Biaya Sewa Bangunan</td>
+														<td colspan="2">
+															<input type="text" id="sewa" name="sewa" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">BPJS Kesehatan dan ketenagakerjaan</td>
+														<td colspan="2">
+															<input type="text" id="bpjs" name="bpjs" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Penyusutan Peralatan Kantor dan Kendaraan</td>
+														<td colspan="2">
+															<input type="text" id="penyusutan" name="penyusutan" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Iuran & Langganan</td>
+														<td colspan="2">
+															<input type="text" id="iuran" name="iuran" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Biaya Sewa - Kendaraan</td>
+														<td colspan="2">
+															<input type="text" id="kendaraan" name="kendaraan" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Pajak dan Perizinan</td>
+														<td colspan="2">
+															<input type="text" id="pajak" name="pajak" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Solar</td>
+														<td colspan="2">
+															<input type="text" id="solar" name="solar" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Donasi</td>
+														<td colspan="2">
+															<input type="text" id="donasi" name="donasi" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Legal & Profesional</td>
+														<td colspan="2">
+															<input type="text" id="legal" name="legal" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Pengobatan</td>
+														<td colspan="2">
+															<input type="text" id="pengobatan" name="pengobatan" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Lembur</td>
+														<td colspan="2">
+															<input type="text" id="lembur" name="lembur" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Pelatihan dan Pengembangan</td>
+														<td colspan="2">
+															<input type="text" id="pelatihan" name="pelatihan" class="form-control rupiahformat text-right" value="" autocomplete="off">
 														</td>
 													</tr>
 													<tr>
