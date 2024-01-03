@@ -65,6 +65,7 @@
 			font-weight: bold;
 			font-size: 8px;
 		}
+		
 		tr.border-bottom td {
         	border-bottom: 1pt solid #ff000d;
       }
@@ -149,23 +150,10 @@
 			$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
 
 			$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-			->from('akumulasi_bahan_jadi_new pp')
-			->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
-			->order_by('pp.date_akumulasi','desc')->limit(1)
+			->from('kunci_bahan_jadi pp')
+			->where("(pp.date = '$tanggal_opening_balance')")
+			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
-			?>
-
-			<!-- HPProduksi -->
-			<!-- Bahan -->
-			<?php
-			$pemakaian_bahan_baku = $this->db->select('pp.nilai_pemakaian_boulder as nilai_pemakaian_boulder, pp.nilai_pemakaian_bbm as nilai_pemakaian_bbm')
-			->from('hpp_bahan_baku_new pp')
-			->where("(pp.date_hpp between '$date1' and '$date2')")
-			->order_by('pp.date_hpp','desc')->limit(1)
-			->get()->row_array();
-
-			$total_nilai_produksi_boulder = $pemakaian_bahan_baku['nilai_pemakaian_boulder'];
-			$total_nilai_produksi_solar = $pemakaian_bahan_baku['nilai_pemakaian_bbm'];
 			?>
 
 			<!-- HPProduksi -->
@@ -403,7 +391,7 @@
 			?>
 			<tr class="table-active">
 	            <th width="5%" align="center" rowspan="2">&nbsp; <br />NO.</th>
-				<th width="20%"  align="center" rowspan="2">&nbsp; <br />URAIAN</th>
+				<th width="20%"  align="left" rowspan="2">&nbsp; <br />URAIAN</th>
 				<th width="25%"  align="center" colspan="3">RAP</th>
 				<th width="25%"  align="center" colspan="3">REALISASI</th>
 				<th width="25%"  align="center" colspan="3">DEVIASI</th>
@@ -543,20 +531,57 @@
 			$total = $nilai_boulder + $nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan + $overhead + $nilai_bbm_solar;
 			$total_ton = $nilai_boulder_ton + $nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $overhead_ton + $nilai_bbm_solar_ton;
 			?>
+			<?php
+			//Opening Balance
+			$date1_ago = date('2020-01-01');
+			$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
+			$date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date1)));
+			$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
+
+			$stock_opname_batu_boulder_ago = $this->db->select('pp.vol_nilai_boulder as volume')
+			->from('kunci_bahan_baku pp')
+			->where("(pp.date = '$tanggal_opening_balance')")
+			->order_by('pp.date','desc')->limit(1)
+			->get()->row_array();
+			
+			$harga_boulder = $this->db->select('pp.nilai_boulder as nilai_boulder')
+			->from('kunci_bahan_baku pp')
+			->where("(pp.date between '$date3_ago' and '$date2_ago')")
+			->order_by('pp.date','desc')->limit(1)
+			->get()->row_array();
+
+			$pembelian_boulder = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
+			->from('pmm_receipt_material prm')
+			->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
+			->join('produk p', 'prm.material_id = p.id','left')
+			->where("prm.date_receipt between '$date1' and '$date2'")
+			->where("prm.material_id = 15")
+			->group_by('prm.material_id')
+			->get()->row_array();
+
+			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+			->from('pmm_produksi_harian pph ')
+			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+			->where("(pph.date_prod between '$date1' and '$date2')")
+			->where('pph.status','PUBLISH')
+			->get()->row_array();
+			$total_rekapitulasi_produksi_harian = $rekapitulasi_produksi_harian['jumlah_pemakaian_a'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_b'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_c'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_d'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_e'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_f'];
+			?>
 			<tr class="table-active3">
 	            <th align="center"><b>1</b></th>
-				<th align="left"><b>BAHAN</b></th>
+				<th align="left"><b>BOULDER</b></th>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<th align="right"><?php echo number_format($nilai_boulder_ton,0,',','.');?></th>
 				<th align="right"><?php echo number_format($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
-				$harsat_realisasi_bahan = (round($total_rekapitulasi_produksi_harian,2)!=0)?$total_nilai_produksi_boulder / round($total_rekapitulasi_produksi_harian,2) * 1:0;
+					$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
 				?>
-				<th align="right"><?php echo number_format($harsat_realisasi_bahan,0,',','.');?></th>
-				<th align="right"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></th>
+				<th align="right"><?php echo number_format($harga_baru,0,',','.');?></th>
+				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></th>
 				<?php
-					$nilai_evaluasi_bahan = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) - $total_nilai_produksi_boulder;
+					$nilai_evaluasi_bahan = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) - ($total_rekapitulasi_produksi_harian * $harga_baru);
 					$styleColor = $nilai_evaluasi_bahan < 0 ? 'color:red' : 'color:black';
 				?>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,0,',','.');?></th>
@@ -570,91 +595,52 @@
 				<th align="right"><?php echo number_format($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
 				<th align="right"></th>
-				<th align="right"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></th>
+				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></th>
 				<th align="right"></th>
 				<th align="right"></th>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_bahan < 0 ? "(".number_format(-$nilai_evaluasi_bahan,0,',','.').")" : number_format($nilai_evaluasi_bahan,0,',','.');?></th>
 			</tr>
 		</table>
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<?php
-		//Opening Balance
-		$date1_ago = date('2020-01-01');
-		$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
-		$date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date1)));
-		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
-
-		$stock_opname_batu_boulder_ago = $this->db->select('(cat.volume) as volume, cat.measure as measure')
-		->from('pmm_remaining_materials_cat_new cat ')
-		->where("(cat.date = '$tanggal_opening_balance')")
-		->where("cat.material_id = 15")
-		->where("cat.status = 'PUBLISH'")
-		->order_by('date','desc')->limit(1)
-		->get()->row_array();
-		
-		$harga_boulder = $this->db->select('pp.nilai_boulder as nilai_boulder')
-		->from('hpp_bahan_baku_new pp')
-		->where("(pp.date_hpp between '$date3_ago' and '$date2_ago')")
-		->order_by('pp.date_hpp','desc')->limit(1)
-		->get()->row_array();
-
-		$pembelian_boulder = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-		->from('pmm_receipt_material prm')
-		->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-		->join('produk p', 'prm.material_id = p.id','left')
-		->where("prm.date_receipt between '$date1' and '$date2'")
-		->where("prm.material_id = 15")
-		->group_by('prm.material_id')
-		->get()->row_array();
-
-		$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-		->from('pmm_produksi_harian pph ')
-		->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-		->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-		->where("(pph.date_prod between '$date1' and '$date2')")
-		->where('pph.status','PUBLISH')
-		->get()->row_array();
-		$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
-		?>
 		<table width="98%" border="0" cellpadding="3">
-			<tr class="table-active4">
-				<th align="left" width="25%">Stok Boulder Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
-				<th align="right" width="10%"><?php echo number_format($stock_opname_batu_boulder_ago['volume'],2,',','.');?> (<?php echo $stock_opname_batu_boulder_ago['measure'] = $this->crud_global->GetField('pmm_measures',array('id'=>$stock_opname_batu_boulder_ago['measure']),'measure_name');?>)</th>
+			<tr>
+				<th align="left" width="25%" style="font-weight:bold; background-color:green; color:white;">Stok Boulder Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:green; color:white;"><?php echo number_format($stock_opname_batu_boulder_ago['volume'],2,',','');?> (Ton)</th>
 				<?php
 				$harsat_boulder = (round($stock_opname_batu_boulder_ago['volume'],2)!=0)?$harga_boulder['nilai_boulder'] / round($stock_opname_batu_boulder_ago['volume'],2) * 1:0;
 				?>
-				<th align="right" width="10%"><?php echo number_format($harsat_boulder,0,',','.');?></th>
-				<th align="right" width="10%"><?php echo number_format($harga_boulder['nilai_boulder'],0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:green; color:white;"><?php echo number_format($harsat_boulder,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:green; color:white;"><?php echo number_format($harga_boulder['nilai_boulder'],0,',','.');?></th>
 			</tr>
-			<tr class="table-active4">
-				<th align="left">Pembelian Boulder Bulan Ini</th>
-				<th align="right"><?php echo number_format($pembelian_boulder['volume'],2,',','.');?> (Ton)</th>
-				<th align="right" width="10%"><?php echo number_format($pembelian_boulder['harga'],0,',','.');?></th>
-				<th align="right" width="10%"><?php echo number_format($pembelian_boulder['nilai'],0,',','.');?></th>
+			<tr>
+				<th align="left" style="font-weight:bold; background-color:yellow; color:black;">Pembelian Boulder Bulan Ini</th>
+				<th align="right" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_boulder['volume'],2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_boulder['harga'],0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_boulder['nilai'],0,',','.');?></th>
 			</tr>
 			<?php
 				$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
 			?>
-			<tr class="table-active">
-				<th align="left">Total Stok Boulder Bulan Ini</th>
-				<th align="right"><?php echo number_format($stock_opname_batu_boulder_ago['volume'] + $pembelian_boulder['volume'],2,',','.');?> (Ton)</th>
-				<th align="right" width="10%" style="color:green"><?php echo number_format($harga_baru,0,',','.');?></th>
-				<th align="right" width="10%"><?php echo number_format($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai'],0,',','.');?></th>
+			<tr>
+				<th align="left" style="font-weight:bold; background-color:grey; color:white;">Total Stok Boulder Bulan Ini</th>
+				<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($stock_opname_batu_boulder_ago['volume'] + $pembelian_boulder['volume'],2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($harga_baru,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai'],0,',','.');?></th>
 			</tr>
 			<tr class="table-active4">
-				<th align="left">Produksi Bulan Ini</th>
-				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?> (Ton)</th>
-				<th align="right" width="10%"><?php echo number_format($harga_baru,0,',','.');?></th>
-				<th align="right" width="10%"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></th>
+				<th align="left" style="font-weight:bold; background-color:blue; color:white;">Produksi Bulan Ini</th>
+				<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($harga_baru,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></th>
 			</tr>
 			<tr class="table-active">
-				<th align="left">Stok Bahan Baku Akhir</th>
-				<th align="right"><?php echo number_format((round($stock_opname_batu_boulder_ago['volume'],2) + $pembelian_boulder['volume'] - $total_rekapitulasi_produksi_harian),2,',','.');?> (Ton)</th>
+				<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok Bahan Baku Akhir</th>
+				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format((round($stock_opname_batu_boulder_ago['volume'],2) + $pembelian_boulder['volume'] - $total_rekapitulasi_produksi_harian),2,',','');?> (Ton)</th>
 				<?php
 				$nilai_stok_akhir_bahan_baku = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) - ($total_rekapitulasi_produksi_harian * $harga_baru);
 				?>
-				<th align="right"><?php echo number_format($harga_baru,0,',','.');?></th>
-				<th align="right"><?php echo number_format($nilai_stok_akhir_bahan_baku,0,',','.');?></th>
+				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($harga_baru,0,',','.');?></th>
+				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($nilai_stok_akhir_bahan_baku,0,',','.');?></th>
 			</tr>
 		</table>
 		

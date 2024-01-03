@@ -186,18 +186,19 @@
 			?>
 			
 			<?php
-			$akumulasi_bahan_jadi = $this->db->select('sum(pp.volume) as volume, sum(pp.nilai) as nilai')
-			->from('akumulasi_bahan_jadi_new pp')
-			->where("pp.date_akumulasi between '$date1' and '$date2'")
-			->order_by('pp.date_akumulasi','desc')->limit(1)
+			$kunci_bahan_jadi = $this->db->select('sum(pp.volume) as volume, sum(pp.nilai) as nilai')
+			->from('kunci_bahan_jadi pp')
+			->where("pp.date between '$date1' and '$date2'")
+			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
-			$akumulasi_bahan_jadi_volume = $akumulasi_bahan_jadi['volume'];
-			$akumulasi_bahan_jadi_nilai = $akumulasi_bahan_jadi['nilai'];
-			$hpp = (round($akumulasi_bahan_jadi_volume,2)!=0)?$akumulasi_bahan_jadi_nilai / round($akumulasi_bahan_jadi_volume,2) * 1:0;
+
+			$kunci_bahan_jadi_volume = $kunci_bahan_jadi['volume'];
+			$kunci_bahan_jadi_nilai = $kunci_bahan_jadi['nilai'];
+			$hpp = (round($kunci_bahan_jadi_volume,2)!=0)?$kunci_bahan_jadi_nilai / round($kunci_bahan_jadi_volume,2) * 1:0;
 			?>
 
 			<?php
-			$beban_pokok_penjualan = round($total_volume,2) * round($hpp,0);
+			$beban_pokok_penjualan = round($total_volume,2) * $hpp;
 			?>
 			
 			<?php
@@ -330,7 +331,7 @@
 			?>
 
 			<?php
-			$beban_pokok_penjualan_2 = $total_volume_2 * round($hpp,0);
+			$beban_pokok_penjualan_2 = $total_volume_2 * $hpp;
 			?>
 
 			<?php

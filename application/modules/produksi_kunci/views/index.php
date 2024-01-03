@@ -44,8 +44,8 @@
                                             <i class="fa fa-plus"></i> Buat <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="<?= site_url('produksi/form_hpp_bahan_baku'); ?>">HPP Bahan Baku</a></li>
-                                            <li><a href="<?= site_url('produksi/form_akumulasi_bahan_jadi'); ?>">HPP Persediaan Bahan Jadi</a></li>
+                                            <li><a href="<?= site_url('produksi/form_kunci_bahan_baku'); ?>">Kunci Bahan Baku</a></li>
+                                            <li><a href="<?= site_url('produksi/form_kunci_bahan_jadi'); ?>">Kunci Bahan Jadi</a></li>
                                         </ul>
                                     </div>
                                 </h3>
@@ -53,29 +53,29 @@
                             </div>
                             <div class="panel-content">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#hpp_bahan_baku" aria-controls="hpp_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Bahan Baku</a>
-                                    <li role="presentation"><a href="#akumulasi_bahan_jadi" aria-controls="akumulasi_bahan_jadi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">HPP Persediaan Bahan Jadi</a></li>
+                                    <li role="presentation" class="active"><a href="#kunci_bahan_baku" aria-controls="kunci_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Kunci Bahan Baku</a>
+                                    <li role="presentation"><a href="#kunci_bahan_jadi" aria-controls="kunci_bahan_jadi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Kunci Bahan Jadi</a></li>
                                 </ul>
 
                                 <div class="tab-content">
 
-                                    <!-- Table HPP Bahan Baku -->
-                                    <div role="tabpanel" class="tab-pane active" class="tab-pane" id="hpp_bahan_baku">
+                                    <!-- Table Kunci Bahan Baku -->
+                                    <div role="tabpanel" class="tab-pane active" class="tab-pane" id="kunci_bahan_baku">
 										<div class="col-sm-4">
-											<input type="text" id="filter_date_hpp_bahan_baku" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
+											<input type="text" id="filter_date_kunci_bahan_baku" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
 										</div>
 										<br />
 										<br />										
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover" id="table_hpp_bahan_baku" style="width:100%">
+                                            <table class="table table-striped table-hover" id="table_kunci_bahan_baku" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
 														<th>Tanggal</th>
-														<th>Nilai Pemakaian Boulder</th>
-                                                        <th>Nilai Pemakaian BBM</th>
+                                                        <th>Vol. Akhir Boulder</th>
                                                         <th>Nilai Akhir Boulder</th>
-                                                        <th>Nilai Akhir BBM</th>
+                                                        <th>Vol. Akhir BBM Solar</th>
+                                                        <th>Nilai Akhir BBM Solar</th>
 														<th>Status</th>
                                                         <th>Hapus</th>
                                                     </tr>
@@ -89,17 +89,16 @@
                                             </table>
                                         </div>
 									</div>
-									<!-- End Table HPP Bahan Baku -->
 
-                                    <!-- HPP Table HPP Persediaan Bahan Jadi -->
-                                    <div role="tabpanel" class="tab-pane" id="akumulasi_bahan_jadi">
+                                    <!-- HPP Table Kunci Bahan Jadi -->
+                                    <div role="tabpanel" class="tab-pane" id="kunci_bahan_jadi">
 										<div class="col-sm-4">
-											<input type="text" id="filter_date_akumulasi_bahan_jadi" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
+											<input type="text" id="filter_date_kunci_bahan_jadi" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
 										</div>
 										<br />
 										<br />										
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover" id="table_akumulasi_bahan_jadi" style="width:100%">
+                                            <table class="table table-striped table-hover" id="table_kunci_bahan_jadi" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
@@ -119,7 +118,6 @@
                                             </table>
                                         </div>
 									</div>
-									<!-- End Table HPP Persediaan Bahan Jadi -->
 										           
                                 </div>
                             </div>
@@ -171,14 +169,14 @@
             showDropdowns: true,
         });
 
-        var table_hpp_bahan_baku = $('#table_hpp_bahan_baku').DataTable({
+        var table_kunci_bahan_baku = $('#table_kunci_bahan_baku').DataTable({
             ajax: {
                 processing: true,
                 serverSide: true,
-                url: '<?php echo site_url('produksi/table_hpp_bahan_baku'); ?>',
+                url: '<?php echo site_url('produksi/table_kunci_bahan_baku'); ?>',
                 type: 'POST',
                 data: function(d) {
-                    d.filter_date = $('#filter_date_hpp_bahan_baku').val();
+                    d.filter_date = $('#filter_date_kunci_bahan_baku').val();
                 }
             },
             responsive: true,
@@ -192,16 +190,16 @@
                     "data": "no"
                 },
 				{
-                    "data": "date_hpp"
+                    "data": "date"
                 },
-				{
-                    "data": "nilai_pemakaian_boulder"
-                },
-				{
-                    "data": "nilai_pemakaian_bbm"
+                {
+                    "data": "vol_nilai_boulder"
                 },
                 {
                     "data": "nilai_boulder"
+                },
+                {
+                    "data": "vol_nilai_bbm"
                 },
 				{
                     "data": "nilai_bbm"
@@ -221,24 +219,24 @@
 
         $('.dtpickerange').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_hpp_bahan_baku.ajax.reload();
+        table_kunci_bahan_baku.ajax.reload();
         });
 
-        function DeleteDataHppBahanBaku(id) {
+        function DeleteKunciBahanBaku(id) {
         bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
             // console.log('This was logged in the callback: ' + result); 
             if (result) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('produksi/delete_hpp_bahan_baku'); ?>",
+                    url: "<?php echo site_url('produksi/delete_kunci_bahan_baku'); ?>",
                     dataType: 'json',
                     data: {
                         id: id
                     },
                     success: function(result) {
                         if (result.output) {
-                            table_hpp_bahan_baku.ajax.reload();
-                            bootbox.alert('Berhasil Menghapus HPP Pergerakan Bahan Baku !!');
+                            table_kunci_bahan_baku.ajax.reload();
+                            bootbox.alert('Berhasil Menghapus Kunci Bahan Baku !!');
                         } else if (result.err) {
                             bootbox.alert(result.err);
                         }
@@ -248,14 +246,14 @@
             });
         }
 
-        var table_akumulasi_bahan_jadi = $('#table_akumulasi_bahan_jadi').DataTable({
+        var table_kunci_bahan_jadi = $('#table_kunci_bahan_jadi').DataTable({
             ajax: {
                 processing: true,
                 serverSide: true,
-                url: '<?php echo site_url('produksi/table_akumulasi_bahan_jadi'); ?>',
+                url: '<?php echo site_url('produksi/table_kunci_bahan_jadi'); ?>',
                 type: 'POST',
                 data: function(d) {
-                    d.filter_date = $('#filter_date_akumulasi_bahan_jadi').val();
+                    d.filter_date = $('#filter_date_kunci_bahan_jadi').val();
                 }
             },
             responsive: true,
@@ -269,7 +267,7 @@
                     "data": "no"
                 },
 				{
-                    "data": "date_akumulasi"
+                    "data": "date"
                 },
 				{
                     "data": "volume"
@@ -292,24 +290,24 @@
 
         $('.dtpickerange').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_akumulasi_bahan_jadi.ajax.reload();
+        table_kunci_bahan_jadi.ajax.reload();
         });
 
-        function DeleteDataAkumulasiBahanJadi(id) {
+        function DeleteKunciBahanJadi(id) {
         bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
             // console.log('This was logged in the callback: ' + result); 
             if (result) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('produksi/delete_akumulasi_bahan_jadi'); ?>",
+                    url: "<?php echo site_url('produksi/delete_kunci_bahan_jadi'); ?>",
                     dataType: 'json',
                     data: {
                         id: id
                     },
                     success: function(result) {
                         if (result.output) {
-                            table_akumulasi_bahan_jadi.ajax.reload();
-                            bootbox.alert('Berhasil Menghapus Akumulasi Bahan Jadi !!');
+                            table_kunci_bahan_jadi.ajax.reload();
+                            bootbox.alert('Berhasil Menghapus Kunci Bahan Jadi !!');
                         } else if (result.err) {
                             bootbox.alert(result.err);
                         }
@@ -322,5 +320,4 @@
     </script>
 
 </body>
-
 </html>

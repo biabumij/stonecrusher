@@ -114,7 +114,7 @@
 			->where("(pph.date_prod between '$date1' and '$date2')")
 			->where('pph.status','PUBLISH')
 			->get()->row_array();
-			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+			$total_rekapitulasi_produksi_harian = $rekapitulasi_produksi_harian['jumlah_pemakaian_a'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_b'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_c'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_d'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_e'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_f'];
 			?>
 			
 			<!-- Total Pendapatan / Penjualan -->
@@ -149,23 +149,10 @@
 			$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
 
 			$nilai_persediaan_bahan_jadi = $this->db->select('(pp.nilai) as nilai')
-			->from('akumulasi_bahan_jadi_new pp')
-			->where("(pp.date_akumulasi = '$tanggal_opening_balance')")
-			->order_by('pp.date_akumulasi','desc')->limit(1)
+			->from('kunci_bahan_jadi pp')
+			->where("(pp.date = '$tanggal_opening_balance')")
+			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
-			?>
-
-			<!-- HPProduksi -->
-			<!-- Bahan -->
-			<?php
-			$pemakaian_bahan_baku = $this->db->select('pp.nilai_pemakaian_boulder as nilai_pemakaian_boulder, pp.nilai_pemakaian_bbm as nilai_pemakaian_bbm')
-			->from('hpp_bahan_baku_new pp')
-			->where("(pp.date_hpp between '$date1' and '$date2')")
-			->order_by('pp.date_hpp','desc')->limit(1)
-			->get()->row_array();
-
-			$total_nilai_produksi_boulder = $pemakaian_bahan_baku['nilai_pemakaian_boulder'];
-			$total_nilai_produksi_solar = $pemakaian_bahan_baku['nilai_pemakaian_bbm'];
 			?>
 
 			<!-- HPProduksi -->
@@ -206,12 +193,6 @@
 			->get()->row_array();
 
 			$whell_loader = $whell_loader_biaya['total'] + $whell_loader_jurnal['total'];
-			
-			$excavator = $this->db->select('sum(prm.display_price) as price')
-			->from('pmm_receipt_material prm ')
-			->where("prm.material_id = 18")
-			->where("(prm.date_receipt between '$date1' and '$date2')")
-			->get()->row_array();
 			
 			$genset_biaya = $this->db->select('sum(pdb.jumlah) as total')
 			->from('pmm_biaya pb ')
@@ -267,7 +248,37 @@
 
 			$tangki_solar = $tangki_solar_biaya['total'] + $tangki_solar_jurnal['total'];		
 			
-			$total_biaya_peralatan = $stone_crusher + $whell_loader + $excavator['price'] + $genset + $timbangan + $tangki_solar;
+			$total_biaya_peralatan = $stone_crusher + $whell_loader + $genset + $timbangan + $tangki_solar;
+			
+			//Opening Balance
+			$date1_ago = date('2020-01-01');
+			$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
+			$date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date1)));
+			$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
+
+			$stock_opname_bbm_ago = $this->db->select('pp.vol_nilai_bbm as volume')
+			->from('kunci_bahan_baku pp')
+			->where("(pp.date = '$tanggal_opening_balance')")
+			->order_by('pp.date','desc')->limit(1)
+			->get()->row_array();
+			
+			$harga_bbm = $this->db->select('pp.nilai_bbm as nilai_bbm')
+			->from('kunci_bahan_baku pp')
+			->where("(pp.date between '$date3_ago' and '$date2_ago')")
+			->order_by('pp.date','desc')->limit(1)
+			->get()->row_array();
+
+			$pembelian_bbm = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
+			->from('pmm_receipt_material prm')
+			->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
+			->join('produk p', 'prm.material_id = p.id','left')
+			->where("prm.date_receipt between '$date1' and '$date2'")
+			->where("prm.material_id = 13")
+			->group_by('prm.material_id')
+			->get()->row_array();
+
+			$harga_baru = ($harga_bbm['nilai_bbm'] + $pembelian_bbm['nilai']) / (round($stock_opname_bbm_ago['volume'],2) + round($pembelian_bbm['volume'],2));
+			$total_nilai_produksi_solar = $total_rekapitulasi_produksi_harian * $harga_baru;
 			?>
 
 			<!-- HPProduksi -->
