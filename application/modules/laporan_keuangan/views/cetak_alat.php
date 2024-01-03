@@ -572,7 +572,7 @@
 		</tr>
 		<tr class="table-active4">
 			<th align="left" style="font-weight:bold; background-color:blue; color:white;">Produksi Bulan Ini</th>
-			<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
+			<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($harga_baru,0,',','.');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></th>
 		</tr>

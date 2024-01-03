@@ -686,7 +686,7 @@
 				<th align="right"></th>
 				<th align="right"></th>
 				<?php
-				$nilai_hpp_siap_jual = $nilai_hpp_siap_jual - $total_penjualan;
+				$nilai_hpp_siap_jual = (round($akumulasi_bahan_jadi_volume,2) + round($total_rekapitulasi_produksi_harian,2) - round($total_volume,2)) * round($harga_siap_jual,0) ;
 				?>
 				<th align="right"><?php echo number_format($nilai_hpp_siap_jual,0,',','.');?></th>
 				<th align="right"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
