@@ -545,7 +545,7 @@
 		</tr>
 	</table>	
 	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-	<b>* Perhitungan BBM Solar</b>
+	<b>* Perhitungan BBM Solar</b><br />
 	<table width="98%" border="0" cellpadding="3">
 		<tr>
 			<th align="left" width="25%" style="font-weight:bold; background-color:green; color:white;">Stok BBM Solar Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
