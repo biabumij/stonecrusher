@@ -544,7 +544,7 @@
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_alat < 0 ? "(".number_format(-$nilai_evaluasi_alat,0,',','.').")" : number_format($nilai_evaluasi_alat,0,',','.');?></th>
 		</tr>
 	</table>	
-	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<br /><br /><br /><br /><br /><br /><br /><br />
 	<b>* Perhitungan BBM Solar</b><br /><br />
 	<table width="98%" border="0" cellpadding="3">
 		<tr>
