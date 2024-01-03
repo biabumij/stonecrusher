@@ -618,6 +618,9 @@
 			->where("prm.material_id = 15")
 			->group_by('prm.material_id')
 			->get()->row_array();
+
+			$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
+			$total_nilai_produksi_boulder = $total_rekapitulasi_produksi_harian * $harga_baru;
 			?>
 			<tr class="table-active2" style="font-weight:bold;">
 				<th align="center"></th>
@@ -625,10 +628,7 @@
 				<th align="right"></th>
 				<th align="right"><?php echo number_format($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
-				<?php
-					$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
-				?>
-				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_bahan?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></a></th>
+				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_bahan?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></a></th>
 				<th align="right"></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
@@ -686,7 +686,7 @@
 				<th align="right"></th>
 				<th align="right"></th>
 				<?php
-				$nilai_hpp_siap_jual = (round($akumulasi_bahan_jadi_volume,2) + round($total_rekapitulasi_produksi_harian,2) - round($total_volume,2)) * round($harga_siap_jual,0) ;
+				$nilai_hpp_siap_jual = $nilai_hpp_siap_jual - $total_penjualan;
 				?>
 				<th align="right"><?php echo number_format($nilai_hpp_siap_jual,0,',','.');?></th>
 				<th align="right"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
