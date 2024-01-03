@@ -378,13 +378,13 @@
 			<th width="25%"  align="center" colspan="3">DEVIASI</th>
 		</tr>
 		<tr class="table-active">
-			<th align="right">VOL</th>
+			<th align="right">VOL (TON)</th>
 			<th align="right">HARSAT</th>
 			<th align="right">NILAI</th>
-			<th align="right">VOL</th>
+			<th align="right">VOL (TON)</th>
 			<th align="right">HARSAT</th>
 			<th align="right">NILAI</th>
-			<th align="right">VOL</th>
+			<th align="right">VOL (TON)</th>
 			<th align="right">HARSAT</th>
 			<th align="right">NILAI</th>
 		</tr>
