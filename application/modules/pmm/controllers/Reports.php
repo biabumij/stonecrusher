@@ -9338,6 +9338,9 @@ class Reports extends CI_Controller {
 			->where('pph.status','PUBLISH')
 			->get()->row_array();
 			$total_rekapitulasi_produksi_harian = $rekapitulasi_produksi_harian['jumlah_pemakaian_a'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_b'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_c'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_d'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_e'] + $rekapitulasi_produksi_harian['jumlah_pemakaian_f'];
+			
+			$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
+			$total_nilai_produksi_boulder = $total_rekapitulasi_produksi_harian * $harga_baru;
 			?>
 			<tr class="table-active3">
 	            <th class="text-center">1</th>
@@ -9345,17 +9348,14 @@ class Reports extends CI_Controller {
 				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($nilai_boulder_ton,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,0,',','.');?></th>
-				<?php
-					$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
-				?>
+				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($harga_baru,0,',','.');?></th>
-				<th class="text-right"><a target="_blank" href="<?= base_url("laporan/cetak_bahan?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></a></th>
+				<th class="text-right"><a target="_blank" href="<?= base_url("laporan/cetak_bahan?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></a></th>
 				<?php
 					$nilai_evaluasi_bahan = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) - $total_nilai_produksi_boulder;
 					$styleColor = $nilai_evaluasi_bahan < 0 ? 'color:red' : 'color:black';
 				?>
-				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($nilai_boulder_ton,0,',','.');?></th>
 				<th class="text-right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_bahan < 0 ? "(".number_format(-$nilai_evaluasi_bahan,0,',','.').")" : number_format($nilai_evaluasi_bahan,0,',','.');?></th>
 	        </tr>
@@ -9368,7 +9368,7 @@ class Reports extends CI_Controller {
 				?>
 				<th class="text-right"><?php echo number_format($harsat_rap_alat ,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format(($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
 				$harsat_realisasi_alat = (round($total_rekapitulasi_produksi_harian,2)!=0)?($total_biaya_peralatan + $total_nilai_produksi_solar) / round($total_rekapitulasi_produksi_harian,2) * 1:0;
 				?>
@@ -9378,7 +9378,7 @@ class Reports extends CI_Controller {
 					$nilai_evaluasi_alat = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2) - ($total_biaya_peralatan + $total_nilai_produksi_solar);
 					$styleColor = $nilai_evaluasi_alat < 0 ? 'color:red' : 'color:black';
 				?>
-				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
 				$harsat_deviasi_alat = (round($total_rekapitulasi_produksi_harian,2)!=0)?$nilai_evaluasi_alat / round($total_rekapitulasi_produksi_harian,2) * 1:0;
 				?>
@@ -9394,7 +9394,7 @@ class Reports extends CI_Controller {
 				?>
 				<th class="text-right"><?php echo number_format($harsat_rap_overhead,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($overhead_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
 				$harsat_realisasi_overhead = (round($total_rekapitulasi_produksi_harian,2)!=0)?$total_operasional / round($total_rekapitulasi_produksi_harian,2) * 1:0;
 				?>
@@ -9404,7 +9404,7 @@ class Reports extends CI_Controller {
 					$nilai_evaluasi_overhead = ($overhead_ton * round($total_rekapitulasi_produksi_harian,2)) - ($total_operasional);
 					$styleColor = $nilai_evaluasi_overhead < 0 ? 'color:red' : 'color:black';
 				?>
-				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
 				$harsat_deviasi_overhead = (round($total_rekapitulasi_produksi_harian,2)!=0)?$nilai_evaluasi_overhead / round($total_rekapitulasi_produksi_harian,2) * 1:0;
 				?>
