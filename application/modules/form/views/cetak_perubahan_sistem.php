@@ -29,7 +29,7 @@
 			<tr>
 				<th>3. Aplikasi / Website</th>
 				<th>:</th>
-				<th>https://cuttingstone.biabumijayendra.com</th>
+				<th>https://stonecrusher.biabumijayendra.com</th>
 			</tr>
 		</table>
 		<br /><br />
