@@ -1214,7 +1214,9 @@ class Penjualan extends Secure_Controller
 					'client_id' => $client_id,
 					'nama_pelanggan' => $nama_pelanggan,
 					'setor_ke' => $this->input->post('bayar_dari_dp'),
+					'cara_pembayaran' => $this->input->post('cara_pembayaran'),
 					'nomor_transaksi' => $this->input->post('nomor_transaksi_dp'),
+					'memo' => 'Uang Muka',
 					'total' => $uang_muka,
 					'pembayaran' => $uang_muka,
 					'tanggal_pembayaran' => date('Y-m-d', strtotime($tanggal_invoice)),
@@ -1222,7 +1224,6 @@ class Penjualan extends Secure_Controller
 					'created_by' => $this->session->userdata('admin_id'),
 					'created_on' => date('Y-m-d H:i:s')
 				);
-
 				$this->db->insert('pmm_pembayaran', $arr_bayar);
 			}
 
