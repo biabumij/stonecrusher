@@ -103,8 +103,8 @@
                                                     <tr>
                                                         <th>No</th>
 														<th>Tanggal</th>
-                                                        <th>Volume Persediaan Bahan Jadi</th>
-														<th>Nilai Persediaan Bahan Jadi</th>
+                                                        <th>Volume Persediaan Akhir Bahan Jadi</th>
+														<th>Nilai Persediaan Akhir Bahan Jadi</th>
 														<th>Status</th>
                                                         <th>Hapus</th>
                                                     </tr>
