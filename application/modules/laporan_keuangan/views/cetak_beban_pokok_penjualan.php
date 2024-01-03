@@ -677,7 +677,7 @@
 				<?php
 				$harga_siap_jual = (($akumulasi_bahan_jadi_volume + $total_rekapitulasi_produksi_harian)!=0)?($akumulasi_bahan_jadi_nilai + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / ($akumulasi_bahan_jadi_volume + $total_rekapitulasi_produksi_harian) * 1:0;
 				?>
-				<th align="right"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
+				<th align="right" style="color:green;"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
 				<th align="center">5.</th>
