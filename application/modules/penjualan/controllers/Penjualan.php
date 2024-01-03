@@ -1208,21 +1208,23 @@ class Penjualan extends Secure_Controller
 				}
 			}
 
-			$arr_bayar = array(
-				'penagihan_id' => $tagihan_id,
-				'client_id' => $client_id,
-				'nama_pelanggan' => $nama_pelanggan,
-				'setor_ke' => $this->input->post('bayar_dari_dp'),
-				'nomor_transaksi' => $this->input->post('nomor_transaksi_dp'),
-				'total' => $uang_muka,
-				'pembayaran' => $uang_muka,
-				'tanggal_pembayaran' => date('Y-m-d', strtotime($tanggal_invoice)),
-				'status' => 'DISETUJUI',
-				'created_by' => $this->session->userdata('admin_id'),
-				'created_on' => date('Y-m-d H:i:s')
-			);
+			if ($uang_muka > 0) {
+				$arr_bayar = array(
+					'penagihan_id' => $tagihan_id,
+					'client_id' => $client_id,
+					'nama_pelanggan' => $nama_pelanggan,
+					'setor_ke' => $this->input->post('bayar_dari_dp'),
+					'nomor_transaksi' => $this->input->post('nomor_transaksi_dp'),
+					'total' => $uang_muka,
+					'pembayaran' => $uang_muka,
+					'tanggal_pembayaran' => date('Y-m-d', strtotime($tanggal_invoice)),
+					'status' => 'DISETUJUI',
+					'created_by' => $this->session->userdata('admin_id'),
+					'created_on' => date('Y-m-d H:i:s')
+				);
 
-			$this->db->insert('pmm_pembayaran', $arr_bayar);
+				$this->db->insert('pmm_pembayaran', $arr_bayar);
+			}
 
 			$arr_surat_jalan = explode(',', $surat_jalan);
 			if (!empty($arr_surat_jalan)) {
