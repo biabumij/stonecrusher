@@ -88,26 +88,7 @@
 													<div class="col-sm-5">
 														<p><h5>Beban Pokok Produksi</h5></p>
                                                         <a href="#beban_pokok_produksi" aria-controls="beban_pokok_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
-                                                    </div>
-													<!--<div class="col-sm-5">
-														<p><h5>Pergerakan Bahan Baku (Rumus)</h5></p>
-														<p style='color:red; font-weight:bold;'><blink>Periode Februari 2021 sd. Mei 2022</blink></p>
-                                                        <a href="#pergerakan_bahan_baku" aria-controls="pergerakan_bahan_baku" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-													<div class="col-sm-5">
-														<p><h5>Pergerakan Bahan Jadi (Rumus)</h5></p>
-														<p style='color:red; font-weight:bold;'><blink>Periode Februari 2021 sd. Mei 2022</blink></p>
-                                                        <a href="#pergerakan_bahan_jadi" aria-controls="pergerakan_bahan_jadi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-													<<div class="col-sm-5">
-														<p><h5>Pergerakan Bahan Baku</h5></p>
-                                                        <a href="#pergerakan_bahan_baku_penyesuaian" aria-controls="pergerakan_bahan_baku_penyesuaian" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-                                                    <div class="col-sm-5">
-														<p><h5>Pergerakan Bahan Jadi</h5></p>
-														<p style='color:red; font-weight:bold;'><blink>Periode Juni 2022 sd. sekarang</blink></p>
-                                                        <a href="#pergerakan_bahan_jadi_penyesuaian" aria-controls="pergerakan_bahan_jadi_penyesuaian" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>-->												
+                                                    </div>										
                                                 </div>
                                             </div>
                                         </div>
@@ -312,269 +293,62 @@
                 
             </div>
         </div>
+	</div>
+	<?php echo $this->Templates->Footer(); ?>
 
-        <?php echo $this->Templates->Footer(); ?>
-
-        <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/moment.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.css">
-        <script src="<?php echo base_url(); ?>assets/back/theme/vendor/bootbox.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/back/theme/vendor/jquery.number.min.js"></script>
-        <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/moment.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/back/theme/vendor/daterangepicker/daterangepicker.css">
+	<script src="<?php echo base_url(); ?>assets/back/theme/vendor/bootbox.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/back/theme/vendor/jquery.number.min.js"></script>
+	<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
 
 
-		<!-- Script Beban Pokok Produksi -->
+	<!-- Script Beban Pokok Produksi -->
 
-		<script type="text/javascript">	
-		$('#filter_date_bpp').daterangepicker({
-		autoUpdateInput : false,
-		showDropdowns: true,
-		locale: {
-			format: 'DD-MM-YYYY'
-		},
-		ranges: {
-			'Today': [moment(), moment()],
-			'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-			'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-			'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-			'This Month': [moment().startOf('month'), moment().endOf('month')],
-			'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	<script type="text/javascript">	
+	$('#filter_date_bpp').daterangepicker({
+	autoUpdateInput : false,
+	showDropdowns: true,
+	locale: {
+		format: 'DD-MM-YYYY'
+	},
+	ranges: {
+		'Today': [moment(), moment()],
+		'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+		'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+		'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+		'This Month': [moment().startOf('month'), moment().endOf('month')],
+		'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+		}
+	});
+
+	$('#filter_date_bpp').on('apply.daterangepicker', function(ev, picker) {
+			$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+			TableBebanPokokProduksi();
+	});
+
+
+	function TableBebanPokokProduksi()
+	{
+		$('#wait').fadeIn('fast');   
+		$.ajax({
+			type    : "POST",
+			url     : "<?php echo site_url('pmm/reports/beban_pokok_produksi'); ?>/"+Math.random(),
+			dataType : 'html',
+			data: {
+				filter_date : $('#filter_date_bpp').val(),
+			},
+			success : function(result){
+				$('#box-ajax-4').html(result);
+				$('#wait').fadeOut('fast');
 			}
 		});
+	}
 
-		$('#filter_date_bpp').on('apply.daterangepicker', function(ev, picker) {
-				$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-				TableBebanPokokProduksi();
-		});
-
-
-		function TableBebanPokokProduksi()
-		{
-			$('#wait').fadeIn('fast');   
-			$.ajax({
-				type    : "POST",
-				url     : "<?php echo site_url('pmm/reports/beban_pokok_produksi'); ?>/"+Math.random(),
-				dataType : 'html',
-				data: {
-					filter_date : $('#filter_date_bpp').val(),
-				},
-				success : function(result){
-					$('#box-ajax-4').html(result);
-					$('#wait').fadeOut('fast');
-				}
-			});
-		}
-
-		//TableBebanPokokProduksi();
-		
-		</script>
-		
-		<!-- Script Pergerakan Bahan Baku -->
-
-		<script type="text/javascript">
-		$('#filter_date_bahan_baku').daterangepicker({
-		autoUpdateInput : false,
-		showDropdowns: true,
-		locale: {
-			format: 'DD-MM-YYYY'
-		},
-		ranges: {
-			'Today': [moment(), moment()],
-			'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-			'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-			'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-			'This Month': [moment().startOf('month'), moment().endOf('month')],
-			'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-		}
-		});
-
-		$("#filter_date_bahan_baku").daterangepicker({
-			autoUpdateInput : false,
-			showDropdowns: true,
-			locale: {
-				format: 'DD-MM-YYYY'
-			},
-			minDate: new Date(2021, 01, 27), 
-			maxDate: new Date(2022, 04, 31)		
-		});
-
-		$('#filter_date_bahan_baku').on('apply.daterangepicker', function(ev, picker) {
-				$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-				TablePergerakanBahanBaku();
-		});
-
-
-		function TablePergerakanBahanBaku()
-		{
-			$('#wait').fadeIn('fast');   
-			$.ajax({
-				type    : "POST",
-				url     : "<?php echo site_url('pmm/reports/pergerakan_bahan_baku'); ?>/"+Math.random(),
-				dataType : 'html',
-				data: {
-					filter_date : $('#filter_date_bahan_baku').val(),
-				},
-				success : function(result){
-					$('#box-ajax-5').html(result);
-					$('#wait').fadeOut('fast');
-				}
-			});
-		}
-
-		//TablePergerakanBahanBaku();
-
-		</script>
-
-		<!-- Script Pergerakan Bahan Baku Penyesuaian -->
-
-		<script type="text/javascript">
-		$('#filter_date_bahan_baku_penyesuaian').daterangepicker({
-		autoUpdateInput : false,
-		showDropdowns: true,
-		locale: {
-			format: 'DD-MM-YYYY'
-		},
-		//minDate: new Date(2022, 05, 01),
-		ranges: {
-			'Today': [moment(), moment()],
-			'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-			'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-			'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-			'This Month': [moment().startOf('month'), moment().endOf('month')],
-			'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-		}
-		});
-
-		$('#filter_date_bahan_baku_penyesuaian').on('apply.daterangepicker', function(ev, picker) {
-				$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-				TablePergerakanBahanBakuPenyesuaian();
-		});
-
-
-		function TablePergerakanBahanBakuPenyesuaian()
-		{
-			$('#wait').fadeIn('fast');   
-			$.ajax({
-				type    : "POST",
-				url     : "<?php echo site_url('pmm/reports/pergerakan_bahan_baku_penyesuaian'); ?>/"+Math.random(),
-				dataType : 'html',
-				data: {
-					filter_date : $('#filter_date_bahan_baku_penyesuaian').val(),
-				},
-				success : function(result){
-					$('#box-ajax-5a').html(result);
-					$('#wait').fadeOut('fast');
-				}
-			});
-		}
-
-		//TablePergerakanBahanBakuPenyesuaian();
-
-		</script>
-
-		<!-- Script Pergerakan Bahan Jadi -->
-			
-		<script type="text/javascript">
-		$('#filter_date_bahan_jadi').daterangepicker({
-			autoUpdateInput : false,
-			showDropdowns: true,
-			locale: {
-				format: 'DD-MM-YYYY'
-			},
-			ranges: {
-				'Today': [moment(), moment()],
-				'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-				'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-				'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-				'This Month': [moment().startOf('month'), moment().endOf('month')],
-				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-			}
-		});
-
-		$("#filter_date_bahan_jadi").daterangepicker({
-			autoUpdateInput : false,
-			showDropdowns: true,
-			locale: {
-				format: 'DD-MM-YYYY'
-			},
-			minDate: new Date(2021, 01, 27), 
-			maxDate: new Date(2022, 04, 31)		
-		});
-
-		$('#filter_date_bahan_jadi').on('apply.daterangepicker', function(ev, picker) {
-				$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-				TablePergerakanBahanJadi();
-		});
-		
-		function TablePergerakanBahanJadi()
-		{
-			$('#wait').fadeIn('fast');   
-			$.ajax({
-				type    : "POST",
-				url     : "<?php echo site_url('pmm/reports/pergerakan_bahan_jadi'); ?>/"+Math.random(),
-				dataType : 'html',
-				data: {
-					filter_date : $('#filter_date_bahan_jadi').val(),
-				},
-				success : function(result){
-					$('#box-ajax-6').html(result);
-					$('#wait').fadeOut('fast');
-				}
-			});
-		}
-
-		//TablePergerakanBahanJadi();
-		
-		</script>
-
-		<!-- Script Pergerakan Bahan Jadi (Penyesuaian Stok) -->
-		
-		<script type="text/javascript">
-		$('#filter_date_bahan_jadi_penyesuaian').daterangepicker({
-			autoUpdateInput : false,
-			showDropdowns: true,
-			locale: {
-				format: 'DD-MM-YYYY'
-			},
-			//minDate: new Date(2022, 05, 01),
-			ranges: {
-				'Today': [moment(), moment()],
-				'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-				'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-				'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-				'This Month': [moment().startOf('month'), moment().endOf('month')],
-				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-			}
-		});
-
-		$('#filter_date_bahan_jadi_penyesuaian').on('apply.daterangepicker', function(ev, picker) {
-				$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-				TablePergerakanBahanJadiPenyesuaian();
-		});
-		
-		function TablePergerakanBahanJadiPenyesuaian()
-		{
-			$('#wait').fadeIn('fast');   
-			$.ajax({
-				type    : "POST",
-				url     : "<?php echo site_url('pmm/reports/pergerakan_bahan_jadi_penyesuaian'); ?>/"+Math.random(),
-				dataType : 'html',
-				data: {
-					filter_date : $('#filter_date_bahan_jadi_penyesuaian').val(),
-				},
-				success : function(result){
-					$('#box-ajax-6c').html(result);
-					$('#wait').fadeOut('fast');
-				}
-			});
-		}
-
-		//TablePergerakanBahanJadiPenyesuaian();
-		
-		</script>
-
-
+	//TableBebanPokokProduksi();
+	
+	</script>
 
 </body>
-
 </html>
