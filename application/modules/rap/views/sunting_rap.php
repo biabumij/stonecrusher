@@ -235,7 +235,7 @@
 														<td class="text-center"></td>
 														<td style="text-align: left !important;">Upah</td>
 														<td colspan="2">
-															<input type="text" id="upah" name="upah" class="form-control rupiahformat text-right" value="<?php echo number_format($rap['gaji'],0,',','.');?>" autocomplete="off">
+															<input type="text" id="upah" name="upah" class="form-control rupiahformat text-right" value="<?php echo number_format($rap['upah'],0,',','.');?>" autocomplete="off">
 														</td>
 													</tr>
 													<tr>

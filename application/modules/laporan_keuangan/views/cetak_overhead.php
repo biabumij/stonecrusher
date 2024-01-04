@@ -109,7 +109,7 @@
 			->group_by("r.tanggal_rap")->limit(1)
 			->order_by('r.tanggal_rap','desc')
 			->get()->row_array();
-			$total_overhead_rap = $row['konsumsi'] + $row['gaji'] + $row['pengujian'] + $row['perbaikan'] + $row['akomodasi'] + $row['listrik'] + $row['thr'] + $row['bensin'] + $row['dinas'] + $row['komunikasi'] + $row['pakaian'] + $row['tulis'] + $row['keamanan'] + $row['perlengkapan'] + $row['beban'] + $row['adm'] + $row['lain'] + $row['sewa'] + $row['bpjs'] + $row['penyusutan'] + $row['iuran'] + $row['kendaraan'] + $row['pajak'] + $row['solar'] + $row['donasi'] + $row['legal'] + $row['pengobatan'] + $row['lembur'] + $row['pelatihan'];
+			$total_overhead_rap = $row['konsumsi'] + $row['gaji'] + $row['upah'] + $row['pengujian'] + $row['perbaikan'] + $row['akomodasi'] + $row['listrik'] + $row['thr'] + $row['bensin'] + $row['dinas'] + $row['komunikasi'] + $row['pakaian'] + $row['tulis'] + $row['keamanan'] + $row['perlengkapan'] + $row['beban'] + $row['adm'] + $row['lain'] + $row['sewa'] + $row['bpjs'] + $row['penyusutan_kantor'] + $row['penyusutan_kendaraan'] + $row['iuran'] + $row['kendaraan'] + $row['pajak'] + $row['solar'] + $row['donasi'] + $row['legal'] + $row['pengobatan'] + $row['lembur'] + $row['pelatihan'] + $row['supplies'];
 			
 			$konsumsi_biaya = $this->db->select('sum(pdb.jumlah) as total')
 			->from('pmm_biaya pb ')
@@ -655,7 +655,7 @@
 			->get()->row_array();
 			$supplies = $supplies_biaya['total'] + $supplies_jurnal['total'];
 
-			$total_overhead_realisasi = $konsumsi + $gaji + $pengujian + $perbaikan + $akomodasi + $listrik + $thr + 
+			$total_overhead_realisasi = $konsumsi + $gaji + $upah + $pengujian + $perbaikan + $akomodasi + $listrik + $thr + 
 			$bensin + $dinas + $komunikasi + $pakaian + $tulis + $keamanan + $perlengkapan + $beban + $adm + 
 			$lain + $sewa + $bpjs + $penyusutan_kantor + $penyusutan_kendaraan + $iuran + $kendaraan + $pajak + $solar + 
 			$donasi + $legal + $pengobatan + $lembur + $pelatihan + $supplies;
@@ -678,7 +678,7 @@
 				?>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_konsumsi < 0 ? "(".number_format(-$evaluasi_konsumsi,0,',','.').")" : number_format($evaluasi_konsumsi,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">2</th>
 				<th align="left">Gaji</th>
 				<th align="right"><?php echo number_format($row['gaji'],0,',','.');?></th>
@@ -700,7 +700,7 @@
 				?>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_upah < 0 ? "(".number_format(-$evaluasi_upah,0,',','.').")" : number_format($evaluasi_upah,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">4</th>
 				<th align="left">Pengujian Material dan Laboratorium</th>
 				<th align="right"><?php echo number_format($row['pengujian'],0,',','.');?></th>
@@ -713,17 +713,6 @@
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">5</th>
-				<th align="left">Pengujian Material dan Laboratorium</th>
-				<th align="right"><?php echo number_format($row['pengujian'],0,',','.');?></th>
-				<th align="right"><?php echo number_format($pengujian,0,',','.');?></th>
-				<?php
-					$evaluasi_pengujian = $row['pengujian'] - $pengujian;
-					$styleColor = $evaluasi_pengujian < 0 ? 'color:red' : 'color:black';
-				?>
-				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_pengujian < 0 ? "(".number_format(-$evaluasi_pengujian,0,',','.').")" : number_format($evaluasi_pengujian,0,',','.');?></th>
-	        </tr>
-			<tr class="table-active3">
-	            <th align="center">6</th>
 				<th align="left">Perbaikan dan Pemeliharaan</th>
 				<th align="right"><?php echo number_format($row['perbaikan'],0,',','.');?></th>
 				<th align="right"><?php echo number_format($perbaikan,0,',','.');?></th>
@@ -733,8 +722,8 @@
 				?>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_perbaikan < 0 ? "(".number_format(-$evaluasi_perbaikan,0,',','.').")" : number_format($evaluasi_perbaikan,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
-	            <th align="center">7</th>
+			<tr class="table-active3" style="background-color: #cccccc;">
+	            <th align="center">6</th>
 				<th align="left">Akomodasi Tamu</th>
 				<th align="right"><?php echo number_format($row['akomodasi'],0,',','.');?></th>
 				<th align="right"><?php echo number_format($akomodasi,0,',','.');?></th>
@@ -745,7 +734,7 @@
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_akomodasi < 0 ? "(".number_format(-$evaluasi_akomodasi,0,',','.').")" : number_format($evaluasi_akomodasi,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
-	            <th align="center">8</th>
+	            <th align="center">7</th>
 				<th align="left">Listrik & Internet</th>
 				<th align="right"><?php echo number_format($row['listrik'],0,',','.');?></th>
 				<th align="right"><?php echo number_format($listrik,0,',','.');?></th>
@@ -755,8 +744,8 @@
 				?>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_listrik < 0 ? "(".number_format(-$evaluasi_listrik,0,',','.').")" : number_format($evaluasi_listrik,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
-	            <th align="center">9</th>
+			<tr class="table-active3" style="background-color: #cccccc;">
+	            <th align="center">8</th>
 				<th align="left">THR & Bonus</th>
 				<th align="right"><?php echo number_format($row['thr'],0,',','.');?></th>
 				<th align="right"><?php echo number_format($thr,0,',','.');?></th>
@@ -767,172 +756,268 @@
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_thr < 0 ? "(".number_format(-$evaluasi_thr,0,',','.').")" : number_format($evaluasi_thr,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
-	            <th align="center">10</th>
+	            <th align="center">9</th>
 				<th align="left">Bensin, Tol & Parkir - Umum</th>
 				<th align="right"><?php echo number_format($row['bensin'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($bensin,0,',','.');?></th>
+				<?php
+					$evaluasi_bensin = $row['bensin'] - $bensin;
+					$styleColor = $evaluasi_bensin < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_bensin < 0 ? "(".number_format(-$evaluasi_bensin,0,',','.').")" : number_format($evaluasi_bensin,0,',','.');?></th>
+	        </tr>
+			<tr class="table-active3" style="background-color: #cccccc;">
+	            <th align="center">10</th>
+				<th align="left">Perjalanan Dinas - Umum</th>
+				<th align="right"><?php echo number_format($row['dinas'],0,',','.');?></th>
+				<th align="right"><?php echo number_format($dinas,0,',','.');?></th>
+				<?php
+					$evaluasi_dinas = $row['dinas'] - $dinas;
+					$styleColor = $evaluasi_dinas < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_dinas < 0 ? "(".number_format(-$evaluasi_dinas,0,',','.').")" : number_format($evaluasi_dinas,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">11</th>
-				<th align="left">Perjalanan Dinas - Umum</th>
-				<th align="right"><?php echo number_format($row['dinas'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
-	        </tr>
-			<tr class="table-active3">
-	            <th align="center">12</th>
 				<th align="left">Komunikasi - Umum</th>
 				<th align="right"><?php echo number_format($row['komunikasi'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($komunikasi,0,',','.');?></th>
+				<?php
+					$evaluasi_komunikasi = $row['komunikasi'] - $komunikasi;
+					$styleColor = $evaluasi_komunikasi < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_komunikasi < 0 ? "(".number_format(-$evaluasi_komunikasi,0,',','.').")" : number_format($evaluasi_komunikasi,0,',','.');?></th>
+	        </tr>
+			<tr class="table-active3" style="background-color: #cccccc;">
+	            <th align="center">12</th>
+				<th align="left">Pakaian Dinas & K3</th>
+				<th align="right"><?php echo number_format($row['pakaian'],0,',','.');?></th>
+				<th align="right"><?php echo number_format($pakaian,0,',','.');?></th>
+				<?php
+					$evaluasi_pakaian = $row['pakaian'] - $pakaian;
+					$styleColor = $evaluasi_pakaian < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_pakaian < 0 ? "(".number_format(-$evaluasi_pakaian,0,',','.').")" : number_format($evaluasi_pakaian,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">13</th>
-				<th align="left">Pakaian Dinas & K3</th>
-				<th align="right"><?php echo number_format($row['pakaian'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
-	        </tr>
-			<tr class="table-active3">
-	            <th align="center">14</th>
 				<th align="left">Alat Tulis Kantor & Printing</th>
 				<th align="right"><?php echo number_format($row['tulis'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($tulis,0,',','.');?></th>
+				<?php
+					$evaluasi_tulis = $row['tulis'] - $tulis;
+					$styleColor = $evaluasi_tulis < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_tulis < 0 ? "(".number_format(-$evaluasi_tulis,0,',','.').")" : number_format($evaluasi_tulis,0,',','.');?></th>
+	        </tr>
+			<tr class="table-active3" style="background-color: #cccccc;">
+	            <th align="center">14</th>
+				<th align="left">Keamanan dan Kebersihan</th>
+				<th align="right"><?php echo number_format($row['keamanan'],0,',','.');?></th>
+				<th align="right"><?php echo number_format($keamanan,0,',','.');?></th>
+				<?php
+					$evaluasi_keamanan = $row['keamanan'] - $keamanan;
+					$styleColor = $evaluasi_keamanan < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_keamanan < 0 ? "(".number_format(-$evaluasi_keamanan,0,',','.').")" : number_format($evaluasi_keamanan,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">15</th>
-				<th align="left">Keamanan dan Kebersihan</th>
-				<th align="right"><?php echo number_format($row['keamanan'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
-	        </tr>
-			<tr class="table-active3">
-	            <th align="center">14</th>
 				<th align="left">Perlengkapan Kantor</th>
 				<th align="right"><?php echo number_format($row['perlengkapan'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($perlengkapan,0,',','.');?></th>
+				<?php
+					$evaluasi_perlengkapan = $row['perlengkapan'] - $perlengkapan;
+					$styleColor = $evaluasi_perlengkapan < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_perlengkapan < 0 ? "(".number_format(-$evaluasi_perlengkapan,0,',','.').")" : number_format($evaluasi_perlengkapan,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">16</th>
 				<th align="left">Beban Kirim</th>
 				<th align="right"><?php echo number_format($row['beban'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($beban,0,',','.');?></th>
+				<?php
+					$evaluasi_beban = $row['beban'] - $beban;
+					$styleColor = $evaluasi_beban < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_beban < 0 ? "(".number_format(-$evaluasi_beban,0,',','.').")" : number_format($evaluasi_beban,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">17</th>
 				<th align="left">Beban Adm Bank</th>
 				<th align="right"><?php echo number_format($row['adm'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($adm,0,',','.');?></th>
+				<?php
+					$evaluasi_adm = $row['adm'] - $adm;
+					$styleColor = $evaluasi_adm < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_adm < 0 ? "(".number_format(-$evaluasi_adm,0,',','.').")" : number_format($evaluasi_adm,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">18</th>
 				<th align="left">Beban Lain-lain</th>
 				<th align="right"><?php echo number_format($row['lain'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($lain,0,',','.');?></th>
+				<?php
+					$evaluasi_lain = $row['lain'] - $lain;
+					$styleColor = $evaluasi_lain < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_lain < 0 ? "(".number_format(-$evaluasi_lain,0,',','.').")" : number_format($evaluasi_lain,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">19</th>
 				<th align="left">Biaya Sewa Bangunan</th>
 				<th align="right"><?php echo number_format($row['sewa'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($sewa,0,',','.');?></th>
+				<?php
+					$evaluasi_sewa = $row['sewa'] - $sewa;
+					$styleColor = $evaluasi_sewa < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_sewa < 0 ? "(".number_format(-$evaluasi_sewa,0,',','.').")" : number_format($evaluasi_sewa,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">20</th>
 				<th align="left">BPJS Kesehatan dan ketenagakerjaan</th>
 				<th align="right"><?php echo number_format($row['bpjs'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($bpjs,0,',','.');?></th>
+				<?php
+					$evaluasi_bpjs = $row['bpjs'] - $bpjs;
+					$styleColor = $evaluasi_bpjs < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_bpjs < 0 ? "(".number_format(-$evaluasi_bpjs,0,',','.').")" : number_format($evaluasi_bpjs,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">21</th>
 				<th align="left">Penyusutan Peralatan Kantor</th>
 				<th align="right"><?php echo number_format($row['penyusutan'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($penyusutan_kantor,0,',','.');?></th>
+				<?php
+					$evaluasi_penyusutan_kantor = $row['penyusutan_kantor'] - $penyusutan_kantor;
+					$styleColor = $evaluasi_penyusutan_kantor < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_penyusutan_kantor < 0 ? "(".number_format(-$evaluasi_penyusutan_kantor,0,',','.').")" : number_format($evaluasi_penyusutan_kantor,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">22</th>
 				<th align="left">Penyusutan Kendaraan</th>
 				<th align="right"><?php echo number_format($row['kendaraan'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($penyusutan_kendaraan,0,',','.');?></th>
+				<?php
+					$evaluasi_penyusutan_kendaraan = $row['penyusutan_kendaraan'] - $penyusutan_kendaraan;
+					$styleColor = $evaluasi_penyusutan_kendaraan < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_penyusutan_kendaraan < 0 ? "(".number_format(-$evaluasi_penyusutan_kendaraan,0,',','.').")" : number_format($evaluasi_penyusutan_kendaraan,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">23</th>
 				<th align="left">Iuran & Langganan</th>
 				<th align="right"><?php echo number_format($row['iuran'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($iuran,0,',','.');?></th>
+				<?php
+					$evaluasi_iuran = $row['iuran'] - $iuran;
+					$styleColor = $evaluasi_iuran < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_iuran < 0 ? "(".number_format(-$evaluasi_iuran,0,',','.').")" : number_format($evaluasi_iuran,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">24</th>
 				<th align="left">Biaya Sewa - Kendaraan</th>
 				<th align="right"><?php echo number_format($row['kendaraan'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($kendaraan,0,',','.');?></th>
+				<?php
+					$evaluasi_kendaraan = $row['kendaraan'] - $kendaraan;
+					$styleColor = $evaluasi_kendaraan < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_kendaraan < 0 ? "(".number_format(-$evaluasi_kendaraan,0,',','.').")" : number_format($evaluasi_kendaraan,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">25</th>
 				<th align="left">Pajak dan Perizinan</th>
 				<th align="right"><?php echo number_format($row['pajak'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($pajak,0,',','.');?></th>
+				<?php
+					$evaluasi_pajak = $row['pajak'] - $pajak;
+					$styleColor = $evaluasi_pajak < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_pajak < 0 ? "(".number_format(-$evaluasi_pajak,0,',','.').")" : number_format($evaluasi_pajak,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">26</th>
 				<th align="left">Solar</th>
 				<th align="right"><?php echo number_format($row['solar'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($solar,0,',','.');?></th>
+				<?php
+					$evaluasi_solar = $row['solar'] - $solar;
+					$styleColor = $evaluasi_solar < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_solar < 0 ? "(".number_format(-$evaluasi_solar,0,',','.').")" : number_format($evaluasi_solar,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">27</th>
 				<th align="left">Donasi</th>
 				<th align="right"><?php echo number_format($row['donasi'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($donasi,0,',','.');?></th>
+				<?php
+					$evaluasi_donasi = $row['donasi'] - $donasi;
+					$styleColor = $evaluasi_donasi < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_donasi < 0 ? "(".number_format(-$evaluasi_donasi,0,',','.').")" : number_format($evaluasi_donasi,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">28</th>
 				<th align="left">Legal & Profesional</th>
 				<th align="right"><?php echo number_format($row['legal'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($legal,0,',','.');?></th>
+				<?php
+					$evaluasi_legal = $row['legal'] - $legal;
+					$styleColor = $evaluasi_legal < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_legal < 0 ? "(".number_format(-$evaluasi_legal,0,',','.').")" : number_format($evaluasi_legal,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">29</th>
 				<th align="left">Pengobatan</th>
 				<th align="right"><?php echo number_format($row['pengobatan'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($pengobatan,0,',','.');?></th>
+				<?php
+					$evaluasi_pengobatan = $row['pengobatan'] - $pengobatan;
+					$styleColor = $evaluasi_pengobatan < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_pengobatan < 0 ? "(".number_format(-$evaluasi_pengobatan,0,',','.').")" : number_format($evaluasi_pengobatan,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">30</th>
 				<th align="left">Lembur</th>
 				<th align="right"><?php echo number_format($row['lembur'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($lembur,0,',','.');?></th>
+				<?php
+					$evaluasi_lembur = $row['lembur'] - $lembur;
+					$styleColor = $evaluasi_lembur < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_lembur < 0 ? "(".number_format(-$evaluasi_lembur,0,',','.').")" : number_format($evaluasi_lembur,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th align="center">31</th>
 				<th align="left">Pelatihan dan Pengembangan</th>
 				<th align="right"><?php echo number_format($row['pelatihan'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($pelatihan,0,',','.');?></th>
+				<?php
+					$evaluasi_pelatihan = $row['pelatihan'] - $pelatihan;
+					$styleColor = $evaluasi_pelatihan < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_pelatihan < 0 ? "(".number_format(-$evaluasi_pelatihan,0,',','.').")" : number_format($evaluasi_pelatihan,0,',','.');?></th>
 	        </tr>
-			<tr class="table-active3">
+			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">32</th>
 				<th align="left">Supplies dan Material</th>
 				<th align="right"><?php echo number_format($row['supplies'],0,',','.');?></th>
-				<th align="right"></th>
-				<th align="right"></th>
+				<th align="right"><?php echo number_format($supplies,0,',','.');?></th>
+				<?php
+					$evaluasi_supplies = $row['supplies'] - $supplies;
+					$styleColor = $evaluasi_supplies < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $evaluasi_supplies < 0 ? "(".number_format(-$evaluasi_supplies,0,',','.').")" : number_format($evaluasi_supplies,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active">
 	            <th align="center" colspan="2">TOTAL</th>
