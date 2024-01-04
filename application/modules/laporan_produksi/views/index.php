@@ -70,10 +70,10 @@
                 </div>
                 <div class="row animated fadeInUp">
                     <div class="col-sm-12 col-lg-12">
-                        <div class="panel" style="background: linear-gradient(90deg, #f8f8f8 20%, #dddddd 40%, #f8f8f8 80%);">
+                        <div class="panel" style="background: linear-gradient(90deg, #ebe1d2 20%, #ebe1d2 40%, #ebe1d2 80%);">
                             <div class="panel-content">
 								<div class="panel-header">
-									<h3 class="section-subtitle"><?php echo $row[0]->menu_name; ?></h3>
+									<h3 class="section-subtitle"><b><?php echo $row[0]->menu_name; ?><b></h3>
 								</div>
                                 <div class="tab-content">
 									
@@ -84,15 +84,15 @@
                                             <div width="100%">
                                                 <div class="panel panel-default">                                            
                                                     <div class="col-sm-5">
-														<p><h5>Laporan Produksi Harian</h5></p>
+														<p><b><h5>Laporan Produksi Harian</h5></b></p>
                                                         <a href="#laporan_produksi" aria-controls="laporan_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
                                                     </div>
                                                     <div class="col-sm-5">
-														<p><h5>Laporan Produksi Campuran</h5></p>
+														<p><b><h5>Laporan Produksi Campuran</h5></b></p>
                                                         <a href="#laporan_produksi_campuran" aria-controls="laporan_produksi_campuran" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
                                                     </div>
 													<div class="col-sm-5">
-														<p><h5>Rekapitulasi Laporan Produksi</h5></p>
+														<p><b><h5>Rekapitulasi Laporan Produksi</h5></b></p>
                                                         <a href="#rekapitulasi_laporan_produksi" aria-controls="rekapitulasi_laporan_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
 													</div>
 													<!--<div class="col-sm-5">
@@ -114,7 +114,7 @@
                                         <div class="col-sm-15">
                                             <div class="panel panel-default"> 
 												<div class="panel-heading">												
-                                                    <h3 class="panel-title">Laporan Produksi Harian</h3>
+                                                    <h3 class="panel-title"><b>Laporan Produksi Harian</b></h3>
 													<a href="laporan_produksi">Kembali</a>
                                                 </div>
                                                 <div style="margin: 20px">
@@ -157,7 +157,7 @@
                                         <div class="col-sm-15">
                                             <div class="panel panel-default"> 
 												<div class="panel-heading">												
-                                                    <h3 class="panel-title">Laporan Produksi Campuran</h3>
+                                                    <h3 class="panel-title"><b>Laporan Produksi Campuran</b></h3>
 													<a href="laporan_produksi">Kembali</a>
                                                 </div>
                                                 <div style="margin: 20px">
@@ -206,7 +206,7 @@
                                         <div class="col-sm-15">
                                             <div class="panel panel-default"> 
 												<div class="panel-heading">												
-                                                    <h3 class="panel-title">Rekapitulasi Laporan Produksi</h3>
+                                                    <h3 class="panel-title"><b>Rekapitulasi Laporan Produksi</b></h3>
 													<a href="laporan_produksi">Kembali</a>
                                                 </div>
                                                 <div style="margin: 20px">

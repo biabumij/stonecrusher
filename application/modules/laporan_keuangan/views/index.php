@@ -44,10 +44,10 @@
                 </div>
                 <div class="row animated fadeInUp">
                     <div class="col-sm-12 col-lg-12">
-                        <div class="panel" style="background: linear-gradient(90deg, #f8f8f8 20%, #dddddd 40%, #f8f8f8 80%);">
+                        <div class="panel" style="background: linear-gradient(90deg, #ebe1d2 20%, #ebe1d2 40%, #ebe1d2 80%);">
                             <div class="panel-content">
 								<div class="panel-header">
-									<h3 class="section-subtitle"><?php echo $row[0]->menu_name; ?></h3>
+									<h3 class="section-subtitle"><b><?php echo $row[0]->menu_name; ?></b></h3>
 								</div>
                                 <div class="tab-content">
 									
@@ -57,13 +57,13 @@
                                             <div width="100%">
                                                 <div class="panel panel-default">                                            
                                                     <div class="col-sm-5">
-														<p><h5>Laporan Laba Rugi</h5></p>
+														<p><b><h5>Laporan Laba Rugi</h5></b></p>
                                                         <a href="#laporan-laba-rugi-new" aria-controls="laporan-laba-rugi-new" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
                                                     </div>													
                                                 </div>
                                                 <div class="panel panel-default">                                            
                                                     <div class="col-sm-5">
-                                                    <p><h5>Biaya</h5></p>
+                                                    <p><b><h5>Biaya</h5></b></p>
                                                     <a href="<?= site_url('laporan/laporan_biaya'); ?>" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
                                                     </div>													
                                                 </div>
@@ -76,7 +76,7 @@
                                         <div class="col-sm-15">
 										<div class="panel panel-default">
                                                 <div class="panel-heading">
-                                                    <h3 class="panel-title">Laporan Laba Rugi</h3>
+                                                    <h3 class="panel-title"><b>Laporan Laba Rugi</b></h3>
 													<a href="laporan_keuangan">Kembali</a>
                                                 </div>
 												<div style="margin: 20px">

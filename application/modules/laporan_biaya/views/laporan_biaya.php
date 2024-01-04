@@ -31,7 +31,7 @@
                 <div class="col-sm-12 col-lg-12">
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="section-subtitle">Laporan Biaya</h3>
+                            <h3 class="section-subtitle"><b>Laporan Biaya</b></h3>
                             <a href="<?php echo site_url('admin/laporan_keuangan');?>">Kembali</a>
                         </div>
                         <div class="panel-content">
