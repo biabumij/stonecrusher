@@ -218,6 +218,13 @@
 													</tr>
 													<tr>
 														<td class="text-center"></td>
+														<td style="text-align: left !important;">Gaji</td>
+														<td colspan="2">
+															<input type="text" id="upah" name="upah" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
 														<td style="text-align: left !important;">Pengujian Material dan Laboratorium</td>
 														<td colspan="2">
 															<input type="text" id="pengujian" name="pengujian" class="form-control rupiahformat text-right" value="" autocomplete="off">
@@ -337,9 +344,16 @@
 													</tr>
 													<tr>
 														<td class="text-center"></td>
-														<td style="text-align: left !important;">Penyusutan Peralatan Kantor dan Kendaraan</td>
+														<td style="text-align: left !important;">Penyusutan Peralatan Kantor</td>
 														<td colspan="2">
-															<input type="text" id="penyusutan" name="penyusutan" class="form-control rupiahformat text-right" value="" autocomplete="off">
+															<input type="text" id="penyusutan_kantor" name="penyusutan_kantor" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Penyusutan Kendaraan</td>
+														<td colspan="2">
+															<input type="text" id="penyusutan_kendaraan" name="penyusutan_kendaraan" class="form-control rupiahformat text-right" value="" autocomplete="off">
 														</td>
 													</tr>
 													<tr>
@@ -403,6 +417,13 @@
 														<td style="text-align: left !important;">Pelatihan dan Pengembangan</td>
 														<td colspan="2">
 															<input type="text" id="pelatihan" name="pelatihan" class="form-control rupiahformat text-right" value="" autocomplete="off">
+														</td>
+													</tr>
+													<tr>
+														<td class="text-center"></td>
+														<td style="text-align: left !important;">Supplies dan Material</td>
+														<td colspan="2">
+															<input type="text" id="supplies" name="supplies" class="form-control rupiahformat text-right" value="" autocomplete="off">
 														</td>
 													</tr>
 													<tr>

@@ -107,6 +107,7 @@ class Rap extends Secure_Controller {
 		
 		$konsumsi = str_replace('.', '', $this->input->post('konsumsi'));
 		$gaji = str_replace('.', '', $this->input->post('gaji'));
+		$upah = str_replace('.', '', $this->input->post('upah'));
 		$pengujian = str_replace('.', '', $this->input->post('pengujian'));
 		$perbaikan = str_replace('.', '', $this->input->post('perbaikan'));
 		$akomodasi = str_replace('.', '', $this->input->post('akomodasi'));
@@ -124,7 +125,8 @@ class Rap extends Secure_Controller {
 		$lain = str_replace('.', '', $this->input->post('lain'));
 		$sewa = str_replace('.', '', $this->input->post('sewa'));
 		$bpjs = str_replace('.', '', $this->input->post('bpjs'));
-		$penyusutan = str_replace('.', '', $this->input->post('penyusutan'));
+		$penyusutan_kantor = str_replace('.', '', $this->input->post('penyusutan_kantor'));
+		$penyusutan_kendaraan = str_replace('.', '', $this->input->post('penyusutan_kendaraan'));
 		$iuran = str_replace('.', '', $this->input->post('iuran'));
 		$kendaraan = str_replace('.', '', $this->input->post('kendaraan'));
 		$pajak = str_replace('.', '', $this->input->post('pajak'));
@@ -134,6 +136,7 @@ class Rap extends Secure_Controller {
 		$pengobatan = str_replace('.', '', $this->input->post('pengobatan'));
 		$lembur = str_replace('.', '', $this->input->post('lembur'));
 		$pelatihan = str_replace('.', '', $this->input->post('pelatihan'));
+		$supplies = str_replace('.', '', $this->input->post('supplies'));
 
 		$laba = str_replace('.', '', $this->input->post('laba'));
 
@@ -180,6 +183,7 @@ class Rap extends Secure_Controller {
 
 			'konsumsi' => $konsumsi,
 			'gaji' => $gaji,
+			'upah' => $upah,
 			'pengujian' => $pengujian,
 			'perbaikan' => $perbaikan,
 			'akomodasi' => $akomodasi,
@@ -197,7 +201,8 @@ class Rap extends Secure_Controller {
 			'lain' => $lain,
 			'sewa' => $sewa,
 			'bpjs' => $bpjs,
-			'penyusutan' => $penyusutan,
+			'penyusutan_kantor' => $penyusutan_kantor,
+			'penyusutan_kendaraan' => $penyusutan_kendaraan,
 			'iuran' => $iuran,
 			'kendaraan' => $kendaraan,
 			'pajak' => $pajak,
@@ -207,6 +212,7 @@ class Rap extends Secure_Controller {
 			'pengobatan' => $pengobatan,
 			'lembur' => $lembur,
 			'pelatihan' => $pelatihan,
+			'supplies' => $supplies,
 
 			'laba' => $laba,
 
@@ -351,6 +357,7 @@ class Rap extends Secure_Controller {
 		
 		$konsumsi = str_replace('.', '', $this->input->post('konsumsi'));
 		$gaji = str_replace('.', '', $this->input->post('gaji'));
+		$upah = str_replace('.', '', $this->input->post('upah'));
 		$pengujian = str_replace('.', '', $this->input->post('pengujian'));
 		$perbaikan = str_replace('.', '', $this->input->post('perbaikan'));
 		$akomodasi = str_replace('.', '', $this->input->post('akomodasi'));
@@ -368,7 +375,8 @@ class Rap extends Secure_Controller {
 		$lain = str_replace('.', '', $this->input->post('lain'));
 		$sewa = str_replace('.', '', $this->input->post('sewa'));
 		$bpjs = str_replace('.', '', $this->input->post('bpjs'));
-		$penyusutan = str_replace('.', '', $this->input->post('penyusutan'));
+		$penyusutan_kantor = str_replace('.', '', $this->input->post('penyusutan_kantor'));
+		$penyusutan_kendaraan = str_replace('.', '', $this->input->post('penyusutan_kendaraan'));
 		$iuran = str_replace('.', '', $this->input->post('iuran'));
 		$kendaraan = str_replace('.', '', $this->input->post('kendaraan'));
 		$pajak = str_replace('.', '', $this->input->post('pajak'));
@@ -378,6 +386,7 @@ class Rap extends Secure_Controller {
 		$pengobatan = str_replace('.', '', $this->input->post('pengobatan'));
 		$lembur = str_replace('.', '', $this->input->post('lembur'));
 		$pelatihan = str_replace('.', '', $this->input->post('pelatihan'));
+		$supplies = str_replace('.', '', $this->input->post('supplies'));
 
 		$laba = str_replace('.', '', $this->input->post('laba'));
 
@@ -422,6 +431,7 @@ class Rap extends Secure_Controller {
 
 			'konsumsi' => $konsumsi,
 			'gaji' => $gaji,
+			'upah' => $upah,
 			'pengujian' => $pengujian,
 			'perbaikan' => $perbaikan,
 			'akomodasi' => $akomodasi,
@@ -439,7 +449,8 @@ class Rap extends Secure_Controller {
 			'lain' => $lain,
 			'sewa' => $sewa,
 			'bpjs' => $bpjs,
-			'penyusutan' => $penyusutan,
+			'penyusutan_kantor' => $penyusutan_kantor,
+			'penyusutan_kendaraan' => $penyusutan_kendaraan,
 			'iuran' => $iuran,
 			'kendaraan' => $kendaraan,
 			'pajak' => $pajak,
@@ -449,6 +460,7 @@ class Rap extends Secure_Controller {
 			'pengobatan' => $pengobatan,
 			'lembur' => $lembur,
 			'pelatihan' => $pelatihan,
+			'supplies' => $supplies,
 			
 			'laba' => $laba,
 
