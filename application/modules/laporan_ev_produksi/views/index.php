@@ -70,10 +70,10 @@
                 </div>
                 <div class="row animated fadeInUp">
                     <div class="col-sm-12 col-lg-12">
-                        <div class="panel" style="background: linear-gradient(90deg, #f8f8f8 20%, #dddddd 40%, #f8f8f8 80%);">
+                        <div class="panel" style="background: linear-gradient(90deg, #a2d6ed 20%, #d0eaf6 40%, #b9e0f1 80%);">
                             <div class="panel-content">
 								<div class="panel-header">
-									<h3 class="section-subtitle"><?php echo $row[0]->menu_name; ?></h3>
+									<h3 class="section-subtitle"><b><?php echo $row[0]->menu_name; ?></b></h3>
 								</div>
                                 <div class="tab-content">
 									
@@ -83,11 +83,11 @@
                                             <div width="100%">
                                                 <div class="panel panel-default">
 													<div class="col-sm-5">
-														<p><h5>Laporan Evaluasi Kapasitas Produksi</h5></p>
+														<p><b><h5>Laporan Evaluasi Kapasitas Produksi</h5></b></p>
                                                         <a href="#laporan_evaluasi_produksi" aria-controls="laporan_evaluasi_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
 													</div>
                                                     <div class="col-sm-5">
-														<p><h5>Laporan Evaluasi Biaya Produksi</h5></p>
+														<p><b><h5>Laporan Evaluasi Biaya Produksi</h5></b></p>
                                                         <a href="#laporan_evaluasi_biaya_produksi" aria-controls="laporan_evaluasi_biaya_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
 													</div>     													
                                                 </div>
