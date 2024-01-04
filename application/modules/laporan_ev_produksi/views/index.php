@@ -100,7 +100,7 @@
                                         <div class="col-sm-15">
                                             <div class="panel panel-default"> 
 												<div class="panel-heading">												
-                                                    <h3 class="panel-title">Laporan Evaluasi Kapasitas Produksi</h3>
+                                                    <h3 class="panel-title"><b>Laporan Evaluasi Kapasitas Produksi</b></h3>
 													<a href="laporan_ev._produksi">Kembali</a>
                                                 </div>
                                                 <div style="margin: 20px">
@@ -147,7 +147,7 @@
                                         <div class="col-sm-15">
 										<div class="panel panel-default">
                                                 <div class="panel-heading">
-                                                    <h3 class="panel-title">Laporan Evaluasi Biaya Produksi</h3>
+                                                    <h3 class="panel-title"><b>Laporan Evaluasi Biaya Produksi</b></h3>
 													<a href="laporan_ev._produksi">Kembali</a>
                                                 </div>
 												<div style="margin: 20px">
