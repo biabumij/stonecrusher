@@ -1443,7 +1443,7 @@ class Receipt_material extends CI_Controller {
 	));	
 	}
 
-	function table_date8a()
+	function table_produksi_harian()
 	{
 		$data = array();
 		$supplier_id = $this->input->post('no_prod');
@@ -1560,7 +1560,7 @@ class Receipt_material extends CI_Controller {
 		echo json_encode(array('data'=>$data,'total'=>number_format($total,2,',','.')));		
 	}
 
-	function table_date_campuran()
+	function table_produksi_campuran()
 	{
 		$data = array();
 		$supplier_id = $this->input->post('no_prod');
@@ -1604,7 +1604,7 @@ class Receipt_material extends CI_Controller {
 			foreach ($query->result_array() as $key => $sups) {
 
 				$mats = array();
-				$materials = $this->pmm_model->GetReceiptMatCampuran($sups['no_prod'],$purchase_order_no,$start_date,$end_date,$filter_material);
+				$materials = $this->pmm_model->GetMatCampuran($sups['no_prod'],$purchase_order_no,$start_date,$end_date,$filter_material);
 				
 				if(!empty($materials)){
 					foreach ($materials as $key => $row) {
@@ -1738,7 +1738,7 @@ class Receipt_material extends CI_Controller {
 		echo json_encode(array('data'=>$data,'total'=>number_format($total,2,',','.')));		
 	}
 
-	function table_date8b()
+	function rekapitulasi_produksi()
 	{
 		$data = array();
 		$supplier_id = $this->input->post('no_prod');

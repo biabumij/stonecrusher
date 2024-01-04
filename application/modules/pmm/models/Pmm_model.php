@@ -3583,7 +3583,7 @@ class Pmm_model extends CI_Model {
         return $output;
     }
 
-    function GetReceiptMatCampuran($supplier_id=false,$purchase_order_no=false,$start_date=false,$end_date=false,$filter_material=false)
+    function GetMatCampuran($supplier_id=false,$purchase_order_no=false,$start_date=false,$end_date=false,$filter_material=false)
     {
         $output = array();
 

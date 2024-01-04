@@ -807,9 +807,9 @@
 							</td>
 						</tr>
 						<?php
-							$create = $this->db->select('id, unit_head, logistik, admin')
-							->from('akumulasi_bahan_baku')
-							->where("(date_akumulasi = '$end_date')")
+							$create = $this->db->select('*')
+							->from('kunci_bahan_jadi')
+							->where("(date = '$end_date')")
 							->order_by('id','desc')->limit(1)
 							->get()->row_array();
 

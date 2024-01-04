@@ -1217,7 +1217,7 @@ class Laporan extends Secure_Controller {
 			foreach ($query->result_array() as $key => $sups) {
 
 				$mats = array();
-				$materials = $this->pmm_model->GetReceiptMatCampuran($sups['no_prod'],$purchase_order_no,$start_date,$end_date,$filter_material);
+				$materials = $this->pmm_model->GetMatCampuran($sups['no_prod'],$purchase_order_no,$start_date,$end_date,$filter_material);
 				
 				if(!empty($materials)){
 					foreach ($materials as $key => $row) {
