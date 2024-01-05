@@ -2424,6 +2424,8 @@ class Laporan extends Secure_Controller {
 		$data['filter_date'] = $filter_date;
 		$data['date1'] = $start_date;
 		$data['date2'] = $end_date;
+		$data['start_date'] = $start_date;
+		$data['end_date'] = $end_date;
         $html = $this->load->view('laporan_keuangan/cetak_beban_pokok_penjualan',$data,TRUE);
 
         $pdf->SetTitle('BBJ - Beban Pokok Penjualan');
