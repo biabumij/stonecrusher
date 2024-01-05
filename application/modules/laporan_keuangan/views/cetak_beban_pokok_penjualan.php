@@ -1131,11 +1131,7 @@
 				<th align="right"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
 			</tr>
 		</table>
-		<table>
-			<tr>
-				<td></td>
-			</tr>
-		</table>
+		<br /><br /><br /><br /><br />
 		<table width="98%" border="0" cellpadding="0">
 			<tr >
 				<td width="5%"></td>

@@ -1131,5 +1131,56 @@
 				<th align="right"><?php echo number_format($harga_siap_jual,0,',','.');?></th>
 			</tr>
 		</table>
+		<br /><br /><br /><br /><br />
+		<table width="98%" border="0" cellpadding="0">
+			<tr >
+				<td width="5%"></td>
+				<td width="90%">
+					<table width="100%" border="0" cellpadding="2">
+						<tr>
+							<td align="center" >
+								Disetujui Oleh
+							</td>
+							<td align="center">
+								Dibuat Oleh
+							</td>
+						</tr>
+						<?php
+							$create = $this->db->select('*')
+							->from('kunci_bahan_jadi')
+							->where("(date = '$end_date')")
+							->order_by('id','desc')->limit(1)
+							->get()->row_array();
+
+							$this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
+							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
+							$this->db->where('a.admin_id',$create['unit_head']);
+							$unit_head = $this->db->get('tbl_admin a')->row_array();
+
+							$dirut = $this->pmm_model->GetNameGroup(6);
+						?>
+						<tr class="">
+							<td align="center" height="60px">
+							
+							</td>
+							<td align="center">
+								<img src="<?= $unit_head['admin_ttd']?>" width="60px">
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<b><u><?= $dirut['admin_name'];?></u><br />
+								<?=  $dirut['admin_group_name'];?></b>
+							</td>
+							<td align="center">
+								<b><u><?= $unit_head['admin_name'];?></u><br />
+								Kepala Unit Bisnis</b>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td width="5%"></td>
+			</tr>
+		</table>
 	</body>
 </html>
