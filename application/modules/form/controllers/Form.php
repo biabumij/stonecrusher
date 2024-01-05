@@ -89,7 +89,8 @@ class Form extends Secure_Controller {
         $data = array();
 
         $this->db->select('s.*');
-		$this->db->order_by('s.tanggal','desc');			
+		$this->db->order_by('s.tanggal','desc');
+		$this->db->order_by('s.created_on','desc');			
 		$query = $this->db->get('perubahan_sistem s');
 		
        	if($query->num_rows() > 0){
