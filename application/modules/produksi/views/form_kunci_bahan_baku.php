@@ -51,7 +51,8 @@
                                             <thead>
                                                 <tr>
                                                     <th width="5%" class="text-center">NO.</th>
-                                                    <th width="35%" class="text-left">URAIAN</th>
+                                                    <th width="15%" class="text-left">URAIAN</th>
+                                                    <th width="25%" class="text-right">VOLUME PEMAKAIAN BAHAN BAKU</th>
                                                     <th width="30%" class="text-right">VOLUME STOK BAHAN BAKU AKHIR</th>
                                                     <th width="30%" class="text-right">NILAI STOK BAHAN BAKU AKHIR</th>
                                                 </tr>
@@ -60,6 +61,7 @@
                                                 <tr>
                                                     <td class="text-center">1.</td>
                                                     <td>Batu Boulder</td>
+                                                    <td></td>
                                                     <td>
                                                         <input type="number" step=".01" min="0" name="vol_nilai_boulder" id="vol_nilai_boulder" class="form-control text-right numberformat" required="" value="0" autocomplete="off"/>
                                                     </td>
@@ -70,6 +72,9 @@
 												<tr>
                                                     <td class="text-center">2.</td>
                                                     <td>Solar</td>
+                                                    <td>
+                                                        <input type="number" step=".01" min="0" name="vol_pemakaian_bbm" id="vol_pemakaian_bbm" class="form-control text-right numberformat" required="" value="0" autocomplete="off"/>
+                                                    </td>
                                                     <td>
                                                         <input type="number" step=".01" min="0" name="vol_nilai_bbm" id="vol_nilai_bbm" class="form-control text-right numberformat" required="" value="0" autocomplete="off"/>
                                                     </td>
