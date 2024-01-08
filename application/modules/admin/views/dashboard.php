@@ -76,7 +76,7 @@
 
                     <div class="col-sm-12">
                         <figure class="highcharts-figure">
-                            <div id="container_laba_rugi" style="border-radius:10px;"></div>
+                            <div id="container_laba_rugi_rap" style="border-radius:10px;"></div>
                             
                         </figure>
                         <br />
@@ -89,6 +89,7 @@
                             <div class="panel" style="border-radius:10px;">
                                     <div class="panel-heading">
                                         <center><h3 class="panel-title">RAP</h3></center>
+                                        <?php echo number_format($beban_pokok_penjualan_oktober23,2,'.',',');?>
                                     </div>
                                     <div style="margin: 20px">
                                         <div id="wait" style=" text-align: center; align-content: center; display: none;">	
@@ -117,7 +118,6 @@
 <script src="<?php echo base_url();?>assets/back/theme/vendor/toastr/toastr.min.js"></script>
 <script src="<?php echo base_url();?>assets/back/theme/vendor/chart-js/chart.min.js"></script>
 <script src="<?php echo base_url();?>assets/back/theme/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-<!-- <script src="<?php echo base_url();?>assets/back/theme/javascripts/examples/dashboard.js"></script> -->
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
@@ -127,7 +127,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-
 <script src="<?php echo base_url();?>assets/back/theme/vendor/daterangepicker/moment.min.js"></script>
 <script src="<?php echo base_url();?>assets/back/theme/vendor/number_format.js"></script>
 <script src="<?php echo base_url();?>assets/back/theme/vendor/daterangepicker/daterangepicker.js"></script>
@@ -146,15 +145,15 @@
         $(document).ready(function() {
             chart = new Highcharts.Chart({
                 chart: {
-                    renderTo: 'container_laba_rugi',
-                    type: 'spline',
+                    renderTo: 'container_laba_rugi_rap',
+                    type: 'line',
                     marginRight: 130,
                     marginBottom: 75,
                     backgroundColor: {
-                        linearGradient: [500, 0, 0, 700],
+                        linearGradient: [0, 0, 700, 500],
                         stops: [
-                            [0, 'rgb(182,150,119)'],
-                            [1, 'rgb(182,150,119)']
+                            [0, 'rgb(176,224,230)'],
+                            [1, 'rgb(176,224,230)']
                         ]
                     },
                 },
@@ -165,20 +164,20 @@
                         fontSize: '14px',
                         fontFamily: 'helvetica'
                     },
-                    text: 'LABA RUGI',
+                    text: 'PRESENTASE LABA RUGI X RAP',
                     x: -20 //center            
                 },
                 subtitle: {
                     style: {
-                    color: '#000000',
-                    fontWeight: 'bold',
-                    fontSize: '14px',
-                    fontFamily: 'helvetica'
+                        color: '#000000',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        fontFamily: 'helvetica'
                     },
-                    text: 'PT. BIA BUMI JAYENDRA - SC (<?php echo $date_now = date('Y', strtotime($date_now));?>)',
+                    text: ''.toUpperCase(),
                     x: -20
                 },
-                xAxis: {
+                xAxis: { //X axis menampilkan data bulan
                     labels: {
                         style: {
                             color: '#000000',
@@ -187,9 +186,13 @@
                             fontFamily: 'helvetica'
                         }
                     },
-                    categories: ['September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24','Juni 24','Juli 24','Agustus 24','September 24','Oktober 24']
+                    categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23']
                 },
                 yAxis: {
+                    //title: {  //label yAxis
+                        //text: 'RAP <br /><?php echo number_format(0,0,',','.'); ?>'
+                        //text: 'Presentase'
+                    //},
                     title: {
                         style: {
                             color: '#000000',
@@ -211,18 +214,18 @@
                             fontSize: '10px',
                             fontFamily: 'helvetica'
                         },
-                        format: '{value} %'
+                        format: '{value}'
                     },
-                    min: -20,
-                    max: 20,
-                    tickInterval: 5,
+                    min: -30,
+                    max: 110,
+                    tickInterval: 10,
                 },
                 tooltip: { 
                 //fungsi tooltip, ini opsional, kegunaan dari fungsi ini 
                 //akan menampikan data di titik tertentu di grafik saat mouseover
                     formatter: function() {
                             return '<b>'+ this.series.name +'</b><br/>'+ 
-                            ''+ 'Presentase' +': '+ this.y + '%<br/>';
+                            ''+ 'Presentase' +': '+ this.y + ' %<br/>';
                             //''+ 'Vol' +': '+ this.x + '';
 
                             //'<b>'+ 'Presentase' +': '+ this.y +'%'</b><br/>'+ 
@@ -253,25 +256,27 @@
                 },
         
                 series: [{  
-                    name: '0 %',  
-                    data: [0,0,0,0,0,0,0,0,0,0,0],
+                    name: 'RAP',  
+                
+                    data: [<?php echo number_format($persentase_laba_kotor_rap_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_desember23_fix,2,'.',',');?>],
 
-                    color: '#000000',
+                    color: '#e69500 ',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'helvetica'
                 },
                 {  
-                    name: 'Laba Rugi %',
-                    data: [ <?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',',');?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>,<?php echo number_format(0,2,'.',','); ?>],
+                    name: 'Realisasi',  
+                    
+                    data: [<?php echo number_format($persentase_laba_kotor_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_desember23_fix,2,'.',',');?>],
 
-                    color: '#cc0000',
+                    color: '#2986CC',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'helvetica',
 
                     zones: [{
-                    
+                        
                     }, {
                         dashStyle: 'dot'
                     }]
