@@ -506,16 +506,16 @@
 		<tr class="table-active3">
 			<th align="center"><b>6</b></th>
 			<th align="left"><b>BBM SOLAR</b></th>
-			<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian * $vol_bbm_solar_ton,2,',','.');?></th>
+			<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 			<th align="right"><?php echo number_format($nilai_bbm_solar_ton,0,',','.');?></th>
 			<?php
-			$nilai_rap_bbm = (round($nilai_bbm_solar_ton,2)!=0)?($total_rekapitulasi_produksi_harian * $vol_bbm_solar_ton) * round($nilai_bbm_solar_ton,2) * 1:0;
+			$nilai_rap_bbm = (round($nilai_bbm_solar_ton,2)!=0)?$total_rekapitulasi_produksi_harian * round($nilai_bbm_solar_ton,2) * 1:0;
 			?>
 			<th align="right"><?php echo number_format($nilai_rap_bbm,0,',','.');?></th>
-			<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian * $vol_bbm_solar_ton,2,',','.');?></th>
+			<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 			<?php
 			$harga_baru = ($harga_bbm['nilai_bbm'] + $pembelian_bbm['nilai']) / (round($stock_opname_bbm_ago['volume'],2) + round($pembelian_bbm['volume'],2));
-			$bbm = ($total_rekapitulasi_produksi_harian * $vol_bbm_solar_ton) * $harga_baru;
+			$bbm = $total_rekapitulasi_produksi_harian * $harga_baru;
 			?>
 			<th align="right"><?php echo number_format($harga_baru,0,',','.');?></th>
 			<th align="right"><?php echo number_format($bbm,0,',','.');?></th>
