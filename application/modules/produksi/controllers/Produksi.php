@@ -1370,6 +1370,7 @@ class Produksi extends Secure_Controller {
 			'nilai_boulder' => $nilai_boulder,
 			'vol_nilai_bbm' => $vol_nilai_bbm,
 			'nilai_bbm' => $nilai_bbm,
+			'nilai_bbm_rev' => $nilai_bbm,
 			'status' => 'PUBLISH',
 			'created_by' => $this->session->userdata('admin_id'),
 			'created_on' => date('Y-m-d H:i:s')
@@ -1400,7 +1401,7 @@ class Produksi extends Secure_Controller {
 			$this->db->where('pp.date >=',date('Y-m-d',strtotime($arr_date[0])));
 			$this->db->where('pp.date <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
-        $this->db->select('pp.id, pp.date, pp.vol_nilai_boulder, pp.nilai_boulder, pp.nilai_bbm, pp.nilai_bbm, pp.status, pp.created_by, pp.created_on');
+        $this->db->select('pp.id, pp.date, pp.vol_pemakaian_bbm, pp.vol_nilai_boulder, pp.nilai_boulder, pp.vol_nilai_bbm, pp.nilai_bbm, pp.status, pp.created_by, pp.created_on');
 		$this->db->order_by('pp.date','desc');
 		$query = $this->db->get('kunci_bahan_baku pp');
 		
@@ -1408,6 +1409,7 @@ class Produksi extends Secure_Controller {
 			foreach ($query->result_array() as $key => $row) {
                 $row['no'] = $key+1;
                 $row['date'] = date('d F Y',strtotime($row['date']));
+				$row['vol_nilai_boulder'] = number_format($row['vol_nilai_boulder'],2,',','.');
 				$row['vol_nilai_boulder'] = number_format($row['vol_nilai_boulder'],2,',','.');
 				$row['nilai_boulder'] = number_format($row['nilai_boulder'],0,',','.');
 				$row['vol_nilai_bbm'] = number_format($row['vol_nilai_bbm'],2,',','.');

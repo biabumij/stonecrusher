@@ -72,6 +72,7 @@
                                                     <tr>
                                                         <th>No</th>
 														<th>Tanggal</th>
+                                                        <th>Vol. Akhir BBM</th>
                                                         <th>Vol. Akhir Boulder</th>
                                                         <th>Nilai Akhir Boulder</th>
                                                         <th>Vol. Akhir BBM Solar</th>
@@ -193,6 +194,9 @@
                     "data": "date"
                 },
                 {
+                    "data": "vol_pemakaian_bbm"
+                },
+                {
                     "data": "vol_nilai_boulder"
                 },
                 {
@@ -213,7 +217,7 @@
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": [2, 3, 4, 5], "className": 'text-right'},
+                { "targets": [2, 3, 4, 5, 6], "className": 'text-right'},
             ],
         });
 
