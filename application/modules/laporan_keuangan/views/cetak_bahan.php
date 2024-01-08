@@ -601,7 +601,8 @@
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_bahan < 0 ? "(".number_format(-$nilai_evaluasi_bahan,0,',','.').")" : number_format($nilai_evaluasi_bahan,0,',','.');?></th>
 			</tr>
 		</table>
-		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+		<br /><br /><br /><br /><br /><br /><br />
+		<b>* Perhitungan Boulder</b><br /><br />
 		<table width="98%" border="0" cellpadding="3">
 			<tr>
 				<th align="left" width="25%" style="font-weight:bold; background-color:green; color:white;">Stok Boulder Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
