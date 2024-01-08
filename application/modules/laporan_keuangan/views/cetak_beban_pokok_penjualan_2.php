@@ -1081,7 +1081,7 @@
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
 				<th align="center"></th>
-				<th align="left">&nbsp;&nbsp;&nbsp;Overhead (Biaya Langsung)</th>
+				<th align="left">&nbsp;&nbsp;&nbsp;Overhead</th>
 				<th align="right"></th>
 				<th align="right"><?php echo number_format($overhead_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
