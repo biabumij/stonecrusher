@@ -46,7 +46,6 @@
 	->group_by("r.tanggal_rap")->limit(1)
 	->order_by('r.tanggal_rap','desc')
 	->get()->row_array();
-	file_put_contents("D:\\test.txt", $this->db->last_query());
 
 	$penyusutan_tangki = $this->db->select('r.*, p.nama_produk')
 	->from('penyusutan r')
