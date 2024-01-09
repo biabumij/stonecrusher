@@ -559,6 +559,14 @@
 			->group_by('prm.material_id')
 			->get()->row_array();
 
+			$pemakaian_boulder = $this->db->select('sum(pp.nilai_boulder_penyesuaian) as nilai_boulder_penyesuaian')
+			->from('kunci_bahan_baku pp')
+			->where("(pp.date between '$date1' and '$date2')")
+			->order_by('pp.date','desc')->limit(1)
+			->get()->row_array();
+			$vol_pemakaian_boulder = $pemakaian_boulder['volume'];
+			$nilai_boulder_penyesuaian = $pemakaian_boulder['nilai_boulder_penyesuaian'];
+
 			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
 			->from('pmm_produksi_harian pph ')
 			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
@@ -638,6 +646,7 @@
 				<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok Bahan Baku Akhir</th>
 				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format((round($stock_opname_batu_boulder_ago['volume'],2) + $pembelian_boulder['volume'] - $total_rekapitulasi_produksi_harian),2,',','');?> (Ton)</th>
 				<?php
+				$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai'] + $nilai_boulder_penyesuaian) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
 				$nilai_stok_akhir_bahan_baku = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) - ($total_rekapitulasi_produksi_harian * $harga_baru);
 				?>
 				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($harga_baru,0,',','.');?></th>
