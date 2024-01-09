@@ -647,7 +647,7 @@
 				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format((round($stock_opname_batu_boulder_ago['volume'],2) + $pembelian_boulder['volume'] - $total_rekapitulasi_produksi_harian),2,',','');?> (Ton)</th>
 				<?php
 				$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai'] + $nilai_boulder_penyesuaian) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
-				$nilai_stok_akhir_bahan_baku = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) - ($total_rekapitulasi_produksi_harian * $harga_baru);
+				$nilai_stok_akhir_bahan_baku = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai'] + $nilai_boulder_penyesuaian) - ($total_rekapitulasi_produksi_harian * $harga_baru);
 				?>
 				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($harga_baru,0,',','.');?></th>
 				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($nilai_stok_akhir_bahan_baku,0,',','.');?></th>
