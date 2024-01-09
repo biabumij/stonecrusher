@@ -73,12 +73,12 @@
 
 	</head>
 	<body>
-	<br />
+		<br />
 		<br />
 		<table width="98%" cellpadding="3">
 			<tr>
 				<td align="center"  width="100%">
-					<div style="display: block;font-weight: bold;font-size: 12px;">BAHAN BAKU<br/>
+					<div style="display: block;font-weight: bold;font-size: 12px;">BAHAN</div>
 					<div style="display: block;font-weight: bold;font-size: 12px; text-transform: uppercase;">PERIODE <?php echo str_replace($search, $replace, $subject);?></div>
 				</td>
 			</tr>
