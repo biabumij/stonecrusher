@@ -376,7 +376,6 @@
 		->order_by('pp.date','desc')->limit(1)
 		->get()->row_array();
 		$vol_pemakaian_bbm = $pemakaian_bbm['volume'];
-		$nilai_bbm_penyesuaian = $pemakaian_bbm['nilai_bbm_penyesuaian'];
 		?>
 		<tr class="table-active">
 			<th width="5%" align="center" rowspan="2">&nbsp; <br />NO.</th>
