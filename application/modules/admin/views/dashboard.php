@@ -89,7 +89,6 @@
                             <div class="panel" style="border-radius:10px;">
                                     <div class="panel-heading">
                                         <center><h3 class="panel-title">RAP</h3></center>
-                                        <?php echo number_format($beban_pokok_penjualan_oktober23,2,'.',',');?>
                                     </div>
                                     <div style="margin: 20px">
                                         <div id="wait" style=" text-align: center; align-content: center; display: none;">	
