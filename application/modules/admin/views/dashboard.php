@@ -72,7 +72,7 @@
             <div class="content-body">
                 <div class="row animated fadeInUp">
 
-                    <?php include_once("script_dashboard_new.php"); ?>
+                    <?php include_once("script_dashboard.php"); ?>
 
                     <div class="col-sm-12">
                         <figure class="highcharts-figure">
@@ -89,6 +89,7 @@
                             <div class="panel" style="border-radius:10px;">
                                     <div class="panel-heading">
                                         <center><h3 class="panel-title">RAP</h3></center>
+                                        <?php echo number_format($harsat_bahan_jadi_oktober23,0,'.',',');?>
                                     </div>
                                     <div style="margin: 20px">
                                         <div id="wait" style=" text-align: center; align-content: center; display: none;">	
