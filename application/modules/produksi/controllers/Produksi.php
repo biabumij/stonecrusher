@@ -212,6 +212,7 @@ class Produksi extends Secure_Controller {
 		}
         $this->db->select('kb.id, kb.jobs_type, kb.no_kalibrasi, kb.date_kalibrasi, lk.kalibrasi_id, lk.lampiran, kb.created_by, kb.created_on, kb.status');
 		$this->db->join('pmm_lampiran_kalibrasi lk', 'kb.id = lk.kalibrasi_id','left');
+		$this->db->where('kb.date_kalibrasi >=', date('2023-08-01'));
 		$this->db->order_by('kb.created_on','desc');		
 		$query = $this->db->get('pmm_kalibrasi kb');
 		
@@ -452,6 +453,7 @@ class Produksi extends Secure_Controller {
         $this->db->select('kb.id, kb.date_prod, kb.no_prod, SUM(phd.duration) as duration, SUM(phd.use) as used, SUM(phd.use) / SUM(phd.duration) as capacity, lk.produksi_harian_id, lk.lampiran, kb.memo, kb.created_by, kb.created_on, kb.status');
 		$this->db->join('pmm_produksi_harian_detail phd','kb.id = phd.produksi_harian_id','left');
 		$this->db->join('pmm_lampiran_produksi_harian lk', 'kb.id = lk.produksi_harian_id','left');
+		$this->db->where('kb.date_prod >=', date('2023-08-01'));
 		$this->db->where('kb.status','PUBLISH');
 		$this->db->group_by('kb.id');	
 		$this->db->order_by('kb.date_prod','desc');			
@@ -700,6 +702,7 @@ class Produksi extends Secure_Controller {
 		}
         $this->db->select('ag.id, ag.jobs_type, ag.date_agregat, ag.no_komposisi, lk.agregat_id, lk.lampiran, ag.created_by, ag.created_on, ag.status');
 		$this->db->join('pmm_lampiran_agregat lk', 'ag.id = lk.agregat_id','left');
+		$this->db->where('ag.date_agregat >=', date('2023-08-01'));
 		$this->db->order_by('ag.date_agregat','desc');		
 		$query = $this->db->get('pmm_agregat ag');
 		
@@ -1241,6 +1244,7 @@ class Produksi extends Secure_Controller {
         $this->db->select('ppc.id, ppc.date_prod, ppc.no_prod, ppcd.uraian, ppcd.measure_convert, SUM(ppcd.volume_convert) as volume_convert, lk.produksi_campuran_id, lk.lampiran, ppc.memo, ppc.created_by, ppc.created_on, ppc.status');
 		$this->db->join('pmm_produksi_campuran_detail ppcd','ppc.id = ppcd.produksi_campuran_id','left');
 		$this->db->join('pmm_lampiran_produksi_campuran lk', 'ppc.id = lk.produksi_campuran_id','left');
+		$this->db->where('ppc.date_prod >=', date('2023-08-01'));
 		$this->db->where('ppc.status','PUBLISH');
 		$this->db->group_by('ppc.id');	
 		$this->db->order_by('ppc.date_prod','desc');			
