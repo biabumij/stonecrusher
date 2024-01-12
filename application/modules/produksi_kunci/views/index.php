@@ -72,7 +72,7 @@
                                                     <tr>
                                                         <th>No</th>
 														<th>Tanggal</th>
-                                                        <th>Vol. Akhir BBM</th>
+                                                        <th>Vol. Pemakaian BBM</th>
                                                         <th>Vol. Akhir Boulder</th>
                                                         <th>Nilai Akhir Boulder</th>
                                                         <th>Vol. Akhir BBM Solar</th>

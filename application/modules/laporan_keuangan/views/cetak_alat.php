@@ -582,7 +582,7 @@
 			<th align="left" style="font-weight:bold; background-color:blue; color:white;">Produksi Bulan Ini</th>
 			<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($vol_pemakaian_bbm,2,',','');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($harga_baru,0,',','.');?></th>
-			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></th>
+			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($vol_pemakaian_bbm * $harga_baru,0,',','.');?></th>
 		</tr>
 		<tr class="table-active">
 			<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok BBM Solar Akhir</th>
