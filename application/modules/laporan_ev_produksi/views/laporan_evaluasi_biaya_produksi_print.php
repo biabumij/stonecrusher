@@ -277,8 +277,15 @@
 			->group_by('prm.material_id')
 			->get()->row_array();
 
+			$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume')
+			->from('kunci_bahan_baku pp')
+			->where("(pp.date between '$date1' and '$date2')")
+			->order_by('pp.date','desc')->limit(1)
+			->get()->row_array();
+			$vol_pemakaian_bbm = $pemakaian_bbm['volume'];
+
 			$harga_baru = ($harga_bbm['nilai_bbm'] + $pembelian_bbm['nilai']) / (round($stock_opname_bbm_ago['volume'],2) + round($pembelian_bbm['volume'],2));
-			$total_nilai_produksi_solar = $total_rekapitulasi_produksi_harian * $harga_baru;
+			$total_nilai_produksi_solar = $vol_pemakaian_bbm * $harga_baru;
 			?>
 
 			<!-- HPProduksi -->
@@ -1027,8 +1034,8 @@
 				<th align="right"><?php echo number_format($harga_baru,0,',','.');?></th>
 				<th align="right"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></th>
 				<?php
-					$nilai_evaluasi_bahan = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) - $total_nilai_produksi_boulder;
-					$styleColor = $nilai_evaluasi_bahan < 0 ? 'color:red' : 'color:black';
+				$nilai_evaluasi_bahan = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) - $total_nilai_produksi_boulder;
+				$styleColor = $nilai_evaluasi_bahan < 0 ? 'color:red' : 'color:black';
 				?>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<th align="right"><?php echo number_format($nilai_boulder_ton,0,',','.');?></th>
@@ -1050,8 +1057,8 @@
 				<th align="right"><?php echo number_format($harsat_realisasi_alat,0,',','.');?></th>
 				<th align="right"><?php echo number_format($total_biaya_peralatan + $total_nilai_produksi_solar,0,',','.');?></th>
 				<?php
-					$nilai_evaluasi_alat = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2) - ($total_biaya_peralatan + $total_nilai_produksi_solar);
-					$styleColor = $nilai_evaluasi_alat < 0 ? 'color:red' : 'color:black';
+				$nilai_evaluasi_alat = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2) - ($total_biaya_peralatan + $total_nilai_produksi_solar);
+				$styleColor = $nilai_evaluasi_alat < 0 ? 'color:red' : 'color:black';
 				?>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
@@ -1076,8 +1083,8 @@
 				<th align="right"><?php echo number_format($harsat_realisasi_overhead,0,',','.');?></th>
 				<th align="right"><?php echo number_format($total_operasional,0,',','.');?></th>
 				<?php
-					$nilai_evaluasi_overhead = ($overhead_ton * round($total_rekapitulasi_produksi_harian,2)) - ($total_operasional);
-					$styleColor = $nilai_evaluasi_overhead < 0 ? 'color:red' : 'color:black';
+				$nilai_evaluasi_overhead = ($overhead_ton * round($total_rekapitulasi_produksi_harian,2)) - ($total_operasional);
+				$styleColor = $nilai_evaluasi_overhead < 0 ? 'color:red' : 'color:black';
 				?>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
@@ -1091,20 +1098,20 @@
 				<th align="right"></th>
 				<th align="right"></th>
 				<?php
-					$total_rap = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) + (($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2)) + ($overhead_ton * round($total_rekapitulasi_produksi_harian,2));
+				$total_rap = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) + (($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2)) + ($overhead_ton * round($total_rekapitulasi_produksi_harian,2));
 				?>
 				<th align="right"><?php echo number_format($total_rap,0,',','.');?></th>
 				<th align="right"></th>
 				<th align="right"></th>
 				<?php
-					$total_realisasi = ($total_nilai_produksi_boulder) + ($total_biaya_peralatan + $total_nilai_produksi_solar) + ($total_operasional);
+				$total_realisasi = ($total_nilai_produksi_boulder) + ($total_biaya_peralatan + $total_nilai_produksi_solar) + ($total_operasional);
 				?>
 				<th align="right"><?php echo number_format($total_realisasi,0,',','.');?></th>
 				<th align="right"></th>
 				<th align="right"></th>
 				<?php
-					$total_evaluasi = ($total_rap) - ($total_realisasi);
-					$styleColor = $total_evaluasi < 0 ? 'color:red' : 'color:black';
+				$total_evaluasi = ($total_rap) - ($total_realisasi);
+				$styleColor = $total_evaluasi < 0 ? 'color:red' : 'color:black';
 				?>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $total_evaluasi < 0 ? "(".number_format(-$total_evaluasi,0,',','.').")" : number_format($total_evaluasi,0,',','.');?></th>
 			</tr>
