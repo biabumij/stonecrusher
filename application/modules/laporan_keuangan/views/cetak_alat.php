@@ -584,7 +584,7 @@
 		<tr>
 			<th align="left" style="font-weight:bold; background-color:yellow; color:black;">Pembelian BBM Solar Bulan Ini</th>
 			<th align="right" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_volume,2,',','');?></th>
-			<th align="right" width="10%" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_harsat,0,',','.');?></th>
+			<th align="right" width="10%" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_harga,0,',','.');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_nilai,0,',','.');?></th>
 		</tr>
 		<tr>
