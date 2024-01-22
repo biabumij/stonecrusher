@@ -356,7 +356,7 @@
                             fontSize: '10px',
                             fontFamily: 'helvetica'
                         },
-                        text: 'Nilai'           
+                        text: 'Nilai (Juta)'           
                     },
                     plotLines: [{
                         value: 0,
@@ -373,15 +373,15 @@
                         format: '{value}'
                     },
                     min: 0,
-                    max: 500000000,
-                    tickInterval: 50000000,
+                    max: 500,
+                    tickInterval: 50,
                 },
                 tooltip: { 
                 //fungsi tooltip, ini opsional, kegunaan dari fungsi ini 
                 //akan menampikan data di titik tertentu di grafik saat mouseover
                     formatter: function() {
                             return '<b>'+ this.series.name +'</b><br/>'+ 
-                            ''+ 'Bahan' +': '+ this.y + ' M3<br/>';
+                            ''+ 'Bahan' +': '+ this.y + ' Juta<br/>';
                             //''+ 'Vol' +': '+ this.x + '';
 
                             //'<b>'+ 'Presentase' +': '+ this.y +'%'</b><br/>'+ 
