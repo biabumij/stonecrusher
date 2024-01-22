@@ -82,6 +82,14 @@
                         <br />
                     </div>
 
+                    <div class="col-sm-12">
+                        <figure class="highcharts-figure">
+                            <div id="container_evaluasi_bahan" style="border-radius:10px;"></div>
+                            
+                        </figure>
+                        <br />
+                    </div>
+
                     <!-- RAP -->
                     <div class="col-sm-8">			
                         <div role="tabpanel" class="tab-pane" id="rap">
@@ -268,6 +276,155 @@
                     name: 'Realisasi',  
                     
                     data: [<?php echo number_format($persentase_laba_kotor_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_desember23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_januari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_februari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_maret24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_april24_fix,2,'.',',');?>],
+
+                    color: '#2986CC',
+                    fontWeight: 'bold',
+                    fontSize: '10px',
+                    fontFamily: 'helvetica',
+
+                    zones: [{
+                        
+                    }, {
+                        dashStyle: 'dot'
+                    }]
+                }
+                ]
+            });
+        });
+        
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        var chart;
+        $(document).ready(function() {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container_evaluasi_bahan',
+                    type: 'column',
+                    marginRight: 130,
+                    marginBottom: 75,
+                    backgroundColor: {
+                        linearGradient: [0, 0, 700, 500],
+                        stops: [
+                            [0, 'rgb(147,233,190)'],
+                            [1, 'rgb(147,233,190)']
+                        ]
+                    },
+                },
+                title: {
+                    style: {
+                        color: '#000000',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        fontFamily: 'helvetica'
+                    },
+                    text: 'EVALUASI BAHAN',
+                    x: -20 //center            
+                },
+                subtitle: {
+                    style: {
+                        color: '#000000',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        fontFamily: 'helvetica'
+                    },
+                    text: ''.toUpperCase(),
+                    x: -20
+                },
+                xAxis: { //X axis menampilkan data bulan
+                    labels: {
+                        style: {
+                            color: '#000000',
+                            fontWeight: 'bold',
+                            fontSize: '10px',
+                            fontFamily: 'helvetica'
+                        }
+                    },
+                    categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24']
+                },
+                yAxis: {
+                    //title: {  //label yAxis
+                        //text: 'RAP <br /><?php echo number_format(0,0,',','.'); ?>'
+                        //text: 'Presentase'
+                    //},
+                    title: {
+                        style: {
+                            color: '#000000',
+                            fontWeight: 'bold',
+                            fontSize: '10px',
+                            fontFamily: 'helvetica'
+                        },
+                        text: 'Nilai'           
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080' //warna dari grafik line
+                    }],
+                    labels: {
+                        style: {
+                            color: '#000000',
+                            fontWeight: 'bold',
+                            fontSize: '10px',
+                            fontFamily: 'helvetica'
+                        },
+                        format: '{value}'
+                    },
+                    min: 0,
+                    max: 500000000,
+                    tickInterval: 50000000,
+                },
+                tooltip: { 
+                //fungsi tooltip, ini opsional, kegunaan dari fungsi ini 
+                //akan menampikan data di titik tertentu di grafik saat mouseover
+                    formatter: function() {
+                            return '<b>'+ this.series.name +'</b><br/>'+ 
+                            ''+ 'Bahan' +': '+ this.y + ' M3<br/>';
+                            //''+ 'Vol' +': '+ this.x + '';
+
+                            //'<b>'+ 'Presentase' +': '+ this.y +'%'</b><br/>'+ 
+                            //'<b>'+ 'Penjualan' +': '+ this.y +'</b><br/>';
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -10,
+                    y: 100,
+                    borderWidth: 0
+                },
+
+                plotOptions: {
+                    spline: {
+                        lineWidth: 4,
+                        states: {
+                            hover: {
+                                lineWidth: 5
+                            }
+                        },
+                        marker: {
+                            enabled: true
+                        }
+                    }
+                },
+        
+                series: [{  
+                    name: 'RAP',  
+                
+                    data: [<?php echo json_encode($nilai_rap_bahan_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_april24_fix, JSON_NUMERIC_CHECK); ?>],
+
+                    color: '#e69500 ',
+                    fontWeight: 'bold',
+                    fontSize: '10px',
+                    fontFamily: 'helvetica'
+                },
+                {  
+                    name: 'Realisasi',  
+                    
+                    data: [ <?php echo json_encode($total_nilai_produksi_boulder_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_april24_fix, JSON_NUMERIC_CHECK); ?>],
 
                     color: '#2986CC',
                     fontWeight: 'bold',
