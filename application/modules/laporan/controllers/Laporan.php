@@ -1830,6 +1830,7 @@ class Laporan extends Secure_Controller {
 		$this->db->join('penerima ps', 'ppp.supplier_id = ps.id');
 		$this->db->group_by('ppp.supplier_id');
 		$this->db->order_by('ps.nama','asc');
+		$this->db->where('ppp.tanggal_invoice >=', date('2023-08-01'));
 		$query = $this->db->get('pmm_penagihan_pembelian ppp');
 		
 			$no = 1;
@@ -1936,6 +1937,7 @@ class Laporan extends Secure_Controller {
 		$this->db->join('penerima ps', 'ppp.client_id = ps.id');
 		$this->db->group_by('ppp.client_id');
 		$this->db->order_by('ps.nama','asc');
+		$this->db->where('ppp.tanggal_invoice >=', date('2023-08-01'));
 		$query = $this->db->get('pmm_penagihan_penjualan ppp');
 		
 
