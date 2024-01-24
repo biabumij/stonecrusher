@@ -283,7 +283,7 @@
                 
                     data: [<?php echo number_format($persentase_laba_kotor_rap_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_desember23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_januari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_februari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_maret24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_april24_fix,2,'.',',');?>],
 
-                    color: '#e69500 ',
+                    color: '#8fce00 ',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'helvetica'
@@ -293,7 +293,7 @@
                     
                     data: [<?php echo number_format($persentase_laba_kotor_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_desember23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_januari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_februari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_maret24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_april24_fix,2,'.',',');?>],
 
-                    color: '#2986CC',
+                    color: '#f44336',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'helvetica',
