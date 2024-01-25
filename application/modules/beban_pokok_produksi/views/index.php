@@ -117,7 +117,7 @@
 													</div>
 													<br />
 													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
+														<div>Mohon Tunggu</div>
 														<div class="fa-3x">
 														  <i class="fa fa-spinner fa-spin"></i>
 														</div>
@@ -155,7 +155,7 @@
 													</div>
 													<br />
 													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
+														<div>Mohon Tunggu</div>
 														<div class="fa-3x">
 														  <i class="fa fa-spinner fa-spin"></i>
 														</div>
@@ -193,7 +193,7 @@
 													</div>
 													<br />
 													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
+														<div>Mohon Tunggu</div>
 														<div class="fa-3x">
 														  <i class="fa fa-spinner fa-spin"></i>
 														</div>
@@ -231,7 +231,7 @@
 													</div>
 													<br />
 													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
+														<div>Mohon Tunggu</div>
 														<div class="fa-3x">
 														  <i class="fa fa-spinner fa-spin"></i>
 														</div>
@@ -269,7 +269,7 @@
 													</div>
 													<br />
 													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
+														<div>Mohon Tunggu</div>
 														<div class="fa-3x">
 														  <i class="fa fa-spinner fa-spin"></i>
 														</div>

@@ -119,7 +119,7 @@
                                                         <div id="loader-table" class="text-center" style="display:none">
                                                             <img src="<?php echo base_url(); ?>assets/back/theme/images/loader.gif">
                                                             <div>
-                                                                Please Wait
+                                                                Mohon Tunggu
                                                             </div>
                                                         </div>
                                                         <table class="mytable table-hover table-center table-condensed" id="table-evaluasi-produksi" style="display:none" width="100%";>
@@ -164,7 +164,7 @@
 													</div>
 													<br />
 													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
-														<div>Please Wait</div>
+														<div>Mohon Tunggu</div>
 														<div class="fa-3x">
 														  <i class="fa fa-spinner fa-spin"></i>
 														</div>

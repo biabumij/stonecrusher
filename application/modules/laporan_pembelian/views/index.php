@@ -170,7 +170,7 @@
                                                         <div id="loader-table" class="text-center" style="display:none">
                                                             <img src="<?php echo base_url(); ?>assets/back/theme/images/loader.gif">
                                                             <div>
-                                                                Please Wait
+                                                                Mohon Tunggu
                                                             </div>
                                                         </div>
                                                         <table class="mytable table table-hover table-center table-bordered" id="penerimaan-pembelian" style="display:none;">
@@ -244,7 +244,7 @@
                                                         <div id="loader-table" class="text-center" style="display:none">
                                                             <img src="<?php echo base_url(); ?>assets/back/theme/images/loader.gif">
                                                             <div>
-                                                                Please Wait
+                                                                Mohon Tunggu
                                                             </div>
                                                         </div>
                                                         <table class="mytable table table-hover table-center table-bordered" id="laporan-hutang" style="display:none; font-size:11px;" width="100%";>
@@ -334,7 +334,7 @@
                                                         <div id="loader-table" class="text-center" style="display:none">
                                                             <img src="<?php echo base_url(); ?>assets/back/theme/images/loader.gif">
                                                             <div>
-                                                                Please Wait
+                                                                Mohon Tunggu
                                                             </div>
                                                         </div>
                                                         <table class="mytable table table-hover table-center table-bordered" id="monitoring-hutang" style="display:none; font-size:11px;" width="100%";>
@@ -404,7 +404,7 @@
                                                         <div id="loader-table" class="text-center" style="display:none">
                                                             <img src="<?php echo base_url(); ?>assets/back/theme/images/loader.gif">
                                                             <div>
-                                                                Please Wait
+                                                                Mohon Tunggu
                                                             </div>
                                                         </div>
                                                         <table class="mytable table table-hover table-center table-bordered" id="table-daftar-pembayaran" style="display:none" width="100%";>

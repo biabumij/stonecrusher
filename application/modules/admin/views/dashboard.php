@@ -116,7 +116,7 @@
                                     </div>
                                     <div style="margin: 20px">
                                         <div id="wait" style=" text-align: center; align-content: center; display: none;">	
-                                            <div>Please Wait</div>
+                                            <div>Mohon Tunggu</div>
                                             <div class="fa-3x">
                                                 <i class="fa fa-spinner fa-spin"></i>
                                             </div>
