@@ -10,24 +10,24 @@
 			font-size: 9px;
 	  	}
 	  	table.minimalistBlack {
-		  border: 0px solid #000000;
-		  width: 100%;
-		  text-align: left;
+			border: 0px solid #000000;
+			width: 100%;
+			text-align: left;
 		}
 		table.minimalistBlack td, table.minimalistBlack th {
-		  border: 0px solid #000000;
-		  padding: 5px 4px;
+			border: 0px solid #000000;
+			padding: 5px 4px;
 		}
 		table.minimalistBlack tr td {
-		  /*font-size: 13px;*/
-		  text-align:center;
+			/*font-size: 13px;*/
+			text-align:center;
 		}
 		table.minimalistBlack tr th {
-		  /*font-size: 14px;*/
-		  font-weight: bold;
-		  color: white;
-		  text-align: center;
-		  padding: 10px;
+			/*font-size: 14px;*/
+			font-weight: bold;
+			color: white;
+			text-align: center;
+			padding: 10px;
 		}
 		table tr.table-active{
             background-color: #e69500;
@@ -243,7 +243,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td align="center" class="ttd">
+							<td align="center">
 							    	
 							</td>
 							<td align="center">
