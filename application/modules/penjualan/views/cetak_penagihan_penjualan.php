@@ -222,7 +222,7 @@
 					<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td align="center" >
-								Tanda Terima,
+								<!--Tanda Terima,-->
 							</td>
 							<td align="center" >
 							
@@ -261,7 +261,7 @@
 							$created_group = $this->db->get('tbl_admin a')->row_array();
 							?>
 							<td align="center">
-							    <b><?php echo $this->crud_global->GetField('penerima',array('id'=>$penagihan['client_id']),'nama');?></b>
+							    <b><!--<?php echo $this->crud_global->GetField('penerima',array('id'=>$penagihan['client_id']),'nama');?>--></b>
 							</td>
 							<td align="center">
 								
