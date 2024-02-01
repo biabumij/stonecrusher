@@ -1088,8 +1088,8 @@
 	        </tr>
 			<tr class="table-active2">
 				<th width="10%" align="center"></th>
-				<th width="40%" align="left">Beban Pokok Penjualan</th>
-	            <th width="50%" align="center">
+				<th width="65%" align="left">Beban Pokok Penjualan</th>
+	            <th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th align="right" width="20%">
