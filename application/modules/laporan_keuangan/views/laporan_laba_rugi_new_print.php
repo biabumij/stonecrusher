@@ -1034,8 +1034,8 @@
 	        </tr>
 			<tr class="table-active2">
 				<th width="10%" align="center"></th>
-				<th width="40%" align="left">Pendapatan Penjualan</th>
-	            <th width="50%" align="center">
+				<th width="65%" align="left">Pendapatan Penjualan</th>
+	            <th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th align="right" width="20%">
@@ -1050,8 +1050,8 @@
 	        </tr>
 			<tr class="table-active2">
 				<th width="10%" align="center"></th>
-				<th width="40%" align="left">Pendapatan Lain - Lain</th>
-	            <th width="50%" align="center">
+				<th width="65%" align="left">Pendapatan Lain - Lain</th>
+	            <th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th align="right" width="20%">
@@ -1066,8 +1066,8 @@
 	        </tr>
 			<hr width="98%">
 			<tr class="table-active2">
-				<th width="50%" align="left"><b>Total Pendapatan</b></th>
-	            <th width="50%" align="right">
+				<th width="75%" align="left"><b>Total Pendapatan</b></th>
+	            <th width="25%" align="right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th align="right" width="20%">
@@ -1104,8 +1104,8 @@
 	        </tr>
 			<hr width="98%">
 			<tr class="table-active2">
-				<th width="50%" align="left"><b>Total Harga Pokok Pendapatan</b></th>
-	            <th width="50%" align="right">
+				<th width="75%" align="left"><b>Total Harga Pokok Pendapatan</b></th>
+	            <th width="25%" align="right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th align="right" width="20%">
@@ -1125,8 +1125,8 @@
 				$styleColor = $laba_kotor < 0 ? 'color:red' : 'color:black';
 			?>
 			<tr class="table-active2">
-	            <th width="50%" align="left"><b>Laba / Rugi Kotor</b></th>
-	            <th width="50%" align="right" style="<?php echo $styleColor ?>">
+	            <th width="75%" align="left"><b>Laba / Rugi Kotor</b></th>
+	            <th width="25%" align="right" style="<?php echo $styleColor ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th align="right" width="20%">
