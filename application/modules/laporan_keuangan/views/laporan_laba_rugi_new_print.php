@@ -1024,7 +1024,7 @@
 						<div style="display: block;font-weight: bold;font-size: 10px;">Periode</div>
 					</td>
 					<td align="right" width="50%">
-						<div align="center" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date;?></div>
+						<div align="right" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date;?></div>
 					</td>
 				</tr>
 			</table>
@@ -1038,10 +1038,10 @@
 	            <th width="50%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
-								<th align="left" width="20%">
+								<th align="right" width="20%">
 									<span>Rp.</span>
 								</th>
-								<th align="center" width="80%">
+								<th align="right" width="80%">
 									<span><?php echo number_format($total_penjualan_all,0,',','.');?></span>
 								</th>
 							</tr>
@@ -1054,10 +1054,10 @@
 	            <th width="50%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
-								<th align="left" width="20%">
+								<th align="right" width="20%">
 									<span>Rp.</span>
 								</th>
-								<th align="center" width="80%">
+								<th align="right" width="80%">
 									<span><?php echo number_format($total_penjualan_all_limbah + $total_penjualan_all_lain_lain,0,',','.');?></span>
 								</th>
 							</tr>
@@ -1070,10 +1070,10 @@
 	            <th width="50%" align="right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
-								<th align="left" width="20%">
+								<th align="right" width="20%">
 									<span>Rp.</span>
 								</th>
-								<th align="center" width="80%">
+								<th align="right" width="80%">
 									<span><b><?php echo number_format($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain,0,',','.');?></b></span>
 								</th>
 							</tr>
@@ -1092,10 +1092,10 @@
 	            <th width="50%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
-								<th align="left" width="20%">
+								<th align="right" width="20%">
 									<span>Rp.</span>
 								</th>
-								<th align="center" width="80%">
+								<th align="right" width="80%">
 									<span><?php echo number_format($total_harga_pokok_pendapatan,0,',','.');?></span>
 								</th>
 							</tr>
@@ -1108,10 +1108,10 @@
 	            <th width="50%" align="right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
-								<th align="left" width="20%">
+								<th align="right" width="20%">
 									<span><b>Rp.</b></span>
 								</th>
-								<th align="center" width="80%">
+								<th align="right" width="80%">
 									<span><b><?php echo number_format($total_harga_pokok_pendapatan,0,',','.');?></b></span>
 								</th>
 							</tr>
@@ -1129,10 +1129,10 @@
 	            <th width="50%" align="right" style="<?php echo $styleColor ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
-								<th align="left" width="20%">
+								<th align="right" width="20%">
 									<span><b>Rp.</b></span>
 								</th>
-								<th align="center" width="80%">
+								<th align="right" width="80%">
 									<span><b><?php echo $laba_kotor < 0 ? "(".number_format(-$laba_kotor,0,',','.').")" : number_format($laba_kotor,0,',','.');?></b></span>
 								</th>
 							</tr>
