@@ -284,8 +284,43 @@
 			->get()->row_array();
 			$vol_pemakaian_bbm = $pemakaian_bbm['volume'];
 
-			$harga_baru = ($harga_bbm['nilai_bbm'] + $pembelian_bbm['nilai']) / (round($stock_opname_bbm_ago['volume'],2) + round($pembelian_bbm['volume'],2));
-			$total_nilai_produksi_solar = $vol_pemakaian_bbm * $harga_baru;
+			$stok_volume_bbm_lalu = $stock_opname_bbm_ago['volume'];
+			$stok_nilai_bbm_lalu = $harga_bbm['nilai_bbm'];
+			$stok_harsat_bbm_lalu = (round($stok_volume_bbm_lalu,2)!=0)?$stok_nilai_bbm_lalu / round($stok_volume_bbm_lalu,2) * 1:0;
+
+			$pembelian_volume = $pembelian_bbm['volume'];
+			$pembelian_harga = $pembelian_bbm['harga'];
+			$pembelian_nilai = $pembelian_bbm['nilai'];
+
+			$total_stok_volume = $stok_volume_bbm_lalu + $pembelian_volume;
+			$total_stok_nilai = $stok_nilai_bbm_lalu + $pembelian_nilai;
+			$total_stok_harsat = (round($total_stok_volume,2)!=0)?$total_stok_nilai / round($total_stok_volume,2) * 1:0;
+
+			$produksi_volume = $stok_volume_bbm_lalu;
+			$produksi_harsat = $stok_harsat_bbm_lalu;
+			$produksi_nilai = $stok_nilai_bbm_lalu;
+
+			$key = 0;
+			if($pembelian_harga == 0) {
+				$key = $produksi_harsat;
+			}
+
+			if($pembelian_harga > 0) {
+				$key = $pembelian_harga;
+			}
+
+			$produksi_2_volume = $vol_pemakaian_bbm - $produksi_volume;
+			$produksi_2_harsat = $key;
+			$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
+
+			$total_produksi_volume = $produksi_volume + $produksi_2_volume;
+			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai;
+
+			$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
+			$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
+
+			$harga_baru = $total_produksi_nilai / $total_produksi_volume;
+			$total_nilai_produksi_solar = $total_produksi_nilai;
 			?>
 
 			<!-- HPProduksi -->
@@ -1021,7 +1056,41 @@
 			->get()->row_array();
 			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
 			
-			$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
+			$stok_volume_boulder_lalu = $stock_opname_batu_boulder_ago['volume'];
+			$stok_nilai_boulder_lalu = $harga_boulder['nilai_boulder'];
+			$stok_harsat_boulder_lalu = (round($stok_volume_boulder_lalu,2)!=0)?$stok_nilai_boulder_lalu / round($stok_volume_boulder_lalu,2) * 1:0;
+		
+			$pembelian_volume = $pembelian_boulder['volume'];
+			$pembelian_nilai = $pembelian_boulder['nilai'];
+			$pembelian_harga = (round($pembelian_volume,2)!=0)?$pembelian_nilai / round($pembelian_volume,2) * 1:0;
+
+			$total_stok_volume = $stok_volume_boulder_lalu + $pembelian_volume;
+			$total_stok_nilai = $stok_nilai_boulder_lalu + $pembelian_nilai;
+
+			$produksi_volume = $stok_volume_boulder_lalu;
+			$produksi_harsat = $stok_harsat_boulder_lalu;
+			$produksi_nilai = $stok_nilai_boulder_lalu;
+
+			$key = 0;
+			if($pembelian_harga == 0) {
+				$key = $produksi_harsat;
+			}
+
+			if($pembelian_harga > 0) {
+				$key = $pembelian_harga;
+			}
+
+			$produksi_2_volume = $total_rekapitulasi_produksi_harian - $produksi_volume;
+			$produksi_2_harsat = $key;
+			$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
+
+			$total_produksi_volume = $produksi_volume + $produksi_2_volume;
+			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai;
+
+			$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
+			$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
+
+			$harga_baru = ($total_rekapitulasi_produksi_harian!=0)?$total_produksi_nilai / $total_rekapitulasi_produksi_harian * 1:0;
 			$total_nilai_produksi_boulder = $total_rekapitulasi_produksi_harian * $harga_baru;
 			?>
 			<tr class="table-active3">

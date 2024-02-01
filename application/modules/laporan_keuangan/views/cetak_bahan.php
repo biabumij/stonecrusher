@@ -568,6 +568,43 @@
 			->get()->row_array();
 			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
 			?>
+
+			<?php
+			$stok_volume_boulder_lalu = $stock_opname_batu_boulder_ago['volume'];
+			$stok_nilai_boulder_lalu = $harga_boulder['nilai_boulder'];
+			$stok_harsat_boulder_lalu = (round($stok_volume_boulder_lalu,2)!=0)?$stok_nilai_boulder_lalu / round($stok_volume_boulder_lalu,2) * 1:0;
+		
+			$pembelian_volume = $pembelian_boulder['volume'];
+			$pembelian_nilai = $pembelian_boulder['nilai'];
+			$pembelian_harga = (round($pembelian_volume,2)!=0)?$pembelian_nilai / round($pembelian_volume,2) * 1:0;
+
+			$total_stok_volume = $stok_volume_boulder_lalu + $pembelian_volume;
+			$total_stok_nilai = $stok_nilai_boulder_lalu + $pembelian_nilai;
+
+			$produksi_volume = $stok_volume_boulder_lalu;
+			$produksi_harsat = $stok_harsat_boulder_lalu;
+			$produksi_nilai = $stok_nilai_boulder_lalu;
+
+			$key = 0;
+			if($pembelian_harga == 0) {
+				$key = $produksi_harsat;
+			}
+
+			if($pembelian_harga > 0) {
+				$key = $pembelian_harga;
+			}
+
+			$produksi_2_volume = $total_rekapitulasi_produksi_harian - $produksi_volume;
+			$produksi_2_harsat = $key;
+			$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
+
+			$total_produksi_volume = $produksi_volume + $produksi_2_volume;
+			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai;
+
+			$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
+			$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
+			?>
+
 			<tr class="table-active3">
 	            <th align="center"><b>1</b></th>
 				<th align="left"><b>BOULDER</b></th>
@@ -576,10 +613,10 @@
 				<th align="right"><?php echo number_format($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
-					$harga_baru = ($harga_boulder['nilai_boulder'] + $pembelian_boulder['nilai']) / (round($stock_opname_batu_boulder_ago['volume'],2) + round($pembelian_boulder['volume'],2));
+					$harga_baru = ($total_rekapitulasi_produksi_harian!=0)?$total_produksi_nilai / $total_rekapitulasi_produksi_harian * 1:0;
 				?>
 				<th align="right"><?php echo number_format($harga_baru,0,',','.');?></th>
-				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian * $harga_baru,0,',','.');?></th>
+				<th align="right"><?php echo number_format($total_produksi_nilai,0,',','.');?></th>
 				<?php
 					$nilai_evaluasi_bahan = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) - ($total_rekapitulasi_produksi_harian * $harga_baru);
 					$styleColor = $nilai_evaluasi_bahan < 0 ? 'color:red' : 'color:black';
@@ -603,27 +640,6 @@
 		</table>
 		<br /><br /><br /><br /><br /><br /><br />
 		<b>* Perhitungan Boulder</b><br /><br />
-		<?php
-			$stok_volume_boulder_lalu = $stock_opname_batu_boulder_ago['volume'];
-			$stok_nilai_boulder_lalu = $harga_boulder['nilai_boulder'];
-			$stok_harsat_boulder_lalu = (round($stok_volume_boulder_lalu,2)!=0)?$stok_nilai_boulder_lalu / round($stok_volume_boulder_lalu,2) * 1:0;
-		
-			$pembelian_volume = $pembelian_boulder['volume'];
-			$pembelian_harga = $pembelian_boulder['harga'];
-			$pembelian_nilai = $pembelian_boulder['nilai'];
-
-			$total_stok_volume = $stok_volume_boulder_lalu + $pembelian_volume;
-			$total_stok_nilai = $stok_nilai_boulder_lalu + $pembelian_nilai;
-			$total_stok_harsat = (round($total_stok_volume,2)!=0)?$total_stok_nilai / round($total_stok_volume,2) * 1:0;
-
-			$produksi_volume = $total_rekapitulasi_produksi_harian;
-			$produksi_harsat = $total_stok_harsat;
-			$produksi_nilai = $total_rekapitulasi_produksi_harian * $produksi_harsat;
-
-			$stok_akhir_volume = $total_stok_volume - $produksi_volume;
-			$stok_akhir_harsat = $produksi_harsat;
-			$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai;
-		?>
 		<table width="98%" border="0" cellpadding="3">
 			<tr>
 				<th align="left" width="25%" style="font-weight:bold; background-color:green; color:white;">Stok Boulder Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
@@ -640,19 +656,31 @@
 			<tr>
 				<th align="left" style="font-weight:bold; background-color:grey; color:white;">Total Stok Boulder Bulan Ini</th>
 				<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($total_stok_volume,2,',','');?> (Ton)</th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($total_stok_harsat,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"></th>
 				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($total_stok_nilai,0,',','.');?></th>
 			</tr>
 			<tr class="table-active4">
-				<th align="left" style="font-weight:bold; background-color:blue; color:white;">Produksi Bulan Ini</th>
+				<th align="left" style="font-weight:bold; background-color:blue; color:white;">Produksi Bulan Ini (1)</th>
 				<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_volume,2,',','');?> (Ton)</th>
 				<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_harsat,0,',','.');?></th>
 				<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_nilai,0,',','.');?></th>
 			</tr>
+			<tr class="table-active4">
+				<th align="left" style="font-weight:bold; background-color:blue; color:white;">Produksi Bulan Ini (2)</th>
+				<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_2_volume,2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_2_harsat,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_2_nilai,0,',','.');?></th>
+			</tr>
+			<tr class="table-active4">
+				<th align="left" style="font-weight:bold; background-color:blue; color:white;">Total Produksi Bulan Ini</th>
+				<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_produksi_volume,2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_produksi_nilai,0,',','.');?></th>
+			</tr>
 			<tr class="table-active">
 				<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok Bahan Baku Akhir</th>
 				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_volume,2,',','');?> (Ton)</th>
-				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_harsat,0,',','.');?></th>
+				<th align="right" style="font-weight:bold; background-color:orange; color:black;"></th>
 				<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_nilai,0,',','.');?></th>
 			</tr>
 		</table>
