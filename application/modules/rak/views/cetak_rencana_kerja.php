@@ -173,7 +173,7 @@
 				<td align="center" class="table-border-pojok-kiri">5.</td>
 				<td align="left" class="table-border-pojok-tengah">Batu Split 2 - 3</td>
 				<td align="right" class="table-border-pojok-tengah"><?= number_format($rak['vol_produk_e'],2,',','.'); ?></td>
-				<td align="center" class="table-border-pojok-tengah">M3</td>
+				<td align="center" class="table-border-pojok-tengah">Ton</td>
 				<td align="right" class="table-border-pojok-tengah"><?= number_format($rak['price_e'],2,',','.'); ?></td>
 				<?php
 				$e1 = round($rak['vol_produk_e'],2);
@@ -231,7 +231,7 @@
 				<th align="center" class="table-border-pojok-kiri">2.</th>	
 				<th align="left" class="table-border-pojok-tengah">BBM Solar</th>
 				<th align="right" class="table-border-pojok-tengah"><?php echo number_format($volume_bbm_solar,2,',','.');?></th>
-				<th align="center" class="table-border-pojok-tengah">M3</th>
+				<th align="center" class="table-border-pojok-tengah">Liter</th>
 				<th align="right" class="table-border-pojok-tengah"><?php echo number_format($harga_bbm_solar,0,',','.');?></th>
 				<th align="right" class="table-border-pojok-kanan"><?php echo number_format($nilai_bbm_solar,0,',','.');?></th>
 	        </tr>
