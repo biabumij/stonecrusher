@@ -271,16 +271,16 @@
                         </tr>
                         <tr>
                             <td align="center" height="75px">
-								<img src="<?= $verifikator['admin_ttd']?>" width="100px">
+								<img src="<?= $verifikator['admin_ttd']?>" width="75px">
                             </td>
                             <td align="center">
-								<img src="uploads/ttd_rifka.png" width="100px">
+								<img src="uploads/ttd_rifka.png" width="75px">
                             </td>
 							<td align="center">
-								<img src="uploads/ttd_vicky.png" width="100px">
+								<img src="uploads/ttd_vicky.png" width="75px">
                             </td>
                             <td align="center">
-								<img src="<?= $unit_head['admin_ttd']?>" width="100px">
+								<img src="<?= $unit_head['admin_ttd']?>" width="75px">
                             </td>
                         </tr>
                         <tr>
