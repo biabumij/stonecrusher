@@ -10407,6 +10407,7 @@ class Reports extends CI_Controller {
 
 			$biaya_bahan_realisasi = $total_nilai_produksi_boulder;
 			?>
+			
 			<?php
 			$date1_ago = date('2020-01-01');
 			$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
