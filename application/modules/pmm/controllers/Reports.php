@@ -10407,7 +10407,7 @@ class Reports extends CI_Controller {
 
 			$biaya_bahan_realisasi = $total_nilai_produksi_boulder;
 			?>
-			
+
 			<?php
 			$date1_ago = date('2020-01-01');
 			$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
@@ -11171,7 +11171,7 @@ class Reports extends CI_Controller {
 			<tr class="table-active3">
 				<th class="text-center">1.</th>
 				<th class="text-left">Batu Split 0 - 0,5 (Abu Batu)</th>
-				<th class="text-center">Ton</th>
+				<th class="text-center">TON</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_a'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_abu_batu['volume'],2,',','.');?></th>
 				<th class="text-right" style="<?php echo $styleColorA ?>"><?php echo $evaluasi_produk_a < 0 ? "(".number_format(-$evaluasi_produk_a,0,',','.').")" : number_format($evaluasi_produk_a,0,',','.');?></th>
@@ -11179,7 +11179,7 @@ class Reports extends CI_Controller {
 			<tr class="table-active3">
 				<th class="text-center">2.</th>
 				<th class="text-left">Batu Split 0,5 - 1</th>
-				<th class="text-center">Ton</th>
+				<th class="text-center">TON</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_b'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_0510['volume'],2,',','.');?></th>
 				<th class="text-right" style="<?php echo $styleColorB ?>"><?php echo $evaluasi_produk_b < 0 ? "(".number_format(-$evaluasi_produk_b,0,',','.').")" : number_format($evaluasi_produk_b,0,',','.');?></th>
@@ -11187,7 +11187,7 @@ class Reports extends CI_Controller {
 			<tr class="table-active3">
 				<th class="text-center">3.</th>
 				<th class="text-left">Batu Split 1 - 1,5 </th>
-				<th class="text-center">Ton</th>
+				<th class="text-center">TON</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_c'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_0115['volume'],2,',','.');?></th>
 				<th class="text-right" style="<?php echo $styleColorC ?>"><?php echo $evaluasi_produk_c < 0 ? "(".number_format(-$evaluasi_produk_c,0,',','.').")" : number_format($evaluasi_produk_c,0,',','.');?></th>
@@ -11195,7 +11195,7 @@ class Reports extends CI_Controller {
 			<tr class="table-active3">
 				<th class="text-center">4.</th>
 				<th class="text-left">Batu Split 1 - 2 </th>
-				<th class="text-center">Ton</th>
+				<th class="text-center">TON</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_d'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_1020['volume'],2,',','.');?></th>
 				<th class="text-right" style="<?php echo $styleColorD ?>"><?php echo $evaluasi_produk_d < 0 ? "(".number_format(-$evaluasi_produk_d,0,',','.').")" : number_format($evaluasi_produk_d,0,',','.');?></th>
@@ -11203,7 +11203,7 @@ class Reports extends CI_Controller {
 			<tr class="table-active3">
 				<th class="text-center">5.</th>
 				<th class="text-left">Batu Split 2 - 3 </th>
-				<th class="text-center">Ton</th>
+				<th class="text-center">TON</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_e'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_2030['volume'],2,',','.');?></th>
 				<th class="text-right" style="<?php echo $styleColorE ?>"><?php echo $evaluasi_produk_e < 0 ? "(".number_format(-$evaluasi_produk_e,0,',','.').")" : number_format($evaluasi_produk_e,0,',','.');?></th>
