@@ -89,7 +89,11 @@
                                                     <div class="col-sm-5">
 														<p><b><h5>Laporan Evaluasi Biaya Produksi</h5></b></p>
                                                         <a href="#laporan_evaluasi_biaya_produksi" aria-controls="laporan_evaluasi_biaya_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>     													
+													</div>
+                                                    <div class="col-sm-5">
+														<p><b><h5>Evaluasi Target Produksi</h5></b></p>
+                                                        <a href="#evaluasi_target_produksi" aria-controls="evaluasi_target_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+													</div>													
                                                 </div>
                                             </div>
                                         </div>
@@ -175,6 +179,41 @@
 													</div>
 												</div>
 										    </div>
+										</div>
+                                    </div>
+
+                                    <!-- Laporan Evaluasi Target Produksi -->
+                                    <div role="tabpanel" class="tab-pane" id="evaluasi_target_produksi">
+                                        <div class="col-sm-15">
+											<div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title"><b>Evaluasi Target Produksi</b></h3>
+													<a href="laporan_ev._produksi">Kembali</a>
+                                                </div>
+												<div style="margin: 20px">
+													<div class="row">
+														<form action="<?php echo site_url('laporan/cetak_evaluasi_target_produksi');?>" target="_blank">
+															<div class="col-sm-3">
+																<input type="text" id="filter_date_evaluasi_target_produksi" name="filter_date" class="form-control dtpicker"  autocomplete="off" placeholder="Filter By Date">
+															</div>
+															<div class="col-sm-3">
+																<button type="submit" class="btn btn-default" style="border-radius:10px; font-weight:bold;"><i class="fa fa-print"></i>  Print</button>
+															</div>
+														</form>
+														
+													</div>
+													<br />
+													<div id="wait" style=" text-align: center; align-content: center; display: none;">	
+														<div>Please Wait</div>
+														<div class="fa-3x">
+														  <i class="fa fa-spinner fa-spin"></i>
+														</div>
+													</div>				
+													<div class="table-responsive" id="evaluasi-target-produksi">
+													</div>
+												</div>
+										</div>
+										
 										</div>
                                     </div>
 									
@@ -303,6 +342,50 @@
         }
 
         //TableEvaluasiBiayaProduksi();
+    </script>
+
+    <!-- Script Evaluasi Target Produksi -->
+    <script type="text/javascript">
+        $('#filter_date_evaluasi_target_produksi').daterangepicker({
+        autoUpdateInput : false,
+        showDropdowns: true,
+        locale: {
+        format: 'DD-MM-YYYY'
+        },
+        ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+        });
+
+        $('#filter_date_evaluasi_target_produksi').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+            EvaluasiTargetProduksi();
+        });
+
+
+        function EvaluasiTargetProduksi()
+        {
+            $('#wait').fadeIn('fast');   
+            $.ajax({
+                type    : "POST",
+                url     : "<?php echo site_url('pmm/reports/evaluasi_target_produksi'); ?>/"+Math.random(),
+                dataType : 'html',
+                data: {
+                    filter_date : $('#filter_date_evaluasi_target_produksi').val(),
+                },
+                success : function(result){
+                    $('#evaluasi-target-produksi').html(result);
+                    $('#wait').fadeOut('fast');
+                }
+            });
+        }
+
+    //EvaluasiTargetProduksi();
     </script>
 
 </body>
