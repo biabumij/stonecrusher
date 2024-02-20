@@ -11135,9 +11135,9 @@ class Reports extends CI_Controller {
 			$overhead_evaluasi = $overhead - $overhead_realisasi;
 			$total_biaya_evaluasi = $total_biaya_rak - $total_biaya_realisasi;
 			$laba_rak = $total_pu - $total_biaya_rak;
-			$presentase_rak = ($laba_rak / $total_pu) * 100;
+			$presentase_rak = ($total_pu!=0)?($laba_rak / $total_pu) * 1:0;
 			$laba_realisasi = $total_penjualan - $total_biaya_realisasi;
-			$presentase_realisasi = ($laba_realisasi / $total_penjualan) * 100;
+			$presentase_realisasi = ($total_penjualan!=0)?($laba_realisasi / $total_penjualan) * 1:0;
 			?>
 
 			<tr class="table-active4">
@@ -11174,7 +11174,7 @@ class Reports extends CI_Controller {
 				<th class="text-center">Ton</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_a'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_abu_batu['volume'],2,',','.');?></th>
-				<th class="text-right" style="<?php echo $styleColorA ?>"><?php echo $evaluasi_produk_a < 0 ? "(".number_format(-$evaluasi_produk_a,0,',','.').")" : number_format($evaluasi_produk_a,0,',','.');?></th>
+				<th class="text-right" style="<?php echo $styleColorA ?>"><?php echo $evaluasi_produk_a < 0 ? "(".number_format(-$evaluasi_produk_a,2,',','.').")" : number_format($evaluasi_produk_a,2,',','.');?></th>
 			</tr>
 			<tr class="table-active3">
 				<th class="text-center">2.</th>
@@ -11182,38 +11182,38 @@ class Reports extends CI_Controller {
 				<th class="text-center">Ton</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_b'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_0510['volume'],2,',','.');?></th>
-				<th class="text-right" style="<?php echo $styleColorB ?>"><?php echo $evaluasi_produk_b < 0 ? "(".number_format(-$evaluasi_produk_b,0,',','.').")" : number_format($evaluasi_produk_b,0,',','.');?></th>
+				<th class="text-right" style="<?php echo $styleColorB ?>"><?php echo $evaluasi_produk_b < 0 ? "(".number_format(-$evaluasi_produk_b,2,',','.').")" : number_format($evaluasi_produk_b,2,',','.');?></th>
 			</tr>
 			<tr class="table-active3">
 				<th class="text-center">3.</th>
-				<th class="text-left">Batu Split 1 - 1,5 </th>
+				<th class="text-left">Batu Split 1 - 1,5</th>
 				<th class="text-center">Ton</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_c'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_0115['volume'],2,',','.');?></th>
-				<th class="text-right" style="<?php echo $styleColorC ?>"><?php echo $evaluasi_produk_c < 0 ? "(".number_format(-$evaluasi_produk_c,0,',','.').")" : number_format($evaluasi_produk_c,0,',','.');?></th>
+				<th class="text-right" style="<?php echo $styleColorC ?>"><?php echo $evaluasi_produk_c < 0 ? "(".number_format(-$evaluasi_produk_c,2,',','.').")" : number_format($evaluasi_produk_c,2,',','.');?></th>
 			</tr>
 			<tr class="table-active3">
 				<th class="text-center">4.</th>
-				<th class="text-left">Batu Split 1 - 2 </th>
+				<th class="text-left">Batu Split 1 - 2</th>
 				<th class="text-center">Ton</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_d'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_1020['volume'],2,',','.');?></th>
-				<th class="text-right" style="<?php echo $styleColorD ?>"><?php echo $evaluasi_produk_d < 0 ? "(".number_format(-$evaluasi_produk_d,0,',','.').")" : number_format($evaluasi_produk_d,0,',','.');?></th>
+				<th class="text-right" style="<?php echo $styleColorD ?>"><?php echo $evaluasi_produk_d < 0 ? "(".number_format(-$evaluasi_produk_d,2,',','.').")" : number_format($evaluasi_produk_d,2,',','.');?></th>
 			</tr>
 			<tr class="table-active3">
 				<th class="text-center">5.</th>
-				<th class="text-left">Batu Split 2 - 3 </th>
+				<th class="text-left">Batu Split 2 - 3</th>
 				<th class="text-center">Ton</th>
 				<th class="text-right"><?php echo number_format($rak['vol_produk_e'],2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($penjualan_2030['volume'],2,',','.');?></th>
-				<th class="text-right" style="<?php echo $styleColorE ?>"><?php echo $evaluasi_produk_e < 0 ? "(".number_format(-$evaluasi_produk_e,0,',','.').")" : number_format($evaluasi_produk_e,0,',','.');?></th>
+				<th class="text-right" style="<?php echo $styleColorE ?>"><?php echo $evaluasi_produk_e < 0 ? "(".number_format(-$evaluasi_produk_e,2,',','.').")" : number_format($evaluasi_produk_e,2,',','.');?></th>
 			</tr>
 			<tr class="table-active2">
 				<th class="text-right" colspan="2">TOTAL VOLUME</th>
 				<th class="text-center">Ton</th>
 				<th class="text-right"><?php echo number_format($total_volume_rap,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_volume_realiasi,2,',','.');?></th>
-				<th class="text-right" style="<?php echo $styleColorF ?>"><?php echo $total_volume_evaluasi < 0 ? "(".number_format(-$total_volume_evaluasi,0,',','.').")" : number_format($total_volume_evaluasi,0,',','.');?></th>
+				<th class="text-right" style="<?php echo $styleColorF ?>"><?php echo $total_volume_evaluasi < 0 ? "(".number_format(-$total_volume_evaluasi,2,',','.').")" : number_format($total_volume_evaluasi,2,',','.');?></th>
 			</tr>
 			<tr class="table-active2">
 				<th class="text-right" colspan="2">PENDAPATAN USAHA</th>
