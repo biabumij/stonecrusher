@@ -562,7 +562,7 @@
 			<th align="right"><?php echo number_format($nilai_bbm_solar_ton,0,',','.');?></th>
 			<?php
 			$nilai_rap_bbm = (round($nilai_bbm_solar_ton,2)!=0)?$total_rekapitulasi_produksi_harian * round($nilai_bbm_solar_ton,2) * 1:0;
-			$total_produksi_harsat = (round($total_produksi_volume,2)!=0)?$total_produksi_nilai * round($total_produksi_volume,2) * 1:0;
+			$total_produksi_harsat = (round($total_produksi_volume,2)!=0)?$total_produksi_nilai / round($total_produksi_volume,2) * 1:0;
 			?>
 			<th align="right"><?php echo number_format($nilai_rap_bbm,0,',','.');?></th>
 			<th align="right"><?php echo number_format($total_produksi_volume,2,',','.');?></th>
