@@ -283,7 +283,7 @@
                 
                     data: [<?php echo number_format($persentase_laba_kotor_rap_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_desember23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_januari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_februari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_maret24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_april24_fix,2,'.',',');?>],
 
-                    color: '#8fce00 ',
+                    color: '#000000 ',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'helvetica'
@@ -432,7 +432,7 @@
                 
                     data: [<?php echo json_encode($nilai_rap_bahan_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_april24_fix, JSON_NUMERIC_CHECK); ?>],
 
-                    color: '#8fce00 ',
+                    color: '#000000 ',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'helvetica'
@@ -581,7 +581,7 @@
                 
                     data: [<?php echo json_encode($nilai_rap_alat_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_april24_fix, JSON_NUMERIC_CHECK); ?>],
 
-                    color: '#8fce00 ',
+                    color: '#000000 ',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'helvetica'
@@ -730,7 +730,7 @@
                 
                     data: [<?php echo json_encode($nilai_rap_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>],
 
-                    color: '#8fce00 ',
+                    color: '#000000 ',
                     fontWeight: 'bold',
                     fontSize: '10px',
                     fontFamily: 'helvetica'

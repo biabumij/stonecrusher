@@ -459,7 +459,7 @@
 			$nilai_evaluasi_tangki_solar = $nilai_rap_tangki_solar - $tangki_solar;
 			$styleColor = $nilai_evaluasi_tangki_solar < 0 ? 'color:red' : 'color:black';
 			?>
-			<th align="right"><?php echo number_format(0,0,',','.');?></th>
+			<th align="right"><?php echo number_format(0,2,',','.');?></th>
 			<th align="right"><?php echo number_format(0,0,',','.');?></th>
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_tangki_solar < 0 ? "(".number_format(-$nilai_evaluasi_tangki_solar,0,',','.').")" : number_format($nilai_evaluasi_tangki_solar,0,',','.');?></th>
 		</tr>
@@ -482,7 +482,7 @@
 			$nilai_evaluasi_stone_crusher = $nilai_rap_stone_crusher - $stone_crusher;
 			$styleColor = $nilai_evaluasi_stone_crusher < 0 ? 'color:red' : 'color:black';
 			?>
-			<th align="right"><?php echo number_format(0,0,',','.');?></th>
+			<th align="right"><?php echo number_format(0,2,',','.');?></th>
 			<th align="right"><?php echo number_format(0,0,',','.');?></th>
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_stone_crusher < 0 ? "(".number_format(-$nilai_evaluasi_stone_crusher,0,',','.').")" : number_format($nilai_evaluasi_stone_crusher,0,',','.');?></th>
 		</tr>
@@ -505,7 +505,7 @@
 			$nilai_evaluasi_genset = $nilai_rap_genset - $genset;
 			$styleColor = $nilai_evaluasi_genset < 0 ? 'color:red' : 'color:black';
 			?>
-			<th align="right"><?php echo number_format(0,0,',','.');?></th>
+			<th align="right"><?php echo number_format(0,2,',','.');?></th>
 			<th align="right"><?php echo number_format(0,0,',','.');?></th>
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_genset < 0 ? "(".number_format(-$nilai_evaluasi_genset,0,',','.').")" : number_format($nilai_evaluasi_genset,0,',','.');?></th>
 		</tr>
@@ -528,7 +528,7 @@
 			$nilai_evaluasi_wheel_loader = $nilai_rap_wheel_loader - $wheel_loader;
 			$styleColor = $nilai_evaluasi_wheel_loader < 0 ? 'color:red' : 'color:black';
 			?>
-			<th align="right"><?php echo number_format(0,0,',','.');?></th>
+			<th align="right"><?php echo number_format(0,2,',','.');?></th>
 			<th align="right"><?php echo number_format(0,0,',','.');?></th>
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_wheel_loader < 0 ? "(".number_format(-$nilai_evaluasi_wheel_loader,0,',','.').")" : number_format($nilai_evaluasi_wheel_loader,0,',','.');?></th>
 		</tr>
@@ -551,7 +551,7 @@
 			$nilai_evaluasi_timbangan = $nilai_rap_timbangan - $timbangan;
 			$styleColor = $nilai_evaluasi_timbangan < 0 ? 'color:red' : 'color:black';
 			?>
-			<th align="right"><?php echo number_format(0,0,',','.');?></th>
+			<th align="right"><?php echo number_format(0,2,',','.');?></th>
 			<th align="right"><?php echo number_format(0,0,',','.');?></th>
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_timbangan < 0 ? "(".number_format(-$nilai_evaluasi_timbangan,0,',','.').")" : number_format($nilai_evaluasi_timbangan,0,',','.');?></th>
 		</tr>
@@ -562,17 +562,18 @@
 			<th align="right"><?php echo number_format($nilai_bbm_solar_ton,0,',','.');?></th>
 			<?php
 			$nilai_rap_bbm = (round($nilai_bbm_solar_ton,2)!=0)?$total_rekapitulasi_produksi_harian * round($nilai_bbm_solar_ton,2) * 1:0;
+			$total_produksi_harsat = (round($total_produksi_volume,2)!=0)?$total_produksi_nilai * round($total_produksi_volume,2) * 1:0;
 			?>
 			<th align="right"><?php echo number_format($nilai_rap_bbm,0,',','.');?></th>
 			<th align="right"><?php echo number_format($total_produksi_volume,2,',','.');?></th>
-			<th align="right"><?php echo number_format($total_produksi_nilai / $total_produksi_volume,0,',','.');?></th>
+			<th align="right"><?php echo number_format($total_produksi_harsat,0,',','.');?></th>
 			<th align="right"><?php echo number_format($total_produksi_nilai,0,',','.');?></th>
 			<?php
 			$nilai_evaluasi_bbm = $nilai_rap_bbm - $total_produksi_nilai;
 			$styleColor = $nilai_evaluasi_bbm < 0 ? 'color:red' : 'color:black';
 			?>
-			<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian - $total_produksi_volume,2,',','.');?></th>
-			<th align="right"><?php echo number_format($nilai_evaluasi_bbm / ($total_rekapitulasi_produksi_harian - $total_produksi_volume),0,',','.');?></th>
+			<th align="right"><?php echo number_format(0,2,',','.');?></th>
+			<th align="right"><?php echo number_format(0,0,',','.');?></th>
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_bbm < 0 ? "(".number_format(-$nilai_evaluasi_bbm,0,',','.').")" : number_format($nilai_evaluasi_bbm,0,',','.');?></th>
 		</tr>
 		<tr class="table-active4">
@@ -594,14 +595,14 @@
 	</table>	
 	<br /><br />
 	<b>* Perhitungan BBM Solar</b><br /><br />
-	<table width="98%" border="0" cellpadding="3">
+	<table width="98%" border="0" cellpadding="3" style="font-size: 6px;">
 		<tr>
 			<th align="left" width="25%" style="font-weight:bold; background-color:green; color:white;">Stok BBM Solar Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:green; color:white;"><?php echo number_format($stok_volume_bbm_lalu,2,',','');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:green; color:white;"><?php echo number_format($stok_harsat_bbm_lalu,0,',','.');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:green; color:white;"><?php echo number_format($stok_nilai_bbm_lalu,0,',','.');?></th>
 		</tr>
-		<tr>
+		<tr style="font-size: 6px;">
 			<th align="left" style="font-weight:bold; background-color:yellow; color:black;">Pembelian BBM Solar Bulan Ini</th>
 			<th align="right" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_volume,2,',','');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:yellow; color:black;"><?php echo number_format($pembelian_harga,0,',','.');?></th>
@@ -613,41 +614,63 @@
 			<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($total_stok_nilai,0,',','.');?></th>
 		</tr>
-		<tr class="table-active4">
+		<tr>
 			<th align="left" style="font-weight:bold; background-color:blue; color:white;">Produksi Bulan Ini (1)</th>
 			<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_volume,2,',','');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_harsat,0,',','.');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_nilai,0,',','.');?></th>
 		</tr>
-		<tr class="table-active4">
+		<tr>
 			<th align="left" style="font-weight:bold; background-color:blue; color:white;">Produksi Bulan Ini (2)</th>
 			<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_2_volume,2,',','');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_2_harsat,0,',','.');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($produksi_2_nilai,0,',','.');?></th>
 		</tr>
-		<tr class="table-active4">
+		<tr>
 			<th align="left" style="font-weight:bold; background-color:blue; color:white;">Total Produksi Bulan Ini</th>
 			<th align="right" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_produksi_volume,2,',','');?></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"></th>
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_produksi_nilai,0,',','.');?></th>
 		</tr>
-		<tr class="table-active">
+		<tr>
 			<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok BBM Solar Akhir (1)</th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_volume,2,',','');?></th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_harsat,0,',','.');?></th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_nilai,0,',','.');?></th>
 		</tr>
-		<tr class="table-active">
+		<tr>
 			<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok BBM Solar Akhir (2)</th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_volume_2,2,',','');?></th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_harsat_2,0,',','.');?></th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_nilai_2,0,',','.');?></th>
 		</tr>
-		<tr class="table-active">
+		<tr>
 			<th align="left" style="font-weight:bold; background-color:orange; color:black;">Total Stok BBM Solar Akhir</th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_volume_total,2,',','');?></th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"></th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_nilai_total,0,',','.');?></th>
+		</tr>
+		<?php
+		$solar = $this->db->select('sum(pdb.jumlah) as total')
+		->from('pmm_biaya pb ')
+		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+		->where("pdb.akun = 228")
+		->where("status = 'PAID'")
+		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->get()->row_array();
+		$solar = $solar['total'];
+		?>
+		<tr>
+			<th align="left" style="font-weight:bold; background-color:grey; color:white;">Pemakaian Diluar Produksi</th>
+			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format(0,2,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format(0,0,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($solar,0,',','.');?></th>
+		</tr>
+		<tr>
+			<th align="left" style="font-weight:bold; background-color:red; color:white;">Total Stok BBM Solar Akhir - Pemakaian Diluar Produksi</th>
+			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format(0,2,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:red; color:white;"></th>
+			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format(0,0,',','.');?></th>
 		</tr>
 	</table>
 		
