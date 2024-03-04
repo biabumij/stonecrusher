@@ -675,7 +675,7 @@
 		<tr>
 			<th align="left" style="font-weight:bold; background-color:grey; color:white;">Pemakaian Diluar Produksi</th>
 			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($vol_bbm_non_produksi,2,',','');?></th>
-			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($harsat_bbm_non_produksi,0,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($harsat_bbm_non_produksi,0,',','.');?></th>
 			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($nilai_bbm_non_produksi,0,',','.');?></th>
 		</tr>
 		<tr>
