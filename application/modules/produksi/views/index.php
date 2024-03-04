@@ -48,7 +48,7 @@
 											<li><a href="<?= site_url('produksi/form_agregat'); ?>">Komposisi Agregat</a></li>
 											<li><a href="<?= site_url('produksi/form_produksi_harian'); ?>">Produksi Harian</a></li>
 											<li><a href="<?= site_url('produksi/form_produksi_campuran'); ?>">Produksi Campuran</a></li>
-                                            <li><a href="javascript:void(0);" onclick="OpenForm()">Stock Opname</a></li>z
+                                            <li><a href="javascript:void(0);" onclick="OpenForm()">Stock Opname</a></li>
                                         </ul>
                                     </div>
                                 </h3>
@@ -258,6 +258,8 @@
         locale: {
             format: 'DD-MM-YYYY'
         },
+        minDate: moment().startOf('month').toDate(),
+        maxDate: moment().endOf('month').toDate(),
         ranges: {
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
