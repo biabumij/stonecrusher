@@ -370,12 +370,23 @@
 		->group_by('prm.material_id')
 		->get()->row_array();
 
-		$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume')
+		$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
 		->from('kunci_bahan_baku pp')
 		->where("(pp.date between '$date1' and '$date2')")
 		->order_by('pp.date','desc')->limit(1)
 		->get()->row_array();
 		$vol_pemakaian_bbm = $pemakaian_bbm['volume'];
+		$nilai_pemakaian_bbm = $pemakaian_bbm['nilai'];
+		$harsat_pemakaian_bbm = (round($vol_pemakaian_bbm,2)!=0)?$nilai_pemakaian_bbm / round($vol_pemakaian_bbm,2) * 1:0;
+
+		$pemakaian_bbm_2 = $this->db->select('sum(pp.vol_pemakaian_bbm_2) as volume, sum(pp.nilai_pemakaian_bbm_2) as nilai')
+		->from('kunci_bahan_baku pp')
+		->where("(pp.date between '$date1' and '$date2')")
+		->order_by('pp.date','desc')->limit(1)
+		->get()->row_array();
+		$vol_pemakaian_bbm_2 = $pemakaian_bbm_2['volume'];
+		$nilai_pemakaian_bbm_2 = $pemakaian_bbm_2['nilai'];
+		$harsat_pemakaian_bbm_2 = (round($vol_pemakaian_bbm_2,2)!=0)?$nilai_pemakaian_bbm_2 / round($vol_pemakaian_bbm_2,2) * 1:0;
 
 		$stok_volume_bbm_lalu = $stock_opname_bbm_ago['volume'];
 		$stok_nilai_bbm_lalu = $harga_bbm['nilai_bbm'];
@@ -389,28 +400,27 @@
 		$total_stok_nilai = $stok_nilai_bbm_lalu + $pembelian_nilai;
 		$total_stok_harsat = (round($total_stok_volume,2)!=0)?$total_stok_nilai / round($total_stok_volume,2) * 1:0;
 
-		$produksi_volume = $stok_volume_bbm_lalu;
-		$produksi_harsat = $stok_harsat_bbm_lalu;
-		$produksi_nilai = $stok_nilai_bbm_lalu;
+		$produksi_volume = $vol_pemakaian_bbm;
+		$produksi_harsat = $harsat_pemakaian_bbm;
+		$produksi_nilai = $nilai_pemakaian_bbm;
 
-		$key = 0;
-		if($pembelian_harga == 0) {
-			$key = $produksi_harsat;
-		}
-
-		if($pembelian_harga > 0) {
-			$key = $pembelian_harga;
-		}
-
-		$produksi_2_volume = $vol_pemakaian_bbm - $produksi_volume;
-		$produksi_2_harsat = $key;
-		$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
+		$produksi_2_volume = $vol_pemakaian_bbm_2;
+		$produksi_2_harsat = $harsat_pemakaian_bbm_2;
+		$produksi_2_nilai = $nilai_pemakaian_bbm_2;
 
 		$total_produksi_volume = $produksi_volume + $produksi_2_volume;
 		$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai;
 
-		$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
-		$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
+		$stok_akhir_volume = $stok_volume_bbm_lalu - $produksi_volume;
+		$stok_akhir_nilai = $stok_nilai_bbm_lalu - $produksi_nilai;
+		$stok_akhir_harsat = (round($stok_akhir_volume,2)!=0)?$stok_akhir_nilai / round($stok_akhir_volume,2) * 1:0;
+
+		$stok_akhir_volume_2 = $pembelian_volume - $produksi_2_volume;
+		$stok_akhir_nilai_2 = $pembelian_nilai - $produksi_2_nilai;
+		$stok_akhir_harsat_2 = (round($stok_akhir_volume_2,2)!=0)?$stok_akhir_nilai_2 / round($stok_akhir_volume_2,2) * 1:0;
+
+		$stok_akhir_volume_total = $stok_akhir_volume + $stok_akhir_volume_2;
+		$stok_akhir_nilai_total = $stok_akhir_nilai + $stok_akhir_nilai_2;
 		?>
 		<tr class="table-active">
 			<th width="5%" align="center" rowspan="2">&nbsp; <br />NO.</th>
@@ -554,19 +564,15 @@
 			$nilai_rap_bbm = (round($nilai_bbm_solar_ton,2)!=0)?$total_rekapitulasi_produksi_harian * round($nilai_bbm_solar_ton,2) * 1:0;
 			?>
 			<th align="right"><?php echo number_format($nilai_rap_bbm,0,',','.');?></th>
-			<th align="right"><?php echo number_format($vol_pemakaian_bbm,2,',','.');?></th>
+			<th align="right"><?php echo number_format($total_produksi_volume,2,',','.');?></th>
+			<th align="right"><?php echo number_format($total_produksi_nilai / $total_produksi_volume,0,',','.');?></th>
+			<th align="right"><?php echo number_format($total_produksi_nilai,0,',','.');?></th>
 			<?php
-			$harga_baru = ($total_produksi_volume!=0)?$total_produksi_nilai / $total_produksi_volume * 1:0;
-			$bbm = $total_produksi_nilai;
-			?>
-			<th align="right"><?php echo number_format($harga_baru,0,',','.');?></th>
-			<th align="right"><?php echo number_format($bbm,0,',','.');?></th>
-			<?php
-			$nilai_evaluasi_bbm = $nilai_rap_bbm - $bbm;
+			$nilai_evaluasi_bbm = $nilai_rap_bbm - $total_produksi_nilai;
 			$styleColor = $nilai_evaluasi_bbm < 0 ? 'color:red' : 'color:black';
 			?>
-			<th align="right"><?php echo number_format(0,0,',','.');?></th>
-			<th align="right"><?php echo number_format(0,0,',','.');?></th>
+			<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian - $total_produksi_volume,2,',','.');?></th>
+			<th align="right"><?php echo number_format($nilai_evaluasi_bbm / ($total_rekapitulasi_produksi_harian - $total_produksi_volume),0,',','.');?></th>
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_bbm < 0 ? "(".number_format(-$nilai_evaluasi_bbm,0,',','.').")" : number_format($nilai_evaluasi_bbm,0,',','.');?></th>
 		</tr>
 		<tr class="table-active4">
@@ -576,17 +582,17 @@
 			<th align="right"><?php echo number_format($nilai_rap_tangki_solar + $nilai_rap_stone_crusher + $nilai_rap_genset + $nilai_rap_wheel_loader + $nilai_rap_timbangan + $nilai_rap_bbm,0,',','.');?></th>
 			<th align="right"></th>
 			<th align="right"></th>
-			<th align="right"><?php echo number_format($tangki_solar + $stone_crusher + $genset + $wheel_loader + $timbangan + $bbm,0,',','.');?></th>
+			<th align="right"><?php echo number_format($tangki_solar + $stone_crusher + $genset + $wheel_loader + $timbangan + $total_produksi_nilai,0,',','.');?></th>
 			<th align="right"></th>
 			<th align="right"></th>
 			<?php
-			$nilai_evaluasi_alat = ($nilai_rap_tangki_solar + $nilai_rap_stone_crusher + $nilai_rap_genset + $nilai_rap_wheel_loader + $nilai_rap_timbangan + $nilai_rap_bbm) - ($tangki_solar + $stone_crusher + $genset + $wheel_loader + $timbangan + $bbm);
+			$nilai_evaluasi_alat = ($nilai_rap_tangki_solar + $nilai_rap_stone_crusher + $nilai_rap_genset + $nilai_rap_wheel_loader + $nilai_rap_timbangan + $nilai_rap_bbm) - ($tangki_solar + $stone_crusher + $genset + $wheel_loader + $timbangan + $total_produksi_nilai);
 			$styleColor = $nilai_evaluasi_alat < 0 ? 'color:red' : 'color:black';
 			?>
 			<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_alat < 0 ? "(".number_format(-$nilai_evaluasi_alat,0,',','.').")" : number_format($nilai_evaluasi_alat,0,',','.');?></th>
 		</tr>
 	</table>	
-	<br /><br /><br /><br /><br />
+	<br /><br />
 	<b>* Perhitungan BBM Solar</b><br /><br />
 	<table width="98%" border="0" cellpadding="3">
 		<tr>
@@ -626,10 +632,22 @@
 			<th align="right" width="10%" style="font-weight:bold; background-color:blue; color:white;"><?php echo number_format($total_produksi_nilai,0,',','.');?></th>
 		</tr>
 		<tr class="table-active">
-			<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok BBM Solar Akhir</th>
+			<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok BBM Solar Akhir (1)</th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_volume,2,',','');?></th>
-			<th align="right" style="font-weight:bold; background-color:orange; color:black;"></th>
+			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_harsat,0,',','.');?></th>
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_nilai,0,',','.');?></th>
+		</tr>
+		<tr class="table-active">
+			<th align="left" style="font-weight:bold; background-color:orange; color:black;">Stok BBM Solar Akhir (2)</th>
+			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_volume_2,2,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_harsat_2,0,',','.');?></th>
+			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_nilai_2,0,',','.');?></th>
+		</tr>
+		<tr class="table-active">
+			<th align="left" style="font-weight:bold; background-color:orange; color:black;">Total Stok BBM Solar Akhir</th>
+			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_volume_total,2,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:orange; color:black;"></th>
+			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_nilai_total,0,',','.');?></th>
 		</tr>
 	</table>
 		

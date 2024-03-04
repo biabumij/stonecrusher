@@ -258,13 +258,24 @@
 		->group_by('prm.material_id')
 		->get()->row_array();
 
-		$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume')
+		$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
 		->from('kunci_bahan_baku pp')
 		->where("(pp.date between '$date1' and '$date2')")
 		->order_by('pp.date','desc')->limit(1)
 		->get()->row_array();
 		$vol_pemakaian_bbm = $pemakaian_bbm['volume'];
-		
+		$nilai_pemakaian_bbm = $pemakaian_bbm['nilai'];
+		$harsat_pemakaian_bbm = (round($vol_pemakaian_bbm,2)!=0)?$nilai_pemakaian_bbm / round($vol_pemakaian_bbm,2) * 1:0;
+
+		$pemakaian_bbm_2 = $this->db->select('sum(pp.vol_pemakaian_bbm_2) as volume, sum(pp.nilai_pemakaian_bbm_2) as nilai')
+		->from('kunci_bahan_baku pp')
+		->where("(pp.date between '$date1' and '$date2')")
+		->order_by('pp.date','desc')->limit(1)
+		->get()->row_array();
+		$vol_pemakaian_bbm_2 = $pemakaian_bbm_2['volume'];
+		$nilai_pemakaian_bbm_2 = $pemakaian_bbm_2['nilai'];
+		$harsat_pemakaian_bbm_2 = (round($vol_pemakaian_bbm_2,2)!=0)?$nilai_pemakaian_bbm_2 / round($vol_pemakaian_bbm_2,2) * 1:0;
+
 		$stok_volume_bbm_lalu = $stock_opname_bbm_ago['volume'];
 		$stok_nilai_bbm_lalu = $harga_bbm['nilai_bbm'];
 		$stok_harsat_bbm_lalu = (round($stok_volume_bbm_lalu,2)!=0)?$stok_nilai_bbm_lalu / round($stok_volume_bbm_lalu,2) * 1:0;
@@ -277,30 +288,29 @@
 		$total_stok_nilai = $stok_nilai_bbm_lalu + $pembelian_nilai;
 		$total_stok_harsat = (round($total_stok_volume,2)!=0)?$total_stok_nilai / round($total_stok_volume,2) * 1:0;
 
-		$produksi_volume = $stok_volume_bbm_lalu;
-		$produksi_harsat = $stok_harsat_bbm_lalu;
-		$produksi_nilai = $stok_nilai_bbm_lalu;
+		$produksi_volume = $vol_pemakaian_bbm;
+		$produksi_harsat = $harsat_pemakaian_bbm;
+		$produksi_nilai = $nilai_pemakaian_bbm;
 
-		$key = 0;
-		if($pembelian_harga == 0) {
-			$key = $produksi_harsat;
-		}
-
-		if($pembelian_harga > 0) {
-			$key = $pembelian_harga;
-		}
-
-		$produksi_2_volume = $vol_pemakaian_bbm - $produksi_volume;
-		$produksi_2_harsat = $key;
-		$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
+		$produksi_2_volume = $vol_pemakaian_bbm_2;
+		$produksi_2_harsat = $harsat_pemakaian_bbm_2;
+		$produksi_2_nilai = $nilai_pemakaian_bbm_2;
 
 		$total_produksi_volume = $produksi_volume + $produksi_2_volume;
 		$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai;
 
-		$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
-		$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
+		$stok_akhir_volume = $stok_volume_bbm_lalu - $produksi_volume;
+		$stok_akhir_nilai = $stok_nilai_bbm_lalu - $produksi_nilai;
+		$stok_akhir_harsat = (round($stok_akhir_volume,2)!=0)?$stok_akhir_nilai / round($stok_akhir_volume,2) * 1:0;
 
-		$harga_baru = ($total_produksi_volume!=0)?$total_produksi_nilai / $total_produksi_volume * 1:0;
+		$stok_akhir_volume_2 = $pembelian_volume - $produksi_2_volume;
+		$stok_akhir_nilai_2 = $pembelian_nilai - $produksi_2_nilai;
+		$stok_akhir_harsat_2 = (round($stok_akhir_volume_2,2)!=0)?$stok_akhir_nilai_2 / round($stok_akhir_volume_2,2) * 1:0;
+
+		$stok_akhir_volume_total = $stok_akhir_volume + $stok_akhir_volume_2;
+		$stok_akhir_nilai_total = $stok_akhir_nilai + $stok_akhir_nilai_2;
+
+		$harga_baru = $total_produksi_nilai / $total_produksi_volume;
 		$total_nilai_produksi_solar = $total_produksi_nilai;
 		?>
 
@@ -860,13 +870,13 @@
 		<!--  Jumlah HPProduksi (Tanpa Limbah)  -->
 		<?php
 		$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-			->from('pmm_produksi_harian pph ')
-			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-			->where("(pph.date_prod between '$date1' and '$date2')")
-			->where('pph.status','PUBLISH')
-			->get()->row_array();
-			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+		->from('pmm_produksi_harian pph ')
+		->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+		->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+		->where("(pph.date_prod between '$date1' and '$date2')")
+		->where('pph.status','PUBLISH')
+		->get()->row_array();
+		$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
 		?>
 		<table class="table-lap" width="98%" border="0" cellpadding="5">
 			<tr class="table-active" style="">

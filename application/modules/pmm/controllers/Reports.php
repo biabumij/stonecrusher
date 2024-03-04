@@ -2433,7 +2433,7 @@ class Reports extends CI_Controller {
 			$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
 			$date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date1)));
 			$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
-	
+
 			$stock_opname_bbm_ago = $this->db->select('pp.vol_nilai_bbm as volume')
 			->from('kunci_bahan_baku pp')
 			->where("(pp.date = '$tanggal_opening_balance')")
@@ -2445,7 +2445,7 @@ class Reports extends CI_Controller {
 			->where("(pp.date between '$date3_ago' and '$date2_ago')")
 			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
-	
+
 			$pembelian_bbm = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
 			->from('pmm_receipt_material prm')
 			->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
@@ -2454,14 +2454,25 @@ class Reports extends CI_Controller {
 			->where("prm.material_id = 13")
 			->group_by('prm.material_id')
 			->get()->row_array();
-	
-			$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume')
+
+			$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
 			->from('kunci_bahan_baku pp')
 			->where("(pp.date between '$date1' and '$date2')")
 			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
 			$vol_pemakaian_bbm = $pemakaian_bbm['volume'];
-			
+			$nilai_pemakaian_bbm = $pemakaian_bbm['nilai'];
+			$harsat_pemakaian_bbm = (round($vol_pemakaian_bbm,2)!=0)?$nilai_pemakaian_bbm / round($vol_pemakaian_bbm,2) * 1:0;
+
+			$pemakaian_bbm_2 = $this->db->select('sum(pp.vol_pemakaian_bbm_2) as volume, sum(pp.nilai_pemakaian_bbm_2) as nilai')
+			->from('kunci_bahan_baku pp')
+			->where("(pp.date between '$date1' and '$date2')")
+			->order_by('pp.date','desc')->limit(1)
+			->get()->row_array();
+			$vol_pemakaian_bbm_2 = $pemakaian_bbm_2['volume'];
+			$nilai_pemakaian_bbm_2 = $pemakaian_bbm_2['nilai'];
+			$harsat_pemakaian_bbm_2 = (round($vol_pemakaian_bbm_2,2)!=0)?$nilai_pemakaian_bbm_2 / round($vol_pemakaian_bbm_2,2) * 1:0;
+
 			$stok_volume_bbm_lalu = $stock_opname_bbm_ago['volume'];
 			$stok_nilai_bbm_lalu = $harga_bbm['nilai_bbm'];
 			$stok_harsat_bbm_lalu = (round($stok_volume_bbm_lalu,2)!=0)?$stok_nilai_bbm_lalu / round($stok_volume_bbm_lalu,2) * 1:0;
@@ -2474,30 +2485,29 @@ class Reports extends CI_Controller {
 			$total_stok_nilai = $stok_nilai_bbm_lalu + $pembelian_nilai;
 			$total_stok_harsat = (round($total_stok_volume,2)!=0)?$total_stok_nilai / round($total_stok_volume,2) * 1:0;
 
-			$produksi_volume = $stok_volume_bbm_lalu;
-			$produksi_harsat = $stok_harsat_bbm_lalu;
-			$produksi_nilai = $stok_nilai_bbm_lalu;
+			$produksi_volume = $vol_pemakaian_bbm;
+			$produksi_harsat = $harsat_pemakaian_bbm;
+			$produksi_nilai = $nilai_pemakaian_bbm;
 
-			$key = 0;
-			if($pembelian_harga == 0) {
-				$key = $produksi_harsat;
-			}
-
-			if($pembelian_harga > 0) {
-				$key = $pembelian_harga;
-			}
-
-			$produksi_2_volume = $vol_pemakaian_bbm - $produksi_volume;
-			$produksi_2_harsat = $key;
-			$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
+			$produksi_2_volume = $vol_pemakaian_bbm_2;
+			$produksi_2_harsat = $harsat_pemakaian_bbm_2;
+			$produksi_2_nilai = $nilai_pemakaian_bbm_2;
 
 			$total_produksi_volume = $produksi_volume + $produksi_2_volume;
 			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai;
 
-			$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
-			$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
+			$stok_akhir_volume = $stok_volume_bbm_lalu - $produksi_volume;
+			$stok_akhir_nilai = $stok_nilai_bbm_lalu - $produksi_nilai;
+			$stok_akhir_harsat = (round($stok_akhir_volume,2)!=0)?$stok_akhir_nilai / round($stok_akhir_volume,2) * 1:0;
 
-			$harga_baru = ($total_produksi_volume!=0)?$total_produksi_nilai / $total_produksi_volume * 1:0;
+			$stok_akhir_volume_2 = $pembelian_volume - $produksi_2_volume;
+			$stok_akhir_nilai_2 = $pembelian_nilai - $produksi_2_nilai;
+			$stok_akhir_harsat_2 = (round($stok_akhir_volume_2,2)!=0)?$stok_akhir_nilai_2 / round($stok_akhir_volume_2,2) * 1:0;
+
+			$stok_akhir_volume_total = $stok_akhir_volume + $stok_akhir_volume_2;
+			$stok_akhir_nilai_total = $stok_akhir_nilai + $stok_akhir_nilai_2;
+
+			$harga_baru = $total_produksi_nilai / $total_produksi_volume;
 			$total_nilai_produksi_solar = $total_produksi_nilai;
 			?>
 	
@@ -9114,12 +9124,23 @@ class Reports extends CI_Controller {
 			->group_by('prm.material_id')
 			->get()->row_array();
 
-			$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume')
+			$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
 			->from('kunci_bahan_baku pp')
 			->where("(pp.date between '$date1' and '$date2')")
 			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
 			$vol_pemakaian_bbm = $pemakaian_bbm['volume'];
+			$nilai_pemakaian_bbm = $pemakaian_bbm['nilai'];
+			$harsat_pemakaian_bbm = (round($vol_pemakaian_bbm,2)!=0)?$nilai_pemakaian_bbm / round($vol_pemakaian_bbm,2) * 1:0;
+
+			$pemakaian_bbm_2 = $this->db->select('sum(pp.vol_pemakaian_bbm_2) as volume, sum(pp.nilai_pemakaian_bbm_2) as nilai')
+			->from('kunci_bahan_baku pp')
+			->where("(pp.date between '$date1' and '$date2')")
+			->order_by('pp.date','desc')->limit(1)
+			->get()->row_array();
+			$vol_pemakaian_bbm_2 = $pemakaian_bbm_2['volume'];
+			$nilai_pemakaian_bbm_2 = $pemakaian_bbm_2['nilai'];
+			$harsat_pemakaian_bbm_2 = (round($vol_pemakaian_bbm_2,2)!=0)?$nilai_pemakaian_bbm_2 / round($vol_pemakaian_bbm_2,2) * 1:0;
 
 			$stok_volume_bbm_lalu = $stock_opname_bbm_ago['volume'];
 			$stok_nilai_bbm_lalu = $harga_bbm['nilai_bbm'];
@@ -9133,28 +9154,27 @@ class Reports extends CI_Controller {
 			$total_stok_nilai = $stok_nilai_bbm_lalu + $pembelian_nilai;
 			$total_stok_harsat = (round($total_stok_volume,2)!=0)?$total_stok_nilai / round($total_stok_volume,2) * 1:0;
 
-			$produksi_volume = $stok_volume_bbm_lalu;
-			$produksi_harsat = $stok_harsat_bbm_lalu;
-			$produksi_nilai = $stok_nilai_bbm_lalu;
+			$produksi_volume = $vol_pemakaian_bbm;
+			$produksi_harsat = $harsat_pemakaian_bbm;
+			$produksi_nilai = $nilai_pemakaian_bbm;
 
-			$key = 0;
-			if($pembelian_harga == 0) {
-				$key = $produksi_harsat;
-			}
-
-			if($pembelian_harga > 0) {
-				$key = $pembelian_harga;
-			}
-
-			$produksi_2_volume = $vol_pemakaian_bbm - $produksi_volume;
-			$produksi_2_harsat = $key;
-			$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
+			$produksi_2_volume = $vol_pemakaian_bbm_2;
+			$produksi_2_harsat = $harsat_pemakaian_bbm_2;
+			$produksi_2_nilai = $nilai_pemakaian_bbm_2;
 
 			$total_produksi_volume = $produksi_volume + $produksi_2_volume;
 			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai;
 
-			$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
-			$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
+			$stok_akhir_volume = $stok_volume_bbm_lalu - $produksi_volume;
+			$stok_akhir_nilai = $stok_nilai_bbm_lalu - $produksi_nilai;
+			$stok_akhir_harsat = (round($stok_akhir_volume,2)!=0)?$stok_akhir_nilai / round($stok_akhir_volume,2) * 1:0;
+
+			$stok_akhir_volume_2 = $pembelian_volume - $produksi_2_volume;
+			$stok_akhir_nilai_2 = $pembelian_nilai - $produksi_2_nilai;
+			$stok_akhir_harsat_2 = (round($stok_akhir_volume_2,2)!=0)?$stok_akhir_nilai_2 / round($stok_akhir_volume_2,2) * 1:0;
+
+			$stok_akhir_volume_total = $stok_akhir_volume + $stok_akhir_volume_2;
+			$stok_akhir_nilai_total = $stok_akhir_nilai + $stok_akhir_nilai_2;
 
 			$harga_baru = $total_produksi_nilai / $total_produksi_volume;
 			$total_nilai_produksi_solar = $total_produksi_nilai;
