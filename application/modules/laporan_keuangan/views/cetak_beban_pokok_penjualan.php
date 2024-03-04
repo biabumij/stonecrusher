@@ -1194,7 +1194,7 @@
 				<?php
 				$volume = round($akumulasi_bahan_jadi_volume,2) + round($total_rekapitulasi_produksi_harian,2) - round($total_volume,2);
 				$harsat_produksi = (round($total_rekapitulasi_produksi_harian,2)!=0)?($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / round($total_rekapitulasi_produksi_harian,2) * 1:0;
-				/* $harsat_produksi_stok = (round($akumulasi_bahan_jadi_volume,2)!=0)?$akumulasi_bahan_jadi_nilai / round($akumulasi_bahan_jadi_volume,2) * 1:0;
+				$harsat_produksi_stok = (round($akumulasi_bahan_jadi_volume,2)!=0)?$akumulasi_bahan_jadi_nilai / round($akumulasi_bahan_jadi_volume,2) * 1:0;
 				$key = 0;
 				if($harsat_produksi == 0) {
 					$key = $harsat_produksi_stok;
@@ -1203,19 +1203,9 @@
 				if($harsat_produksi > 0) {
 					$key = $harsat_produksi;
 				}
-				 */
-
-				$akumulasi = $this->db->select('sum(pp.volume) as volume, sum(pp.nilai) as nilai, sum(pp.overhead) as overhead')
-				->from('kunci_bahan_jadi pp')
-				->where("(pp.date <= '$date1')")
-				->get()->row_array();
-				$akumulasi_volume = $akumulasi['volume'] + $total_rekapitulasi_produksi_harian;
-				$akumulasi_nilai = $akumulasi['nilai'] + $akumulasi['overhead'] + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
-				$akumulasi_harsat = (round($akumulasi_volume,2)!=0)?$akumulasi_nilai / round($akumulasi_volume,2) * 1:0;
 				?>
-
-				<th align="right"><?php echo number_format($akumulasi_nilai,0,',','.');?></th>
-				<th align="right"><?php echo number_format($akumulasi_harsat,0,',','.');?></th>
+				<th align="right"><?php echo number_format($volume * $key,0,',','.');?></th>
+				<th align="right"><?php echo number_format($key,0,',','.');?></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
 				<th align="center">7.</th>
@@ -1224,10 +1214,10 @@
 				<th align="right"></th>
 				<th align="right"></th>
 				<?php
-				$nilai_beban_produksi = $total_volume * $harsat_produksi;
+				$nilai_beban_produksi = $total_volume * $key;
 				?>
 				<th align="right"><?php echo number_format($nilai_beban_produksi,0,',','.');?></th>
-				<th align="right"><?php echo number_format($harsat_produksi,0,',','.');?></th>
+				<th align="right"><?php echo number_format($key,0,',','.');?></th>
 			</tr>
 		</table>
 		<br /><br /><br /><br /><br />
