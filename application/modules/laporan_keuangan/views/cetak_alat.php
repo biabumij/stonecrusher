@@ -651,26 +651,38 @@
 			<th align="right" style="font-weight:bold; background-color:orange; color:black;"><?php echo number_format($stok_akhir_nilai_total,0,',','.');?></th>
 		</tr>
 		<?php
-		$solar = $this->db->select('sum(pdb.jumlah) as total')
+		$vol_bbm_non_produksi = $this->db->select('sum(pp.vol_non_produksi) as volume')
+		->from('kunci_bahan_baku pp')
+		->where("(pp.date between '$date1' and '$date2')")
+		->order_by('pp.date','desc')->limit(1)
+		->get()->row_array();
+		$vol_bbm_non_produksi = $vol_bbm_non_produksi['volume'];
+
+		$nilai_bbm_non_produksi = $this->db->select('sum(pdb.jumlah) as total')
 		->from('pmm_biaya pb ')
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 228")
 		->where("status = 'PAID'")
 		->where("(tanggal_transaksi between '$date1' and '$date2')")
 		->get()->row_array();
-		$solar = $solar['total'];
+		$nilai_bbm_non_produksi = $nilai_bbm_non_produksi['total'];
+
+		$harsat_bbm_non_produksi = (round($vol_bbm_non_produksi,2)!=0)?$nilai_bbm_non_produksi / round($vol_bbm_non_produksi,2) * 1:0;
+		
+		$volume_bbm_sisa = $stok_akhir_volume_total - $vol_bbm_non_produksi;
+		$nilai_bbm_sisa = $stok_akhir_nilai_total - $nilai_bbm_non_produksi;
 		?>
 		<tr>
 			<th align="left" style="font-weight:bold; background-color:grey; color:white;">Pemakaian Diluar Produksi</th>
-			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format(0,2,',','');?></th>
-			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format(0,0,',','');?></th>
-			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($solar,0,',','.');?></th>
+			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($vol_bbm_non_produksi,2,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($harsat_bbm_non_produksi,0,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($nilai_bbm_non_produksi,0,',','.');?></th>
 		</tr>
 		<tr>
 			<th align="left" style="font-weight:bold; background-color:red; color:white;">Total Stok BBM Solar Akhir - Pemakaian Diluar Produksi</th>
-			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format(0,2,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format($volume_bbm_sisa,2,',','');?></th>
 			<th align="right" style="font-weight:bold; background-color:red; color:white;"></th>
-			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format(0,0,',','.');?></th>
+			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format($nilai_bbm_sisa,0,',','.');?></th>
 		</tr>
 	</table>
 		
