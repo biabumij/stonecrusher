@@ -52,7 +52,6 @@
                                         </ul>
                                     </div>
                                 </h3>
-
                             </div>
                             <div class="panel-content">
                                 <ul class="nav nav-tabs" role="tablist">
@@ -258,8 +257,6 @@
         locale: {
             format: 'DD-MM-YYYY'
         },
-        minDate: moment().startOf('month').toDate(),
-        maxDate: moment().endOf('month').toDate(),
         ranges: {
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
