@@ -680,7 +680,7 @@
 		</tr>
 		<tr>
 			<th align="left" style="font-weight:bold; background-color:red; color:white;">Total Stok BBM Solar Akhir - Pemakaian Diluar Produksi</th>
-			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format($volume_bbm_sisa,2,',','');?></th>
+			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format($volume_bbm_sisa,2,',','.');?></th>
 			<th align="right" style="font-weight:bold; background-color:red; color:white;"></th>
 			<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format($nilai_bbm_sisa,0,',','.');?></th>
 		</tr>
