@@ -168,6 +168,7 @@
 														<th>Pemakaian Bahan Baku (Ton)</th>
 														<th>Kapasitas Produksi (Ton/Jam)</th>
 														<th>Keterangan</th>
+                                                        <th>Lampiran</th>
                                                         <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>												
@@ -459,6 +460,9 @@
                 },
 				{
                     "data": "memo"
+                },
+                {
+                    "data": "lampiran"
                 },
                 {
 					"data": "actions"
