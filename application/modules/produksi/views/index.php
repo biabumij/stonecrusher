@@ -217,6 +217,7 @@
 														<th>Satuan</th>
 														<th>Volume</th>
 														<th>Keterangan</th>
+                                                        <th>Lampiran</th>
                                                         <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>											
@@ -546,6 +547,9 @@
                 },
 				{
                     "data": "memo"
+                },
+                {
+                    "data": "lampiran"
                 },
                 {
 					"data": "actions"
