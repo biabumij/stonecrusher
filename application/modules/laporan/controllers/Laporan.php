@@ -2603,7 +2603,14 @@ class Laporan extends Secure_Controller {
 		        $pdf->AddPage('P');
 
 		$arr_data = array();
+		$filter_category = $this->input->get('filter_category');
 		$this->db->where('status !=','DELETED');
+
+		if(!empty($filter_category) && !empty($filter_category)){
+			$this->db->where_in('coa_category',$filter_category);
+		}
+		
+		$this->db->order_by('coa_number','asc');
 		$query = $this->db->get('pmm_coa');
 		$data['data'] = $query->result_array();
         $html = $this->load->view('pmm/finance/cetak_list_coa',$data,TRUE);

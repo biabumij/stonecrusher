@@ -41,21 +41,21 @@
                                 <div class="col-sm-2">
                                     <a href="javascript:void(0);" onclick="OpenForm()" class="btn btn-info" style="border-radius:10px; font-weight:bold;"><i class="fa fa-plus"></i> Buat Daftar Akun</a>
                                 </div>
-                                <div class="col-sm-3">
-                                    <select id="filter_category" name="filter_category" class="form-control select2" required="">
-                                        <option value="">Pilih Kategori</option>
-                                        <?php
-                                        if(!empty($coa_category)){
-                                            foreach ($coa_category as $key => $coa_c) {
-                                                ?>
-                                                <option value="<?= $coa_c['id'];?>"><?= $coa_c['coa_category'];?></option>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
                                 <form method="GET" target="_blank" action="<?php echo site_url('laporan/list_coa_print');?>">
+                                    <div class="col-sm-3">
+                                        <select id="filter_category" name="filter_category" class="form-control select2">
+                                            <option value="">Pilih Kategori</option>
+                                            <?php
+                                            if(!empty($coa_category)){
+                                                foreach ($coa_category as $key => $coa_c) {
+                                                    ?>
+                                                    <option value="<?= $coa_c['id'];?>"><?= $coa_c['coa_category'];?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
                                     <div class="col-sm-2">
                                         <button type="submit" class="btn btn-info"><i class="fa fa-print"></i> Print</button>
                                     </div>
