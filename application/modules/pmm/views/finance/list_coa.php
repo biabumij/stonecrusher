@@ -179,6 +179,7 @@
                 { "width": "5%", "targets": 0, "className": 'text-center'},
             ],
             responsive: true,
+            pageLength : 250,
         });
 
 
