@@ -75,5 +75,4 @@ class Pdf extends TCPDF {
         //$this->SetFont('times', 'I', 8);
         //$this->Cell(0, 10, 'Do Something Big Today', 0, 0,'C');
     }
-    
 } 
