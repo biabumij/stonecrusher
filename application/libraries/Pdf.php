@@ -12,16 +12,16 @@ class Pdf extends TCPDF {
         $this->CI->load->database();
         parent::__construct();
 
-        $this->SetTopMargin(35);
+        $this->SetTopMargin(30);
         $this->setRightMargin(0);
         $this->setLeftMargin(5);
-        $this->setFooterMargin(10);
+        $this->setFooterMargin(30);
 
-        $this->SetHeaderMargin(5);
+        /*$this->SetHeaderMargin(5);
         $this->SetAutoPageBreak(TRUE, 20);
         $this->SetAuthor('NSI');
         $this->SetDisplayMode('real', 'default');
-        $this->SetFont('times','',8);
+        $this->SetFont('times','',8);*/
 
     }
 
@@ -37,6 +37,9 @@ class Pdf extends TCPDF {
     }
 
     public function nsi_html($html) {
+        $PDF_MARGIN_BOTTOM = 20;
+        $this->SetAutoPageBreak(TRUE, $PDF_MARGIN_BOTTOM);
+        //$this->setImageScale(PDF_IMAGE_SCALE_RATIO);
         $this->SetFont('times', '', 8);
         $this->writeHTML($html, true, false, true, false, '');
     }
@@ -60,19 +63,13 @@ class Pdf extends TCPDF {
         $this->writeHTMLCell(
             $w = 0, $h = 0, $x = 0, $y = 0,
             $this->nsi_header, $border = 0, $ln = 1, $fill = 0,
-            $bMargin = $this->getBreakMargin(),
-            $auto_page_break = $this->AutoPageBreak,
             $this->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM-150),
-            $this->Image($nsi_header, -20, -20, 210, 297, '', '', '', false, 300, '', false, false, 0, 'LB', false, false),
-            $reseth = true, $align = 'top', $autopadding = false);
-        $posisi_y = $this->getY();
-        $this->SetTopMargin(40);
-
+            $reseth = false, $align = 'top', $autopadding = false);
     }
 
     public function Footer() {
         $style = array();
-        //$this->SetFont('times', 'I', 8);
-        //$this->Cell(0, 10, 'Do Something Big Today', 0, 0,'C');
+        $this->SetFont('times', 'I', 8);
+        //$this->Cell(0, 0, 'Do Something Big Today', 0, 0,'C', $border = 0,);
     }
 } 
