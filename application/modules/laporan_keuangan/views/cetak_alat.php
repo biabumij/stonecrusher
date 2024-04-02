@@ -661,7 +661,7 @@
 		$nilai_bbm_non_produksi = $this->db->select('sum(pdb.jumlah) as total')
 		->from('pmm_biaya pb ')
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-		->where("pdb.akun = 228")
+		->where("pdb.akun = 105")
 		->where("status = 'PAID'")
 		->where("(tanggal_transaksi between '$date1' and '$date2')")
 		->get()->row_array();
