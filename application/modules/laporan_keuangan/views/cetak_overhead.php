@@ -890,7 +890,7 @@
 			<tr class="table-active3">
 	            <th align="center">21</th>
 				<th align="left">Penyusutan Peralatan Kantor</th>
-				<th align="right"><?php echo number_format($row['penyusutan'],0,',','.');?></th>
+				<th align="right"><?php echo number_format($row['penyusutan_kantor'],0,',','.');?></th>
 				<th align="right"><?php echo number_format($penyusutan_kantor,0,',','.');?></th>
 				<?php
 					$evaluasi_penyusutan_kantor = $row['penyusutan_kantor'] - $penyusutan_kantor;
@@ -901,7 +901,7 @@
 			<tr class="table-active3" style="background-color: #cccccc;">
 	            <th align="center">22</th>
 				<th align="left">Penyusutan Kendaraan</th>
-				<th align="right"><?php echo number_format($row['kendaraan'],0,',','.');?></th>
+				<th align="right"><?php echo number_format($row['penyusutan_kendaraan'],0,',','.');?></th>
 				<th align="right"><?php echo number_format($penyusutan_kendaraan,0,',','.');?></th>
 				<?php
 					$evaluasi_penyusutan_kendaraan = $row['penyusutan_kendaraan'] - $penyusutan_kendaraan;
