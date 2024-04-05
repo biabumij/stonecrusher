@@ -11293,5 +11293,1161 @@ class Reports extends CI_Controller {
 	    </table>
 		<?php
 	}
+
+	public function cash_flow($arr_date)
+	{
+		$data = array();
+		
+		$arr_date = $this->input->post('filter_date');
+		$arr_filter_date = explode(' - ', $arr_date);
+		$date1 = '';
+		$date2 = '';
+
+		if(count($arr_filter_date) == 2){
+			$date1 	= date('Y-m-d',strtotime($arr_filter_date[0]));
+			$date2 	= date('Y-m-d',strtotime($arr_filter_date[1]));
+			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
+		}
+		
+		?>
+		
+		<table class="table table-bordered" width="100%">
+			<style type="text/css">
+				body {
+					font-family: helvetica;
+				}
+
+				table tr.table-active-csf{
+					background-color: #F0F0F0;
+					font-size: 8px;
+					font-weight: bold;
+					color: black;
+				}
+					
+				table tr.table-active2-csf{
+					background-color: #E8E8E8;
+					font-size: 8px;
+					font-weight: bold;
+				}
+					
+				table tr.table-active3-csf{
+					font-size: 8px;
+					background-color: #F0F0F0;
+				}
+					
+				table tr.table-active4-csf{
+					background-color: #e69500;
+					font-weight: bold;
+					font-size: 8px;
+					color: black;
+				}
+				table tr.table-active5-csf{
+					background-color: #E8E8E8;
+					text-decoration: underline;
+					font-size: 8px;
+					font-weight: bold;
+					color: red;
+				}
+				table tr.table-active6-csf{
+					background-color: #A9A9A9;
+					font-size: 8px;
+					font-weight: bold;
+				}
+				table tr.table-active7-csf{
+					background-color: #ffd966;
+					font-weight: bold;
+					font-size: 8px;
+					color: black;
+				}
+				table tr.table-active8-csf{
+					background-color: #2986cc;
+					font-weight: bold;
+					font-size: 8px;
+					color: black;
+				}
+			</style>
+			<?php
+			$date_now = date('Y-m-d');
+			$date_awal_produksi = date('2023-08-01');
+			$date_approval = $this->db->select('date_approval')->order_by('date_approval','desc')->limit(1)->get_where('ttd_laporan',array('status'=>'PUBLISH'))->row_array();
+			$last_opname = date('Y-m-d', strtotime('0 days', strtotime($date_approval['date_approval'])));
+
+			//RAP
+			$nilai_penjualan_rap = 0;
+			$termin_rap = 0;
+			$ppn_keluar_rap = 0;
+			$jumlah_penerimaan_ppn_rap = $termin_rap + $ppn_keluar_rap;
+			$pembayaran_bahan_rap = 0;
+			$pembayaran_alat_rap = 0;
+			$overhead_rap = 0;
+			$ppn_masuk_rap = 0;
+			$jumlah_pengeluaran_rap = $pembayaran_bahan_rap + $pembayaran_alat_rap + $overhead_rap + $ppn_masuk_rap;
+			$ppn_keluaran_rap = 0;
+			$ppn_masukan_rap = 0;
+			$kurang_bayar_ppn_rap = $ppn_keluaran_rap - $ppn_masukan_rap;
+			//REALISASI
+			$penjualan = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+			->from('pmm_productions pp')
+			->join('penerima p', 'pp.client_id = p.id','left')
+			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+			->where("pp.date_production between '$date_awal_produksi' and '$last_opname'")
+			->where("pp.product_id in (3,4,7,8,9,14,24,63)")
+			->where("pp.salesPo_id <> 536 ")
+			->where("pp.salesPo_id <> 532 ")
+			->where("pp.salesPo_id <> 537 ")
+			->where("pp.salesPo_id <> 533 ")
+			->where("pp.salesPo_id <> 534 ")
+			->where("pp.salesPo_id <> 535 ")
+			->where("pp.salesPo_id <> 546 ")
+			->where("pp.salesPo_id <> 542 ")
+			->where("pp.salesPo_id <> 547 ")
+			->where("pp.salesPo_id <> 543 ")
+			->where("pp.salesPo_id <> 548 ")
+			->where("pp.salesPo_id <> 538 ")
+			->where("pp.salesPo_id <> 544 ")
+			->where("pp.salesPo_id <> 549 ")
+			->where("pp.salesPo_id <> 539 ")
+			->where("pp.salesPo_id <> 545 ")
+			->where("pp.salesPo_id <> 541 ")
+			->where("pp.salesPo_id <> 530 ")
+			->where("pp.salesPo_id <> 531 ")
+			->where("ppo.status in ('OPEN','CLOSED')")
+			->group_by('pp.salesPo_id')
+			->get()->result_array();
+			
+			$total_penjualan = 0;
+			$total_volume = 0;
+
+			foreach ($penjualan as $x){
+				$total_penjualan += $x['price'];
+				$total_volume += $x['volume'];
+			}
+
+			$penjualan_limbah = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+			->from('pmm_productions pp')
+			->join('penerima p', 'pp.client_id = p.id','left')
+			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+			->where("pp.date_production between '$date_awal_produksi' and '$last_opname'")
+			->where("pp.product_id in (9)")
+			->where("ppo.status in ('OPEN','CLOSED')")
+			->group_by('pp.salesPo_id')
+			->get()->result_array();
+
+			$total_penjualan_limbah = 0;
+			$total_volume_limbah = 0;
+
+			foreach ($penjualan_limbah as $x){
+				$total_penjualan_limbah += $x['price'];
+				$total_volume_limbah += $x['volume'];
+			}
+
+			$penjualan_lain_lain = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+			->from('pmm_productions pp')
+			->join('penerima p', 'pp.client_id = p.id','left')
+			->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+			->where("pp.date_production between '$date_awal_produksi' and '$last_opname'")
+			->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
+			->where("ppo.status in ('OPEN','CLOSED')")
+			->group_by('pp.salesPo_id')
+			->get()->result_array();
+
+			$total_penjualan_lain_lain = 0;
+			$total_volume_lain_lain = 0;
+
+			foreach ($penjualan_lain_lain as $x){
+				$total_penjualan_lain_lain += $x['price'];
+				$total_volume_lain_lain += $x['volume'];
+			}
+
+			$total_penjualan_now = $total_penjualan + $total_penjualan_limbah +$total_penjualan_lain_lain;
+
+			$termin_now = $this->db->select('SUM(pm.total) as total')
+			->from('pmm_pembayaran pm')
+			->where("pm.tanggal_pembayaran between '$date_awal_produksi' and '$last_opname'")
+			->where("pm.status = 'DISETUJUI'")
+			->where("pm.memo <> 'PPN'")
+			->get()->row_array();
+			$termin_now = $termin_now['total'];
+
+			$ppn_keluar_now = $this->db->select('SUM(pm.total) as total')
+			->from('pmm_pembayaran pm')
+			->where("pm.memo = 'PPN'")
+			->where("pm.tanggal_pembayaran between '$date_awal_produksi' and '$last_opname'")
+			->get()->row_array();
+			$ppn_keluar_now = $ppn_keluar_now['total'];
+			$jumlah_penerimaan_ppn_now = $termin_now + $ppn_keluar_now;
+
+			$pembayaran_bahan_now = $this->db->select('SUM(pm.total) as total')
+			->from('pmm_pembayaran_penagihan_pembelian pm')
+			->join('pmm_penagihan_pembelian ppp','pm.penagihan_pembelian_id = ppp.id','left')
+			->join('pmm_purchase_order ppo','ppp.purchase_order_id = ppo.id','left')
+			->where("pm.tanggal_pembayaran between '$date_awal_produksi' and '$last_opname'")
+			->where("ppo.kategori_id = '1'")
+			->where("pm.memo <> 'PPN'")
+			->get()->row_array();
+			$pembayaran_bahan_now = $pembayaran_bahan_now['total'];
+
+			$pembayaran_alat_now = $this->db->select('SUM(pm.total) as total')
+			->from('pmm_pembayaran_penagihan_pembelian pm')
+			->join('pmm_penagihan_pembelian ppp','pm.penagihan_pembelian_id = ppp.id','left')
+			->join('pmm_purchase_order ppo','ppp.purchase_order_id = ppo.id','left')
+			->where("pm.tanggal_pembayaran between '$date_awal_produksi' and '$last_opname'")
+			->where("ppo.kategori_id = '7'")
+			->where("pm.memo <> 'PPN'")
+			->get()->row_array();
+			$pembayaran_alat_now = $pembayaran_alat_now['total'];
+
+			$konsumsi_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 201")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$konsumsi_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 201")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$konsumsi = $konsumsi_biaya['total'] + $konsumsi_jurnal['total'];
+
+			$gaji_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 199")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$gaji_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 199")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$gaji = $gaji_biaya['total'] + $gaji_jurnal['total'];
+
+			$upah_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 200")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$upah_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 200")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$upah = $upah_biaya['total'] + $upah_jurnal['total'];
+
+			$pengujian_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 205")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$pengujian_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 205")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$pengujian = $pengujian_biaya['total'] + $pengujian_jurnal['total'];
+
+			$perbaikan_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 203")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$perbaikan_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 203")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$perbaikan = $perbaikan_biaya['total'] + $perbaikan_jurnal['total'];
+
+			$akomodasi_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 204")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$akomodasi_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 204")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$akomodasi = $akomodasi_biaya['total'] + $akomodasi_jurnal['total'];
+
+			$listrik_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 206")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$listrik_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 206")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$listrik = $listrik_biaya['total'] + $listrik_jurnal['total'];
+			
+			$thr_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 202")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$thr_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 202")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$thr = $thr_biaya['total'] + $thr_jurnal['total'];
+
+			$bensin_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 129")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$bensin_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 129")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$bensin = $bensin_biaya['total'] + $bensin_jurnal['total'];
+
+			$dinas_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 131")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$dinas_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 131")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$dinas = $dinas_biaya['total'] + $dinas_jurnal['total'];
+
+			$komunikasi_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 133")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$komunikasi_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 133")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$komunikasi = $komunikasi_biaya['total'] + $komunikasi_jurnal['total'];
+
+			$pakaian_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 138")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$pakaian_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 138")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$pakaian = $pakaian_biaya['total'] + $pakaian_jurnal['total'];
+			
+			$tulis_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 149")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$tulis_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 149")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$tulis = $tulis_biaya['total'] + $tulis_jurnal['total'];
+
+			$keamanan_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 151")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$keamanan_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 151")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$keamanan = $keamanan_biaya['total'] + $keamanan_jurnal['total'];
+
+			$perlengkapan_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 153")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$perlengkapan_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 153")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$perlengkapan = $perlengkapan_biaya['total'] + $perlengkapan_jurnal['total'];
+
+			$beban_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 145")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$beban_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 145")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$beban = $beban_biaya['total'] + $beban_jurnal['total'];
+
+			$adm_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 143")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$adm_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 143")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$adm = $adm_biaya['total'] + $adm_jurnal['total'];
+
+			$lain_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 146")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$lain_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 146")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$lain = $lain_biaya['total'] + $lain_jurnal['total'];
+
+			$sewa_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 154")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$sewa_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 154")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$sewa = $sewa_biaya['total'] + $sewa_jurnal['total'];
+
+			$bpjs_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 123")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$bpjs_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 123")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$bpjs = $bpjs_biaya['total'] + $bpjs_jurnal['total'];
+
+			$penyusutan_kantor_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 162")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$penyusutan_kantor_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 162")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$penyusutan_kantor = $penyusutan_kantor_biaya['total'] + $penyusutan_kantor_jurnal['total'];
+
+			$penyusutan_kendaraan_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 160")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$penyusutan_kendaraan_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 160")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$penyusutan_kendaraan = $penyusutan_kendaraan_biaya['total'] + $penyusutan_kendaraan_jurnal['total'];
+
+			$iuran_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 134")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$iuran_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 134")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$iuran = $iuran_biaya['total'] + $iuran_jurnal['total'];
+
+			$kendaraan_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 155")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$kendaraan_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 155")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$kendaraan = $kendaraan_biaya['total'] + $kendaraan_jurnal['total'];
+
+			$pajak_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 141")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$pajak_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 141")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$pajak = $pajak_biaya['total'] + $pajak_jurnal['total'];
+
+			$solar_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 105")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$solar_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 105")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$solar = $solar_biaya['total'] + $solar_jurnal['total'];
+
+			$donasi_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 127")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$donasi_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 127")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$donasi = $donasi_biaya['total'] + $donasi_jurnal['total'];
+
+			$legal_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 136")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$legal_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 136")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$legal = $legal_biaya['total'] + $legal_jurnal['total'];
+
+			$pengobatan_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 121")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$pengobatan_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 121")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$pengobatan = $pengobatan_biaya['total'] + $pengobatan_jurnal['total'];
+
+			$lembur_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 120")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$lembur_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 120")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$lembur = $lembur_biaya['total'] + $lembur_jurnal['total'];
+
+			$pelatihan_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 139")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$pelatihan_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 139")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$pelatihan = $pelatihan_biaya['total'] + $pelatihan_jurnal['total'];
+
+			$supplies_biaya = $this->db->select('sum(pdb.jumlah) as total')
+			->from('pmm_biaya pb ')
+			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+			->where("pdb.akun = 152")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+
+			$supplies_jurnal = $this->db->select('sum(pdb.debit) as total')
+			->from('pmm_jurnal_umum pb ')
+			->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+			->where("pdb.akun = 152")
+			->where("status = 'PAID'")
+			->where("(tanggal_transaksi between '$date_awal_produksi' and '$last_opname')")
+			->get()->row_array();
+			$supplies = $supplies_biaya['total'] + $supplies_jurnal['total'];
+
+			$overhead_now = $konsumsi + $gaji + $upah + $pengujian + $perbaikan + $akomodasi + $listrik + $thr + 
+			$bensin + $dinas + $komunikasi + $pakaian + $tulis + $keamanan + $perlengkapan + $beban + $adm + 
+			$lain + $sewa + $bpjs + $penyusutan_kantor + $penyusutan_kendaraan + $iuran + $kendaraan + $pajak + $solar + 
+			$donasi + $legal + $pengobatan + $lembur + $pelatihan + $supplies;
+
+			$ppn_masuk_now = $this->db->select('SUM(pm.total) as total')
+			->from('pmm_pembayaran_penagihan_pembelian pm')
+			->where("pm.memo = 'PPN'")
+			->where("pm.tanggal_pembayaran between '$date_awal_produksi' and '$last_opname'")
+			->get()->row_array();
+			$ppn_masuk_now = $ppn_masuk_now['total'];
+			$jumlah_pengeluaran_now = $pembayaran_bahan_now + $pembayaran_alat_now + $overhead_now + $ppn_masuk_now;
+			
+			$ppn_keluaran_now = $this->db->select('SUM(ppd.tax) as total')
+			->from('pmm_penagihan_penjualan ppp')
+			->join('pmm_penagihan_penjualan_detail ppd','ppp.id = ppd.penagihan_id','left')
+			->where("ppp.tanggal_invoice between '$date_awal_produksi' and '$last_opname'")
+			->get()->row_array();
+			$ppn_keluaran_now = $ppn_keluaran_now['total'];
+
+			$ppn_masukan_now = $this->db->select('SUM(v.ppn) as total')
+			->from('pmm_verifikasi_penagihan_pembelian v')
+			->join('pmm_penagihan_pembelian ppp','v.penagihan_pembelian_id = ppp.id','left')
+			->where("ppp.tanggal_invoice between '$date_awal_produksi' and '$last_opname'")
+			->get()->row_array();
+			$ppn_masukan_now = $ppn_masukan_now['total'];
+			$kurang_bayar_ppn_now = $ppn_keluaran_now - $ppn_masukan_now;
+			
+			$date_1_awal = date('Y-m-01', strtotime('+1 days +1 months', strtotime($last_opname)));
+			$date_1_akhir = date('Y-m-d', strtotime('-1 days +1 months', strtotime($date_1_awal)));
+
+			$date_2_awal = date('Y-m-d', strtotime('+1 days', strtotime($date_1_akhir)));
+			$date_2_akhir = date('Y-m-d', strtotime('-1 days +1 months', strtotime($date_2_awal)));
+
+			$date_3_awal = date('Y-m-d', strtotime('+1 days', strtotime($date_2_akhir)));
+			$date_3_akhir = date('Y-m-d', strtotime('-1 days +1 months', strtotime($date_3_awal)));
+			?>
+
+			<tr class="table-active4-csf">
+				<th class="text-center" rowspan="2" style="vertical-align:middle; background-color:#55ffff;" width="5%">NO.</th>
+				<th class="text-center" rowspan="2" style="vertical-align:middle; background-color:#55ffff;">URAIAN</th>
+				<th class="text-center" rowspan="2" style="vertical-align:middle; background-color:#55ffff;">RAP</th>
+				<th class="text-center" rowspan="2" style="text-transform:uppercase;vertical-align:middle;; background-color:#8fce00;">REALISASI SD. <?php echo $last_opname = date('F Y', strtotime('0 days', strtotime($last_opname)));?></th>
+				<th class="text-center" style="text-transform:uppercase;"><?php echo $date_1_awal = date('F', strtotime('+1 days +1 months', strtotime($last_opname)));?></th>
+				<th class="text-center" style="text-transform:uppercase;">SD. <?php echo $date_1_awal = date('F', strtotime('+1 days +1 months', strtotime($last_opname)));?></th>
+				<th class="text-center" style="text-transform:uppercase;"><?php echo $date_2_awal = date('F', strtotime('+0 days', strtotime($date_1_akhir)));?></th>
+				<th class="text-center" style="text-transform:uppercase;">SD. <?php echo $date_2_awal = date('F', strtotime('+0 days', strtotime($date_1_akhir)));?></th>
+				<th class="text-center" style="text-transform:uppercase;"><?php echo $date_3_awal = date('F', strtotime('+0 days', strtotime($date_2_akhir)));?></th>
+				<th class="text-center" style="text-transform:uppercase;">SD. <?php echo $date_3_awal = date('F', strtotime('+0 days', strtotime($date_2_akhir)));?></th>
+				<th class="text-center" rowspan="2" style="vertical-align:middle; background-color:#55ffff;">SISA</th>
+	        </tr>
+			<tr class="table-active4-csf">
+				<th class="text-center"><?php echo $date_1_awal = date('Y');?></th>
+				<th class="text-center"><?php echo $date_1_awal = date('Y');?></th>
+				<th class="text-center"><?php echo $date_2_awal = date('Y', strtotime('+1 days', strtotime($date_1_akhir)));?></th>
+				<th class="text-center"><?php echo $date_2_awal = date('Y', strtotime('+1 days', strtotime($date_1_akhir)));?></th>
+				<th class="text-center"><?php echo $date_3_awal = date('Y', strtotime('+1 days', strtotime($date_2_akhir)));?></th>
+				<th class="text-center"><?php echo $date_3_awal = date('Y', strtotime('+1 days', strtotime($date_2_akhir)));?></th>
+	        </tr>
+			<tr class="table-active3-csf">
+				<th class="text-center" rowspan="3" style="vertical-align:middle">1</th>
+				<th class="text-left" colspan="10"><u>PRODUKSI (EXCL. PPN)</u></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left"><u>AKUMULASI %</u></th>
+				<th class="text-right">100%</th>
+				<th class="text-right"><?php echo number_format($presentase_now,0,',','.');?>%</th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active2-csf">
+				<th class="text-left">&nbsp;&nbsp;1. Produksi / Penjualan</th>
+				<th class="text-right"><?php echo number_format($nilai_penjualan_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($total_penjualan_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center" rowspan="4" style="vertical-align:middle">2</th>
+				<th class="text-left" colspan="10"><u>PENERIMAAN (EXCL. PPN)</u></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;2.1 Tagihan (Realisasi)</th>
+				<th class="text-right"><?php echo number_format($termin_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($termin_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;2.2 PPN (Keluaran)</th>
+				<th class="text-right"><?php echo number_format($ppn_keluar_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($ppn_keluar_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active2-csf">
+				<th class="text-left">JUMLAH PENERIMAAN</th>
+				<th class="text-right"><?php echo number_format($jumlah_penerimaan_ppn_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($jumlah_penerimaan_ppn_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center" rowspan="6" style="vertical-align:middle">3</th>
+				<th class="text-left" colspan="10"><u>PENGELUARAN (EXCL. PPN)</u></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;3.1 Biaya Bahan</th>
+				<th class="text-right"><?php echo number_format($pembayaran_bahan_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pembayaran_bahan_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;3.2 Biaya Alat</th>
+				<th class="text-right"><?php echo number_format($pembayaran_alat_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pembayaran_alat_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;3.3 BUA</th>
+				<th class="text-right"><?php echo number_format($overhead_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($overhead_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;3.4 PPN Rekanan</th>
+				<th class="text-right"><?php echo number_format($ppn_masuk_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($ppn_masuk_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active2-csf">
+				<th class="text-left">JUMLAH PENGELUARAN</th>
+				<th class="text-right"><?php echo number_format($jumlah_pengeluaran_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($jumlah_pengeluaran_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center" rowspan="4" style="vertical-align:middle">4</th>
+				<th class="text-left" colspan="16"><u>PAJAK</u></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;1. Pajak Keluaran</th>
+				<th class="text-right"><?php echo number_format($ppn_keluaran_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($ppn_keluaran_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;2. Pajak Masukan</th>
+				<th class="text-right"><?php echo number_format($ppn_masukan_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($ppn_masukan_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active2-csf">
+				<th class="text-left">KURANG BAYAR PPN</th>
+				<th class="text-right"><?php echo number_format($kurang_bayar_ppn_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($kurang_bayar_ppn_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center" rowspan="8" style="vertical-align:middle">5</th>
+				<th class="text-left" colspan="16"><u>PINJAMAN</u></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left" colspan="16">MODAL PERSIAPAN</th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;1. Penerimaan Pinjaman</th>
+				<th class="text-right"><?php echo number_format($penerimaan_pinjaman_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($penerimaan_pinjaman_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;2. Pengembalian Pinjaman</th>
+				<th class="text-right"><?php echo number_format($pengembalian_pinjaman_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pengembalian_pinjaman_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active2-csf">
+				<th class="text-left">SISA PINJAMAN DANA</th>
+				<th class="text-right"><?php echo number_format($sisa_pinjaman_dana_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($sisa_pinjaman_dana_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left" colspan="16">PEMAKAIAN DANA</th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-left">&nbsp;&nbsp;1. Pinjaman Dana</th>
+				<th class="text-right"><?php echo number_format($total_rap_2022_pinjaman_dana,0,',','.');?></th>
+				<th class="text-right"><a target="_blank" href="<?= base_url("laporan/cetak_pemakaian_dana?filter_date=".$filter_date = date('2021-01-01',strtotime('2021-01-01')).' - '.date('Y-m-d',strtotime($stock_opname['date']))) ?>"><?php echo number_format($pinjaman_dana_now,0,',','.');?></a></th>
+				<th class="text-right"><?php echo number_format($pinjaman_dana_1,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_pinjaman_dana_1,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pinjaman_dana_2,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_pinjaman_dana_2,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pinjaman_dana_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_pinjaman_dana_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+			<tr class="table-active2-csf">
+				<th class="text-left">JUMLAH PEMAKAIAN DANA</th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pinjaman_dana_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pinjaman_dana_1,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_pinjaman_dana_1,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pinjaman_dana_2,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_pinjaman_dana_2,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($pinjaman_dana_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_pinjaman_dana_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(($total_rap_2022_pinjaman_dana - $total_pinjaman_dana_6),0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center">6</th>
+				<th class="text-left"><u>PIUTANG</u></th>
+				<th class="text-right"><?php echo number_format($total_rap_2022_piutang,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($piutang_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($piutang_1,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_piutang_1,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($piutang_2,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_piutang_2,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($piutang_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_piutang_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center"></th>
+				<th class="text-left">&nbsp;&nbsp;DPP</th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($piutang_now_dpp,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center"></th>
+				<th class="text-left">&nbsp;&nbsp;PPN</th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($piutang_now_ppn,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center">7</th>
+				<th class="text-left"><u>HUTANG</u></th>
+				<th class="text-right"><?php echo number_format($total_rap_2022_hutang,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($hutang_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($hutang_1,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_hutang_1,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($hutang_2,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_hutang_2,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($hutang_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($akumulasi_hutang_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center"></th>
+				<th class="text-left">&nbsp;&nbsp;DPP</th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($hutang_now_dpp,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center"></th>
+				<th class="text-left">&nbsp;&nbsp;PPN</th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($hutang_now_ppn,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+			<tr class="table-active3-csf">
+				<th class="text-center">8</th>
+				<th class="text-left"><u>MOS</u></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($mos_now,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+			<tr class="table-active4-csf">
+				<th class="text-center">9</th>
+				<th class="text-left"><u>POSISI DANA</u></th>
+				<th class="text-right"><?php echo $posisi_dana_rap < 0 ? "(".number_format(-$posisi_dana_rap,0,',','.').")" : number_format($posisi_dana_rap,0,',','.');?></th>
+				<th class="text-right"><?php echo $posisi_dana_now < 0 ? "(".number_format(-$posisi_dana_now,0,',','.').")" : number_format($posisi_dana_now,0,',','.');?></th>
+				<th class="text-right"><?php echo $posisi_dana_1 < 0 ? "(".number_format(-$posisi_dana_1,0,',','.').")" : number_format($posisi_dana_1,0,',','.');?></th>
+				<th class="text-right"><?php echo $akumulasi_posisi_dana_1 < 0 ? "(".number_format(-$akumulasi_posisi_dana_1,0,',','.').")" : number_format($akumulasi_posisi_dana_1,0,',','.');?></th>
+				<th class="text-right"><?php echo $posisi_dana_2 < 0 ? "(".number_format(-$posisi_dana_2,0,',','.').")" : number_format($posisi_dana_2,0,',','.');?></th>
+				<th class="text-right"><?php echo $akumulasi_posisi_dana_2 < 0 ? "(".number_format(-$akumulasi_posisi_dana_2,0,',','.').")" : number_format($akumulasi_posisi_dana_2,0,',','.');?></th>
+				<th class="text-right"><?php echo $posisi_dana_3 < 0 ? "(".number_format(-$posisi_dana_3,0,',','.').")" : number_format($posisi_dana_3,0,',','.');?></th>
+				<th class="text-right"><?php echo $akumulasi_posisi_dana_3 < 0 ? "(".number_format(-$akumulasi_posisi_dana_3,0,',','.').")" : number_format($akumulasi_posisi_dana_3,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format(0,0,',','.');?></th>
+			</tr>
+	    </table>
+		<?php
+	}
 	
 }
