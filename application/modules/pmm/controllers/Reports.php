@@ -12485,6 +12485,7 @@ class Reports extends CI_Controller {
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 			</tr>
 	    </table>
 		<?php
