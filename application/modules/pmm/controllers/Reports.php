@@ -11385,6 +11385,7 @@ class Reports extends CI_Controller {
 			$ppn_keluaran_rap = 0;
 			$ppn_masukan_rap = 0;
 			$kurang_bayar_ppn_rap = $ppn_keluaran_rap - $ppn_masukan_rap;
+
 			//REALISASI
 			$penjualan = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
 			->from('pmm_productions pp')
@@ -12048,6 +12049,8 @@ class Reports extends CI_Controller {
 
 			$ppn_masuk_now = $this->db->select('SUM(pm.total) as total')
 			->from('pmm_pembayaran_penagihan_pembelian pm')
+			->join('pmm_penagihan_pembelian ppp','pm.penagihan_pembelian_id = ppp.id','left')
+			->where("ppp.tanggal_invoice between '$date_awal_produksi' and '$last_opname'")
 			->where("pm.memo = 'PPN'")
 			->where("pm.tanggal_pembayaran between '$date_awal_produksi' and '$last_opname'")
 			->get()->row_array();
@@ -12068,6 +12071,44 @@ class Reports extends CI_Controller {
 			->get()->row_array();
 			$ppn_masukan_now = $ppn_masukan_now['total'];
 			$kurang_bayar_ppn_now = $ppn_keluaran_now - $ppn_masukan_now;
+
+			$penerimaan_piutang_now = $this->db->select('SUM(pp.display_price) as total')
+			->from('pmm_productions pp')
+			->join('pmm_sales_po po','pp.salesPo_id = po.id','left')
+			->where("po.status in ('OPEN','CLOSED')")
+			->where("pp.date_production between '$date_awal_produksi' and '$last_opname'")
+			->get()->row_array();
+
+			$pembayaran_piutang_now = $this->db->select('SUM(pm.total) as total')
+			->from('pmm_pembayaran pm')
+			->join('pmm_penagihan_penjualan ppp', 'pm.penagihan_id = ppp.id','left')
+			->where("ppp.tanggal_invoice between '$date_awal_produksi' and '$last_opname'")
+			->where("pm.memo <> 'PPN'")
+			->where("pm.tanggal_pembayaran between '$date_awal_produksi' and '$last_opname'")
+			->get()->row_array();
+
+			$dpp_piutang_now = $penerimaan_piutang_now['total'] - $pembayaran_piutang_now['total'];
+			$ppn_piutang_now = $ppn_keluaran_now - $ppn_keluar_now;
+			$piutang_now = $dpp_piutang_now + $ppn_piutang_now;
+
+			$penerimaan_hutang_now = $this->db->select('SUM(prm.display_price) as total')
+			->from('pmm_receipt_material prm')
+			->join('pmm_purchase_order ppo','prm.purchase_order_id = ppo.id','left')
+			->where("ppo.status in ('PUBLISH','CLOSED')")
+			->where("prm.date_receipt between '$date_awal_produksi' and '$last_opname'")
+			->get()->row_array();
+
+			$pembayaran_hutang_now = $this->db->select('SUM(pm.total) as total')
+			->from('pmm_pembayaran_penagihan_pembelian pm')
+			->join('pmm_penagihan_pembelian ppp', 'pm.penagihan_pembelian_id = ppp.id','left')
+			->where("ppp.tanggal_invoice between '$date_awal_produksi' and '$last_opname'")
+			->where("pm.memo <> 'PPN'")
+			->where("pm.memo <> 'PPH'")
+			->where("pm.tanggal_pembayaran between '$date_awal_produksi' and '$last_opname'")
+			->get()->row_array();
+			$dpp_hutang_now = $penerimaan_hutang_now['total'] - $pembayaran_hutang_now['total'];
+			$ppn_hutang_now = $ppn_masukan_now - $ppn_masuk_now;
+
 			
 			$date_1_awal = date('Y-m-01', strtotime('+1 days +1 months', strtotime($last_opname)));
 			$date_1_akhir = date('Y-m-d', strtotime('-1 days +1 months', strtotime($date_1_awal)));
@@ -12346,7 +12387,7 @@ class Reports extends CI_Controller {
 				<th class="text-center">6</th>
 				<th class="text-left"><u>PIUTANG</u></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($piutang_now,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
@@ -12359,7 +12400,7 @@ class Reports extends CI_Controller {
 				<th class="text-center"></th>
 				<th class="text-left">&nbsp;&nbsp;DPP</th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($dpp_piutang_now,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
@@ -12372,7 +12413,7 @@ class Reports extends CI_Controller {
 				<th class="text-center"></th>
 				<th class="text-left">&nbsp;&nbsp;PPN</th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($ppn_piutang_now,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
@@ -12398,7 +12439,7 @@ class Reports extends CI_Controller {
 				<th class="text-center"></th>
 				<th class="text-left">&nbsp;&nbsp;DPP</th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($dpp_hutang_now,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
@@ -12411,7 +12452,7 @@ class Reports extends CI_Controller {
 				<th class="text-center"></th>
 				<th class="text-left">&nbsp;&nbsp;PPN</th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
+				<th class="text-right"><?php echo number_format($ppn_hutang_now,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
 				<th class="text-right"><?php echo number_format($test,0,',','.');?></th>
