@@ -12490,5 +12490,122 @@ class Reports extends CI_Controller {
 	    </table>
 		<?php
 	}
+
+	public function detail_transaction($date1,$date2,$id)
+    {
+        $check = $this->m_admin->check_login();
+        if($check == true){
+
+            $this->db->select('b.*, sum(b.total) as kredit');
+			$this->db->where('b.tanggal_transaksi >=',$date1);
+            $this->db->where('b.tanggal_transaksi <=',$date2);
+            $this->db->where('b.bayar_dari',$id);
+			$this->db->group_by('b.id');
+            $query = $this->db->get('pmm_biaya b');
+            $data['row'] = $query->result_array();
+            $this->load->view('laporan_keuangan/detail_transaction',$data);
+            
+        }else {
+            redirect('admin');
+        }
+    }
+
+	public function neraca($arr_date)
+	{
+		$data = array();
+		
+		$arr_date = $this->input->post('filter_date');
+		$arr_filter_date = explode(' - ', $arr_date);
+		$date3 = '';
+		$date1 = '';
+		$date2 = '';
+
+		if(count($arr_filter_date) == 2){
+			$date3 	= date('2023-08-01',strtotime($date3));
+			$date1 	= date('Y-m-d',strtotime($arr_filter_date[0]));
+			$date2 	= date('Y-m-d',strtotime($arr_filter_date[1]));
+			$filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));
+			$filter_date_2 = date('Y-m-d',strtotime($date3)).' - '.date('Y-m-d',strtotime($arr_filter_date[1]));
+		}
+		
+		?>
+		
+		<table class="table table-bordered" width="100%">
+		 <style type="text/css">
+			body {
+				font-family: helvetica;
+				font-size: 11px;
+			}
+
+			table tr.table-active{
+				background: linear-gradient(90deg, #fdcd3b 20%, #fdcd3b 40%, #e69500 80%);
+				font-size: 11px;
+				font-weight: bold;
+			}
+				
+			table tr.table-active2{
+				background: linear-gradient(90deg, #333333 5%, #696969 50%, #333333 100%);
+				font-size: 11px;
+				font-weight: bold;
+				color: white;
+			}
+				
+			table tr.table-active3{
+				font-size: 11px;
+			}
+				
+			table tr.table-active4{
+				background: linear-gradient(90deg, #eeeeee 5%, #cccccc 50%, #cccccc 100%);
+				font-weight: bold;
+				font-size: 11px;
+				color: black;
+			}
+		 </style>
+			<?php
+			$aset_lancar = $this->db->select('c.*, b.*, sum(b.total) as total, c.id as coa_id')
+			->from('pmm_coa c')
+			->where("c.id in (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36)")
+			->join('pmm_biaya b', 'c.id = b.bayar_dari','left')
+			->where("b.tanggal_transaksi between '$date1' and '$date2'")
+			->group_by('c.id')
+			->order_by('c.coa_number','asc')
+			->get()->result_array();
+
+			$total_aset_lancar = 0;
+
+			foreach ($aset_lancar as $x){
+				$total_aset_lancar += $x['total'];
+			}
+
+			?>
+	        <tr class="table-active2">
+	            <th colspan="2">PERIODE</th>
+				<th class="text-center"><?php echo $filter_date = $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
+	        </tr>
+
+			<tr class="table-active">
+	            <th width="100%" class="text-left" colspan="3">ASET</th>
+	        </tr>
+			<tr class="table-active4">
+	            <th width="100%" class="text-left" colspan="3">&nbsp;&nbsp;ASET LANCAR</th>
+	        </tr>
+			<?php
+			foreach ($aset_lancar as $x) {
+			?> 
+			<tr class="table-active3">
+	            <th width="10%" class="text-center"><?php echo $x['coa_number'];?></th>
+				<th class="text-left"><?php echo $x['coa'];?></th>
+				<th class="text-right"><a target="_blank" href="<?= base_url("pmm/reports/detail_transaction/".$date1."/".$date2."/".$x['coa_id']."") ?>"><?php echo number_format($x['total'],2,',','.');?></a></th>
+	        </tr>
+			<?php                        
+			}
+			?>
+			<tr class="table-active3">
+	            <th class="text-right" colspan="2">TOTAL ASET</th>
+				<th class="text-right"><?php echo number_format($total_aset_lancar,2,',','.');?></th>
+	        </tr>
+	    </table>
+		<?php
+	}
 	
 }
