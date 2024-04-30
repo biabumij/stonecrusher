@@ -12496,13 +12496,24 @@ class Reports extends CI_Controller {
         $check = $this->m_admin->check_login();
         if($check == true){
 
-            $this->db->select('b.*, sum(b.total) as kredit');
-			$this->db->where('b.tanggal_transaksi >=',$date1);
-            $this->db->where('b.tanggal_transaksi <=',$date2);
-            $this->db->where('b.bayar_dari',$id);
-			$this->db->group_by('b.id');
-            $query = $this->db->get('pmm_biaya b');
+            $this->db->select('pb.*, sum(pb.total) as kredit');
+			$this->db->where('pb.tanggal_transaksi >=',$date1);
+            $this->db->where('pb.tanggal_transaksi <=',$date2);
+            $this->db->where('pb.bayar_dari',$id);
+			$this->db->where("pb.status = 'PAID'");
+			$this->db->group_by('pb.id');
+            $query = $this->db->get('pmm_biaya pb');
             $data['row'] = $query->result_array();
+
+			$this->db->select('pb.*, pb.id as id_jurnal, sum(pdb.debit) as debit, sum(pdb.kredit) as kredit');
+			$this->db->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left');
+			$this->db->where('pb.tanggal_transaksi >=',$date1);
+            $this->db->where('pb.tanggal_transaksi <=',$date2);
+            $this->db->where('pdb.akun',$id);
+			$this->db->where("pb.status = 'PAID'");
+			$this->db->group_by('pdb.id');
+            $query = $this->db->get('pmm_jurnal_umum pb');
+            $data['row2'] = $query->result_array();
             $this->load->view('laporan_keuangan/detail_transaction',$data);
             
         }else {
@@ -12561,23 +12572,6 @@ class Reports extends CI_Controller {
 				color: black;
 			}
 		 </style>
-			<?php
-			$aset_lancar = $this->db->select('c.*, b.*, sum(b.total) as total, c.id as coa_id')
-			->from('pmm_coa c')
-			->where("c.id in (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36)")
-			->join('pmm_biaya b', 'c.id = b.bayar_dari','left')
-			->where("b.tanggal_transaksi between '$date1' and '$date2'")
-			->group_by('c.id')
-			->order_by('c.coa_number','asc')
-			->get()->result_array();
-
-			$total_aset_lancar = 0;
-
-			foreach ($aset_lancar as $x){
-				$total_aset_lancar += $x['total'];
-			}
-
-			?>
 	        <tr class="table-active2">
 	            <th colspan="2">PERIODE</th>
 				<th class="text-center"><?php echo $filter_date = $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
@@ -12590,16 +12584,33 @@ class Reports extends CI_Controller {
 	            <th width="100%" class="text-left" colspan="3">&nbsp;&nbsp;ASET LANCAR</th>
 	        </tr>
 			<?php
-			foreach ($aset_lancar as $x) {
-			?> 
-			<tr class="table-active3">
-	            <th width="10%" class="text-center"><?php echo $x['coa_number'];?></th>
-				<th class="text-left"><?php echo $x['coa'];?></th>
-				<th class="text-right"><a target="_blank" href="<?= base_url("pmm/reports/detail_transaction/".$date1."/".$date2."/".$x['coa_id']."") ?>"><?php echo number_format($x['total'],2,',','.');?></a></th>
-	        </tr>
-			<?php                        
-			}
+			$akun_1_biaya = $this->db->select('pb.bayar_dari as id, sum(pb.total) as total')
+			->from('pmm_biaya pb')
+			->where("pb.tanggal_transaksi between '$date1' and '$date2'")
+			->where("pb.bayar_dari = 1")
+			->where("pb.status = 'PAID'")
+			->group_by('pb.bayar_dari')
+			->get()->row_array();
+			
+			$akun_1_jurnal = $this->db->select('pdb.akun as id, sum(pdb.kredit) as total')
+			->from('pmm_jurnal_umum pb')
+			->join('pmm_detail_jurnal pdb', 'pb.id = pdb.jurnal_id','left')
+			->where("pb.tanggal_transaksi between '$date1' and '$date2'")
+			->where("pdb.akun = 1")
+			->where("pb.status = 'PAID'")
+			->where("pdb.kredit > 0")
+			->group_by('pdb.akun')
+			->get()->row_array();
+
+			$akun_1 = $akun_1_biaya['total'] + $akun_1_jurnal['total'];
+
+
 			?>
+			<tr class="table-active3">
+	            <th width="10%" class="text-center">1-10001</th>
+				<th class="text-left">Kas Cutting Stone</th>
+				<th class="text-right"><a target="_blank" href="<?= base_url("pmm/reports/detail_transaction/".$date1."/".$date2."/".$akun_1_biaya['id']."") ?>"><?php echo number_format($akun_1,2,',','.');?></a></th>
+	        </tr>
 			<tr class="table-active3">
 	            <th class="text-right" colspan="2">TOTAL ASET</th>
 				<th class="text-right"><?php echo number_format($total_aset_lancar,2,',','.');?></th>

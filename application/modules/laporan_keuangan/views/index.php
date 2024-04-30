@@ -297,10 +297,11 @@
             $('#filter_date_neraca').daterangepicker({
                 autoUpdateInput : false,
                 showDropdowns: true,
+                singleDatePicker: true,
                 locale: {
                 format: 'DD-MM-YYYY'
                 },
-                minDate: new Date(2023, 07, 01),	
+                minDate: new Date(2023, 08, 01),	
                 ranges: {
                 'Today': [moment(), moment()],
                 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -312,7 +313,7 @@
             });
 
             $('#filter_date_neraca').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                $(this).val(picker.startDate.format('01-08-2023') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
                 TableNeraca();
             });
 

@@ -39,28 +39,46 @@
                                         <table class="table table-bordered table-striped table-condensed">
                                             <tr style='background-color:#cccccc; font-weight:bold;'>
                                                 <th class="text-center">Tanggal</th>
+                                                <th class="text-center">Transaksi</th>
                                                 <th class="text-center">Nomor</th>
                                                 <th class="text-center">Debit</th>
                                                 <th class="text-center">Kredit</th>
                                             </tr>
                                             <?php
-                                            $total_kredit = 0;
+                                            $total_biaya = 0;
                                             foreach ($row as $x) {
                                             ?> 
                                             <tr>
                                                 <td class="text-center"><?php echo $x['tanggal_transaksi'];?></td>
+                                                <td class="text-center">BIAYA</td>
                                                 <td class="text-left"><a target="_blank" href="<?= base_url("pmm/biaya/detail_biaya/".$x['id']) ?>"><?php echo $x['nomor_transaksi'];?></a></td>
                                                 <td class="text-right"><?php echo number_format($x['debit'],2,',','.');?></td>
                                                 <td class="text-right"><?php echo number_format($x['kredit'],2,',','.');?></td>
                                             </tr>
                                             <?php
-                                            $total_kredit += $x['kredit'];
+                                            $total_biaya += $x['kredit'];
+                                            }
+                                            ?>
+                                            <?php
+                                            $total_jurnal = 0;
+                                            foreach ($row2 as $x) {
+                                            ?> 
+                                            <tr>
+                                                <td class="text-center"><?php echo $x['tanggal_transaksi'];?></td>
+                                                <td class="text-center">JURNAL UMUM</td>
+                                                <td class="text-left"><a target="_blank" href="<?= base_url("pmm/jurnal_umum/detailJurnal/".$x['id_jurnal']) ?>"><?php echo $x['nomor_transaksi'];?></a></td>
+                                                <td class="text-right"><?php echo number_format($x['debit'],2,',','.');?></td>
+                                                <td class="text-right"><?php echo number_format($x['kredit'],2,',','.');?></td>
+                                            </tr>
+                                            <?php
+                                            $total_jurnal_debit += $x['debit'];
+                                            $total_jurnal += $x['kredit'];
                                             }
                                             ?>
                                             <tr>
-                                                <td class="text-right" colspan="2"><b>TOTAL</b></td>
-                                                <td class="text-right"><b><?php echo number_format(0,2,',','.');?></b></td>
-                                                <td class="text-right"><b><?php echo number_format($total_kredit,2,',','.');?></b></td>
+                                                <td class="text-right" colspan="3"><b>TOTAL</b></td>
+                                                <td class="text-right"><b><?php echo number_format($total_jurnal_debit,2,',','.');?></b></td>
+                                                <td class="text-right"><b><?php echo number_format($total_biaya + $total_jurnal,2,',','.');?></b></td>
                                             </tr>
                                         </table>
 
