@@ -12,7 +12,7 @@ class Pdf extends TCPDF {
         $this->CI->load->database();
         parent::__construct();
 
-        $this->SetTopMargin(30);
+        $this->SetTopMargin(40);
         $this->setRightMargin(0);
         $this->setLeftMargin(5);
         $this->setFooterMargin(30);

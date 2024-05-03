@@ -773,11 +773,10 @@ class Laporan extends Secure_Controller {
 	
 		$pdf = new Pdf('L', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->setPrintHeader(true);
-		$pdf->setPrintFooter(true);
+        $pdf->setPrintFooter(true);
         $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
 		$pdf->setHtmlVSpace($tagvs);
 		$pdf->AddPage('L');
-		$pdf->setPrintHeader(false);
 
 		//Page2
 		$pdf->AddPage('L', 'A4');
@@ -862,13 +861,13 @@ class Laporan extends Secure_Controller {
 		</table>';
 		$pdf->writeHTML($html, true, false, true, false, '');
 
-		//Page3
+		/*//Page3
 		$pdf->AddPage();
 		$pdf->SetY(31);
 		$pdf->SetX(6);
 		$pdf->WriteHTML($html);
 
-		//Page4
+		Page4
 		$pdf->AddPage();
 		$pdf->SetY(31);
 		$pdf->SetX(6);
@@ -920,7 +919,7 @@ class Laporan extends Secure_Controller {
 		$pdf->AddPage();
 		$pdf->SetY(31);
 		$pdf->SetX(6);
-		$pdf->WriteHTML($html);
+		$pdf->WriteHTML($html);*/
 
 		//Page1
 		$pdf->setPage(1, true);
