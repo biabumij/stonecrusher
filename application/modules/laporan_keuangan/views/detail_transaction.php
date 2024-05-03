@@ -21,7 +21,7 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><a>Dashboard</a></li>
+                            <li><a>Laporan Keuangan</a></li>
                             <li><a>Neraca</a></li>
                             <li><a>Detail Transaksi</a></li>
                         </ul>
