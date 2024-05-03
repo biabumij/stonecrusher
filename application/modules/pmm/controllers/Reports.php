@@ -12496,7 +12496,7 @@ class Reports extends CI_Controller {
         $check = $this->m_admin->check_login();
         if($check == true){
 
-            $this->db->select('pb.*, sum(pb.total) as kredit');
+            /*$this->db->select('pb.*, sum(pb.total) as kredit');
 			$this->db->where('pb.tanggal_transaksi >=',$date1);
             $this->db->where('pb.tanggal_transaksi <=',$date2);
             $this->db->where('pb.bayar_dari',$id);
@@ -12514,7 +12514,62 @@ class Reports extends CI_Controller {
 			$this->db->group_by('pdb.id');
             $query = $this->db->get('pmm_jurnal_umum pb');
             $data['row2'] = $query->result_array();
+
+			$this->db->select('pb.*, sum(pb.jumlah) as debit');
+			$this->db->where('pb.tanggal_transaksi >=',$date1);
+            $this->db->where('pb.tanggal_transaksi <=',$date2);
+            $this->db->where('pb.setor_ke',$id);
+			$this->db->where("pb.status = 'PAID'");
+			$this->db->group_by('pb.id');
+            $query = $this->db->get('pmm_terima_uang pb');
+            $data['row3'] = $query->result_array();*/
+
+			$this->db->select('t.*, pb.nomor_transaksi as trx_biaya, pj.nomor_transaksi as trx_jurnal, tu.nomor_transaksi as trx_terima, tr.nomor_transaksi as trx_transfer, sum(t.debit) as debit, sum(t.kredit) as kredit');
+			$this->db->join('pmm_biaya pb','t.biaya_id = pb.id','left');
+			$this->db->join('pmm_jurnal_umum pj','t.jurnal_id = pj.id','left');
+			$this->db->join('pmm_terima_uang tu','t.terima_id = tu.id','left');
+			$this->db->join('pmm_transfer tr','t.transfer_id = tr.id','left');
+			$this->db->where('t.tanggal_transaksi >=',$date1);
+            $this->db->where('t.tanggal_transaksi <=',$date2);
+            $this->db->where('t.akun',$id);
+			$this->db->group_by('t.id');
+			$this->db->order_by('t.tanggal_transaksi','asc');
+            $query = $this->db->get('transactions t');
+            $data['row'] = $query->result_array();
             $this->load->view('laporan_keuangan/detail_transaction',$data);
+            
+        }else {
+            redirect('admin');
+        }
+    }
+
+	public function detail_transaction2($date1,$date2,$id)
+    {
+        $check = $this->m_admin->check_login();
+        if($check == true){
+
+			$this->db->select('t.*, pb.nomor_transaksi as trx_biaya, pj.nomor_transaksi as trx_jurnal, tu.nomor_transaksi as trx_terima, tr.nomor_transaksi as trx_transfer, sum(t.debit) as debit, sum(t.kredit) as kredit');
+			$this->db->join('pmm_biaya pb','t.biaya_id = pb.id','left');
+			$this->db->join('pmm_jurnal_umum pj','t.jurnal_id = pj.id','left');
+			$this->db->join('pmm_terima_uang tu','t.terima_id = tu.id','left');
+			$this->db->join('pmm_transfer tr','t.transfer_id = tr.id','left');
+			$this->db->where('t.tanggal_transaksi >=',$date1);
+            $this->db->where('t.tanggal_transaksi <=',$date2);
+            $this->db->where('t.akun',$id);
+			$this->db->group_by('t.id');
+			$this->db->order_by('t.tanggal_transaksi','asc');
+            $query = $this->db->get('transactions t');
+            $data['row'] = $query->result_array();
+
+			$this->db->select('t.*, sum(t.debit) as debit, sum(t.kredit) as kredit');
+			$this->db->where('t.tanggal_transaksi >=',$date1);
+            $this->db->where('t.tanggal_transaksi <=',$date2);
+            $this->db->where('t.akun',1);
+			$this->db->group_by('t.id');
+			$this->db->order_by('t.tanggal_transaksi','asc');
+            $query = $this->db->get('transactions t');
+            $data['row2'] = $query->result_array();
+            $this->load->view('laporan_keuangan/detail_transaction2',$data);
             
         }else {
             redirect('admin');
@@ -12584,36 +12639,38 @@ class Reports extends CI_Controller {
 	            <th width="100%" class="text-left" colspan="3">&nbsp;&nbsp;ASET LANCAR</th>
 	        </tr>
 			<?php
-			$akun_1_biaya = $this->db->select('pb.bayar_dari as id, sum(pb.total) as total')
-			->from('pmm_biaya pb')
-			->where("pb.tanggal_transaksi between '$date1' and '$date2'")
-			->where("pb.bayar_dari = 1")
-			->where("pb.status = 'PAID'")
-			->group_by('pb.bayar_dari')
+			$akun_1_10001 = $this->db->select('t.akun as id, sum(t.debit) as debit, sum(t.kredit) as kredit')
+			->from('transactions t')
+			->where("t.tanggal_transaksi between '$date1' and '$date2'")
+			->where("t.akun = 1")
+			->group_by('t.akun')
 			->get()->row_array();
-			
-			$akun_1_jurnal = $this->db->select('pdb.akun as id, sum(pdb.kredit) as total')
-			->from('pmm_jurnal_umum pb')
-			->join('pmm_detail_jurnal pdb', 'pb.id = pdb.jurnal_id','left')
-			->where("pb.tanggal_transaksi between '$date1' and '$date2'")
-			->where("pdb.akun = 1")
-			->where("pb.status = 'PAID'")
-			->where("pdb.kredit > 0")
-			->group_by('pdb.akun')
+			$akun_1_10001 = $akun_1_10001['debit'] - $akun_1_10001['kredit'] ;
+
+			$akun_1_10002 = $this->db->select('t.akun as id, sum(t.debit) as debit, sum(t.kredit) as kredit')
+			->from('transactions t')
+			->where("t.tanggal_transaksi between '$date1' and '$date2'")
+			->where("t.akun = 2")
+			->group_by('t.akun')
 			->get()->row_array();
+			$akun_1_10002 = $akun_1_10001 + ($akun_1_10002['debit'] - $akun_1_10002['kredit']);
 
-			$akun_1 = $akun_1_biaya['total'] + $akun_1_jurnal['total'];
-
+			$total_aset_lancar = $akun_1_10002;
 
 			?>
 			<tr class="table-active3">
 	            <th width="10%" class="text-center">1-10001</th>
 				<th class="text-left">Kas Cutting Stone</th>
-				<th class="text-right"><a target="_blank" href="<?= base_url("pmm/reports/detail_transaction/".$date1."/".$date2."/".$akun_1_biaya['id']."") ?>"><?php echo number_format($akun_1,2,',','.');?></a></th>
+				<th class="text-right"><a target="_blank" href="<?= base_url("pmm/reports/detail_transaction/".$date1."/".$date2."/".'1'."") ?>"><?php echo number_format($akun_1_10001,0,',','.');?></a></th>
 	        </tr>
 			<tr class="table-active3">
-	            <th class="text-right" colspan="2">TOTAL ASET</th>
-				<th class="text-right"><?php echo number_format($total_aset_lancar,2,',','.');?></th>
+	            <th width="10%" class="text-center">1-10002</th>
+				<th class="text-left">Rekening Bank Cutting Stone</th>
+				<th class="text-right"><a target="_blank" href="<?= base_url("pmm/reports/detail_transaction2/".$date1."/".$date2."/".'2'."") ?>"><?php echo number_format($akun_1_10002,0,',','.');?></a></th>
+	        </tr>
+			<tr class="table-active3">
+	            <th class="text-right" colspan="2">TOTAL ASET LANCAR</th>
+				<th class="text-right"><?php echo number_format($total_aset_lancar,0,',','.');?></th>
 	        </tr>
 	    </table>
 		<?php
