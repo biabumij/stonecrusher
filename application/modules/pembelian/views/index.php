@@ -114,11 +114,29 @@
                                     <?php
                                     if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 15){
                                     ?>
-                                        <li role="presentation"><a href="#verifikasi" aria-controls="verifikasi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Notifikasi 
-                                        <blink><b><?php
-                                            $query = $this->db->query('SELECT * FROM pmm_verifikasi_penagihan_pembelian where approve_unit_head = "TIDAK DISETUJUI" ');
-                                            echo $query->num_rows();
-                                            ?></b></blink>
+                                        <li role="presentation"><a href="#verifikasi" aria-controls="verifikasi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">NOTIFIKASI 
+                                            <blink><b><?php
+
+                                        $query1 = $this->db->select('COUNT(pvp.id) as id')
+                                        ->from('pmm_verifikasi_penagihan_pembelian pvp')
+                                        ->where("pvp.approve_unit_head = 'TIDAK DISETUJUI'")
+                                        ->get()->row_array();
+
+                                        $query2 = $this->db->select('COUNT(ppo.id) as id')
+                                        ->from('pmm_purchase_order ppo')
+                                        ->where("ppo.status = 'WAITING'")
+                                        ->get()->row_array();
+
+                                        $query3 = $this->db->select('COUNT(req.id) as id')
+                                        ->from('pmm_request_materials req')
+                                        ->where("req.status = 'WAITING'")
+                                        ->get()->row_array();
+                                        
+                                        $query = $query1['id'] + $query2['id'] + $query3['id'];
+                                        ?></b>
+                                        
+                                        (<?php echo number_format($query,0,',','.');?>)    
+                                        </blink>
                                         </a></li>			
                                     <?php
                                     }
