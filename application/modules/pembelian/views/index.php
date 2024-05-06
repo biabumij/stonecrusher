@@ -114,7 +114,7 @@
                                     <?php
                                     if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 15){
                                     ?>
-                                        <li role="presentation"><a href="#verifikasi" aria-controls="verifikasi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">NOTIFIKASI 
+                                        <li role="presentation"><a href="#verifikasi" aria-controls="verifikasi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Notifikasi 
                                             <blink><b><?php
 
                                         $query1 = $this->db->select('COUNT(pvp.id) as id')
