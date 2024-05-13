@@ -12534,6 +12534,7 @@ class Reports extends CI_Controller {
             $this->db->where('t.akun',$id);
 			$this->db->group_by('t.id');
 			$this->db->order_by('t.tanggal_transaksi','asc');
+			$this->db->order_by('t.id','asc');
             $query = $this->db->get('transactions t');
             $data['row'] = $query->result_array();
             $this->load->view('laporan_keuangan/detail_transaction',$data);
@@ -12558,6 +12559,7 @@ class Reports extends CI_Controller {
             $this->db->where('t.akun',$id);
 			$this->db->group_by('t.id');
 			$this->db->order_by('t.tanggal_transaksi','asc');
+			$this->db->order_by('t.id','asc');
             $query = $this->db->get('transactions t');
             $data['row'] = $query->result_array();
 
@@ -12567,6 +12569,7 @@ class Reports extends CI_Controller {
             $this->db->where('t.akun',1);
 			$this->db->group_by('t.id');
 			$this->db->order_by('t.tanggal_transaksi','asc');
+			$this->db->order_by('t.id','asc');
             $query = $this->db->get('transactions t');
             $data['row2'] = $query->result_array();
             $this->load->view('laporan_keuangan/detail_transaction2',$data);
