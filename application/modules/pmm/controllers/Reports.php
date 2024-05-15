@@ -12127,10 +12127,10 @@ class Reports extends CI_Controller {
 				<th class="text-center" rowspan="2" style="text-transform:uppercase;vertical-align:middle;; background-color:#8fce00;">REALISASI SD. <?php echo $last_opname = date('F Y', strtotime('0 days', strtotime($last_opname)));?></th>
 				<th class="text-center" style="text-transform:uppercase;"><?php echo $date_1_awal = date('F', strtotime('+1 days +1 months', strtotime($last_opname)));?></th>
 				<th class="text-center" style="text-transform:uppercase;">SD. <?php echo $date_1_awal = date('F', strtotime('+1 days +1 months', strtotime($last_opname)));?></th>
-				<th class="text-center" style="text-transform:uppercase;"><?php echo $date_2_awal = date('F', strtotime('+0 days', strtotime($date_1_akhir)));?></th>
-				<th class="text-center" style="text-transform:uppercase;">SD. <?php echo $date_2_awal = date('F', strtotime('+0 days', strtotime($date_1_akhir)));?></th>
-				<th class="text-center" style="text-transform:uppercase;"><?php echo $date_3_awal = date('F', strtotime('+0 days', strtotime($date_2_akhir)));?></th>
-				<th class="text-center" style="text-transform:uppercase;">SD. <?php echo $date_3_awal = date('F', strtotime('+0 days', strtotime($date_2_akhir)));?></th>
+				<th class="text-center" style="text-transform:uppercase;"><?php echo $date_2_awal = date('F', strtotime('+1 days', strtotime($date_1_akhir)));?></th>
+				<th class="text-center" style="text-transform:uppercase;">SD. <?php echo $date_2_awal = date('F', strtotime('+1 days', strtotime($date_1_akhir)));?></th>
+				<th class="text-center" style="text-transform:uppercase;"><?php echo $date_3_awal = date('F', strtotime('+1 days', strtotime($date_2_akhir)));?></th>
+				<th class="text-center" style="text-transform:uppercase;">SD. <?php echo $date_3_awal = date('F', strtotime('+1 days', strtotime($date_2_akhir)));?></th>
 				<th class="text-center" rowspan="2" style="vertical-align:middle; background-color:#55ffff;">SISA</th>
 	        </tr>
 			<tr class="table-active4-csf">

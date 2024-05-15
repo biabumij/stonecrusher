@@ -124,7 +124,7 @@
                                             <div class="col-sm-15">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
-                                                        <h3 class="panel-title">Cash Flow</h3>
+                                                        <h3 class="panel-title"><b>Cash Flow</b></h3>
                                                         <a href="laporan_keuangan">Kembali</a>
                                                     </div>
                                                     <div style="margin: 20px">
