@@ -964,6 +964,95 @@
 	$laba_kotor_rap_april24 = $penjualan_april24 - ($total_volume_penjualan_april24 * $total_ton_rap);
 	$persentase_laba_kotor_rap_april24 = ($penjualan_april24!=0)?($laba_kotor_rap_april24 / $penjualan_april24)  * 100:0;
 	$persentase_laba_kotor_rap_april24_fix = round($persentase_laba_kotor_rap_april24,2);
+
+	//MEI24
+	$penjualan_mei24 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_mei24_awal' and '$date_mei24_akhir'")
+	->where("pp.product_id in (3,4,7,8,9,14,24,63)")
+	->where("pp.salesPo_id <> 536 ")
+	->where("pp.salesPo_id <> 532 ")
+	->where("pp.salesPo_id <> 537 ")
+	->where("pp.salesPo_id <> 533 ")
+	->where("pp.salesPo_id <> 534 ")
+	->where("pp.salesPo_id <> 535 ")
+	->where("pp.salesPo_id <> 546 ")
+	->where("pp.salesPo_id <> 542 ")
+	->where("pp.salesPo_id <> 547 ")
+	->where("pp.salesPo_id <> 543 ")
+	->where("pp.salesPo_id <> 548 ")
+	->where("pp.salesPo_id <> 538 ")
+	->where("pp.salesPo_id <> 544 ")
+	->where("pp.salesPo_id <> 549 ")
+	->where("pp.salesPo_id <> 539 ")
+	->where("pp.salesPo_id <> 545 ")
+	->where("pp.salesPo_id <> 541 ")
+	->where("pp.salesPo_id <> 530 ")
+	->where("pp.salesPo_id <> 531 ")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
+	
+	$total_penjualan_mei24 = 0;
+	$total_volume_penjualan_mei24 = 0;
+
+	foreach ($penjualan_mei24 as $x){
+		$total_penjualan_mei24 += $x['price'];
+		$total_volume_penjualan_mei24 += $x['volume'];
+	}
+
+	$penjualan_limbah_mei24 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_mei24_awal' and '$date_mei24_akhir'")
+	->where("pp.product_id in (9)")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
+
+	$total_penjualan_limbah_mei24 = 0;
+
+	foreach ($penjualan_limbah_mei24 as $x){
+		$total_penjualan_limbah_mei24 += $x['price'];
+	}
+
+	$penjualan_lain_lain_mei24 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_mei24_awal' and '$date_mei24_akhir'")
+	->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
+
+	$total_penjualan_lain_lain_mei24 = 0;
+
+	foreach ($penjualan_lain_lain_mei24 as $x){
+		$total_penjualan_lain_lain_mei24 += $x['price'];
+	}
+
+	$akumulasi_bahan_jadi_mei24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_mei24')
+	->from('kunci_bahan_jadi pp')
+	->where("pp.date between '$date_maret24_akhir' and '$date_mei24_akhir'")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+	$harsat_bahan_jadi_mei24 = $akumulasi_bahan_jadi_mei24['harsat_mei24'];
+
+	$penjualan_mei24 = $total_penjualan_mei24 + $total_penjualan_limbah_mei24 + $total_penjualan_lain_lain_mei24;
+	$beban_pokok_penjualan_mei24 = $total_volume_penjualan_mei24 * $harsat_bahan_jadi_mei24;
+	$laba_kotor_mei24 = $penjualan_mei24 - $beban_pokok_penjualan_mei24;
+
+	
+	$persentase_laba_kotor_mei24 = ($penjualan_mei24!=0)?($laba_kotor_mei24 / $penjualan_mei24) * 100:0;
+	$persentase_laba_kotor_mei24_fix = round($persentase_laba_kotor_mei24,2);
+
+	$laba_kotor_rap_mei24 = $penjualan_mei24 - ($total_volume_penjualan_mei24 * $total_ton_rap);
+	$persentase_laba_kotor_rap_mei24 = ($penjualan_mei24!=0)?($laba_kotor_rap_mei24 / $penjualan_mei24)  * 100:0;
+	$persentase_laba_kotor_rap_mei24_fix = round($persentase_laba_kotor_rap_mei24,2);
 	
 ?>
 
