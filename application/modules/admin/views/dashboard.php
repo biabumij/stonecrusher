@@ -656,7 +656,7 @@
                                     fontFamily: 'helvetica'
                                 }
                             },
-                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24']
+                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24']
                         },
                         yAxis: {
                             //title: {  //label yAxis
@@ -728,7 +728,7 @@
                         series: [{  
                             name: 'RAP',  
                         
-                            data: [<?php echo json_encode($nilai_rap_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>],
+                            data: [<?php echo json_encode($nilai_rap_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_mei24_fix, JSON_NUMERIC_CHECK); ?>],
 
                             color: '#000000 ',
                             fontWeight: 'bold',
@@ -738,7 +738,7 @@
                         {  
                             name: 'Realisasi',  
                             
-                            data: [<?php echo json_encode($nilai_realisasi_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>],
+                            data: [<?php echo json_encode($nilai_realisasi_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_mei24_fix, JSON_NUMERIC_CHECK); ?>],
 
                             color: '#f44336',
                             fontWeight: 'bold',

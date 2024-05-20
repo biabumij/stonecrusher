@@ -2859,6 +2859,7 @@
 
 	$nilai_realisasi_alat_mei24 = $total_biaya_peralatan_mei24 + $total_nilai_produksi_solar_mei24;
 	$nilai_realisasi_alat_mei24_fix = round($nilai_realisasi_alat_mei24 / 1000000,0);
+	
 ?>
 
 <?php
@@ -8400,4 +8401,558 @@
 	$lain_april24 + $sewa_april24 + $bpjs_april24 + $penyusutan_kantor_april24 + $penyusutan_kendaraan_april24 + $iuran_april24 + $kendaraan_april24 + $pajak_april24 + $solar_april24 + 
 	$donasi_april24 + $legal_april24 + $pengobatan_april24 + $lembur_april24 + $pelatihan_april24 + $supplies_april24;
 	$nilai_realisasi_overhead_april24_fix = round($total_operasional_april24 / 1000000,0);
+
+	//MEI24
+	$nilai_rap_overhead_mei24 = $overhead_ton * round($total_rekapitulasi_produksi_harian_mei24,2);
+	$nilai_rap_overhead_mei24_fix = round($nilai_rap_overhead_mei24 / 1000000,0);
+
+	$konsumsi_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 201")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$konsumsi_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 201")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$konsumsi_mei24 = $konsumsi_biaya_mei24['total'] + $konsumsi_jurnal_mei24['total'];
+
+	$gaji_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 199")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$gaji_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 199")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$gaji_mei24 = $gaji_biaya_mei24['total'] + $gaji_jurnal_mei24['total'];
+
+	$upah_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 200")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$upah_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 200")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$upah_mei24 = $upah_biaya_mei24['total'] + $upah_jurnal_mei24['total'];
+
+	$pengujian_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 205")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$pengujian_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 205")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$pengujian_mei24 = $pengujian_biaya_mei24['total'] + $pengujian_jurnal_mei24['total'];
+
+	$perbaikan_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 203")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$perbaikan_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 203")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$perbaikan_mei24 = $perbaikan_biaya_mei24['total'] + $perbaikan_jurnal_mei24['total'];
+
+	$akomodasi_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 204")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$akomodasi_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 204")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$akomodasi_mei24 = $akomodasi_biaya_mei24['total'] + $akomodasi_jurnal_mei24['total'];
+
+	$listrik_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 206")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$listrik_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 206")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$listrik_mei24 = $listrik_biaya_mei24['total'] + $listrik_jurnal_mei24['total'];
+
+	$thr_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 202")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$thr_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 202")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$thr_mei24 = $thr_biaya_mei24['total'] + $thr_jurnal_mei24['total'];
+
+	$bensin_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 129")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$bensin_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 129")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$bensin_mei24 = $bensin_biaya_mei24['total'] + $bensin_jurnal_mei24['total'];
+
+	$dinas_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 131")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$dinas_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 131")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$dinas_mei24 = $dinas_biaya_mei24['total'] + $dinas_jurnal_mei24['total'];
+
+	$komunikasi_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 133")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$komunikasi_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 133")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$komunikasi_mei24 = $komunikasi_biaya_mei24['total'] + $komunikasi_jurnal_mei24['total'];
+
+	$pakaian_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 138")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$pakaian_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 138")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$pakaian_mei24 = $pakaian_biaya_mei24['total'] + $pakaian_jurnal_mei24['total'];
+
+	$tulis_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 149")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$tulis_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 149")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$tulis_mei24 = $tulis_biaya_mei24['total'] + $tulis_jurnal_mei24['total'];
+
+	$keamanan_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 151")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$keamanan_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 151")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$keamanan_mei24 = $keamanan_biaya_mei24['total'] + $keamanan_jurnal_mei24['total'];
+
+	$perlengkapan_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 153")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$perlengkapan_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 153")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$perlengkapan_mei24 = $perlengkapan_biaya_mei24['total'] + $perlengkapan_jurnal_mei24['total'];
+
+	$beban_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 145")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$beban_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 145")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$beban_mei24 = $beban_biaya_mei24['total'] + $beban_jurnal_mei24['total'];
+
+	$adm_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 143")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$adm_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 143")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$adm_mei24 = $adm_biaya_mei24['total'] + $adm_jurnal_mei24['total'];
+
+	$lain_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 146")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$lain_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 146")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$lain_mei24 = $lain_biaya_mei24['total'] + $lain_jurnal_mei24['total'];
+
+	$sewa_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 154")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$sewa_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 154")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$sewa_mei24 = $sewa_biaya_mei24['total'] + $sewa_jurnal_mei24['total'];
+
+	$bpjs_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 123")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$bpjs_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 123")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$bpjs_mei24 = $bpjs_biaya_mei24['total'] + $bpjs_jurnal_mei24['total'];
+
+	$penyusutan_kantor_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 162")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$penyusutan_kantor_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 162")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$penyusutan_kantor_mei24 = $penyusutan_kantor_biaya_mei24['total'] + $penyusutan_kantor_jurnal_mei24['total'];
+
+	$penyusutan_kendaraan_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 160")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$penyusutan_kendaraan_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 160")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$penyusutan_kendaraan_mei24 = $penyusutan_kendaraan_biaya_mei24['total'] + $penyusutan_kendaraan_jurnal_mei24['total'];
+
+	$iuran_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 134")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$iuran_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 134")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$iuran_mei24 = $iuran_biaya_mei24['total'] + $iuran_jurnal_mei24['total'];
+
+	$kendaraan_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 155")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$kendaraan_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 155")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$kendaraan_mei24 = $kendaraan_biaya_mei24['total'] + $kendaraan_jurnal_mei24['total'];
+
+	$pajak_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 141")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$pajak_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 141")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$pajak_mei24 = $pajak_biaya_mei24['total'] + $pajak_jurnal_mei24['total'];
+
+	$solar_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 105")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$solar_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 105")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$solar_mei24 = $solar_biaya_mei24['total'] + $solar_jurnal_mei24['total'];
+
+	$donasi_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 127")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$donasi_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 127")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$donasi_mei24 = $donasi_biaya_mei24['total'] + $donasi_jurnal_mei24['total'];
+
+	$legal_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 136")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$legal_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 136")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$legal_mei24 = $legal_biaya_mei24['total'] + $legal_jurnal_mei24['total'];
+
+	$pengobatan_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 121")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$pengobatan_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 121")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$pengobatan_mei24 = $pengobatan_biaya_mei24['total'] + $pengobatan_jurnal_mei24['total'];
+
+	$lembur_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 120")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$lembur_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 120")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$lembur_mei24 = $lembur_biaya_mei24['total'] + $lembur_jurnal_mei24['total'];
+
+	$pelatihan_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 139")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$pelatihan_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 139")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$pelatihan_mei24 = $pelatihan_biaya_mei24_mei24['total'] + $pelatihan_jurnal_mei24['total'];
+
+	$supplies_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 152")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$supplies_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 152")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+	$supplies_mei24 = $supplies_biaya_mei24['total'] + $supplies_jurnal_mei24['total'];
+
+	$total_operasional_mei24 = $konsumsi_mei24 + $gaji_mei24 + $upah_mei24 + $pengujian_mei24 + $perbaikan_mei24 + $akomodasi_mei24 + $listrik_mei24 + $thr_mei24 + 
+	$bensin_mei24 + $dinas_mei24 + $komunikasi_mei24 + $pakaian_mei24 + $tulis_mei24 + $keamanan_mei24 + $perlengkapan_mei24 + $beban_mei24 + $adm_mei24 + 
+	$lain_mei24 + $sewa_mei24 + $bpjs_mei24 + $penyusutan_kantor_mei24 + $penyusutan_kendaraan_mei24 + $iuran_mei24 + $kendaraan_mei24 + $pajak_mei24 + $solar_mei24 + 
+	$donasi_mei24 + $legal_mei24 + $pengobatan_mei24 + $lembur_mei24 + $pelatihan_mei24 + $supplies_mei24;
+	$nilai_realisasi_overhead_mei24_fix = round($total_operasional_mei24 / 1000000,0);
 ?>
