@@ -2722,6 +2722,143 @@
 
 	$nilai_realisasi_alat_april24 = $total_biaya_peralatan_april24 + $total_nilai_produksi_solar_april24;
 	$nilai_realisasi_alat_april24_fix = round($nilai_realisasi_alat_april24 / 1000000,0);
+
+	//MEI24
+	$vol_rap_alat_mei24 = $total_rekapitulasi_produksi_harian_mei24;
+	$nilai_rap_alat_mei24 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_mei24,2);
+	$nilai_rap_alat_mei24_fix = round($nilai_rap_alat_mei24 / 1000000,0);
+
+	$stone_crusher_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 101")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$stone_crusher_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 101")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$stone_crusher_mei24 = $stone_crusher_biaya_mei24['total'] + $stone_crusher_jurnal_mei24['total'];
+	
+	$whell_loader_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 104")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$whell_loader_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 104")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$whell_loader_mei24 = $whell_loader_biaya_mei24['total'] + $whell_loader_jurnal_mei24['total'];
+	
+	$genset_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 197")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$genset_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 197")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$genset_mei24 = $genset_biaya_mei24['total'] + $genset_jurnal_mei24['total'];
+	
+	$timbangan_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 198")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$timbangan_biaya_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 198")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$timbangan_mei24 = $timbangan_biaya_mei24['total'] + $timbangan_biaya_jurnal_mei24['total'];
+	
+	$tangki_solar_biaya_mei24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 207")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$tangki_solar_jurnal_mei24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 207")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->get()->row_array();
+
+	$tangki_solar_mei24 = $tangki_solar_biaya_mei24['total'] + $tangki_solar_jurnal_mei24['total'];		
+	
+	$total_biaya_peralatan_mei24 = $stone_crusher_mei24 + $whell_loader_mei24 + $genset_mei24 + $timbangan_mei24 + $tangki_solar_mei24;
+
+	//Opening Balance
+	$date1_ago_mei24 = date('2020-01-01');
+	$date2_ago_mei24 = date('Y-m-d', strtotime('-1 days', strtotime($date_mei24_awal)));
+	$date3_ago_mei24 = date('Y-m-d', strtotime('-1 months', strtotime($date_mei24_awal)));
+	$tanggal_opening_balance_mei24 = date('Y-m-d', strtotime('-1 days', strtotime($date_mei24_awal)));
+
+	$stock_opname_bbm_ago_mei24 = $this->db->select('pp.vol_nilai_bbm as volume')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date = '$tanggal_opening_balance_mei24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+	
+	$harga_bbm_mei24 = $this->db->select('pp.nilai_bbm as nilai_bbm')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date between '$date3_ago_mei24' and '$date2_ago_mei24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$pembelian_bbm_mei24 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
+	->from('pmm_receipt_material prm')
+	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
+	->join('produk p', 'prm.material_id = p.id','left')
+	->where("prm.date_receipt between '$date_mei24_awal' and '$date_mei24_akhir'")
+	->where("prm.material_id = 13")
+	->group_by('prm.material_id')
+	->get()->row_array();
+
+	$pemakaian_bbm_mei24 = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date between '$date_mei24_awal' and '$date_mei24_akhir')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+	$vol_pemakaian_bbm_mei24 = $pemakaian_bbm_mei24['volume'];
+
+	$harga_baru_mei24 = ($harga_bbm_mei24['nilai_bbm'] + $pembelian_bbm_mei24['nilai']) / (round($stock_opname_bbm_ago_mei24['volume'],2) + round($pembelian_bbm_mei24['volume'],2));
+	$total_nilai_produksi_solar_mei24 = $vol_pemakaian_bbm_mei24 * $harga_baru_mei24;
+
+	$nilai_realisasi_alat_mei24 = $total_biaya_peralatan_mei24 + $total_nilai_produksi_solar_mei24;
+	$nilai_realisasi_alat_mei24_fix = round($nilai_realisasi_alat_mei24 / 1000000,0);
 ?>
 
 <?php
