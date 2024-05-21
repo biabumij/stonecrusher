@@ -642,6 +642,8 @@
         $('#material_id').change(function(){
             var measure = $(this).find(':selected').data('measure');
             $('#measure_id').val(measure);
+            var display_measure = $(this).find(':selected').data('measure');
+            $('#display_measure').val(display_measure);
             var tax_id = $(this).find(':selected').data('tax_id');
             $('#tax_id').val(tax_id);
             var pajak_id = $(this).find(':selected').data('pajak_id');
@@ -664,22 +666,27 @@
                 data: formdata ? formdata : form.serialize(),
                 success : function(result){
                     $('#btn-form').button('reset');
-					$.toast({
-                            heading: 'Success',
-                            text: 'Berhasil menambahkan data penerimaan',
-                            showHideTransition: 'fade',
-                            icon: 'success',
-                            position: 'top-right',
-                        });
-                    if(result.output){
+					if (result.output) {
+
+                    table.ajax.reload();
+
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Berhasil menambahkan data penerimaan',
+                        showHideTransition: 'fade',
+                        icon: 'success',
+                        position: 'top-right',
+                    });
+
+                    }if(result.output){
                         $("#form-product").trigger("reset");
                         table.ajax.reload();
                         SelectMatByPo();
                         $('#material_id').focus();
                     }else if(result.err){
                         bootbox.alert(result.err);
-                    }
-                },
+                        }
+                    },
                 cache: false,
                 contentType: false,
                 processData: false
@@ -688,9 +695,6 @@
             event.preventDefault();
             
         });
-
-        
-
        
         function DeleteData(id)
         {
