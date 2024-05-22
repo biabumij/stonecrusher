@@ -414,8 +414,6 @@ class Receipt_material extends CI_Controller {
 	{
 		$output['output'] = false;
 
-		
-
 		$purchase_order_id = $this->input->post('purchase_order_id');
 		$material_id = $this->input->post('material_id');
 		$tax_id = $this->input->post('tax_id');
@@ -484,16 +482,14 @@ class Receipt_material extends CI_Controller {
 
 		if($receipt_material['volume'] + $volume > $get_po['volume']){
 			$output['output'] = false;
-			$output['err'] = '<b>Mohon maaf sudah melebihi volume pesanan pembelian, Silahkan buat pesanan pembelian baru.</b>';
-			//$output['err'] = $this->session->set_flashdata('notif_error', '<b>Mohon maaf sudah melebihi volume pesanan pembelian, Silahkan buat pesanan pembelian baru.</b>');
+			$output['err'] = 'Mohon maaf sudah melebihi volume pesanan pembelian, Silahkan buat pesanan pembelian baru.';
+			//$output['err'] = $this->session->set_flashdata('notif_error', 'Mohon maaf sudah melebihi volume pesanan pembelian, Silahkan buat pesanan pembelian baru.');
 			echo json_encode($output);
 			exit();
 		}
 
 		$this->db->trans_start(); # Starting Transaction
 		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
-
-		
 
 		$data_p = array(
 			'purchase_order_id' => $purchase_order_id,
@@ -522,10 +518,9 @@ class Receipt_material extends CI_Controller {
 		$this->db->insert('pmm_receipt_material',$data_p);
 		$no_production = $this->db->insert_id();
 
-		$coa_description = 'Penerimaan Nomor '.$no_production;
-		$this->pmm_finance->InsertTransactions(7,$coa_description,$price * $volume,0);
-
-		$this->pmm_finance->InsertTransactions(39,$coa_description,0,$price * $volume);
+		//$coa_description = 'Penerimaan Nomor '.$no_production;
+		//$this->pmm_finance->InsertTransactions(7,$coa_description,$price * $volume,0);
+		//$this->pmm_finance->InsertTransactions(39,$coa_description,0,$price * $volume);
 		
 		if ($this->db->trans_status() === FALSE) {
 			# Something went wrong.

@@ -248,9 +248,8 @@ class Productions extends Secure_Controller {
 		$production = $this->db->get_where("pmm_productions",["no_production" => $no_production])->num_rows();
 
 		$this->load->library('upload', $config);
-		
 
-		if ($production > 1) {
+		if ($production > 0) {
 			$output['output'] = false;
 			$output['err'] = 'No. Surat Jalan Telah Terdaftar !!';
 		}else{
@@ -290,8 +289,8 @@ class Productions extends Secure_Controller {
 
 			if($productions['volume'] + $volume > $get_po['qty']){
 				$output['output'] = false;
-				$output['err'] = '<b>Mohon maaf sudah melebihi volume sales order, Silahkan buat sales order baru.</b>';
-				//$output['err'] = $this->session->set_flashdata('notif_error', '<b>Mohon maaf sudah melebihi volume sales order, Silahkan buat sales order baru.</b>');
+				$output['err'] = 'Mohon maaf sudah melebihi volume sales order, Silahkan buat sales order baru.';
+				//$output['err'] = $this->session->set_flashdata('notif_error', 'Mohon maaf sudah melebihi volume sales order, Silahkan buat sales order baru.');
 				echo json_encode($output);
 				exit();
 			} 
@@ -330,10 +329,8 @@ class Productions extends Secure_Controller {
 					$production_id = $this->db->insert_id();
 					
 					// Insert COA
-					$coa_description = 'Production Nomor '.$no_production;
-					$this->pmm_finance->InsertTransactions(4,$coa_description,$price,0);
-
-	
+					//$coa_description = 'Production Nomor '.$no_production;
+					//$this->pmm_finance->InsertTransactions(4,$coa_description,$price,0);
 				}
 			}else {
 				$data['updated_by'] = $this->session->userdata('admin_id');
@@ -345,9 +342,6 @@ class Productions extends Secure_Controller {
 				}
 				
 			}
-	
-			
-				
 	
 			if ($this->db->trans_status() === FALSE) {
 				# Something went wrong.
@@ -362,12 +356,8 @@ class Productions extends Secure_Controller {
 				$output['output'] = true;	
 				// $output['no_production'] = $this->pmm_model->ProductionsNo();
 			}
-
-			
 		}
         
-
-		
 		echo json_encode($output);
 	}
 	
