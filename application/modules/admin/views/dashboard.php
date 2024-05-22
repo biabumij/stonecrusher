@@ -3,6 +3,7 @@
     <head>
     <?php echo $this->Templates->Header();?>
     </head>
+    <script src="https://kit.fontawesome.com/591a1bf2f6.js" crossorigin="anonymous"></script>
     <style type="text/css">
         body {
             font-family: helvetica;
@@ -53,6 +54,34 @@
         .highcharts-data-table tr:hover {
         background: #f1f7ff;
         }
+
+        blink {
+        -webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
+        animation: 2s linear infinite kedip;
+        }
+        /* for Safari 4.0 - 8.0 */
+        @-webkit-keyframes kedip { 
+        0% {
+            visibility: hidden;
+        }
+        50% {
+            visibility: hidden;
+        }
+        100% {
+            visibility: visible;
+        }
+        }
+        @keyframes kedip {
+        0% {
+            visibility: hidden;
+        }
+        50% {
+            visibility: hidden;
+        }
+        100% {
+            visibility: visible;
+        }
+        }
     </style>
     <body>
         <div class="wrap">
@@ -73,6 +102,38 @@
                         <div class="row animated fadeInUp">
 
                             <?php include_once("script_dashboard.php"); ?>
+
+                            <div class="col-sm-12">
+                                <figure class="highcharts-figure">
+                                <?php
+                                if(in_array($this->session->userdata('admin_group_id'), array(1,5,6,15))){
+                                ?>
+
+                                <?php
+                                $query1 = $this->db->select('COUNT(pvp.id) as id')
+                                ->from('pmm_verifikasi_penagihan_pembelian pvp')
+                                ->where("pvp.approve_unit_head = 'TIDAK DISETUJUI'")
+                                ->get()->row_array();
+
+                                $query2 = $this->db->select('COUNT(ppo.id) as id')
+                                ->from('pmm_purchase_order ppo')
+                                ->where("ppo.status = 'WAITING'")
+                                ->get()->row_array();
+
+                                $query3 = $this->db->select('COUNT(req.id) as id')
+                                ->from('pmm_request_materials req')
+                                ->where("req.status = 'WAITING'")
+                                ->get()->row_array();
+                                
+                                $query = $query1['id'] + $query2['id'] + $query3['id'];
+                                ?>
+                                    <center><b><blink><a target="_blank" href="<?= base_url("pmm/reports/detail_notification/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN KA. PLANT (<?php echo number_format($query,0,',','.');?>)</a></blink><b><center>
+                                <?php
+                                }
+                                ?>
+                                </figure>
+                                <br />
+                            </div>
 
                             <div class="col-sm-12">
                                 <figure class="highcharts-figure">
