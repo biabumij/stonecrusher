@@ -344,7 +344,7 @@ class Jurnal_umum extends CI_Controller {
         $data['akun_biaya'] = $query->result_array();
 
         $get_data = $this->db->select('b.*, pdb.akun as akun_jurnal')
-        ->from('pmm_jurnal_umum b ')
+        ->from('pmm_jurnal_umum b')
         ->join('pmm_detail_jurnal pdb','b.id = pdb.jurnal_id','left')
         ->where('b.id',$id)
         ->get()->row_array();

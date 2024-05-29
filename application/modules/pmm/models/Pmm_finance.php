@@ -89,8 +89,6 @@ class Pmm_finance extends CI_Model {
 
     function UpdateTransactionsBiaya($form_id_biaya_main,$bayar_dari,$total,$tanggal_transaksi)
     {
-       
-
         $data = array(
             'biaya_id' => $form_id_biaya_main,
             'jurnal_id' => 0,
@@ -108,8 +106,6 @@ class Pmm_finance extends CI_Model {
 
     function UpdateTransactionsJurnal($form_id_jurnal_main,$akun_jurnal,$total_debit,$tanggal_transaksi)
     {
-       
-
         $data = array(
             'biaya_id' => 0,
             'jurnal_id' => $form_id_jurnal_main,
