@@ -776,7 +776,8 @@ class Biaya extends CI_Controller {
 		$form_id_biaya_main = $this->input->post('form_id_biaya_main');
 		$penerima = $this->input->post('penerima');
 		$nomor_transaksi = $this->input->post('nomor_transaksi');
-		$tanggal_transaksi = date('Y-m-d',strtotime($this->input->post('tanggal_transaksi')));
+        $tanggal_transaksi = date('Y-m-d',strtotime($this->input->post('tanggal_transaksi')));
+		$bayar_dari = $this->input->post('bayar_dari');
         $bayar_dari = $this->input->post('bayar_dari');
         $memo = $this->input->post('memo');
 		$total = str_replace(',', '.', $this->input->post('total'));
@@ -790,6 +791,9 @@ class Biaya extends CI_Controller {
             //'memo' => $memo,
             'total' => $total
 		);
+        
+        $this->pmm_finance->UpdateTransactionsBiaya($form_id_biaya_main,$bayar_dari,$total,$tanggal_transaksi);
+        $transaction_id = $this->db->insert_id();
 
 		if(!empty($id)){
 			if($this->db->update('pmm_biaya',$data,array('id'=>$form_id_biaya_main))){
