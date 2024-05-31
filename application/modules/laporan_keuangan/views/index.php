@@ -72,12 +72,6 @@
                                                             <a href="#cash_flow" aria-controls="cash_flow" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
                                                         </div>
                                                     </div>
-                                                    <div class="panel panel-default">                                            
-                                                        <div class="col-sm-5">
-                                                            <p><b><h5>Neraca</h5></b></p>
-                                                            <a href="#neraca" aria-controls="neraca" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
-                                                        </div>													
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,43 +141,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Neraca -->
-                                        <div role="tabpanel" class="tab-pane" id="neraca">
-                                            <div class="col-sm-15">
-                                            <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h3 class="panel-title"><b>Neraca</b></h3>
-                                                        <a href="laporan_keuangan">Kembali</a>
-                                                    </div>
-                                                    <div style="margin: 20px">
-                                                        <div class="row">
-                                                            <form action="<?php echo site_url('laporan/neraca_print');?>" target="_blank">
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" id="filter_date_neraca" name="filter_date" class="form-control dtpicker"  autocomplete="off" placeholder="Filter By Date">
-                                                                </div>
-                                                                <div class="col-sm-3">
-                                                                    <button type="submit" class="btn btn-default" style="border-radius:10px; font-weight:bold;"><i class="fa fa-print"></i>  Print</button>
-                                                                </div>
-                                                            </form>
-                                                            
-                                                        </div>
-                                                        <br />
-                                                        <div id="wait-neraca" style=" text-align: center; align-content: center; display: none;">	
-                                                            <div>Please Wait</div>
-                                                            <div class="fa-3x">
-                                                            <i class="fa fa-spinner fa-spin"></i>
-                                                            </div>
-                                                        </div>				
-                                                        <div class="table-responsive" id="table-neraca">													
-                                                        
-                        
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                            
                                             </div>
                                         </div>
                                         
