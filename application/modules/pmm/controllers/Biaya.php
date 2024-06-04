@@ -17,6 +17,14 @@ class Biaya extends CI_Controller {
     public function table_biaya(){
         $data = array();
 		$filter_date = $this->input->post('filter_date');
+        
+        $kunci_bahan_baku = $this->db->select('pp.date')
+        ->from('kunci_bahan_baku pp')
+        ->order_by('pp.date','desc')->limit(1)
+        ->get()->row_array();
+        $last_opname = $kunci_bahan_baku['date'];
+        $last_opname = date('Y-m-d', strtotime('+1 days 0 months', strtotime($last_opname)));
+
 		if(!empty($filter_date)){
 			$arr_date = explode(' - ', $filter_date);
 			$this->db->where('b.tanggal_transaksi >=',date('Y-m-d',strtotime($arr_date[0])));
@@ -25,10 +33,12 @@ class Biaya extends CI_Controller {
 
         $this->db->select('b.*, p.nama as penerima');
         $this->db->join('penerima p','b.penerima = p.id','left');
-        $this->db->where('b.tanggal_transaksi >=', date('2023-08-01'));
+        $this->db->where('b.tanggal_transaksi >=', $last_opname);
         $this->db->order_by('b.tanggal_transaksi','desc');
         $this->db->order_by('b.created_on','desc');
 		$query = $this->db->get('pmm_biaya b');
+        file_put_contents("D:\\test.txt", $this->db->last_query());
+
 		if($query->num_rows() > 0){
 			foreach ($query->result_array() as $key => $row) {
 				$row['no'] = $key+1;
