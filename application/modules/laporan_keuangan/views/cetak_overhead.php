@@ -551,7 +551,8 @@
 			->where("status = 'PAID'")
 			->where("(tanggal_transaksi between '$date1' and '$date2')")
 			->get()->row_array();
-			$solar = $solar_biaya['total'] + $solar_jurnal['total'];
+			//$solar = $solar_biaya['total'] + $solar_jurnal['total'];
+			$solar = 0;
 
 			$donasi_biaya = $this->db->select('sum(pdb.jumlah) as total')
 			->from('pmm_biaya pb ')
