@@ -310,7 +310,7 @@ class Laporan extends Secure_Controller {
 		$pdf->AddPage('L');
 		$pdf->setPrintHeader(false);
 
-		//Page2
+		/*//Page2
 		$pdf->AddPage('L', 'A4');
 		$pdf->SetY(29);
 		$pdf->SetX(6);
@@ -399,7 +399,7 @@ class Laporan extends Secure_Controller {
 		$pdf->AddPage();
 		$pdf->SetY(29);
 		$pdf->SetX(6);
-		$pdf->WriteHTML($html);
+		$pdf->WriteHTML($html);*/
 
 		//Page1
 		$pdf->setPage(1, true);
