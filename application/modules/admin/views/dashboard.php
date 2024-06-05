@@ -270,7 +270,7 @@
                                     fontFamily: 'helvetica'
                                 }
                             },
-                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24']
+                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24','Juni 24']
                         },
                         yAxis: {
                             //title: {  //label yAxis
@@ -342,7 +342,7 @@
                         series: [{  
                             name: 'RAP',  
                         
-                            data: [<?php echo number_format($persentase_laba_kotor_rap_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_desember23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_januari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_februari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_maret24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_april24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_mei24_fix,2,'.',',');?>],
+                            data: [<?php echo number_format($persentase_laba_kotor_rap_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_desember23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_januari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_februari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_maret24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_april24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_mei24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_rap_juni24_fix,2,'.',',');?>],
 
                             color: '#000000 ',
                             fontWeight: 'bold',
@@ -352,7 +352,7 @@
                         {  
                             name: 'Realisasi',  
                             
-                            data: [<?php echo number_format($persentase_laba_kotor_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_desember23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_januari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_februari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_maret24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_april24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_mei24_fix,2,'.',',');?>],
+                            data: [<?php echo number_format($persentase_laba_kotor_agustus23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_september23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_oktober23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_november23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_desember23_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_januari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_februari24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_maret24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_april24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_mei24_fix,2,'.',',');?>,<?php echo number_format($persentase_laba_kotor_juni24_fix,2,'.',',');?>],
 
                             color: '#f44336',
                             fontWeight: 'bold',
@@ -419,7 +419,7 @@
                                     fontFamily: 'helvetica'
                                 }
                             },
-                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24']
+                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24','Juni 24']
                         },
                         yAxis: {
                             //title: {  //label yAxis
@@ -491,7 +491,7 @@
                         series: [{  
                             name: 'RAP',  
                         
-                            data: [<?php echo json_encode($nilai_rap_bahan_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_mei24_fix, JSON_NUMERIC_CHECK); ?>],
+                            data: [<?php echo json_encode($nilai_rap_bahan_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_mei24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_bahan_juni24_fix, JSON_NUMERIC_CHECK); ?>],
 
                             color: '#000000 ',
                             fontWeight: 'bold',
@@ -501,7 +501,7 @@
                         {  
                             name: 'Realisasi',  
                             
-                            data: [ <?php echo json_encode($total_nilai_produksi_boulder_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_mei24_fix, JSON_NUMERIC_CHECK); ?>],
+                            data: [ <?php echo json_encode($total_nilai_produksi_boulder_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_mei24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($total_nilai_produksi_boulder_juni24_fix, JSON_NUMERIC_CHECK); ?>],
 
                             color: '#f44336',
                             fontWeight: 'bold',
@@ -568,7 +568,7 @@
                                     fontFamily: 'helvetica'
                                 }
                             },
-                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24']
+                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24','Juni 24']
                         },
                         yAxis: {
                             //title: {  //label yAxis
@@ -640,7 +640,7 @@
                         series: [{  
                             name: 'RAP',  
                         
-                            data: [<?php echo json_encode($nilai_rap_alat_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_mei24_fix, JSON_NUMERIC_CHECK); ?>],
+                            data: [<?php echo json_encode($nilai_rap_alat_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_mei24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_alat_juni24_fix, JSON_NUMERIC_CHECK); ?>],
 
                             color: '#000000 ',
                             fontWeight: 'bold',
@@ -650,7 +650,7 @@
                         {  
                             name: 'Realisasi',  
                             
-                            data: [<?php echo json_encode($nilai_realisasi_alat_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_mei24_fix, JSON_NUMERIC_CHECK); ?>],
+                            data: [<?php echo json_encode($nilai_realisasi_alat_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_mei24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_alat_juni24_fix, JSON_NUMERIC_CHECK); ?>],
 
                             color: '#f44336',
                             fontWeight: 'bold',
@@ -717,7 +717,7 @@
                                     fontFamily: 'helvetica'
                                 }
                             },
-                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24']
+                            categories: ['Agustus 23','September 23','Oktober 23','November 23','Desember 23','Januari 24','Februari 24','Maret 24','April 24','Mei 24','Juni 24']
                         },
                         yAxis: {
                             //title: {  //label yAxis
@@ -789,7 +789,7 @@
                         series: [{  
                             name: 'RAP',  
                         
-                            data: [<?php echo json_encode($nilai_rap_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_mei24_fix, JSON_NUMERIC_CHECK); ?>],
+                            data: [<?php echo json_encode($nilai_rap_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_mei24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_rap_overhead_juni24_fix, JSON_NUMERIC_CHECK); ?>],
 
                             color: '#000000 ',
                             fontWeight: 'bold',
@@ -799,7 +799,7 @@
                         {  
                             name: 'Realisasi',  
                             
-                            data: [<?php echo json_encode($nilai_realisasi_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_mei24_fix, JSON_NUMERIC_CHECK); ?>],
+                            data: [<?php echo json_encode($nilai_realisasi_overhead_agustus23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_september23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_oktober23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_november23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_desember23_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_januari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_februari24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_maret24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_april24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_mei24_fix, JSON_NUMERIC_CHECK); ?>,<?php echo json_encode($nilai_realisasi_overhead_juni24_fix, JSON_NUMERIC_CHECK); ?>],
 
                             color: '#f44336',
                             fontWeight: 'bold',
