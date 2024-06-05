@@ -24,9 +24,8 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
-                            <li>
-                                <a href="<?php echo site_url('admin/kas_&_bank');?>"> Kas & Bank</a></li>
+                            <li><a><i class="fa fa-home" aria-hidden="true"></i>Dashboard</a></li>
+                            <li><a>Kas & Bank</a></li>
                             <li><a>Terima Uang</a></li>
                         </ul>
                     </div>
