@@ -22,7 +22,7 @@
             <div class="content-header">
                 <div class="leftside-content-header">
                     <ul class="breadcrumbs">
-                        <li><a>Dashboard</a></li>
+                        <li><a><i class="fa fa-home" aria-hidden="true"></i>Dashboard</a></li>
                         <li><a>Biaya</a></li>
                     </ul>
                 </div>
