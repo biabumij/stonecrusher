@@ -22,7 +22,7 @@
             <div class="content-header">
                 <div class="leftside-content-header">
                     <ul class="breadcrumbs">
-                        <li><i class="fa fa-home" aria-hidden="true"></i><a href="<?php echo base_url();?>">Dashboard</a></li>
+                        <li><a>Dashboard</a></li>
                         <li><a>Jurnal Umum</a></li>
                     </ul>
                 </div>
