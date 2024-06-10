@@ -1733,7 +1733,122 @@ class Receipt_material extends CI_Controller {
 
 		echo json_encode(array('data'=>$data,'total'=>number_format($total,2,',','.')));		
 	}
-	
+
+	function rekapitulasi_produksi()
+	{
+		$data = array();
+		$supplier_id = $this->input->post('no_prod');
+		$purchase_order_no = $this->input->post('purchase_order_no');
+		$filter_material = $this->input->post('filter_material');
+		$start_date = false;
+		$end_date = false;
+		$total = 0;
+		$date = $this->input->post('filter_date');
+		if(!empty($date)){
+			$arr_date = explode(' - ',$date);
+			$start_date = date('Y-m-d',strtotime($arr_date[0]));
+			$end_date = date('Y-m-d',strtotime($arr_date[1]));
+		}
+		$this->db->select('pph.no_prod, SUM(pphd.use) as jumlah_used, (SUM(pphd.use) * pk.presentase_a) / 100 AS jumlah_pemakaian_a,  (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b,  (SUM(pphd.use) * pk.presentase_c) / 100 AS jumlah_pemakaian_c,  (SUM(pphd.use) * pk.presentase_d) / 100 AS jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 AS jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 AS jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f, (pk.presentase_a + pk.presentase_b + pk.presentase_c + pk.presentase_d + pk.presentase_e + pk.presentase_f) as jumlah_presentase');
+		if(!empty($start_date) && !empty($end_date)){
+            $this->db->where('pph.date_prod >=',$start_date);
+            $this->db->where('pph.date_prod <=',$end_date);
+        }
+        if(!empty($supplier_id)){
+            $this->db->where('pph.no_prod',$supplier_id);
+        }
+        if(!empty($filter_material)){
+            $this->db->where_in('ppd.material_id',$filter_material);
+        }
+        if(!empty($purchase_order_no)){
+            $this->db->where('pph.produksi_harian_id',$purchase_order_no);
+        }
+		
+		$this->db->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left');
+		$this->db->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id','left');
+		$this->db->where('pph.status','PUBLISH');
+		$query = $this->db->get('pmm_produksi_harian pph');
+		
+		$no = 1;
+		if($query->num_rows() > 0){
+
+			foreach ($query->result_array() as $key => $sups) {
+
+				$mats = array();
+				$materials = $this->pmm_model->GetRekapitulasi($sups['no_prod'],$purchase_order_no,$start_date,$end_date,$filter_material);
+				
+				if(!empty($materials)){
+					foreach ($materials as $key => $row) {
+						$arr['no'] = $key + 1;
+						$arr['produk_a'] = $this->crud_global->GetField('produk',array('id'=>$row['produk_a']),'nama_produk');
+						$arr['produk_b'] = $this->crud_global->GetField('produk',array('id'=>$row['produk_b']),'nama_produk');
+						$arr['produk_c'] = $this->crud_global->GetField('produk',array('id'=>$row['produk_c']),'nama_produk');
+						$arr['produk_d'] = $this->crud_global->GetField('produk',array('id'=>$row['produk_d']),'nama_produk');
+						$arr['produk_e'] = $this->crud_global->GetField('produk',array('id'=>$row['produk_e']),'nama_produk');
+						$arr['produk_f'] = $this->crud_global->GetField('produk',array('id'=>$row['produk_f']),'nama_produk');
+						$arr['measure_a'] = $this->crud_global->GetField('pmm_measures',array('id'=>$row['measure_a']),'measure_name');
+						$arr['measure_b'] = $this->crud_global->GetField('pmm_measures',array('id'=>$row['measure_b']),'measure_name');
+						$arr['measure_c'] = $this->crud_global->GetField('pmm_measures',array('id'=>$row['measure_c']),'measure_name');
+						$arr['measure_d'] = $this->crud_global->GetField('pmm_measures',array('id'=>$row['measure_d']),'measure_name');
+						$arr['measure_e'] = $this->crud_global->GetField('pmm_measures',array('id'=>$row['measure_e']),'measure_name');
+						$arr['measure_f'] = $this->crud_global->GetField('pmm_measures',array('id'=>$row['measure_f']),'measure_name');
+						$arr['presentase_a'] = $row['presentase_a'];
+						$arr['presentase_b'] = $row['presentase_b'];
+						$arr['presentase_c'] = $row['presentase_c'];
+						$arr['presentase_d'] = $row['presentase_d'];
+						$arr['presentase_e'] = $row['presentase_e'];
+						$arr['presentase_f'] = $row['presentase_f'];
+						$arr['jumlah_pemakaian_a'] = round($row['jumlah_pemakaian_a'],2);
+						$arr['jumlah_pemakaian_b'] = round($row['jumlah_pemakaian_b'],2);
+						$arr['jumlah_pemakaian_c'] = round($row['jumlah_pemakaian_c'],2);
+						$arr['jumlah_pemakaian_d'] = round($row['jumlah_pemakaian_d'],2);
+						$arr['jumlah_pemakaian_e'] = round($row['jumlah_pemakaian_e'],2);
+						$arr['jumlah_pemakaian_f'] = round($row['jumlah_pemakaian_f'],2);			
+						
+						$mats[] = $arr;
+					}
+					
+					
+					$sups['mats'] = $mats;
+					$total += round($sups['jumlah_pemakaian_a'],2) + round($sups['jumlah_pemakaian_b'],2) + round($sups['jumlah_pemakaian_c'],2) + round($sups['jumlah_pemakaian_d'],2) + round($sups['jumlah_pemakaian_e'],2) + round($sups['jumlah_pemakaian_f'],2);
+					$sups['no'] =$no;
+					$sups['jumlah_used'] = number_format($sups['jumlah_used'],2,',','.');
+					$sups['produk_a'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_a']),'nama_produk');
+					$sups['produk_b'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_b']),'nama_produk');
+					$sups['produk_c'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_c']),'nama_produk');
+					$sups['produk_d'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_d']),'nama_produk');
+					$sups['produk_e'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_e']),'nama_produk');
+					$sups['produk_f'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_f']),'nama_produk');
+					$sups['measure_a'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_a']),'measure_name');
+					$sups['measure_b'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_b']),'measure_name');
+					$sups['measure_c'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_c']),'measure_name');
+					$sups['measure_d'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_d']),'measure_name');
+					$sups['measure_e'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_e']),'measure_name');
+					$sups['measure_f'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_f']),'measure_name');
+					$sups['presentase_a'] = $sups['presentase_a'];
+					$sups['presentase_b'] = $sups['presentase_b'];
+					$sups['presentase_c'] = $sups['presentase_c'];
+					$sups['presentase_d'] = $sups['presentase_d'];
+					$sups['presentase_e'] = $sups['presentase_e'];
+					$sups['presentase_f'] = $sups['presentase_f'];
+					$sups['jumlah_pemakaian_a'] = round($sups['jumlah_pemakaian_a'],2);
+					$sups['jumlah_pemakaian_b'] = round($sups['jumlah_pemakaian_b'],2);
+					$sups['jumlah_pemakaian_c'] = round($sups['jumlah_pemakaian_c'],2);
+					$sups['jumlah_pemakaian_d'] = round($sups['jumlah_pemakaian_d'],2);
+					$sups['jumlah_pemakaian_e'] = round($sups['jumlah_pemakaian_e'],2);
+					$sups['jumlah_pemakaian_f'] = round($sups['jumlah_pemakaian_f'],2);
+					$sups['jumlah_presentase'] = $sups['jumlah_presentase'];
+
+					$data[] = $sups;
+					$no++;
+					
+				}		
+			}
+		}
+
+		echo json_encode(array('data'=>$data,'total'=>number_format($total,2,',','.')));		
+	}
+
 	public function cetak_surat_jalan()
 	{
 		$this->load->library('pdf');

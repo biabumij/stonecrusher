@@ -113,27 +113,8 @@
 			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
 			->where("(pph.date_prod between '$date1' and '$date2')")
 			->where('pph.status','PUBLISH')
-			->group_by('pph.id')
-			->get()->result_array();
-
-			$jumlah_pemakaian_a = 0;
-			$jumlah_pemakaian_b = 0;
-			$jumlah_pemakaian_c = 0;
-			$jumlah_pemakaian_d = 0;
-			$jumlah_pemakaian_e = 0;
-			$jumlah_pemakaian_f = 0;
-
-			foreach ($rekapitulasi_produksi_harian as $x){
-				$jumlah_pemakaian_a += $x['jumlah_pemakaian_a'];
-				$jumlah_pemakaian_b += $x['jumlah_pemakaian_b'];
-				$jumlah_pemakaian_c += $x['jumlah_pemakaian_c'];
-				$jumlah_pemakaian_d += $x['jumlah_pemakaian_d'];
-				$jumlah_pemakaian_e += $x['jumlah_pemakaian_e'];
-				$jumlah_pemakaian_f += $x['jumlah_pemakaian_f'];
-			}
-
-			$total_rekapitulasi_produksi_harian = 0;
-			$total_rekapitulasi_produksi_harian = round($jumlah_pemakaian_a,2) + round($jumlah_pemakaian_b,2) + round($jumlah_pemakaian_c,2) + round($jumlah_pemakaian_d,2) + round($jumlah_pemakaian_e,2) + round($jumlah_pemakaian_f,2);
+			->get()->row_array();
+			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
 			?>
 			
 			<!-- Total Pendapatan / Penjualan -->
@@ -1100,27 +1081,8 @@
 			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
 			->where("(pph.date_prod between '$date1' and '$date2')")
 			->where('pph.status','PUBLISH')
-			->group_by('pph.id')
-			->get()->result_array();
-
-			$jumlah_pemakaian_a = 0;
-			$jumlah_pemakaian_b = 0;
-			$jumlah_pemakaian_c = 0;
-			$jumlah_pemakaian_d = 0;
-			$jumlah_pemakaian_e = 0;
-			$jumlah_pemakaian_f = 0;
-
-			foreach ($rekapitulasi_produksi_harian as $x){
-				$jumlah_pemakaian_a += $x['jumlah_pemakaian_a'];
-				$jumlah_pemakaian_b += $x['jumlah_pemakaian_b'];
-				$jumlah_pemakaian_c += $x['jumlah_pemakaian_c'];
-				$jumlah_pemakaian_d += $x['jumlah_pemakaian_d'];
-				$jumlah_pemakaian_e += $x['jumlah_pemakaian_e'];
-				$jumlah_pemakaian_f += $x['jumlah_pemakaian_f'];
-			}
-
-			$total_rekapitulasi_produksi_harian = 0;
-			$total_rekapitulasi_produksi_harian = round($jumlah_pemakaian_a,2) + round($jumlah_pemakaian_b,2) + round($jumlah_pemakaian_c,2) + round($jumlah_pemakaian_d,2) + round($jumlah_pemakaian_e,2) + round($jumlah_pemakaian_f,2);
+			->get()->row_array();
+			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
 			
 			$stok_volume_boulder_lalu = $stock_opname_batu_boulder_ago['volume'];
 			$stok_nilai_boulder_lalu = $harga_boulder['nilai_boulder'];
@@ -1168,12 +1130,15 @@
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<th align="right"><?php echo number_format($harga_baru,0,',','.');?></th>
 				<th align="right"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></th>
+				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
+				<?php
+				$styleColor = $nilai_boulder_ton < 0 ? 'color:red' : 'color:black';
+				?>
+				<th align="right"><?php echo number_format($nilai_boulder_ton,0,',','.');?></th>
 				<?php
 				$nilai_evaluasi_bahan = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) - $total_nilai_produksi_boulder;
 				$styleColor = $nilai_evaluasi_bahan < 0 ? 'color:red' : 'color:black';
 				?>
-				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
-				<th align="right"><?php echo number_format($nilai_boulder_ton,0,',','.');?></th>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_bahan < 0 ? "(".number_format(-$nilai_evaluasi_bahan,0,',','.').")" : number_format($nilai_evaluasi_bahan,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
@@ -1191,15 +1156,16 @@
 				?>
 				<th align="right"><?php echo number_format($harsat_realisasi_alat,0,',','.');?></th>
 				<th align="right"><?php echo number_format($total_biaya_peralatan + $total_nilai_produksi_solar,0,',','.');?></th>
-				<?php
-				$nilai_evaluasi_alat = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2) - ($total_biaya_peralatan + $total_nilai_produksi_solar);
-				$styleColor = $nilai_evaluasi_alat < 0 ? 'color:red' : 'color:black';
-				?>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
+				$nilai_evaluasi_alat = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2) - ($total_biaya_peralatan + $total_nilai_produksi_solar);
 				$harsat_deviasi_alat = (round($total_rekapitulasi_produksi_harian,2)!=0)?$nilai_evaluasi_alat / round($total_rekapitulasi_produksi_harian,2) * 1:0;
+				$styleColor = $harsat_deviasi_alat < 0 ? 'color:red' : 'color:black';
 				?>
-				<th align="right"><?php echo number_format($harsat_deviasi_alat,0,',','.');?></th>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_alat < 0 ? "(".number_format(-$nilai_evaluasi_alat,0,',','.').")" : number_format($nilai_evaluasi_alat,0,',','.');?></th>
+				<?php
+				$styleColor = $nilai_evaluasi_alat < 0 ? 'color:red' : 'color:black';
+				?>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_alat < 0 ? "(".number_format(-$nilai_evaluasi_alat,0,',','.').")" : number_format($nilai_evaluasi_alat,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
@@ -1217,15 +1183,16 @@
 				?>
 				<th align="right"><?php echo number_format($harsat_realisasi_overhead,0,',','.');?></th>
 				<th align="right"><?php echo number_format($total_operasional,0,',','.');?></th>
-				<?php
-				$nilai_evaluasi_overhead = ($overhead_ton * round($total_rekapitulasi_produksi_harian,2)) - ($total_operasional);
-				$styleColor = $nilai_evaluasi_overhead < 0 ? 'color:red' : 'color:black';
-				?>
 				<th align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
 				<?php
+				$nilai_evaluasi_overhead = ($overhead_ton * round($total_rekapitulasi_produksi_harian,2)) - ($total_operasional);
 				$harsat_deviasi_overhead = (round($total_rekapitulasi_produksi_harian,2)!=0)?$nilai_evaluasi_overhead / round($total_rekapitulasi_produksi_harian,2) * 1:0;
+				$styleColor = $harsat_deviasi_overhead < 0 ? 'color:red' : 'color:black';
 				?>
-				<th align="right"><?php echo number_format($harsat_deviasi_overhead,0,',','.');?></th>
+				<th align="right" style="<?php echo $styleColor ?>"><?php echo $harsat_deviasi_overhead < 0 ? "(".number_format(-$harsat_deviasi_overhead,0,',','.').")" : number_format($harsat_deviasi_overhead,0,',','.');?></th>
+				<?php
+				$styleColor = $nilai_evaluasi_overhead < 0 ? 'color:red' : 'color:black';
+				?>
 				<th align="right" style="<?php echo $styleColor ?>"><?php echo $nilai_evaluasi_overhead < 0 ? "(".number_format(-$nilai_evaluasi_overhead,0,',','.').")" : number_format($nilai_evaluasi_overhead,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active4">

@@ -194,10 +194,16 @@
 						<td align="right"><?php echo number_format($sub_total,2,',','.');?></td>
 						
 					</tr>
-            		<?php
+            			<?php
             	}
             }
             ?>
+            <tr class="table-total">
+            	<th width="80%" align="right"><b>TOTAL</b></th>
+				<th width="10%" align="center"><b>Ton</b></th>
+            	<th width="10%" align="right"><?php echo number_format($total,2,',','.');?></th>
+            </tr>
+			
 		</table>
 		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 		<table width="98%">

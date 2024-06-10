@@ -192,11 +192,11 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        
                                         <!-- Rekapitulasi -->
                                         <div role="tabpanel" class="tab-pane" id="rekapitulasi_laporan_produksi">
                                             <div class="col-sm-15">
-                                                <div class="panel panel-default">
+                                                <div class="panel panel-default"> 
                                                     <div class="panel-heading">												
                                                         <h3 class="panel-title"><b>Rekapitulasi Laporan Produksi</b></h3>
                                                         <a href="laporan_produksi">Kembali</a>
@@ -213,15 +213,27 @@
                                                             </form>
                                                         </div>
                                                         <br />
-                                                        <div id="wait" style=" text-align: center; align-content: center; display: none;">	
-                                                            <div>Mohon Tunggu</div>
-                                                            <div class="fa-3x">
-                                                            <i class="fa fa-spinner fa-spin"></i>
+                                                        <div id="box-print" class="table-responsive">
+                                                            <div id="loader-table" class="text-center" style="display:none">
+                                                                <img src="<?php echo base_url(); ?>assets/back/theme/images/loader.gif">
+                                                                <div>
+                                                                    Mohon Tunggu
+                                                                </div>
                                                             </div>
-                                                        </div>				
-                                                        <div class="table-responsive" id="table-rekapitulasi-produksi">													
-                                                        
-                        
+                                                            <table class="mytable table-hover table-center table-condensed" id="table-rekapitulasi-produksi" style="display:none" width="100%";>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center">NO.</th>
+                                                                        <th class="text-center">URAIAN</th>
+                                                                        <th class="text-right">SATUAN</th>
+                                                                        <th class="text-right">PRESENTASE</th>
+                                                                        <th class="text-right">VOLUME</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                                <tfoot class="mytable table-hover table-center table-condensed"></tfoot>
+                                                            </table>
+                                                            <br />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -426,51 +438,5 @@
                 $('.mats-' + id).slideToggle();
             }
         </script>
-
-        <!-- Script Rekepitulasi -->
-		<script type="text/javascript">
-            $('#filter_date_rekapitulasi').daterangepicker({
-                autoUpdateInput : false,
-                showDropdowns: true,
-                locale: {
-                format: 'DD-MM-YYYY'
-                },
-                minDate: new Date(2023, 07, 01),	
-                ranges: {
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                }
-            });
-
-            $('#filter_date_rekapitulasi').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-                TableRekapitulasi();
-            });
-
-
-            function TableRekapitulasi()
-            {
-                $('#wait').fadeIn('fast');   
-                $.ajax({
-                    type    : "POST",
-                    url     : "<?php echo site_url('pmm/reports/rekapitulasi'); ?>/"+Math.random(),
-                    dataType : 'html',
-                    data: {
-                        filter_date : $('#filter_date_rekapitulasi').val(),
-                    },
-                    success : function(result){
-                        $('#table-rekapitulasi-produksi').html(result);
-                        $('#wait').fadeOut('fast');
-                    }
-                });
-            }
-
-            //TableRekapitulasi();
-		</script>
-
     </body>
 </html>
