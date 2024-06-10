@@ -893,8 +893,27 @@
 		->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
 		->where("(pph.date_prod between '$date1' and '$date2')")
 		->where('pph.status','PUBLISH')
-		->get()->row_array();
-		$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+		->group_by('pph.id')
+		->get()->result_array();
+
+		$jumlah_pemakaian_a = 0;
+		$jumlah_pemakaian_b = 0;
+		$jumlah_pemakaian_c = 0;
+		$jumlah_pemakaian_d = 0;
+		$jumlah_pemakaian_e = 0;
+		$jumlah_pemakaian_f = 0;
+
+		foreach ($rekapitulasi_produksi_harian as $x){
+			$jumlah_pemakaian_a += $x['jumlah_pemakaian_a'];
+			$jumlah_pemakaian_b += $x['jumlah_pemakaian_b'];
+			$jumlah_pemakaian_c += $x['jumlah_pemakaian_c'];
+			$jumlah_pemakaian_d += $x['jumlah_pemakaian_d'];
+			$jumlah_pemakaian_e += $x['jumlah_pemakaian_e'];
+			$jumlah_pemakaian_f += $x['jumlah_pemakaian_f'];
+		}
+
+		$total_rekapitulasi_produksi_harian = 0;
+		$total_rekapitulasi_produksi_harian = round($jumlah_pemakaian_a,2) + round($jumlah_pemakaian_b,2) + round($jumlah_pemakaian_c,2) + round($jumlah_pemakaian_d,2) + round($jumlah_pemakaian_e,2) + round($jumlah_pemakaian_f,2);
 		?>
 		<table class="table-lap" width="98%" border="0" cellpadding="5">
 			<tr class="table-active" style="">
@@ -1120,13 +1139,20 @@
 			$harga_baru = ($total_rekapitulasi_produksi_harian!=0)?$total_produksi_nilai / $total_rekapitulasi_produksi_harian * 1:0;
 			$total_nilai_produksi_boulder = $total_rekapitulasi_produksi_harian * $harga_baru;
 			?>
+			<?php
+			$produksi = $this->db->select('pp.produksi')
+			->from('kunci_bahan_jadi pp')
+			->where("(pp.date between '$date1' and '$date2')")
+			->get()->row_array();
+			$produksi = $produksi['produksi'];
+			?>
 			<tr class="table-active2" style="font-weight:bold;">
 				<th align="center"></th>
 				<th align="left">&nbsp;&nbsp;&nbsp;Bahan Baku</th>
 				<th align="right"></th>
 				<th align="right"><?php echo number_format($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_bahan?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></a></th>
+				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_bahan?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_nilai_produksi_boulder * $produksi,0,',','.');?></a></th>
 				<th align="right"></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
@@ -1135,7 +1161,7 @@
 				<th align="right"></th>
 				<th align="right"><?php echo number_format(($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_alat?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_biaya_peralatan + $total_nilai_produksi_solar,0,',','.');?></a></th>
+				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_alat?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format(($total_biaya_peralatan + $total_nilai_produksi_solar) * $produksi,0,',','.');?></a></th>
 				<th align="right"></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
@@ -1144,7 +1170,7 @@
 				<th align="right"></th>
 				<th align="right"><?php echo number_format($overhead_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_overhead?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_operasional,0,',','.');?></a></th>
+				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_overhead?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_operasional * $produksi,0,',','.');?></a></th>
 				<th align="right"></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold; background-color:#cccccc;">
@@ -1155,7 +1181,7 @@
 				?>
 				<th align="right"><?php echo number_format($total_nilai_rap,0,',','.');?></th>
 				<th align="right"><?php echo number_format((round($total_rekapitulasi_produksi_harian,2)!=0)?$total_nilai_rap / round($total_rekapitulasi_produksi_harian,2) * 1:0,0,',','.');?></th>
-				<th align="right"><?php echo number_format($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional,0,',','.');?></th>
+				<th align="right"><?php echo number_format(($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) * $produksi,0,',','.');?></th>
 				<th align="right"><?php echo number_format((round($total_rekapitulasi_produksi_harian,2)!=0)?($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) / round($total_rekapitulasi_produksi_harian,2) * 1:0,0,',','.');?></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
@@ -1181,13 +1207,13 @@
 				<th align="right"></th>
 				<th align="right"></th>
 				<?php
-				$nilai_hpp_siap_jual = $akumulasi_bahan_jadi_nilai + $total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional;
+				$nilai_hpp_siap_jual = ($akumulasi_bahan_jadi_nilai) + (($total_nilai_produksi_boulder + $total_biaya_peralatan + $total_nilai_produksi_solar + $total_operasional) * $produksi);
 				?>
 				<th align="right"><?php echo number_format($nilai_hpp_siap_jual,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
-				<th align="center">4.</th>
+				<th align="center">3.</th>
 				<th align="left">Pendapatan / Penjualan</th>
 				<th align="right"></th>
 				<th align="right"></th>
@@ -1204,7 +1230,7 @@
 				<th align="right"><?php echo number_format((round($total_volume,2)!=0)?$total_penjualan / round($total_volume,2) * 1:0,0,',','.');?></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
-				<th align="center">5.</th>
+				<th align="center">4.</th>
 				<th align="left">Persediaan Akhir Bahan Jadi</th>
 				<th align="right"><?php echo number_format(round($akumulasi_bahan_jadi_volume,2) + round($total_rekapitulasi_produksi_harian,2) - round($total_volume,2),2,',','');?> (Ton)</th>
 				<th align="right"></th>
@@ -1226,7 +1252,7 @@
 				<th align="right"><?php echo number_format($key,0,',','.');?></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
-				<th align="center">7.</th>
+				<th align="center">5.</th>
 				<th align="left">Beban Pokok Penjualan</th>
 				<th align="right"><?php echo number_format($total_volume,2,',','');?> (Ton)</th>
 				<th align="right"></th>

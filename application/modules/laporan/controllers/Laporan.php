@@ -1369,130 +1369,29 @@ class Laporan extends Secure_Controller {
 		$this->load->library('pdf');
 	
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetPrintHeader(true);
-		$pdf->SetPrintFooter(true);
+        $pdf->setPrintHeader(true);
+		$pdf->setPrintFooter(true);
         $tagvs = array('div' => array(0 => array('h' => 0, 'n' => 0), 1 => array('h' => 0, 'n'=> 0)));
 		$pdf->setHtmlVSpace($tagvs);
-		$pdf->AddPage('P');
-		
-		$arr_data = array();
-		$supplier_id = $this->input->get('supplier_id');
-		$purchase_order_no = $this->input->get('purchase_order_no');
-		$filter_material = $this->input->get('filter_material');
-		$start_date = false;
-		$end_date = false;
-		$total = 0;
-		$date = $this->input->get('filter_date');
-		if(!empty($date)){
-			$arr_date = explode(' - ',$date);
-			$start_date = date('Y-m-d',strtotime($arr_date[0]));
-			$end_date = date('Y-m-d',strtotime($arr_date[1]));
-			$filter_date = date('d F Y',strtotime($arr_date[0])).' - '.date('d F Y',strtotime($arr_date[1]));
+		        $pdf->AddPage('P');
 
-			$data['filter_date'] = $filter_date;
-			$data['start_date'] = $start_date;
-			$data['end_date'] = $end_date;
-		
-		$this->db->select('pph.no_prod, SUM(pphd.use) as jumlah_used, (SUM(pphd.use) * pk.presentase_a) / 100 AS jumlah_pemakaian_a,  (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b,  (SUM(pphd.use) * pk.presentase_c) / 100 AS jumlah_pemakaian_c,  (SUM(pphd.use) * pk.presentase_d) / 100 AS jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 AS jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 AS jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f');
-		if(!empty($start_date) && !empty($end_date)){
-            $this->db->where('pph.date_prod >=',$start_date);
-            $this->db->where('pph.date_prod <=',$end_date);
-        }
-        if(!empty($supplier_id)){
-            $this->db->where('pph.no_prod',$supplier_id);
-        }
-        if(!empty($filter_material)){
-            $this->db->where_in('ppd.material_id',$filter_material);
-        }
-        if(!empty($purchase_order_no)){
-            $this->db->where('prm.purchase_order_id',$purchase_order_no);
-        }
-		
-		$this->db->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left');
-		$this->db->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id','left');
-		$this->db->where('pph.status','PUBLISH');
-		$query = $this->db->get('pmm_produksi_harian pph');
-		
-		$no = 1;
-		if($query->num_rows() > 0){
-
-			foreach ($query->result_array() as $key => $sups) {
-
-				$mats = array();
-				$materials = $this->pmm_model->GetRekapitulasi($sups['no_prod'],$purchase_order_no,$start_date,$end_date,$filter_material);
-				
-				if(!empty($materials)){
-					foreach ($materials as $key => $row) {
-						$arr['no'] = $key + 1;
-						$arr['produk_a'] = $row['produk_a'];
-						$arr['produk_b'] = $row['produk_b'];
-						$arr['produk_c'] = $row['produk_c'];
-						$arr['produk_d'] = $row['produk_d'];
-						$arr['produk_e'] = $row['produk_e'];
-						$arr['produk_f'] = $row['produk_f'];
-						$arr['measure_a'] = $row['measure_a'];
-						$arr['measure_b'] = $row['measure_b'];
-						$arr['measure_c'] = $row['measure_c'];
-						$arr['measure_d'] = $row['measure_a'];
-						$arr['measure_e'] = $row['measure_a'];
-						$arr['measure_f'] = $row['measure_f'];
-						$arr['presentase_a'] = $row['presentase_a'];
-						$arr['presentase_b'] = $row['presentase_b'];
-						$arr['presentase_c'] = $row['presentase_c'];
-						$arr['presentase_d'] = $row['presentase_d'];
-						$arr['presentase_e'] = $row['presentase_e'];
-						$arr['presentase_f'] = $row['presentase_f'];
-					
-						$mats[] = $arr;
-					}
-					
-					$sups['mats'] = $mats;
-					$total += $sups['jumlah_used'];
-					$sups['no'] =$no;
-					$sups['jumlah_used'] = number_format($sups['jumlah_used'],2,',','.');
-					$sups['produk_a'] = $sups['produk_a'];
-					$sups['produk_b'] = $sups['produk_b'];
-					$sups['produk_c'] = $sups['produk_c'];
-					$sups['produk_d'] = $sups['produk_d'];
-					$sups['produk_e'] = $sups['produk_e'];
-					$sups['produk_f'] = $sups['produk_f'];
-					$sups['measure_a'] = $sups['measure_a'];
-					$sups['measure_b'] = $sups['measure_b'];
-					$sups['measure_c'] = $sups['measure_c'];
-					$sups['measure_d'] = $sups['measure_d'];
-					$sups['measure_e'] = $sups['measure_e'];
-					$sups['measure_f'] = $sups['measure_f'];
-					$sups['presentase_a'] = $sups['presentase_a'];
-					$sups['presentase_b'] = $sups['presentase_b'];
-					$sups['presentase_c'] = $sups['presentase_c'];
-					$sups['presentase_d'] = $sups['presentase_d'];
-					$sups['presentase_e'] = $sups['presentase_e'];
-					$sups['presentase_f'] = $sups['presentase_f'];
-					$sups['jumlah_pemakaian_a'] = number_format($sups['jumlah_pemakaian_a'],2,',','.');
-					$sups['jumlah_pemakaian_b'] = number_format($sups['jumlah_pemakaian_b'],2,',','.');
-					$sups['jumlah_pemakaian_c'] = number_format($sups['jumlah_pemakaian_c'],2,',','.');
-					$sups['jumlah_pemakaian_d'] = number_format($sups['jumlah_pemakaian_d'],2,',','.');
-					$sups['jumlah_pemakaian_e'] = number_format($sups['jumlah_pemakaian_e'],2,',','.');
-					$sups['jumlah_pemakaian_f'] = number_format($sups['jumlah_pemakaian_f'],2,',','.');
-
-					$arr_data[] = $sups;
-					$no++;
-					
-					}	
-				}
-			}
-			
-			$data['data'] = $arr_data;
-			$data['total'] = $total;
-	        $html = $this->load->view('laporan_produksi/cetak_rekapitulasi_laporan_produksi',$data,TRUE);
-
-	        $pdf->SetTitle('BBJ - Rekapitulasi Laporan Produksi');
-	        $pdf->nsi_html($html);
-	        $pdf->Output('rekapitulasi-laporan-produksi.pdf', 'I');
-	        
+		$arr_date = $this->input->get('filter_date');
+		if(empty($arr_date)){
+			$filter_date = '-';
 		}else {
-			echo 'Please Filter Date First';
+			$arr_filter_date = explode(' - ', $arr_date);
+			$start_date = date('Y-m-d',strtotime($arr_filter_date[0]));
+			$end_date = date('Y-m-d',strtotime($arr_filter_date[1]));
+			$filter_date = date('d F Y',strtotime($arr_filter_date[0])).' - '.date('d F Y',strtotime($arr_filter_date[1]));
 		}
+		$data['filter_date'] = $filter_date;
+		$data['start_date'] = $start_date;
+		$data['end_date'] = $end_date;
+		$html = $this->load->view('laporan_produksi/cetak_rekapitulasi_laporan_produksi',$data,TRUE);
+
+        $pdf->SetTitle('BBJ - Rekapitulasi Produksi Harian');
+        $pdf->nsi_html($html);
+        $pdf->Output('rekapitulasi-produksi-harian.pdf', 'I');
 	
 	}
 

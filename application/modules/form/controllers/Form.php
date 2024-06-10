@@ -61,7 +61,7 @@ class Form extends Secure_Controller {
 			'lain_lain' => $lain_lain,
 			'deskripsi' => $deskripsi,
 			'memo' => $memo,
-			'unit_head' => 39,
+			'unit_head' => 41,
 			'status' => 'UNPUBLISH',
 			'status_permintaan' => 'MENUNGGU',
 			'created_by' => $this->session->userdata('admin_id'),

@@ -95,6 +95,49 @@
 		</table>
 		<br />
 		<br />
+		<?php
+			$rekapitulasi_produksi_harian = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+			->from('pmm_produksi_harian pph ')
+			->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+			->where("(pph.date_prod between '$start_date' and '$end_date')")
+			->where('pph.status','PUBLISH')
+			->group_by('pph.id')
+			->get()->result_array();
+
+			$jumlah_pemakaian_a = 0;
+			$jumlah_pemakaian_b = 0;
+			$jumlah_pemakaian_c = 0;
+			$jumlah_pemakaian_d = 0;
+			$jumlah_pemakaian_e = 0;
+			$jumlah_pemakaian_f = 0;
+
+			$presentase_a = 0;
+			$presentase_b = 0;
+			$presentase_c = 0;
+			$presentase_d = 0;
+			$presentase_e = 0;
+			$presentase_f = 0;
+
+			foreach ($rekapitulasi_produksi_harian as $x){
+				$jumlah_pemakaian_a += $x['jumlah_pemakaian_a'];
+				$jumlah_pemakaian_b += $x['jumlah_pemakaian_b'];
+				$jumlah_pemakaian_c += $x['jumlah_pemakaian_c'];
+				$jumlah_pemakaian_d += $x['jumlah_pemakaian_d'];
+				$jumlah_pemakaian_e += $x['jumlah_pemakaian_e'];
+				$jumlah_pemakaian_f += $x['jumlah_pemakaian_f'];
+				$presentase_a = $x['presentase_a'];
+				$presentase_b = $x['presentase_b'];
+				$presentase_c = $x['presentase_c'];
+				$presentase_d = $x['presentase_d'];
+				$presentase_e = $x['presentase_e'];
+				$presentase_f = $x['presentase_f'];
+			}
+
+			$total_rekapitulasi_produksi_harian = 0;
+			$total_rekapitulasi_produksi_harian = round($jumlah_pemakaian_a,2) + round($jumlah_pemakaian_b,2) + round($jumlah_pemakaian_c,2) + round($jumlah_pemakaian_d,2) + round($jumlah_pemakaian_e,2) + round($jumlah_pemakaian_f,2);
+			$total_presentase_produksi_harian = $presentase_a + $presentase_b + $presentase_c + $presentase_d + $presentase_e + $presentase_f;
+		?>
 		<table cellpadding="3" width="98%" border="0">
 			<tr class="table-judul">
 				<th align="center" width="5%">NO.</th>
@@ -103,69 +146,54 @@
 				<th align="center" width="20%">PRESENTASE</th>
 				<th align="center" width="20%">VOLUME</th>
             </tr>
-            <?php   
-            if(!empty($data)){
-            	foreach ($data as $key => $sups) {
-            		?>
-					<?php
-					$subtotal_presentase = 0;
-					$subtotal_volume = 0;
-					?>
-					<?php
-					$subtotal_presentase = $sups['presentase_a'] + $sups['presentase_b'] + $sups['presentase_c'] + $sups['presentase_d'] + $sups['presentase_e'] + $sups['presentase_f'];
-					$subtotal_volume = str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_a']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_b']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_c']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_d']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_e']) + str_replace(['.', ','], ['', '.'], $sups['jumlah_pemakaian_f']);
-					?>
-            		<tr class="table-baris1">
-            			<td align="center"><?php echo $key + 1;?></td>
-						<td align="left"><?php echo $sups['produk_a'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_a']),'nama_produk'); ?></td>
-						<td align="center"><?php echo $sups['measure_a'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_a']),'measure_name'); ?></td>
-						<td align="center"><?php echo $sups['presentase_a'];?> %</td>
-						<td align="right"><?php echo $sups['jumlah_pemakaian_a'];?></td>
-            		</tr>
-					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 2;?></td>						
-						<td align="left"><?php echo $sups['produk_b'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_b']),'nama_produk'); ?></td>
-						<td align="center"><?php echo $sups['measure_b'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_b']),'measure_name'); ?></td>
-						<td align="center"><?php echo $sups['presentase_b'];?> %</td>
-						<td align="right"><?php echo $sups['jumlah_pemakaian_b'];?></td>
-					</tr>
-					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 3;?></td>			
-						<td align="left"><?php echo $sups['produk_f'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_f']),'nama_produk'); ?></td>
-						<td align="center"><?php echo $sups['measure_f'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_f']),'measure_name'); ?></td>
-						<td align="center"><?php echo $sups['presentase_f'];?> %</td>
-						<td align="right"><?php echo $sups['jumlah_pemakaian_f'];?></td>
-					</tr>
-					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 4;?></td>						
-						<td align="left"><?php echo $sups['produk_c'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_c']),'nama_produk'); ?></td>
-						<td align="center"><?php echo $sups['measure_c'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_c']),'measure_name'); ?></td>
-						<td align="center"><?php echo $sups['presentase_c'];?> %</td>
-						<td align="right"><?php echo $sups['jumlah_pemakaian_c'];?></td>
-					</tr>
-					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 5;?></td>					
-						<td align="left"><?php echo $sups['produk_d'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_d']),'nama_produk'); ?></td>
-						<td align="center"><?php echo $sups['measure_d'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_d']),'measure_name'); ?></td>
-						<td align="center"><?php echo $sups['presentase_d'];?> %</td>
-						<td align="right"><?php echo $sups['jumlah_pemakaian_d'];?></td>
-					</tr>
-					<tr class="table-baris1">
-						<td align="center"><?php echo $key + 6;?></td>			
-						<td align="left"><?php echo $sups['produk_e'] = $this->crud_global->GetField('produk',array('id'=>$sups['produk_e']),'nama_produk'); ?></td>
-						<td align="center"><?php echo $sups['measure_e'] = $this->crud_global->GetField('pmm_measures',array('id'=>$sups['measure_e']),'measure_name'); ?></td>
-						<td align="center"><?php echo $sups['presentase_e'];?> %</td>
-						<td align="right"><?php echo $sups['jumlah_pemakaian_e'];?></td>
-					</tr>
-            		<?php
-            	}
-            }
-            ?>
+            
+			<tr class="table-baris1">
+				<td align="center">1.</td>	
+				<td align="left">Batu Split 0 - 0,5 (Abu Batu)</td>
+				<td align="center">Ton</td>
+				<td align="center"><?php echo number_format($presentase_a,2,',','.');?> %</td>
+				<td align="right"><?php echo number_format($jumlah_pemakaian_a,2,',','.');?></td>
+			</tr>
+			<tr class="table-baris1">
+				<td align="center">2.</td>	
+				<td align="left">Batu Split 0,5 - 1</td>
+				<td align="center">Ton</td>
+				<td align="center"><?php echo number_format($presentase_b,2,',','.');?> %</td>
+				<td align="right"><?php echo number_format($jumlah_pemakaian_b,2,',','.');?></td>
+			</tr>
+			<tr class="table-baris1">
+				<td align="center">3.</td>	
+				<td align="left">Batu Split 0 - 0,5 (Abu Batu)</td>
+				<td align="center">Ton</td>
+				<td align="center"><?php echo number_format($presentase_c,2,',','.');?> %</td>
+				<td align="right"><?php echo number_format($jumlah_pemakaian_c,2,',','.');?></td>
+			</tr>
+			<tr class="table-baris1">
+				<td align="center">4.</td>	
+				<td align="left">Batu Split 1 - 2</td>
+				<td align="center">Ton</td>
+				<td align="center"><?php echo number_format($presentase_d,2,',','.');?> %</td>
+				<td align="right"><?php echo number_format($jumlah_pemakaian_d,2,',','.');?></td>
+			</tr>
+			<tr class="table-baris1">
+				<td align="center">5.</td>	
+				<td align="left">Batu Split 2 - 3</td>
+				<td align="center">Ton</td>
+				<td align="center"><?php echo number_format($presentase_e,2,',','.');?> %</td>
+				<td align="right"><?php echo number_format($jumlah_pemakaian_e,2,',','.');?></td>
+			</tr>
+			<tr class="table-baris1">
+				<td align="center">6.</td>	
+				<td align="left">Limbah</td>
+				<td align="center">Ton</td>
+				<td align="center"><?php echo number_format($presentase_f,2,',','.');?> %</td>
+				<td align="right"><?php echo number_format($jumlah_pemakaian_f,2,',','.');?></td>
+			</tr>
             <tr class="table-total">
             	<th width="40%" align="center" colspan="2"><b>TOTAL</b></th>
 				<th width="20%" align="center"><b>Ton</b></th>
-				<th width="20%" align="center"><?php echo number_format($subtotal_presentase,2,',','.');?></th>
-            	<th width="20%" align="right"><?php echo number_format($subtotal_volume,2,',','.');?></th>
+				<th width="20%" align="center"><?php echo number_format($total_presentase_produksi_harian,2,',','.');?> %</th>
+            	<th width="20%" align="right"><?php echo number_format($total_rekapitulasi_produksi_harian,2,',','.');?></th>
             </tr>
 			
 		</table>

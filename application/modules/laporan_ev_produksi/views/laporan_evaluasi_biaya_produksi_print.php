@@ -113,8 +113,27 @@
 			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
 			->where("(pph.date_prod between '$date1' and '$date2')")
 			->where('pph.status','PUBLISH')
-			->get()->row_array();
-			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+			->group_by('pph.id')
+			->get()->result_array();
+
+			$jumlah_pemakaian_a = 0;
+			$jumlah_pemakaian_b = 0;
+			$jumlah_pemakaian_c = 0;
+			$jumlah_pemakaian_d = 0;
+			$jumlah_pemakaian_e = 0;
+			$jumlah_pemakaian_f = 0;
+
+			foreach ($rekapitulasi_produksi_harian as $x){
+				$jumlah_pemakaian_a += $x['jumlah_pemakaian_a'];
+				$jumlah_pemakaian_b += $x['jumlah_pemakaian_b'];
+				$jumlah_pemakaian_c += $x['jumlah_pemakaian_c'];
+				$jumlah_pemakaian_d += $x['jumlah_pemakaian_d'];
+				$jumlah_pemakaian_e += $x['jumlah_pemakaian_e'];
+				$jumlah_pemakaian_f += $x['jumlah_pemakaian_f'];
+			}
+
+			$total_rekapitulasi_produksi_harian = 0;
+			$total_rekapitulasi_produksi_harian = round($jumlah_pemakaian_a,2) + round($jumlah_pemakaian_b,2) + round($jumlah_pemakaian_c,2) + round($jumlah_pemakaian_d,2) + round($jumlah_pemakaian_e,2) + round($jumlah_pemakaian_f,2);
 			?>
 			
 			<!-- Total Pendapatan / Penjualan -->
@@ -1081,8 +1100,27 @@
 			->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
 			->where("(pph.date_prod between '$date1' and '$date2')")
 			->where('pph.status','PUBLISH')
-			->get()->row_array();
-			$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
+			->group_by('pph.id')
+			->get()->result_array();
+
+			$jumlah_pemakaian_a = 0;
+			$jumlah_pemakaian_b = 0;
+			$jumlah_pemakaian_c = 0;
+			$jumlah_pemakaian_d = 0;
+			$jumlah_pemakaian_e = 0;
+			$jumlah_pemakaian_f = 0;
+
+			foreach ($rekapitulasi_produksi_harian as $x){
+				$jumlah_pemakaian_a += $x['jumlah_pemakaian_a'];
+				$jumlah_pemakaian_b += $x['jumlah_pemakaian_b'];
+				$jumlah_pemakaian_c += $x['jumlah_pemakaian_c'];
+				$jumlah_pemakaian_d += $x['jumlah_pemakaian_d'];
+				$jumlah_pemakaian_e += $x['jumlah_pemakaian_e'];
+				$jumlah_pemakaian_f += $x['jumlah_pemakaian_f'];
+			}
+
+			$total_rekapitulasi_produksi_harian = 0;
+			$total_rekapitulasi_produksi_harian = round($jumlah_pemakaian_a,2) + round($jumlah_pemakaian_b,2) + round($jumlah_pemakaian_c,2) + round($jumlah_pemakaian_d,2) + round($jumlah_pemakaian_e,2) + round($jumlah_pemakaian_f,2);
 			
 			$stok_volume_boulder_lalu = $stock_opname_batu_boulder_ago['volume'];
 			$stok_nilai_boulder_lalu = $harga_boulder['nilai_boulder'];
