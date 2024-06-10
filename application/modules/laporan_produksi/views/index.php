@@ -107,7 +107,7 @@
                                                         <h3 class="panel-title"><b>Laporan Produksi Harian</b></h3>
                                                         <a href="laporan_produksi">Kembali</a>
                                                     </div>
-                                                    <div style="margin: 20px">
+                                                    <div style="margin: 20px; font-weight:normal;">
                                                         <div class="row">
                                                             <form action="<?php echo site_url('laporan/laporan_produksi_harian_print'); ?>" target="_blank">
                                                                 <div class="col-sm-3">
@@ -151,7 +151,7 @@
                                                         <h3 class="panel-title"><b>Laporan Produksi Campuran</b></h3>
                                                         <a href="laporan_produksi">Kembali</a>
                                                     </div>
-                                                    <div style="margin: 20px">
+                                                    <div style="margin: 20px; font-weight:normal;">
                                                         <div class="row">
                                                             <form action="<?php echo site_url('laporan/laporan_produksi_campuran_print'); ?>" target="_blank">
                                                                 <div class="col-sm-3">
@@ -201,7 +201,7 @@
                                                         <h3 class="panel-title"><b>Rekapitulasi Laporan Produksi</b></h3>
                                                         <a href="laporan_produksi">Kembali</a>
                                                     </div>
-                                                    <div style="margin: 20px">
+                                                    <div style="margin: 20px; font-weight:normal;">
                                                         <div class="row">
                                                             <form action="<?php echo site_url('laporan/rekapitulasi_laporan_produksi_print'); ?>" target="_blank">
                                                                 <div class="col-sm-3">
