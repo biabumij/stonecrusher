@@ -1051,11 +1051,8 @@
 					<td width="50%">
 						<div style="display: block;font-weight: bold;font-size: 10px;">Periode</div>
 					</td>
-					<td align="right" width="25%">
+					<td align="right" width="50%">
 						<div align="right" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date;?></div>
-					</td>
-					<td align="right" width="25%">
-						<div align="right" style="display: block;font-weight: bold;font-size: 10px;">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></div>
 					</td>
 				</tr>
 			</table>
@@ -1065,7 +1062,7 @@
 	        </tr>
 			<tr class="table-active2">
 				<th width="10%" align="center"></th>
-				<th width="40%" align="left">Pendapatan Penjualan</th>
+				<th width="65%" align="left">Pendapatan Penjualan</th>
 	            <th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -1078,22 +1075,10 @@
 							</tr>
 					</table>
 				</th>
-				<th width="25%" align="center">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th align="right" width="20%">
-									<span>Rp.</span>
-								</th>
-								<th align="right" width="80%">
-									<span><?php echo number_format($total_penjualan_all_2,0,',','.');?></span>
-								</th>
-							</tr>
-					</table>
-				</th>
 	        </tr>
 			<tr class="table-active2">
 				<th width="10%" align="center"></th>
-				<th width="40%" align="left">Pendapatan Lain - Lain</th>
+				<th width="65%" align="left">Pendapatan Lain - Lain</th>
 	            <th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -1106,22 +1091,10 @@
 							</tr>
 					</table>
 				</th>
-				<th width="25%" align="center">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th align="right" width="20%">
-									<span>Rp.</span>
-								</th>
-								<th align="right" width="80%">
-									<span><?php echo number_format($total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2,0,',','.');?></span>
-								</th>
-							</tr>
-					</table>
-				</th>
 	        </tr>
 			<hr width="98%">
 			<tr class="table-active2">
-				<th width="50%" align="left"><b>Total Pendapatan</b></th>
+				<th width="75%" align="left"><b>Total Pendapatan</b></th>
 	            <th width="25%" align="right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -1130,18 +1103,6 @@
 								</th>
 								<th align="right" width="80%">
 									<span><b><?php echo number_format($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain,0,',','.');?></b></span>
-								</th>
-							</tr>
-					</table>
-				</th>
-				<th width="25%" align="right">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th align="right" width="20%">
-									<span>Rp.</span>
-								</th>
-								<th align="right" width="80%">
-									<span><b><?php echo number_format($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2,0,',','.');?></b></span>
 								</th>
 							</tr>
 					</table>
@@ -1155,7 +1116,7 @@
 	        </tr>
 			<tr class="table-active2">
 				<th width="10%" align="center"></th>
-				<th width="40%" align="left">Beban Pokok Penjualan</th>
+				<th width="65%" align="left">Beban Pokok Penjualan</th>
 	            <th width="25%" align="center">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -1168,22 +1129,10 @@
 							</tr>
 					</table>
 				</th>
-				<th width="25%" align="center">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th align="right" width="20%">
-									<span>Rp.</span>
-								</th>
-								<th align="right" width="80%">
-									<span><?php echo number_format($total_harga_pokok_pendapatan_2,0,',','.');?></span>
-								</th>
-							</tr>
-					</table>
-				</th>
 	        </tr>
 			<hr width="98%">
 			<tr class="table-active2">
-				<th width="50%" align="left"><b>Total Harga Pokok Pendapatan</b></th>
+				<th width="75%" align="left"><b>Total Harga Pokok Pendapatan</b></th>
 	            <th width="25%" align="right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -1196,18 +1145,6 @@
 							</tr>
 					</table>
 				</th>
-				<th width="25%" align="right">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th align="right" width="20%">
-									<span><b>Rp.</b></span>
-								</th>
-								<th align="right" width="80%">
-									<span><b><?php echo number_format($total_harga_pokok_pendapatan_2,0,',','.');?></b></span>
-								</th>
-							</tr>
-					</table>
-				</th>
 	        </tr>
 			<tr class="table-active3">
 				<th width="100%" align="left"></th>
@@ -1216,7 +1153,7 @@
 				$styleColor = $laba_kotor < 0 ? 'color:red' : 'color:black';
 			?>
 			<tr class="table-active2">
-	            <th width="50%" align="left"><b>Laba / Rugi Kotor</b></th>
+	            <th width="75%" align="left"><b>Laba / Rugi Kotor</b></th>
 	            <th width="25%" align="right" style="<?php echo $styleColor ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
@@ -1225,21 +1162,6 @@
 								</th>
 								<th align="right" width="80%">
 									<span><b><?php echo $laba_kotor < 0 ? "(".number_format(-$laba_kotor,0,',','.').")" : number_format($laba_kotor,0,',','.');?></b></span>
-								</th>
-							</tr>
-					</table>
-				</th>
-				<?php
-					$styleColor = $laba_kotor_2 < 0 ? 'color:red' : 'color:black';
-				?>
-				<th width="25%" align="right" style="<?php echo $styleColor ?>">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th align="right" width="20%">
-									<span><b>Rp.</b></span>
-								</th>
-								<th align="right" width="80%">
-									<span><b><?php echo $laba_kotor_2 < 0 ? "(".number_format(-$laba_kotor_2,0,',','.').")" : number_format($laba_kotor_2,0,',','.');?></b></span>
 								</th>
 							</tr>
 					</table>

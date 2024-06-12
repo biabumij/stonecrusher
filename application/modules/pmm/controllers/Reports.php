@@ -2225,9 +2225,8 @@ class Reports extends CI_Controller {
 			}
 		 </style>
 	        <tr class="table-active2">
-	            <th colspan="2">PERIODE</th>
-				<th class="text-center" colspan="2"><?php echo $filter_date = $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
-				<th class="text-center" colspan="2">SD. <?php echo $filter_date_2 = date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
+	            <th colspan="3">PERIODE</th>
+				<th class="text-center"><?php echo $filter_date = $filter_date = date('d/m/Y',strtotime($arr_filter_date[0])).' - '.date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 	        </tr>
 			<?php
 			$penjualan = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
@@ -3183,23 +3182,19 @@ class Reports extends CI_Controller {
 			?>
 
 			<tr class="table-active">
-	            <th width="100%" class="text-left" colspan="6">PENDAPATAN USAHA</th>
+	            <th width="100%" class="text-left" colspan="4">PENDAPATAN USAHA</th>
 	        </tr>
 			<tr class="table-active3">
 	            <th width="10%" class="text-center"></th>
 				<th class="text-left">Pendapatan Penjualan</th>
 				<th class="text-right"><?php echo number_format($total_volume,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_penjualan_all,0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($total_volume_2,2,',','.');?></th>
-				<th class="text-right"><?php echo number_format($total_penjualan_all_2,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 	            <th width="10%" class="text-center"></th>
 				<th class="text-left">Pendapatan Lain - Lain</th>
 				<th class="text-right"><?php echo number_format($total_volume_limbah + $total_volume_lain_lain,2,',','.');?></th>
 				<th class="text-right"><?php echo number_format($total_penjualan_all_limbah + $total_penjualan_all_lain_lain,0,',','.');?></th>
-				<th class="text-right"><?php echo number_format($total_volume_limbah_2 + $total_volume_lain_lain_2,2,',','.');?></th>
-				<th class="text-right"><?php echo number_format($total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2,0,',','.');?></th>
 	        </tr>
 			<tr class="table-active3">
 				<th class="text-left" colspan="2">Total Pendapatan</th>
@@ -3216,30 +3211,17 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
-				<th class="text-right"><?php echo number_format($total_volume_2 + $total_volume_limbah_2 + $total_volume_lain_lain_2,2,',','.');?></th>
-	            <th class="text-right">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th class="text-left" width="10%">
-									<span>Rp.</span>
-								</th>
-								<th class="text-right" width="90%">
-									<span><a target="_blank" href="<?= base_url("laporan/cetak_overhead?filter_date=".$filter_date_2 = date('d F Y',strtotime($date3)).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_lain_lain_2,0,',','.');?></a></span>
-								</th>
-							</tr>
-					</table>
-				</th>
 	        </tr>
 			<tr class="table-active3">
-				<th colspan="6"></th>
+				<th colspan="4"></th>
 			</tr>
 			<tr class="table-active">
-				<th class="text-left" colspan="6">BEBAN POKOK PENJUALAN</th>
+				<th class="text-left" colspan="4">BEBAN POKOK PENJUALAN</th>
 	        </tr>
 			<tr class="table-active3">
 	            <th class="text-center"></th>
-				<th class="text-left">Beban Pokok Penjualan</th>
-				<th class="text-right" colspan="2">
+				<th class="text-left" colspan="2">Beban Pokok Penjualan</th>
+				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th class="text-left" width="10%">
@@ -3251,22 +3233,10 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
-				<th class="text-right" colspan="2">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th class="text-left" width="10%">
-									<span>Rp.</span>
-								</th>
-								<th class="text-right" width="90%">
-									<span><a target="_blank" href="<?= base_url("laporan/cetak_beban_pokok_penjualan?filter_date=".$filter_date_2 = date('d F Y',strtotime($date3)).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_harga_pokok_pendapatan,0,',','.');?></a></span>
-								</th>
-							</tr>
-					</table>
-				</th>
 	        </tr>
 			<tr class="table-active3">
-				<th class="text-left" colspan="2">Total Beban Pokok Penjualan</th>
-				<th class="text-right" colspan="2">
+				<th class="text-left" colspan="3">Total Beban Pokok Penjualan</th>
+				<th class="text-right">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th class="text-left"width="10%">
@@ -3278,28 +3248,16 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>				
 				</th>
-				<th class="text-right" colspan="2">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th class="text-left"width="10%">
-									<span>Rp.</span>
-								</th>
-								<th class="text-right" width="90%">
-									<span><?php echo number_format($total_harga_pokok_pendapatan_2,0,',','.');?></span>
-								</th>
-							</tr>
-					</table>				
-				</th>
 	        </tr>
 			<tr class="table-active3">
-				<th colspan="6"></th>
+				<th colspan="4"></th>
 			</tr>
 			<?php
 				$styleColor = $laba_kotor < 0 ? 'color:red' : 'color:black';
 			?>
 			<tr class="table-active3">
-				<th class="text-left" colspan="2">Laba / Rugi Kotor</th>
-	            <th class="text-right" style="<?php echo $styleColor ?>" colspan="2">
+				<th class="text-left" colspan="3">Laba / Rugi Kotor</th>
+	            <th class="text-right" style="<?php echo $styleColor ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th class="text-left" width="10%">
@@ -3311,31 +3269,15 @@ class Reports extends CI_Controller {
 							</tr>
 					</table>
 				</th>
-				<?php
-					$styleColor = $laba_kotor_2 < 0 ? 'color:red' : 'color:black';
-				?>
-				<th class="text-right" style="<?php echo $styleColor ?>" colspan="2">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th class="text-left" width="10%">
-									<span>Rp.</span>
-								</th>
-								<th class="text-right" width="90%">
-									<span><?php echo $laba_kotor_2 < 0 ? "(".number_format(-$laba_kotor_2,0,',','.').")" : number_format($laba_kotor_2,0,',','.');?></span>
-								</th>
-							</tr>
-					</table>
-				</th>
-			</tr>
 			<tr class="table-active3">
-				<th colspan="6"></th>
+				<th colspan="4"></th>
 			</tr>
 			<?php
 				$styleColor = $persentase < 0 ? 'color:red' : 'color:black';
 			?>
 			<tr class="table-active3">
-	            <th colspan="2" class="text-left">Presentase Laba / Rugi Kotor Terhadap Pendapatan</th>
-	            <th class="text-right" style="<?php echo $styleColor ?>" colspan="2">
+	            <th colspan="3" class="text-left">Presentase Laba / Rugi Kotor Terhadap Pendapatan</th>
+	            <th class="text-right" style="<?php echo $styleColor ?>">
 					<table width="100%" border="0" cellpadding="0">
 						<tr>
 								<th class="text-left" width="10%">
@@ -3343,21 +3285,6 @@ class Reports extends CI_Controller {
 								</th>
 								<th class="text-right" width="90%">
 									<span><?php echo $persentase < 0 ? "(".number_format(-$persentase,2,',','.').")" : number_format($persentase,2,',','.');?> %</span>
-								</th>
-							</tr>
-					</table>
-				</th>
-				<?php
-					$styleColor = $persentase_2 < 0 ? 'color:red' : 'color:black';
-				?>
-				<th class="text-right" style="<?php echo $styleColor ?>" colspan="2">
-					<table width="100%" border="0" cellpadding="0">
-						<tr>
-								<th class="text-left" width="10%">
-									<span>Rp.</span>
-								</th>
-								<th class="text-right" width="90%">
-									<span><?php echo $persentase_2 < 0 ? "(".number_format(-$persentase_2,2,',','.').")" : number_format($persentase_2,2,',','.');?> %</span>
 								</th>
 							</tr>
 					</table>
