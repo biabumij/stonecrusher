@@ -108,7 +108,6 @@
                                 <?php
                                 if(in_array($this->session->userdata('admin_group_id'), array(1,5,6,15))){
                                 ?>
-
                                 <?php
                                 $query1 = $this->db->select('COUNT(pvp.id) as id')
                                 ->from('pmm_verifikasi_penagihan_pembelian pvp')
@@ -127,7 +126,22 @@
                                 
                                 $query = $query1['id'] + $query2['id'] + $query3['id'];
                                 ?>
-                                    <center><b><blink><a target="_blank" href="<?= base_url("pmm/reports/detail_notification/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN KA. PLANT (<?php echo number_format($query,0,',','.');?>)</a></blink><b><center>
+                                    <center><b><a target="_blank" href="<?= base_url("pmm/reports/detail_notification/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN KA. PLANT (<blink><?php echo number_format($query,0,',','.');?></blink>)</a><b><center>
+                                <?php
+                                }
+                                ?>
+                                <?php
+                                if(in_array($this->session->userdata('admin_group_id'), array(1,5,6))){
+                                ?>
+                                <?php
+                                $query = $this->db->select('COUNT(id) as id')
+                                ->from('perubahan_sistem')
+                                ->where("status = 'UNPUBLISH'")
+                                ->get()->row_array();
+                                
+                                $query = $query['id'];
+                                ?>
+                                    <center><a target="_blank" href="<?= base_url("pmm/reports/detail_notification_2/") ?>"><i class="fa-solid fa-clipboard-check"></i> FORM PERUBAHAN APLIKASI (<blink><?php echo number_format($query,0,',','.');?></blink>)</a><center>
                                 <?php
                                 }
                                 ?>

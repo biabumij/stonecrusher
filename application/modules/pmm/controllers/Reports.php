@@ -12655,6 +12655,18 @@ class Reports extends CI_Controller {
         }
     }
 
+	public function detail_notification_2()
+    {
+        $check = $this->m_admin->check_login();
+        if($check == true){
+			
+            $this->load->view('admin/detail_notification_2',$data);
+            
+        }else {
+            redirect('admin');
+        }
+    }
+
 	public function rekapitulasi($arr_date)
 	{
 		$data = array();
