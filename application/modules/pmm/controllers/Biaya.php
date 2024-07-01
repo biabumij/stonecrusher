@@ -56,7 +56,7 @@ class Biaya extends CI_Controller {
         ->order_by('pp.date','desc')->limit(1)
         ->get()->row_array();
         $last_opname = $kunci_bahan_baku['date'];
-        $last_opname = date('Y-m-d', strtotime('+1 days -1 months', strtotime($last_opname)));
+        $last_opname = date('Y-m-d', strtotime('-30 days 0 months', strtotime($last_opname)));
 
 		if(!empty($filter_date)){
 			$arr_date = explode(' - ', $filter_date);
