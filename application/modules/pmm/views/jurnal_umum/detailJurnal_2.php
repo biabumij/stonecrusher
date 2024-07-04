@@ -82,20 +82,12 @@
                                             $kredit = 0;
                                             ?>
                                             <?php foreach($detailBiaya as $d) : ?>
-                                            <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td>
-                                                <?= $d["coa"]; ?>
-                                                </td>
-                                                <td>
-                                                <?= $d["deskripsi"]; ?>
-                                                </td>
-                                                <td >
-                                                <?= $this->filter->Rupiah($d['debit']);?>
-                                                </td>
-                                                <td >
-                                                <?= $this->filter->Rupiah($d['kredit']);?>
-                                                </td>
+                                                <tr>
+                                                <td class="text-center"><?= $no++ ?></td>
+                                                <td class="text-left">(<?= $d["coa_number"]; ?>) - <?= $d["coa"]; ?></td>
+                                                <td class="text-left"><?= $d["deskripsi"]; ?></td>
+                                                <td class="text-right">Rp. <?php echo number_format($d['debit'],0,',','.');?></td>
+                                                <td class="text-right">Rp. <?php echo number_format($d['kredit'],0,',','.');?></td>
                                             </tr>
                                             <?php
                                             $debit += $d['debit'];

@@ -90,10 +90,10 @@
                                             foreach ($detail as $key => $dt) {
                                                 ?>
                                                 <tr>
-                                                    <td><?= $dt['kode_akun'];?></td>
-                                                    <td><?= $dt['akun'];?></td>
-                                                    <td><?= $dt['deskripsi'];?></td>
-                                                    <td class=" text-right">Rp. <?= $this->filter->Rupiah($dt['jumlah']);?></td>    
+                                                    <td class="text-center"><?= $dt['kode_akun'];?></td>
+                                                    <td class="text-left"><?= $dt['akun'];?></td>
+                                                    <td class="text-left"><?= $dt['deskripsi'];?></td>
+                                                    <td class="text-right">Rp. <?php echo number_format($dt['jumlah'],0,',','.');?></td>    
                                                 </tr>
                                                 <?php
                                                 $total += $dt['jumlah'];
