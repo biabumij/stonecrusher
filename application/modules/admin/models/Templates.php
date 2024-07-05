@@ -48,7 +48,7 @@ class Templates extends CI_Model {
     	$jenis_usaha = $this->crud_global->GetField('pmm_setting_production',array('id'=>1),'jenis_usaha');
     	?>
     	<div class="page-header">
-	        <div class="leftside-header">
+		<div class="leftside-header">
 				<?php
 				function tglIndonesia($str){
 					$tr   = trim($str);
@@ -58,23 +58,23 @@ class Templates extends CI_Model {
 				?>
 	            <div class="logo">
 	                <a href="" class="on-click" style="color:#ffffff; font-weight:bold; display:block; text-align:left; font-size:18px; padding-top:1px; width:880px;">
-					<?php echo $this->m_themes->GetThemes('site_name');?> - DIVISI STONE CRUSHER <br />
+					<!--<?php echo $this->m_themes->GetThemes('site_name');?>--> DIVISI STONE CRUSHER <br />
 					<div style="font-size:12px;">
 						<?php echo tglIndonesia(date('D'));?>, <?php echo tglIndonesia(date('d F Y'));?>
 					</div>
 					</a>
 	            </div>
-	            <div id="menu-toggle" class="visible-xs toggle-left-sidebar" data-toggle-class="left-sidebar-open" data-target="html">
+	            <!--<div id="menu-toggle" class="visible-xs toggle-left-sidebar" data-toggle-class="left-sidebar-open" data-target="html">
 	                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-	            </div>
+	            </div>-->
 	        </div>
 	        <div class="rightside-header">
 	            <div class="header-middle"></div>
-	            <div class="header-section" id="search-headerbox">
+	            <!--<div class="header-section" id="search-headerbox">
 	                <input type="text" name="search" id="search" placeholder="Search...">
 	                <i class="fa fa-search search" id="search-icon" aria-hidden="true"></i>
 	                <div class="header-separator"></div>
-	            </div>
+	            </div>-->
 	            <div class="header-section" id="user-headerbox">
 	                <div class="user-header-wrap">
 	                    <div class="user-photo">
