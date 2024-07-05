@@ -3733,7 +3733,7 @@ class Pmm_model extends CI_Model {
         return $output;
     }
 
-    function getBPP($date1,$date2)
+    function getBPPAkumulasi($date3,$date2)
     {   
         $total = 0;
 
@@ -3742,7 +3742,7 @@ class Pmm_model extends CI_Model {
 		->from('pmm_productions pp')
 		->join('penerima p', 'pp.client_id = p.id','left')
 		->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-		->where("pp.date_production between '$date1' and '$date2'")
+		->where("pp.date_production between '$date3' and '$date2'")
 		->where("pp.product_id in (3,4,7,8,9,14,24,63)")
 		->where("pp.salesPo_id <> 536 ")
 		->where("pp.salesPo_id <> 532 ")
@@ -3782,7 +3782,7 @@ class Pmm_model extends CI_Model {
 		$date1_old = date('Y-m-d', strtotime('+1 days', strtotime($last_production['date'])));
 		$date2_old = date('Y-m-d', strtotime($last_production_2['date']));
 
-		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
+		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date3)));
 
 		$akumulasi_bahan_jadi = $this->db->select('sum(pp.volume) as volume, sum(pp.nilai) as nilai')
 		->from('kunci_bahan_jadi pp')
@@ -3798,7 +3798,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 101")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$stone_crusher_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -3806,7 +3806,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 101")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$stone_crusher = $stone_crusher_biaya['total'] + $stone_crusher_jurnal['total'];
@@ -3816,7 +3816,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 104")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$whell_loader_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -3824,7 +3824,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 104")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$whell_loader = $whell_loader_biaya['total'] + $whell_loader_jurnal['total'];
@@ -3832,7 +3832,7 @@ class Pmm_model extends CI_Model {
 		$excavator = $this->db->select('sum(prm.display_price) as price')
 		->from('pmm_receipt_material prm ')
 		->where("prm.material_id = 18")
-		->where("(prm.date_receipt between '$date1' and '$date2')")
+		->where("(prm.date_receipt between '$date3' and '$date2')")
 		->get()->row_array();
 		
 		$genset_biaya = $this->db->select('sum(pdb.jumlah) as total')
@@ -3840,7 +3840,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 197")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$genset_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -3848,7 +3848,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 197")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$genset = $genset_biaya['total'] + $genset_jurnal['total'];
@@ -3858,7 +3858,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 198")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$timbangan_biaya_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -3866,7 +3866,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 198")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$timbangan = $timbangan_biaya['total'] + $timbangan_biaya_jurnal['total'];
@@ -3876,7 +3876,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 207")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$tangki_solar_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -3884,7 +3884,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 207")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$tangki_solar = $tangki_solar_biaya['total'] + $tangki_solar_jurnal['total'];		
@@ -3893,9 +3893,9 @@ class Pmm_model extends CI_Model {
 		
 		//Opening Balance
 		$date1_ago = date('2020-01-01');
-		$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
-		$date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date1)));
-		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
+		$date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date3)));
+		$date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date3)));
+		$tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date3)));
 
 		$stock_opname_bbm_ago = $this->db->select('pp.vol_nilai_bbm as volume')
 		->from('kunci_bahan_baku pp')
@@ -3913,14 +3913,14 @@ class Pmm_model extends CI_Model {
 		->from('pmm_receipt_material prm')
 		->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
 		->join('produk p', 'prm.material_id = p.id','left')
-		->where("prm.date_receipt between '$date1' and '$date2'")
+		->where("prm.date_receipt between '$date3' and '$date2'")
 		->where("prm.material_id = 13")
 		->group_by('prm.material_id')
 		->get()->row_array();
 
 		$pemakaian_bbm = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
 		->from('kunci_bahan_baku pp')
-		->where("(pp.date between '$date1' and '$date2')")
+		->where("(pp.date between '$date3' and '$date2')")
 		->order_by('pp.date','desc')->limit(1)
 		->get()->row_array();
 		$vol_pemakaian_bbm = $pemakaian_bbm['volume'];
@@ -3929,7 +3929,7 @@ class Pmm_model extends CI_Model {
 
 		$pemakaian_bbm_2 = $this->db->select('sum(pp.vol_pemakaian_bbm_2) as volume, sum(pp.nilai_pemakaian_bbm_2) as nilai')
 		->from('kunci_bahan_baku pp')
-		->where("(pp.date between '$date1' and '$date2')")
+		->where("(pp.date between '$date3' and '$date2')")
 		->order_by('pp.date','desc')->limit(1)
 		->get()->row_array();
 		$vol_pemakaian_bbm_2 = $pemakaian_bbm_2['volume'];
@@ -3959,7 +3959,7 @@ class Pmm_model extends CI_Model {
         //PEMAKAIAN DILUAR PRODUKSI
 		$vol_bbm_non_produksi = $this->db->select('sum(pp.vol_non_produksi) as volume')
 		->from('kunci_bahan_baku pp')
-		->where("(pp.date between '$date1' and '$date2')")
+		->where("(pp.date between '$date3' and '$date2')")
 		->order_by('pp.date','desc')->limit(1)
 		->get()->row_array();
 		$vol_bbm_non_produksi = $vol_bbm_non_produksi['volume'];
@@ -3969,7 +3969,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 105")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$nilai_bbm_non_produksi = $nilai_bbm_non_produksi['total'];
 
@@ -3997,7 +3997,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 201")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$konsumsi_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4005,7 +4005,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 201")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$konsumsi = $konsumsi_biaya['total'] + $konsumsi_jurnal['total'];
 
@@ -4014,7 +4014,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 199")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$gaji_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4022,7 +4022,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 199")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$gaji = $gaji_biaya['total'] + $gaji_jurnal['total'];
 
@@ -4031,7 +4031,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 200")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$upah_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4039,7 +4039,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 200")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$upah = $upah_biaya['total'] + $upah_jurnal['total'];
 
@@ -4048,7 +4048,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 205")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$pengujian_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4056,7 +4056,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 205")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$pengujian = $pengujian_biaya['total'] + $pengujian_jurnal['total'];
 
@@ -4065,7 +4065,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 203")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$perbaikan_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4073,7 +4073,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 203")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$perbaikan = $perbaikan_biaya['total'] + $perbaikan_jurnal['total'];
 
@@ -4082,7 +4082,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 204")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$akomodasi_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4090,7 +4090,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 204")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$akomodasi = $akomodasi_biaya['total'] + $akomodasi_jurnal['total'];
 
@@ -4099,7 +4099,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 206")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$listrik_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4107,7 +4107,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 206")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$listrik = $listrik_biaya['total'] + $listrik_jurnal['total'];
 		
@@ -4116,7 +4116,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 202")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$thr_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4124,7 +4124,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 202")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$thr = $thr_biaya['total'] + $thr_jurnal['total'];
 
@@ -4133,7 +4133,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 129")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$bensin_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4141,7 +4141,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 129")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$bensin = $bensin_biaya['total'] + $bensin_jurnal['total'];
 
@@ -4150,7 +4150,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 131")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$dinas_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4158,7 +4158,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 131")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$dinas = $dinas_biaya['total'] + $dinas_jurnal['total'];
 
@@ -4167,7 +4167,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 133")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$komunikasi_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4175,7 +4175,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 133")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$komunikasi = $komunikasi_biaya['total'] + $komunikasi_jurnal['total'];
 
@@ -4184,7 +4184,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 138")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$pakaian_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4192,7 +4192,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 138")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$pakaian = $pakaian_biaya['total'] + $pakaian_jurnal['total'];
 		
@@ -4201,7 +4201,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 149")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$tulis_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4209,7 +4209,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 149")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$tulis = $tulis_biaya['total'] + $tulis_jurnal['total'];
 
@@ -4218,7 +4218,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 151")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$keamanan_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4226,7 +4226,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 151")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$keamanan = $keamanan_biaya['total'] + $keamanan_jurnal['total'];
 
@@ -4235,7 +4235,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 153")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$perlengkapan_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4243,7 +4243,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 153")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$perlengkapan = $perlengkapan_biaya['total'] + $perlengkapan_jurnal['total'];
 
@@ -4252,7 +4252,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 145")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$beban_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4260,7 +4260,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 145")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$beban = $beban_biaya['total'] + $beban_jurnal['total'];
 
@@ -4269,7 +4269,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 143")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$adm_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4277,7 +4277,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 143")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$adm = $adm_biaya['total'] + $adm_jurnal['total'];
 
@@ -4286,7 +4286,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 146")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$lain_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4294,7 +4294,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 146")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$lain = $lain_biaya['total'] + $lain_jurnal['total'];
 
@@ -4303,7 +4303,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 154")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$sewa_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4311,7 +4311,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 154")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$sewa = $sewa_biaya['total'] + $sewa_jurnal['total'];
 
@@ -4320,7 +4320,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 123")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$bpjs_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4328,7 +4328,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 123")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$bpjs = $bpjs_biaya['total'] + $bpjs_jurnal['total'];
 
@@ -4337,7 +4337,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 162")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$penyusutan_kantor_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4345,7 +4345,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 162")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$penyusutan_kantor = $penyusutan_kantor_biaya['total'] + $penyusutan_kantor_jurnal['total'];
 
@@ -4354,7 +4354,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 160")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$penyusutan_kendaraan_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4362,7 +4362,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 160")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$penyusutan_kendaraan = $penyusutan_kendaraan_biaya['total'] + $penyusutan_kendaraan_jurnal['total'];
 
@@ -4371,7 +4371,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 134")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$iuran_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4379,7 +4379,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 134")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$iuran = $iuran_biaya['total'] + $iuran_jurnal['total'];
 
@@ -4388,7 +4388,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 155")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$kendaraan_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4396,7 +4396,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 155")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$kendaraan = $kendaraan_biaya['total'] + $kendaraan_jurnal['total'];
 
@@ -4405,7 +4405,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 141")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$pajak_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4413,7 +4413,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 141")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$pajak = $pajak_biaya['total'] + $pajak_jurnal['total'];
 
@@ -4422,7 +4422,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 105")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$solar_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4430,7 +4430,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 105")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		//$solar = $solar_biaya['total'] + $solar_jurnal['total'];
 		$solar = 0;
@@ -4440,7 +4440,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 127")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$donasi_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4448,7 +4448,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 127")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$donasi = $donasi_biaya['total'] + $donasi_jurnal['total'];
 
@@ -4457,7 +4457,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 136")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$legal_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4465,7 +4465,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 136")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$legal = $legal_biaya['total'] + $legal_jurnal['total'];
 
@@ -4474,7 +4474,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 121")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$pengobatan_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4482,7 +4482,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 121")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$pengobatan = $pengobatan_biaya['total'] + $pengobatan_jurnal['total'];
 
@@ -4491,7 +4491,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 120")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$lembur_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4499,7 +4499,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 120")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$lembur = $lembur_biaya['total'] + $lembur_jurnal['total'];
 
@@ -4508,7 +4508,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 139")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$pelatihan_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4516,7 +4516,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 139")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$pelatihan = $pelatihan_biaya['total'] + $pelatihan_jurnal['total'];
 
@@ -4525,7 +4525,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 152")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 
 		$supplies_jurnal = $this->db->select('sum(pdb.debit) as total')
@@ -4533,7 +4533,7 @@ class Pmm_model extends CI_Model {
 		->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
 		->where("pdb.akun = 152")
 		->where("status = 'PAID'")
-		->where("(tanggal_transaksi between '$date1' and '$date2')")
+		->where("(tanggal_transaksi between '$date3' and '$date2')")
 		->get()->row_array();
 		$supplies = $supplies_biaya['total'] + $supplies_jurnal['total'];
 
@@ -4546,7 +4546,7 @@ class Pmm_model extends CI_Model {
 		->from('pmm_produksi_harian pph ')
 		->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
 		->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-		->where("(pph.date_prod between '$date1' and '$date2')")
+		->where("(pph.date_prod between '$date3' and '$date2')")
 		->where('pph.status','PUBLISH')
 		->get()->row_array();
 		$total_rekapitulasi_produksi_harian = round($rekapitulasi_produksi_harian['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian['jumlah_pemakaian_f'],2);
@@ -4679,9 +4679,9 @@ class Pmm_model extends CI_Model {
 
         //Opening Balance
         $date1_ago = date('2020-01-01');
-        $date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
-        $date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date1)));
-        $tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date1)));
+        $date2_ago = date('Y-m-d', strtotime('-1 days', strtotime($date3)));
+        $date3_ago = date('Y-m-d', strtotime('-1 months', strtotime($date3)));
+        $tanggal_opening_balance = date('Y-m-d', strtotime('-1 days', strtotime($date3)));
 
         $stock_opname_batu_boulder_ago = $this->db->select('pp.vol_nilai_boulder as volume')
         ->from('kunci_bahan_baku pp')
@@ -4699,7 +4699,7 @@ class Pmm_model extends CI_Model {
         ->from('pmm_receipt_material prm')
         ->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
         ->join('produk p', 'prm.material_id = p.id','left')
-        ->where("prm.date_receipt between '$date1' and '$date2'")
+        ->where("prm.date_receipt between '$date3' and '$date2'")
         ->where("prm.material_id = 15")
         ->group_by('prm.material_id')
         ->get()->row_array();
@@ -4743,7 +4743,7 @@ class Pmm_model extends CI_Model {
 
         $produksi = $this->db->select('pp.produksi')
         ->from('kunci_bahan_jadi pp')
-        ->where("(pp.date between '$date1' and '$date2')")
+        ->where("(pp.date between '$date3' and '$date2')")
         ->group_by('pp.produksi')
         ->order_by('pp.id','desc')->limit(1)
         ->get()->row_array();
@@ -4766,7 +4766,7 @@ class Pmm_model extends CI_Model {
 
         $nilai_beban_produksi = $total_volume * $key;
 
-        $query = $nilai_beban_produksi;
+        $query = $nilai_beban_produksi * $produksi;
         
         if(!empty($query)){
             $total = $query;
