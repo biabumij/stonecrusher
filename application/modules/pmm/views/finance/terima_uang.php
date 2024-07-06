@@ -130,7 +130,7 @@
         $('input.numberformat').number( true, 0,',','.' );
         $('.dtpicker').daterangepicker({
             singleDatePicker: true,
-            showDropdowns : true,
+            showDropdowns : false,
             locale: {
               format: 'DD-MM-YYYY'
             },
@@ -138,8 +138,9 @@
 			//maxDate: new Date()+1,
             //minDate: moment().add(-10, 'd').toDate(),
 			//maxDate: moment().add(+0, 'd').toDate(),
+            //minDate: moment().add(-1, 'month').toDate(),
             minDate: moment().startOf('month').toDate(),
-			maxDate: moment().endOf('month').toDate(),
+			maxDate: moment().endOf('month').toDate(),	
         });
         $('.dtpicker').on('apply.daterangepicker', function(ev, picker) {
               $(this).val(picker.startDate.format('DD-MM-YYYY'));
