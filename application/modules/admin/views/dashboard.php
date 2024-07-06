@@ -314,9 +314,9 @@
                                 },
                                 format: '{value}'
                             },
-                            min: -50,
-                            max: 110,
-                            tickInterval: 10,
+                            min: -120,
+                            max: 120,
+                            tickInterval: 20,
                         },
                         tooltip: { 
                         //fungsi tooltip, ini opsional, kegunaan dari fungsi ini 
