@@ -64,9 +64,9 @@ class Templates extends CI_Model {
 					</div>
 					</a>
 	            </div>
-	            <!--<div id="menu-toggle" class="visible-xs toggle-left-sidebar" data-toggle-class="left-sidebar-open" data-target="html">
+	            <div id="menu-toggle" class="visible-xs toggle-left-sidebar" data-toggle-class="left-sidebar-open" data-target="html">
 	                <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-	            </div>-->
+	            </div>
 	        </div>
 	        <div class="rightside-header">
 	            <div class="header-middle"></div>
