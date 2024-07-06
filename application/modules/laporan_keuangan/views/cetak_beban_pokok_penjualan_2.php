@@ -343,7 +343,7 @@
 				<th align="right"></th>
 				<th align="right"><?php echo number_format($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_bahan?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></a></th>
+				<th align="right"><?php echo number_format($total_nilai_produksi_boulder,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
@@ -352,7 +352,7 @@
 				<th align="right"></th>
 				<th align="right"><?php echo number_format(($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_alat?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_biaya_peralatan + $total_nilai_produksi_solar,0,',','.');?></a></th>
+				<th align="right"><?php echo number_format($total_biaya_peralatan + $total_nilai_produksi_solar,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold;">
@@ -361,7 +361,7 @@
 				<th align="right"></th>
 				<th align="right"><?php echo number_format($overhead_ton * round($total_rekapitulasi_produksi_harian,2),0,',','.');?></th>
 				<th align="right"></th>
-				<th align="right"><a target="_blank" href="<?= base_url("laporan/cetak_overhead?filter_date=".$filter_date = date('d-m-Y',strtotime($date1)).' - '.date('d-m-Y',strtotime($date2))) ?>"><?php echo number_format($total_operasional,0,',','.');?></a></th>
+				<th align="right"><?php echo number_format($total_operasional,0,',','.');?></th>
 				<th align="right"></th>
 			</tr>
 			<tr class="table-active2" style="font-weight:bold; background-color:#cccccc;">
