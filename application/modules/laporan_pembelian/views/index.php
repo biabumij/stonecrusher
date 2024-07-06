@@ -80,23 +80,21 @@
                                         <br />
                                         <div class="row">
                                             <div width="100%">
-                                                <div class="panel panel-default">                                            
-                                                    <div class="col-sm-5">
-														<p><b><h5>Penerimaan Pembelian</h5></b></p>
-                                                        <a href="#laporan_penerimaan_pembelian" aria-controls="laporan_penerimaan_pembelian" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-                                                    <div class="col-sm-5">
-														<p><b><h5>Laporan Hutang</h5></b></p>
-                                                        <a href="#laporan_hutang" aria-controls="laporan_hutang" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-                                                    </div>
-                                                    <div class="col-sm-5">
-														<p><b><h5>Monitoring Hutang</h5></b></p>
-                                                        <a href="#monitoring_hutang" aria-controls="monitoring_hutang" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-                                                    </div>
-                                                    <div class="col-sm-5">
-														<p><b><h5>Daftar Pembayaran</h5></b></p>
-                                                        <a href="#daftar_pembayaran" aria-controls="daftar_pembayaran" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-                                                    </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Penerimaan Pembelian</h5></b></p>
+                                                    <a href="#laporan_penerimaan_pembelian" aria-controls="laporan_penerimaan_pembelian" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Laporan Hutang</h5></b></p>
+                                                    <a href="#laporan_hutang" aria-controls="laporan_hutang" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Monitoring Hutang</h5></b></p>
+                                                    <a href="#monitoring_hutang" aria-controls="monitoring_hutang" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Daftar Pembayaran</h5></b></p>
+                                                    <a href="#daftar_pembayaran" aria-controls="daftar_pembayaran" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
                                                 </div>
                                             </div>
                                         </div>

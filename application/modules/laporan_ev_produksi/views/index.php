@@ -81,20 +81,18 @@
                                         <br />
                                         <div class="row">
                                             <div width="100%">
-                                                <div class="panel panel-default">
-													<div class="col-sm-5">
-														<p><b><h5>Laporan Evaluasi Kapasitas Produksi</h5></b></p>
-                                                        <a href="#laporan_evaluasi_produksi" aria-controls="laporan_evaluasi_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-                                                    <div class="col-sm-5">
-														<p><b><h5>Laporan Evaluasi Biaya Produksi</h5></b></p>
-                                                        <a href="#laporan_evaluasi_biaya_produksi" aria-controls="laporan_evaluasi_biaya_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-                                                    <div class="col-sm-5">
-														<p><b><h5>Evaluasi Target Produksi</h5></b></p>
-                                                        <a href="#evaluasi_target_produksi" aria-controls="evaluasi_target_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>													
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Laporan Evaluasi Kapasitas Produksi</h5></b></p>
+                                                    <a href="#laporan_evaluasi_produksi" aria-controls="laporan_evaluasi_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
                                                 </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Laporan Evaluasi Biaya Produksi</h5></b></p>
+                                                    <a href="#laporan_evaluasi_biaya_produksi" aria-controls="laporan_evaluasi_biaya_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Evaluasi Target Produksi</h5></b></p>
+                                                    <a href="#evaluasi_target_produksi" aria-controls="evaluasi_target_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+                                                </div>	
                                             </div>
                                         </div>
                                     </div>

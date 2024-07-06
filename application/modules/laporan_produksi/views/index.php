@@ -81,19 +81,17 @@
                                             <br />
                                             <div class="row">
                                                 <div width="100%">
-                                                    <div class="panel panel-default">                                            
-                                                        <div class="col-sm-5">
-                                                            <p><b><h5>Laporan Produksi Harian</h5></b></p>
-                                                            <a href="#laporan_produksi" aria-controls="laporan_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <p><b><h5>Laporan Produksi Campuran</h5></b></p>
-                                                            <a href="#laporan_produksi_campuran" aria-controls="laporan_produksi_campuran" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
-                                                        </div>
-                                                        <div class="col-sm-5">
-                                                            <p><b><h5>Rekapitulasi Laporan Produksi</h5></b></p>
-                                                            <a href="#rekapitulasi_laporan_produksi" aria-controls="rekapitulasi_laporan_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-                                                        </div>   													
+                                                    <div class="col-sm-5">
+                                                        <p><b><h5>Laporan Produksi Harian</h5></b></p>
+                                                        <a href="#laporan_produksi" aria-controls="laporan_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <p><b><h5>Laporan Produksi Campuran</h5></b></p>
+                                                        <a href="#laporan_produksi_campuran" aria-controls="laporan_produksi_campuran" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <p><b><h5>Rekapitulasi Laporan Produksi</h5></b></p>
+                                                        <a href="#rekapitulasi_laporan_produksi" aria-controls="rekapitulasi_laporan_produksi" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
                                                     </div>
                                                 </div>
                                             </div>

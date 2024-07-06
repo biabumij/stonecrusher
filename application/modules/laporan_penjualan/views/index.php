@@ -80,23 +80,21 @@
                                         <br />
                                         <div class="row">
                                             <div width="100%">
-                                                <div class="panel panel-default">                                            
-                                                    <div class="col-sm-5">
-														<p><b><h5>Pengiriman Penjualan</h5></b></p>
-                                                        <a href="#laporan_pengiriman_penjualan" aria-controls="laporan_pengiriman_penjualan" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>									
-                                                    </div>
-                                                    <div class="col-sm-5">
-														<p><b><h5>Laporan Piutang</h5></b></p>
-                                                        <a href="#laporan_piutang" aria-controls="laporan_piutang" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-                                                    <div class="col-sm-5">
-														<p><b><h5>Monitoring Piutang</h5></b></p>
-                                                        <a href="#monitoring_piutang" aria-controls="monitoring_piutang" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
-                                                    <div class="col-sm-5">
-														<p><b><h5>Daftar Penerimaan</h5></b></p>
-                                                        <a href="#daftar_penerimaan" aria-controls="daftar_penerimaan" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
-													</div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Pengiriman Penjualan</h5></b></p>
+                                                    <a href="#laporan_pengiriman_penjualan" aria-controls="laporan_pengiriman_penjualan" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>									
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Laporan Piutang</h5></b></p>
+                                                    <a href="#laporan_piutang" aria-controls="laporan_piutang" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Monitoring Piutang</h5></b></p>
+                                                    <a href="#monitoring_piutang" aria-controls="monitoring_piutang" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <p><b><h5>Daftar Penerimaan</h5></b></p>
+                                                    <a href="#daftar_penerimaan" aria-controls="daftar_penerimaan" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>
                                                 </div>
                                             </div>
                                         </div>
