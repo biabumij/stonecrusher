@@ -314,7 +314,7 @@
                                 },
                                 format: '{value}'
                             },
-                            min: -30,
+                            min: -50,
                             max: 110,
                             tickInterval: 10,
                         },
