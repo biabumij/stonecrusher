@@ -141,6 +141,7 @@
 															<tfoot class="mytable table-hover table-center table-condensed"></tfoot>
                                                         </table>
                                                     </div>
+                                                    <br/><br/>
                                                 </div>
                                             </div>
                                         </div>
@@ -175,8 +176,8 @@
 													</div>				
 													<div class="table-responsive" id="box-evaluasi">													
 													
-                    
 													</div>
+                                                    <br/><br/>
 												</div>
 										    </div>
 										</div>
@@ -210,7 +211,9 @@
 														</div>
 													</div>				
 													<div class="table-responsive" id="evaluasi-target-produksi">
-													</div>
+													
+                                                    </div>
+                                                    <br/><br/>
 												</div>
 										</div>
 										

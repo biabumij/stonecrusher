@@ -136,8 +136,8 @@
                                                                 <tbody></tbody>
                                                                 <tfoot class="mytable table-hover table-center table-condensed"></tfoot>
                                                             </table>
-                                                            <br />
                                                         </div>
+                                                        <br/><br/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,8 +186,8 @@
                                                                 <tbody></tbody>
                                                                 <tfoot class="mytable table-hover table-center table-condensed"></tfoot>
                                                             </table>
-                                                            <br />
                                                         </div>
+                                                        <br/><br/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -233,8 +233,8 @@
                                                                 <tbody></tbody>
                                                                 <tfoot class="mytable table-hover table-center table-condensed"></tfoot>
                                                             </table>
-                                                            <br />
                                                         </div>
+                                                        <br/><br/>
                                                     </div>
                                                 </div>
                                             </div>

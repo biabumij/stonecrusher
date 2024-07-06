@@ -191,6 +191,7 @@
                                                             <tfoot class="mytable table-hover table-center table-bordered table-condensed"></tfoot>
                                                         </table>
                                                     </div>
+                                                    <br/><br/>
                                                 </div>
                                             </div>
                                         </div>
@@ -268,6 +269,7 @@
 															<tfoot class="mytable table-hover table-center table-bordered table-condensed"></tfoot>
                                                         </table>
                                                     </div>
+                                                    <br/><br/>
                                                 </div>
                                             </div>
                                         </div>
@@ -375,6 +377,7 @@
 															<tfoot class="mytable table-hover table-center table-bordered table-condensed"></tfoot>
                                                         </table>
                                                     </div>
+                                                    <br/><br/>
                                                 </div>
                                             </div>
                                         </div>
@@ -425,6 +428,7 @@
 															<tfoot class="mytable table-hover table-center table-bordered table-condensed"></tfoot>
                                                         </table>
                                                     </div>
+                                                    <br/><br/>
                                                 </div>
                                             </div>
                                         </div>
