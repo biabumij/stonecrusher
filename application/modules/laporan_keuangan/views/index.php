@@ -107,6 +107,7 @@
                                                         
                         
                                                         </div>
+                                                        <br/><br/>
                                                     </div>
                                             </div>
                                             
@@ -139,6 +140,7 @@
                                                         <div class="table-responsive" id="cash-flow">
                                                         
                                                         </div>
+                                                        <br/><br/>
                                                     </div>
                                                 </div>
                                             </div>
