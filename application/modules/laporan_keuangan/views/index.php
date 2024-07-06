@@ -54,12 +54,10 @@
                                             <br />
                                             <div class="row">
                                                 <div width="100%">
-                                                    <div class="panel panel-default">                                            
-                                                        <div class="col-sm-5">
+                                                <div class="col-sm-5">
                                                             <p><b><h5>Laporan Laba Rugi</h5></b></p>
                                                             <a href="#laporan-laba-rugi-new" aria-controls="laporan-laba-rugi-new" role="tab" data-toggle="tab" class="btn btn-primary" style="border-radius:10px; font-weight:bold;">Lihat Laporan</a>										
-                                                        </div>													
-                                                    </div>
+                                                        </div>	
                                                     <div class="panel panel-default">                                            
                                                         <div class="col-sm-5">
                                                             <p><b><h5>Biaya</h5></b></p>
