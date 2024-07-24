@@ -231,7 +231,8 @@
                                     if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
                                     ?>
                                     <form class="form-approval" action="<?= base_url("penjualan/closed_sales_order/".$sales_po["id"]) ?>">
-                                        <button type="submit" class="btn btn-danger" style="margin-top:0px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-briefcase"></i> Closed</button>        
+                                        <button type="submit" class="btn btn-danger" style="margin-top:0px; width:150px; font-weight:bold; border-radius:10px;"><i class="fa fa-briefcase"></i> Closed</button>
+                                        <a href="<?= site_url('penjualan/reject_sales_order/' . $sales_po["id"]); ?>" class="btn btn-default" style="width:150px; font-weight:bold; margin-bottom:10px; border-radius:10px;"> Reject</a>     
                                     </form>					
                                     <?php
                                     }
@@ -245,7 +246,8 @@
                                     <?php
                                     if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 11 || $this->session->userdata('admin_group_id') == 15){
                                     ?>
-                                        <a class="btn btn-success" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;" href="<?= base_url("penjualan/open_sales_order/".$sales_po["id"]) ?>"><i class="fa fa-folder-open-o"></i> Open</a>           
+                                        <a class="btn btn-success" style="margin-top:10px; width:150px; font-weight:bold; border-radius:10px;" href="<?= base_url("penjualan/open_sales_order/".$sales_po["id"]) ?>"><i class="fa fa-folder-open-o"></i> Open</a>
+                                        <a href="<?= site_url('penjualan/reject_sales_order/' . $sales_po["id"]); ?>" class="btn btn-default" style="width:150px; font-weight:bold; margin-bottom:10px; border-radius:10px;"> Reject</a>         
                                     <?php
                                     }
                                     ?>
