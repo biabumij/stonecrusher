@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Biaya Umum & Adm.</a></li>
+                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Biaya Umum & Adm. (All)</a></li>
                                 <li role="presentation"><a href="#home_2" aria-controls="home_2" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Biaya Umum & Adm. (<?php echo date('F');?>)</a></li>
                             </ul>
                             <div class="tab-content">
