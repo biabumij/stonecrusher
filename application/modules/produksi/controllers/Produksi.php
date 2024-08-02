@@ -1504,8 +1504,8 @@ class Produksi extends Secure_Controller {
 		$filter_date = $this->input->post('filter_date');
 		if(!empty($filter_date)){
 			$arr_date = explode(' - ', $filter_date);
-			$this->db->where('kb.date_prod >=',date('Y-m-d',strtotime($arr_date[0])));
-			$this->db->where('kb.date_prod <=',date('Y-m-d',strtotime($arr_date[1])));
+			$this->db->where('date >=',date('Y-m-d',strtotime($arr_date[0])));
+			$this->db->where('date <=',date('Y-m-d',strtotime($arr_date[1])));
 		}
         $this->db->select('*');
 		$this->db->where('status','PUBLISH');
@@ -1545,6 +1545,106 @@ class Produksi extends Secure_Controller {
 
 		if(!empty($id)){
 			$this->db->delete('kunci_bahan_baku',array('id'=>$id));
+			{
+				$output['output'] = true;
+			}
+		}
+		echo json_encode($output);
+	}
+
+	public function form_kunci_bahan_jadi()
+	{
+		$check = $this->m_admin->check_login();
+		if ($check == true) {
+			$data['products'] = $this->db->select('*')->get_where('produk', array('status' => 'PUBLISH', 'bahanbaku' => 1))->result_array();
+			$this->load->view('produksi/form_kunci_bahan_jadi', $data);
+		} else {
+			redirect('admin');
+		}
+	}
+
+	public function submit_kunci_bahan_jadi()
+	{
+		$date = $this->input->post('date');
+		$volume = str_replace(',', '.', $this->input->post('volume'));
+		$nilai = str_replace('.', '', $this->input->post('nilai'));
+		$produksi = $this->input->post('produksi');
+
+		$this->db->trans_start(); # Starting Transaction
+		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
+
+		$arr_insert = array(
+			'date' => date('Y-m-d', strtotime($date)),
+			'volume' => $volume,
+			'nilai' => $nilai,
+			'produksi' => $produksi,
+			'unit_head' => 39,
+			'logistik' => 27,
+			'admin' => 27,
+			'keu_1' => 37,
+			'keu_2' => 36,
+			'status' => 'PUBLISH',
+			'created_by' => $this->session->userdata('admin_id'),
+			'created_on' => date('Y-m-d H:i:s')
+		);
+
+		$this->db->insert('kunci_bahan_jadi', $arr_insert);
+
+		if ($this->db->trans_status() === FALSE) {
+			# Something went wrong.
+			$this->db->trans_rollback();
+			$this->session->set_flashdata('notif_error','<b>ERROR</b>');
+			redirect('/produksi/kunci_bahan_jadi');
+		} else {
+			# Everything is Perfect. 
+			# Committing data to the database.
+			$this->db->trans_commit();
+			$this->session->set_flashdata('notif_success','<b>SAVED</b>');
+			redirect('admin/produksi');
+		}
+	}
+
+	public function table_kunci_bahan_jadi()
+	{   
+        $data = array();
+		$filter_date = $this->input->post('filter_date');
+		if(!empty($filter_date)){
+			$arr_date = explode(' - ', $filter_date);
+			$this->db->where('date >=',date('Y-m-d',strtotime($arr_date[0])));
+			$this->db->where('date <=',date('Y-m-d',strtotime($arr_date[1])));
+		}
+        $this->db->select('*');
+		$this->db->where('status','PUBLISH');
+		$this->db->group_by('id');	
+		$this->db->order_by('date','desc');			
+		$query = $this->db->get('kunci_bahan_jadi');
+		
+       if($query->num_rows() > 0){
+			foreach ($query->result_array() as $key => $row) {
+                $row['no'] = $key+1;
+                $row['date'] = date('d-m-Y',strtotime($row['date']));
+				$row['volume'] = number_format($row['volume'],2,',','.');
+				$row['nilai'] = number_format($row['nilai'],0,',','.');
+                if($this->session->userdata('admin_group_id') == 1){
+					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteKunciBahanJadi('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+				}else {
+					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
+				}
+
+                $data[] = $row;
+            }
+
+        }
+        echo json_encode(array('data'=>$data));
+    }
+
+	public function delete_kunci_bahan_jadi()
+	{
+		$output['output'] = false;
+		$id = $this->input->post('id');
+
+		if(!empty($id)){
+			$this->db->delete('kunci_bahan_jadi',array('id'=>$id));
 			{
 				$output['output'] = true;
 			}

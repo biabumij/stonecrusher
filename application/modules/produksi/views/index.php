@@ -50,6 +50,7 @@
 											<li><a href="<?= site_url('produksi/form_produksi_campuran'); ?>">Produksi Campuran</a></li>
                                             <li><a href="javascript:void(0);" onclick="OpenForm()">Stock Opname</a></li>
                                             <li><a href="<?= site_url('produksi/form_kunci_bahan_baku'); ?>">Kunci Bahan Baku</a></li>
+                                            <li><a href="<?= site_url('produksi/form_kunci_bahan_jadi'); ?>">Kunci Bahan Jadi</a></li>
                                         </ul>
                                     </div>
                                 </h3>
@@ -62,6 +63,7 @@
 									<li role="presentation"><a href="#produksi_campuran" aria-controls="produksi_campuran" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Produksi Campuran</a></li>
                                     <li role="presentation"><a href="#material_on_site" aria-controls="material_on_site" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Stock Opname</a></li>
                                     <li role="presentation"><a href="#kunci_bahan_baku" aria-controls="kunci_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Kunci Bahan Baku</a></li>
+                                    <li role="presentation"><a href="#kunci_bahan_jadi" aria-controls="kunci_bahan_jadi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Kunci Bahan Jadi</a></li>
                                 </ul>
 
                                 <div class="tab-content">
@@ -256,6 +258,34 @@
 														<th>Nilai Boulder</th>
 														<th>Vol. BBM Solar</th>
                                                         <th>Nilai BBM Solar</th>
+                                                        <th>Hapus</th>										
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                                <tfoot>
+                                                   
+                                                </tfoot>
+                                            </table>
+                                        </div>
+									</div>
+
+                                    <!-- Table Kunci Bahan Jadi -->
+									<div role="tabpanel" class="tab-pane" id="kunci_bahan_jadi">
+										<div class="col-sm-4">
+											<input type="text" id="filter_date_kunci_bahan_jadi" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
+										</div>
+										<br />
+										<br />
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-center" id="table_kunci_bahan_jadi" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>	
+                                                        <th>Tanggal</th>
+														<th>Vol. Persediaan Bahan Jadi</th>
+														<th>Nilai Persedian Bahan Jadi</th>
                                                         <th>Hapus</th>										
                                                     </tr>
                                                 </thead>
@@ -712,6 +742,73 @@
                         if (result.output) {
                             table_kunci_bahan_baku.ajax.reload();
                             bootbox.alert('<b>Berhasil Menghapus Kunci Bahan Baku</b>');
+                        } else if (result.err) {
+                            bootbox.alert(result.err);
+                        }
+                    }
+                });
+            }
+            });
+        }
+
+        var table_kunci_bahan_jadi = $('#table_kunci_bahan_jadi').DataTable( {"bAutoWidth": false,
+            ajax: {
+                processing: true,
+                serverSide: true,
+                url: '<?php echo site_url('produksi/table_kunci_bahan_jadi'); ?>',
+                type: 'POST',
+                data: function(d) {
+                    d.filter_date = $('#filter_date_kunci_bahan_jadi').val();
+                }
+            },
+            responsive: true,
+            "deferRender": true,
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+            },
+            columns: [
+				{
+                    "data": "no"
+                },
+				{
+                    "data": "date"
+                },
+				{
+                    "data": "volume"
+                },
+				{
+                    "data": "nilai"
+                },
+                {
+                    "data": "actions"
+                }
+            ],
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": [1,2], "className": 'text-right'},
+            ],
+        });
+		
+		$('#filter_date_kunci_bahan_jadi').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+        table_kunci_bahan_jadi.ajax.reload();
+		});
+
+        function DeleteKunciBahanJadi(id) {
+        bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
+            // console.log('This was logged in the callback: ' + result); 
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('produksi/delete_kunci_bahan_jadi'); ?>",
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    success: function(result) {
+                        if (result.output) {
+                            table_kunci_bahan_jadi.ajax.reload();
+                            bootbox.alert('<b>Berhasil Menghapus Kunci Bahan Jadi</b>');
                         } else if (result.err) {
                             bootbox.alert(result.err);
                         }

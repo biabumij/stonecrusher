@@ -31,7 +31,7 @@
                         <div class="panel">
                             <div class="panel-header"> 
                                 <div class="">
-                                    <h3 class="">Kunci Baku Baru</h3>
+                                    <h3 class="">Kunci Bahan Baku Baru</h3>
                                     
                                 </div>
                             </div>
