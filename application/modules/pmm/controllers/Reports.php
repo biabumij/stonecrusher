@@ -7333,13 +7333,13 @@ class Reports extends CI_Controller {
 			}
 
 			table tr.table-active{
-				background: linear-gradient(90deg, #fdcd3b 20%, #fdcd3b 40%, #e69500 80%);
+				background-color: #e69500;
 				font-size: 11px;
 				font-weight: bold;
 			}
 				
 			table tr.table-active2{
-				background: linear-gradient(90deg, #333333 5%, #696969 50%, #333333 100%);
+				background-color: #e69500;
 				font-size: 11px;
 				font-weight: bold;
 				color: white;
@@ -7350,7 +7350,7 @@ class Reports extends CI_Controller {
 			}
 				
 			table tr.table-active4{
-				background: linear-gradient(90deg, #eeeeee 5%, #cccccc 50%, #cccccc 100%);
+				background-color: #cccccc;
 				font-weight: bold;
 				font-size: 11px;
 				color: black;
@@ -7567,20 +7567,14 @@ class Reports extends CI_Controller {
 			$produksi_2_nilai = $nilai_pemakaian_bbm_2;
 
 			//PEMAKAIAN DILUAR PRODUKSI
-			$vol_bbm_non_produksi = $this->db->select('sum(pp.vol_non_produksi) as volume')
-			->from('kunci_bahan_baku pp')
-			->where("(pp.date between '$date1' and '$date2')")
-			->order_by('pp.date','desc')->limit(1)
-			->get()->row_array();
-			$vol_bbm_non_produksi = $vol_bbm_non_produksi['volume'];
-
-			$nilai_bbm_non_produksi = $this->db->select('sum(pdb.jumlah) as total')
+			$nilai_bbm_non_produksi = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
 			->from('pmm_biaya pb ')
 			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 			->where("pdb.akun = 105")
 			->where("status = 'PAID'")
 			->where("(tanggal_transaksi between '$date1' and '$date2')")
 			->get()->row_array();
+			$vol_bbm_non_produksi = $nilai_bbm_non_produksi['memo'];
 			$nilai_bbm_non_produksi = $nilai_bbm_non_produksi['total'];
 
 			$total_produksi_volume = $produksi_volume + $produksi_2_volume + $vol_bbm_non_produksi;
@@ -8921,20 +8915,14 @@ class Reports extends CI_Controller {
 			$produksi_2_nilai = $nilai_pemakaian_bbm_2;
 
 			//PEMAKAIAN DILUAR PRODUKSI
-			$vol_bbm_non_produksi = $this->db->select('sum(pp.vol_non_produksi) as volume')
-			->from('kunci_bahan_baku pp')
-			->where("(pp.date between '$date1' and '$date2')")
-			->order_by('pp.date','desc')->limit(1)
-			->get()->row_array();
-			$vol_bbm_non_produksi = $vol_bbm_non_produksi['volume'];
-
-			$nilai_bbm_non_produksi = $this->db->select('sum(pdb.jumlah) as total')
+			$nilai_bbm_non_produksi = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
 			->from('pmm_biaya pb ')
 			->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 			->where("pdb.akun = 105")
 			->where("status = 'PAID'")
 			->where("(tanggal_transaksi between '$date1' and '$date2')")
 			->get()->row_array();
+			$vol_bbm_non_produksi = $nilai_bbm_non_produksi['memo'];
 			$nilai_bbm_non_produksi = $nilai_bbm_non_produksi['total'];
 
 			$total_produksi_volume = $produksi_volume + $produksi_2_volume + $vol_bbm_non_produksi;

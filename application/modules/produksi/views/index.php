@@ -49,6 +49,7 @@
 											<li><a href="<?= site_url('produksi/form_produksi_harian'); ?>">Produksi Harian</a></li>
 											<li><a href="<?= site_url('produksi/form_produksi_campuran'); ?>">Produksi Campuran</a></li>
                                             <li><a href="javascript:void(0);" onclick="OpenForm()">Stock Opname</a></li>
+                                            <li><a href="<?= site_url('produksi/form_kunci_bahan_baku'); ?>">Kunci Bahan Baku</a></li>
                                         </ul>
                                     </div>
                                 </h3>
@@ -60,6 +61,7 @@
 									<li role="presentation"><a href="#produksi_harian" aria-controls="produksi_harian" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Produksi Harian</a></li>
 									<li role="presentation"><a href="#produksi_campuran" aria-controls="produksi_campuran" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Produksi Campuran</a></li>
                                     <li role="presentation"><a href="#material_on_site" aria-controls="material_on_site" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Stock Opname</a></li>
+                                    <li role="presentation"><a href="#kunci_bahan_baku" aria-controls="kunci_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Kunci Bahan Baku</a></li>
                                 </ul>
 
                                 <div class="tab-content">
@@ -221,6 +223,40 @@
                                                         <th>Hapus</th>
                                                         <th>Cetak</th>
                                                         <th>Status</th>											
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                                <tfoot>
+                                                   
+                                                </tfoot>
+                                            </table>
+                                        </div>
+									</div>
+
+                                    <!-- Table Kunci Bahan Baku -->
+									<div role="tabpanel" class="tab-pane" id="kunci_bahan_baku">
+										<div class="col-sm-4">
+											<input type="text" id="filter_date_kunci_bahan_baku" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
+										</div>
+										<br />
+										<br />
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-center" id="table_kunci_bahan_baku" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>	
+                                                        <th>Tanggal</th>
+														<th>Vol. Pemakaian BBM (1)</th>	
+														<th>Nilai Pemakaian BBM (1)</th>
+                                                        <th>Vol. Pemakaian BBM (2)</th>	
+														<th>Nilai Pemakaian BBM (2)</th>
+														<th>Vol. Boulder</th>
+														<th>Nilai Boulder</th>
+														<th>Vol. BBM Solar</th>
+                                                        <th>Nilai BBM Solar</th>
+                                                        <th>Hapus</th>										
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -591,6 +627,91 @@
                         if (result.output) {
                             table_produksi_campuran.ajax.reload();
                             bootbox.alert('<b>Berhasil Menghapus Produksi Campuran</b>');
+                        } else if (result.err) {
+                            bootbox.alert(result.err);
+                        }
+                    }
+                });
+            }
+            });
+        }
+
+        var table_kunci_bahan_baku = $('#table_kunci_bahan_baku').DataTable( {"bAutoWidth": false,
+            ajax: {
+                processing: true,
+                serverSide: true,
+                url: '<?php echo site_url('produksi/table_kunci_bahan_baku'); ?>',
+                type: 'POST',
+                data: function(d) {
+                    d.filter_date = $('#filter_date_kunci_bahan_baku').val();
+                }
+            },
+            responsive: true,
+            "deferRender": true,
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+            },
+            columns: [
+				{
+                    "data": "no"
+                },
+				{
+                    "data": "date"
+                },
+				{
+                    "data": "vol_pemakaian_bbm"
+                },
+				{
+                    "data": "nilai_pemakaian_bbm"
+                },
+				{
+                    "data": "vol_pemakaian_bbm_2"
+                },
+				{
+                    "data": "nilai_pemakaian_bbm_2"
+                },
+				{
+                    "data": "vol_nilai_boulder"
+                },
+                {
+                    "data": "nilai_boulder"
+                },
+                {
+					"data": "vol_nilai_bbm"
+				},
+                {
+					"data": "nilai_bbm"
+				},
+                {
+                    "data": "actions"
+                }
+            ],
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": [2,3,4,5,6,7,8,9], "className": 'text-right'},
+            ],
+        });
+		
+		$('#filter_date_kunci_bahan_baku').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+        table_kunci_bahan_baku.ajax.reload();
+		});
+
+        function DeleteKunciBahanBaku(id) {
+        bootbox.confirm("Anda yakin akan menghapus data ini ?", function(result) {
+            // console.log('This was logged in the callback: ' + result); 
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('produksi/delete_kunci_bahan_baku'); ?>",
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    success: function(result) {
+                        if (result.output) {
+                            table_kunci_bahan_baku.ajax.reload();
+                            bootbox.alert('<b>Berhasil Menghapus Kunci Bahan Baku</b>');
                         } else if (result.err) {
                             bootbox.alert(result.err);
                         }

@@ -641,50 +641,49 @@
 		<?php
 		if(in_array($this->session->userdata('admin_group_id'), array(1))){
 		?>
-		<br /><br />
-		<b>* Perhitungan Boulder</b><br /><br />
+		<br /><br /><br /><br /><br /><br />
 		<table width="98%" border="0" cellpadding="3" style="font-size: 6px;">
 			<tr>
-				<th align="left" width="25%" style="font-weight:bold; background-color:white; color:black;">Stok Boulder Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($stok_volume_boulder_lalu,2,',','');?> (Ton)</th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($stok_harsat_boulder_lalu,0,',','.');?></th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($stok_nilai_boulder_lalu,0,',','.');?></th>
+				<th align="left" width="25%" style="font-weight:bold; background-color:#cccccc; color:black;">Stok Boulder Bulan Lalu (<?= convertDateDBtoIndo($date2_ago); ?>)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($stok_volume_boulder_lalu,2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($stok_harsat_boulder_lalu,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($stok_nilai_boulder_lalu,0,',','.');?></th>
 			</tr>
 			<tr>
-				<th align="left" style="font-weight:bold; background-color:white; color:black;">Pembelian Boulder Bulan Ini</th>
-				<th align="right" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($pembelian_volume,2,',','');?> (Ton)</th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($pembelian_harga,0,',','.');?></th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($pembelian_nilai,0,',','.');?></th>
+				<th align="left" style="font-weight:bold; background-color:#cccccc; color:black;">Pembelian Boulder Bulan Ini (<?= convertDateDBtoIndo($date1); ?> - <?= convertDateDBtoIndo($date2); ?>)</th>
+				<th align="right" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($pembelian_volume,2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($pembelian_harga,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($pembelian_nilai,0,',','.');?></th>
 			</tr>
 			<tr>
-				<th align="left" style="font-weight:bold; background-color:grey; color:white;">Total Stok Boulder Bulan Ini</th>
+				<th align="left" style="font-weight:bold; background-color:grey; color:white;">Total Boulder</th>
 				<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($total_stok_volume,2,',','');?> (Ton)</th>
 				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"></th>
 				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($total_stok_nilai,0,',','.');?></th>
 			</tr>
 			<tr>
-				<th align="left" style="font-weight:bold; background-color:white; color:black;">Produksi Bulan Ini (1)</th>
-				<th align="right" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($produksi_volume,2,',','');?> (Ton)</th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($produksi_harsat,0,',','.');?></th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($produksi_nilai,0,',','.');?></th>
+				<th align="left" style="font-weight:bold; background-color:#cccccc; color:black;">Produksi Bulan Ini (<?= convertDateDBtoIndo($date1); ?> - <?= convertDateDBtoIndo($date2); ?>)</th>
+				<th align="right" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($produksi_volume,2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($produksi_harsat,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($produksi_nilai,0,',','.');?></th>
 			</tr>
 			<tr>
-				<th align="left" style="font-weight:bold; background-color:white; color:black;">Produksi Bulan Ini (2)</th>
-				<th align="right" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($produksi_2_volume,2,',','');?> (Ton)</th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($produksi_2_harsat,0,',','.');?></th>
-				<th align="right" width="10%" style="font-weight:bold; background-color:white; color:black;"><?php echo number_format($produksi_2_nilai,0,',','.');?></th>
+				<th align="left" style="font-weight:bold; background-color:#cccccc; color:black;">Produksi Bulan Ini (<?= convertDateDBtoIndo($date1); ?> - <?= convertDateDBtoIndo($date2); ?>)</th>
+				<th align="right" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($produksi_2_volume,2,',','');?> (Ton)</th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($produksi_2_harsat,0,',','.');?></th>
+				<th align="right" width="10%" style="font-weight:bold; background-color:#cccccc; color:black;"><?php echo number_format($produksi_2_nilai,0,',','.');?></th>
 			</tr>
 			<tr>
-				<th align="left" style="font-weight:bold; background-color:grey; color:white;">Total Produksi Bulan Ini</th>
+				<th align="left" style="font-weight:bold; background-color:grey; color:white;">Total Produksi</th>
 				<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($total_produksi_volume,2,',','');?> (Ton)</th>
 				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"></th>
 				<th align="right" width="10%" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($total_produksi_nilai,0,',','.');?></th>
 			</tr>
 			<tr>
-				<th align="left" style="font-weight:bold; background-color:red; color:white;">Stok Bahan Baku Akhir</th>
-				<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format($stok_akhir_volume,2,',','');?> (Ton)</th>
-				<th align="right" style="font-weight:bold; background-color:red; color:white;"></th>
-				<th align="right" style="font-weight:bold; background-color:red; color:white;"><?php echo number_format($stok_akhir_nilai,0,',','.');?></th>
+				<th align="left" style="font-weight:bold; background-color:grey; color:white;">Sisa Boulder</th>
+				<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($stok_akhir_volume,2,',','');?> (Ton)</th>
+				<th align="right" style="font-weight:bold; background-color:grey; color:white;"></th>
+				<th align="right" style="font-weight:bold; background-color:grey; color:white;"><?php echo number_format($stok_akhir_nilai,0,',','.');?></th>
 			</tr>
 		</table>
 		<?php

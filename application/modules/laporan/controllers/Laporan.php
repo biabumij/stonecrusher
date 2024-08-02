@@ -2433,7 +2433,7 @@ class Laporan extends Secure_Controller {
 		$data['date2'] = $end_date;
         $html = $this->load->view('laporan_keuangan/cetak_bahan',$data,TRUE);
         
-        $pdf->SetTitle('BBJ - Bahan');
+        $pdf->SetTitle('Bahan');
         $pdf->nsi_html($html);
         $pdf->Output('bahan.pdf', 'I');
 	}
@@ -2462,7 +2462,7 @@ class Laporan extends Secure_Controller {
 		$data['date2'] = $end_date;
         $html = $this->load->view('laporan_keuangan/cetak_alat',$data,TRUE);
         
-        $pdf->SetTitle('BBJ - Alat');
+        $pdf->SetTitle('Alat');
         $pdf->nsi_html($html);
         $pdf->Output('alat.pdf', 'I');
 	}

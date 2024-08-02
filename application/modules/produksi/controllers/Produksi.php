@@ -195,8 +195,6 @@ class Produksi extends Secure_Controller {
 		}
 	}
 
-	
-
 	public function table_kalibrasi()
 	{   
         $data = array();
@@ -1435,6 +1433,120 @@ class Produksi extends Secure_Controller {
 		if(!empty($id)){
 			$this->db->delete('pmm_produksi_campuran_detail',array('produksi_campuran_id'=>$id));
 			$this->db->delete('pmm_produksi_campuran',array('id'=>$id));
+			{
+				$output['output'] = true;
+			}
+		}
+		echo json_encode($output);
+	}
+
+	public function form_kunci_bahan_baku()
+	{
+		$check = $this->m_admin->check_login();
+		if ($check == true) {
+			$data['products'] = $this->db->select('*')->get_where('produk', array('status' => 'PUBLISH', 'bahanbaku' => 1))->result_array();
+			$this->load->view('produksi/form_kunci_bahan_baku', $data);
+		} else {
+			redirect('admin');
+		}
+	}
+
+	public function submit_kunci_bahan_baku()
+	{
+		$date = $this->input->post('date');
+		$vol_non_produksi = str_replace(',', '.', $this->input->post('vol_non_produksi'));
+		$vol_pemakaian_bbm = str_replace(',', '.', $this->input->post('vol_pemakaian_bbm'));
+		$vol_pemakaian_bbm_2 = str_replace(',', '.', $this->input->post('vol_pemakaian_bbm_2'));
+		$vol_nilai_boulder = str_replace(',', '.', $this->input->post('vol_nilai_boulder'));
+		$vol_nilai_bbm = str_replace(',', '.', $this->input->post('vol_nilai_bbm'));
+
+		$nilai_pemakaian_bbm = str_replace('.', '', $this->input->post('nilai_pemakaian_bbm'));
+		$nilai_pemakaian_bbm_2 = str_replace('.', '', $this->input->post('nilai_pemakaian_bbm_2'));
+		$nilai_boulder = str_replace('.', '', $this->input->post('nilai_boulder'));
+		$nilai_bbm = str_replace('.', '', $this->input->post('nilai_bbm'));;
+
+		$this->db->trans_start(); # Starting Transaction
+		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
+
+		$arr_insert = array(
+			'date' => date('Y-m-d', strtotime($date)),
+			'vol_non_produksi' => $vol_non_produksi,
+			'vol_pemakaian_bbm' => $vol_pemakaian_bbm,
+			'vol_pemakaian_bbm_2' => $vol_pemakaian_bbm_2,
+			'vol_nilai_boulder' => $vol_nilai_boulder,
+			'vol_nilai_bbm' => $vol_nilai_bbm,
+			'nilai_pemakaian_bbm' => $nilai_pemakaian_bbm,
+			'nilai_pemakaian_bbm_2' => $nilai_pemakaian_bbm_2,
+			'nilai_boulder' => $nilai_boulder,
+			'nilai_bbm' => $nilai_bbm,
+			'status' => 'PUBLISH',
+			'created_by' => $this->session->userdata('admin_id'),
+			'created_on' => date('Y-m-d H:i:s')
+		);
+
+		$this->db->insert('kunci_bahan_baku', $arr_insert);
+
+		if ($this->db->trans_status() === FALSE) {
+			# Something went wrong.
+			$this->db->trans_rollback();
+			$this->session->set_flashdata('notif_error','<b>ERROR</b>');
+			redirect('/produksi/kunci_bahan_baku');
+		} else {
+			# Everything is Perfect. 
+			# Committing data to the database.
+			$this->db->trans_commit();
+			$this->session->set_flashdata('notif_success','<b>SAVED</b>');
+			redirect('admin/produksi');
+		}
+	}
+
+	public function table_kunci_bahan_baku()
+	{   
+        $data = array();
+		$filter_date = $this->input->post('filter_date');
+		if(!empty($filter_date)){
+			$arr_date = explode(' - ', $filter_date);
+			$this->db->where('kb.date_prod >=',date('Y-m-d',strtotime($arr_date[0])));
+			$this->db->where('kb.date_prod <=',date('Y-m-d',strtotime($arr_date[1])));
+		}
+        $this->db->select('*');
+		$this->db->where('status','PUBLISH');
+		$this->db->group_by('id');	
+		$this->db->order_by('date','desc');			
+		$query = $this->db->get('kunci_bahan_baku');
+		
+       if($query->num_rows() > 0){
+			foreach ($query->result_array() as $key => $row) {
+                $row['no'] = $key+1;
+                $row['date'] = date('d-m-Y',strtotime($row['date']));
+				$row['vol_pemakaian_bbm'] = number_format($row['vol_pemakaian_bbm'],2,',','.');
+				$row['nilai_pemakaian_bbm'] = number_format($row['nilai_pemakaian_bbm'],0,',','.');
+				$row['vol_pemakaian_bbm_2'] = number_format($row['vol_pemakaian_bbm_2'],2,',','.');
+				$row['nilai_pemakaian_bbm_2'] = number_format($row['nilai_pemakaian_bbm_2'],0,',','.');
+				$row['vol_nilai_boulder'] = number_format($row['vol_nilai_boulder'],2,',','.');
+				$row['nilai_boulder'] = number_format($row['nilai_boulder'],0,',','.');
+				$row['vol_nilai_bbm'] = number_format($row['vol_nilai_bbm'],2,',','.');
+				$row['nilai_bbm'] = number_format($row['nilai_bbm'],0,',','.');
+                if($this->session->userdata('admin_group_id') == 1){
+					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteKunciBahanBaku('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+				}else {
+					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
+				}
+
+                $data[] = $row;
+            }
+
+        }
+        echo json_encode(array('data'=>$data));
+    }
+
+	public function delete_kunci_bahan_baku()
+	{
+		$output['output'] = false;
+		$id = $this->input->post('id');
+
+		if(!empty($id)){
+			$this->db->delete('kunci_bahan_baku',array('id'=>$id));
 			{
 				$output['output'] = true;
 			}

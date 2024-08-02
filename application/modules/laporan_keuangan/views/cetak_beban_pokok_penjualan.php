@@ -297,20 +297,14 @@
 		$produksi_2_nilai = $nilai_pemakaian_bbm_2;
 
 		//PEMAKAIAN DILUAR PRODUKSI
-		$vol_bbm_non_produksi = $this->db->select('sum(pp.vol_non_produksi) as volume')
-		->from('kunci_bahan_baku pp')
-		->where("(pp.date between '$date1' and '$date2')")
-		->order_by('pp.date','desc')->limit(1)
-		->get()->row_array();
-		$vol_bbm_non_produksi = $vol_bbm_non_produksi['volume'];
-
-		$nilai_bbm_non_produksi = $this->db->select('sum(pdb.jumlah) as total')
+		$nilai_bbm_non_produksi = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
 		->from('pmm_biaya pb ')
 		->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
 		->where("pdb.akun = 105")
 		->where("status = 'PAID'")
 		->where("(tanggal_transaksi between '$date1' and '$date2')")
 		->get()->row_array();
+		$vol_bbm_non_produksi = $nilai_bbm_non_produksi['memo'];
 		$nilai_bbm_non_produksi = $nilai_bbm_non_produksi['total'];
 
 		$total_produksi_volume = $produksi_volume + $produksi_2_volume + $vol_bbm_non_produksi;
