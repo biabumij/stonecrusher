@@ -1578,7 +1578,7 @@ class Produksi extends Secure_Controller {
 			'volume' => $volume,
 			'nilai' => $nilai,
 			'produksi' => $produksi,
-			'unit_head' => 39,
+			'unit_head' => 41,
 			'logistik' => 27,
 			'admin' => 27,
 			'keu_1' => 37,
