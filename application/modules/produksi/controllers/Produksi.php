@@ -1454,7 +1454,6 @@ class Produksi extends Secure_Controller {
 	public function submit_kunci_bahan_baku()
 	{
 		$date = $this->input->post('date');
-		$vol_non_produksi = str_replace(',', '.', $this->input->post('vol_non_produksi'));
 		$vol_pemakaian_bbm = str_replace(',', '.', $this->input->post('vol_pemakaian_bbm'));
 		$vol_pemakaian_bbm_2 = str_replace(',', '.', $this->input->post('vol_pemakaian_bbm_2'));
 		$vol_nilai_boulder = str_replace(',', '.', $this->input->post('vol_nilai_boulder'));
@@ -1470,7 +1469,6 @@ class Produksi extends Secure_Controller {
 
 		$arr_insert = array(
 			'date' => date('Y-m-d', strtotime($date)),
-			'vol_non_produksi' => $vol_non_produksi,
 			'vol_pemakaian_bbm' => $vol_pemakaian_bbm,
 			'vol_pemakaian_bbm_2' => $vol_pemakaian_bbm_2,
 			'vol_nilai_boulder' => $vol_nilai_boulder,
