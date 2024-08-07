@@ -383,8 +383,8 @@
             //minDate: moment().add(-10, 'd').toDate(),
 			//maxDate: moment().add(+0, 'd').toDate(),
             //minDate: moment().add(-4, 'month').toDate(),
-            minDate: moment().startOf('month').toDate(),
-			maxDate: moment().endOf('month').toDate(),
+            //minDate: moment().startOf('month').toDate(),
+			//maxDate: moment().endOf('month').toDate(),
         });
 
 
