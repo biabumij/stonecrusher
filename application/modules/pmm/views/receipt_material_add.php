@@ -168,9 +168,13 @@
                             </form>
                             <br />
                             <div class="text-right">
-                                <button class="btn btn-danger" id="btn-view" style="width:100px; font-weight:bold; font-weight:bold; border-radius:10px;"><i class="fa fa-search"></i> Lihat Data</button>
+                                <button class="btn btn-danger" id="btn-view" style="width:250px; font-weight:bold; font-weight:bold; border-radius:10px;"><i class="fa fa-search"></i> Edit & Hapus Surat Jalan</button>
                             </div>
                             <div id="box-view" style="display:none;">
+                                <div style="color:red; font-weight:bold;"> * Data yang tampil adalah data surat jalan dengan status UNCREATED / belum ditagihkan.<br />
+                                * Data yang tampil adalah data surat jalan periode berjalan.<br />
+                                * Untuk melihat data surat jalan keseluruhan, bisa lihat di tab penerimaan pembelian.
+                                </div><br />
                                 <div class="row">
                                     <form action="<?php echo site_url('pmm/receipt_material/print_pdf');?>" method="GET" target="_blank">
                                         <input type="hidden" name="supplier_id" id="print_supplier_id">
@@ -209,8 +213,7 @@
                                                 <th>Satuan</th>
 												<th>Harga Satuan</th>
 												<th>Nilai</th>
-                                                <th>Edit</th>
-                                                <th>Hapus</th>
+                                                <th>Tindakan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -499,14 +502,13 @@
                 { "data": "surat_jalan" },
                 { "data": "no_kendaraan" },
                 { "data": "driver" },
-                { "data": "memo" },
                 { "data": "surat_jalan_file" },
+                { "data": "memo" },
                 { "data": "material_name" },
                 { "data": "volume" },
                 { "data": "measure" },
                 { "data": "harga_satuan" },
 				{ "data": "price" },
-                { "data": "edits" },
                 { "data": "actions" },
             ],
             "columnDefs": [

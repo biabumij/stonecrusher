@@ -85,7 +85,7 @@ class Productions extends Secure_Controller {
 		}
 
 		//$this->db->where("(date_production between '$awal_bulan' and '$akhir_bulan')");
-		//$this->db->where("date_production >= '$last_opname'");
+		$this->db->where("date_production >= '$last_opname'");
 		$this->db->where('status_payment','UNCREATED');
 		$this->db->order_by('date_production','desc');
 		$this->db->order_by('created_on','desc');
@@ -104,19 +104,14 @@ class Productions extends Secure_Controller {
 				$row['harga_satuan'] = number_format($row['harga_satuan'],0,',','.');
 				$row['price'] = number_format($row['price'],0,',','.');
 				$row['surat_jalan'] = '<a href="'.base_url().'uploads/surat_jalan_penjualan/'.$row['surat_jalan'].'" target="_blank">'.$row['surat_jalan'].'</a>';
-				
-				if($this->session->userdata('admin_group_id') == 1){
-					$edit = '<a href="javascript:void(0);" onclick="EditData('.$row['id'].')" class="btn btn-primary" style="font-weight:bold; border-radius:10px;"><i class="fa fa-edit"></i> </a>';			
-				}
-
-				if($this->session->userdata('admin_group_id') == 1){
+				$edit = '<a href="javascript:void(0);" onclick="EditData('.$row['id'].')" class="btn btn-primary" style="font-weight:bold; border-radius:10px;"><i class="fa fa-edit"></i> </a>';			
+				/*if($this->session->userdata('admin_group_id') == 1){
 					$row['edits'] = '<a href="javascript:void(0);" onclick="EditData('.$row['id'].')" class="btn btn-primary" style="font-weight:bold; border-radius:10px;"><i class="fa fa-edit"></i> </a>';	
 				}else {
 					$row['edits'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
-				}
-
-				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 15){
-					//$row['actions'] = $edit.'<a href="javascript:void(0);" onclick="DeleteData('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+				}*/
+				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 15 || $this->session->userdata('admin_group_id') == 11){
+					//$row['actions'] = $edit.' <a href="javascript:void(0);" onclick="DeleteData('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
 					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteData('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
 				}else {
 					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';

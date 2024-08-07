@@ -212,10 +212,10 @@ class Receipt_material extends CI_Controller {
 			$this->db->where('prm.date_receipt <=',date('Y-m-d',strtotime($end_date)));	
 		}
 
-		//$this->db->where("(date_receipt between '$awal_bulan' and '$akhir_bulan')");
-		$this->db->where("date_receipt >= '$last_opname'");
 		$this->db->join('pmm_purchase_order ppo','prm.purchase_order_id = ppo.id','left');
 		$this->db->join('penerima ps','ppo.supplier_id = ps.id','left');
+		//$this->db->where("(date_receipt between '$awal_bulan' and '$akhir_bulan')");
+		$this->db->where("date_receipt >= '$last_opname'");
 		$this->db->where('prm.status_payment','UNCREATED');
 		$this->db->order_by('prm.date_receipt','DESC');
 		$query = $this->db->get('pmm_receipt_material prm');
@@ -239,21 +239,16 @@ class Receipt_material extends CI_Controller {
 				
 				$uploads_surat_jalan = '<a href="javascript:void(0);" onclick="UploadDocSuratJalan('.$row['id'].')" class="btn btn-primary" title="Upload Surat Jalan" ><i class="fa fa-upload"></i> </a>';
 				$row['uploads_surat_jalan'] = $uploads_surat_jalan.' ';
-
 				$edit = false;
-				if($this->session->userdata('admin_group_id') == 1){
-					$edit = '<a href="javascript:void(0);" onclick="EditData('.$row['id'].')" class="btn btn-primary" style="font-weight:bold; border-radius:10px;"><i class="fa fa-edit"></i> </a>';			
-				}
-
-				if($this->session->userdata('admin_group_id') == 1){
-					$row['edits'] = '<a href="javascript:void(0);" onclick="EditData('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-edit"></i> </a>';		
+				$edit = '<a href="javascript:void(0);" onclick="EditData('.$row['id'].')" class="btn btn-primary" style="font-weight:bold; border-radius:10px;"><i class="fa fa-edit"></i> </a>';
+				/*if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 15 || $this->session->userdata('admin_group_id') == 11){
+					$row['edits'] = '<a href="javascript:void(0);" onclick="EditData('.$row['id'].')" class="btn btn-warning" style="font-weight:bold; border-radius:10px;"><i class="fa fa-edit"></i> </a>';		
 				}else {
 					$row['edits'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
-				}
-
-				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 15){
+				}*/
+				if($this->session->userdata('admin_group_id') == 1 || $this->session->userdata('admin_group_id') == 5 || $this->session->userdata('admin_group_id') == 6 || $this->session->userdata('admin_group_id') == 15 || $this->session->userdata('admin_group_id') == 11){
 					//$row['actions'] = $edit.' <a href="javascript:void(0);" onclick="DeleteData('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
-					$row['actions'] = ' <a href="javascript:void(0);" onclick="DeleteData('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
+					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteData('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
 				}else {
 					$row['actions'] = '<button type="button" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-ban"></i> No Access</button>';
 				}

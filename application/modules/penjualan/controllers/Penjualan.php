@@ -476,7 +476,7 @@ class Penjualan extends Secure_Controller
 		$this->db->group_by('pod.product_id');
 		$this->db->order_by('p.nama_produk','asc');
 		$query = $this->db->get('pmm_sales_po_detail pod');
-		$data[0] = array('id'=>'0','text'=>'Pilih Produk');
+		//$data[0] = array('id'=>'0','text'=>'Pilih Produk');
 		if($query->num_rows() > 0){
 			foreach ($query->result_array() as $key => $row) {
 				$arr['id'] = $row['product_id'];

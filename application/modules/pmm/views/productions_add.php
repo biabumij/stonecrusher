@@ -223,9 +223,13 @@
                                 </form>
                                 <br />
                                 <div class="text-right">
-                                    <button class="btn btn-danger" id="btn-view" style="width:100px; font-weight:bold; font-weight:bold; border-radius:10px;"><i class="fa fa-search"></i> Lihat Data</button>
+                                    <button class="btn btn-danger" id="btn-view" style="width:250px; font-weight:bold; font-weight:bold; border-radius:10px;"><i class="fa fa-search"></i> Edit & Hapus Surat Jalan</button>
                                 </div>
                                 <div id="box-view" style="display:none;">
+                                    <div style="color:red; font-weight:bold;"> * Data yang tampil adalah data surat jalan dengan status UNCREATED / belum ditagihkan.<br />
+                                    * Data yang tampil adalah data surat jalan periode berjalan.<br />
+                                    * Untuk melihat data surat jalan keseluruhan, bisa lihat di tab pengiriman penjualan.
+                                    </div><br />
                                     <div class="row">
                                         <form action="<?php echo site_url('pmm/productions/print_pdf'); ?>" target="_blank">
                                             <?php
@@ -285,8 +289,7 @@
                                                     <th>Satuan</th>
 													<th>Harga Satuan</th>
                                                     <th>Nilai</th>
-                                                    <th>Edit</th>
-                                                    <th>Hapus</th>
+                                                    <th>Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -466,9 +469,6 @@
                 },
                 {
                     "data": "price"
-                },
-                {
-                    "data": "edits"
                 },
                 {
                     "data": "actions"
