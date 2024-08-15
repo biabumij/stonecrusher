@@ -107,7 +107,7 @@
 
                             <?php include_once("script_dashboard.php"); ?>
 
-                            <div class="col-sm-12" style="background-color:#333; font-size:18px; border-radius: 10px; padding:10px;">
+                            <div class="col-sm-12" style="background-color:#333; font-size:18px; border-radius: 10px; padding:10px; margin-bottom:50px;">
                                 <figure class="highcharts-figure">
                                     <?php
                                     if(in_array($this->session->userdata('admin_group_id'), array(1,5,6))){
