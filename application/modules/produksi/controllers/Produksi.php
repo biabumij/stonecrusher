@@ -1627,6 +1627,7 @@ class Produksi extends Secure_Controller {
                 $row['date'] = date('d-m-Y',strtotime($row['date']));
 				$row['volume'] = number_format($row['volume'],2,',','.');
 				$row['nilai'] = number_format($row['nilai'],0,',','.');
+				$row['bpp'] = number_format($row['bpp'],0,',','.');
                 if($this->session->userdata('admin_group_id') == 1){
 					$row['actions'] = '<a href="javascript:void(0);" onclick="DeleteKunciBahanJadi('.$row['id'].')" class="btn btn-danger" style="font-weight:bold; border-radius:10px;"><i class="fa fa-close"></i> </a>';
 				}else {
