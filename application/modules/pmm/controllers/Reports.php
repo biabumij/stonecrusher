@@ -1568,7 +1568,7 @@ class Reports extends CI_Controller {
 				</th>
 				<?php
 				//$total_harga_pokok_pendapatan_2 = $this->pmm_model->getBebanPokokPenjualanAkumulasi($date3,$date2);
-				$bpp = $produksi = $this->db->select('sum(bpp) as bpp')
+				$bpp = $this->db->select('sum(bpp) as bpp')
 				->from('kunci_bahan_jadi')
 				->where("date between '$date1' and '$date2'")
 				->get()->row_array();
