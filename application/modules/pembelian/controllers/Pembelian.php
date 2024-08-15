@@ -1881,6 +1881,8 @@ class Pembelian extends Secure_Controller
 		$this->db->set("approve_unit_head", "SETUJUI");
         $this->db->set("keu_pusat", "25");
         $this->db->set("pusat", "18");
+        $this->db->set("updated_by", $this->session->userdata('admin_id'));
+        $this->db->set("updated_on", date('Y-m-d H:i:s'));
 		$this->db->where("id", $id);
 		$this->db->update("pmm_verifikasi_penagihan_pembelian");
 		$this->session->set_flashdata('notif_success','<b>Berhasil Menutup Verifikasi</b>');
