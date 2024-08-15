@@ -1567,7 +1567,14 @@ class Reports extends CI_Controller {
 					</table>
 				</th>
 				<?php
-				$total_harga_pokok_pendapatan_2 = $this->pmm_model->getBebanPokokPenjualanAkumulasi($date3,$date2);
+				//$total_harga_pokok_pendapatan_2 = $this->pmm_model->getBebanPokokPenjualanAkumulasi($date3,$date2);
+				$bpp = $produksi = $this->db->select('sum(bpp) as bpp')
+				->from('kunci_bahan_jadi')
+				->where("date between '$date1' and '$date2'")
+				->get()->row_array();
+				$bpp = $bpp['bpp'];
+				$total_harga_pokok_pendapatan_2 = $bpp;
+
 				$laba_kotor_2 = ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2) - $total_harga_pokok_pendapatan_2;
 				$persentase_2 = ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2!=0)?($laba_kotor_2 / ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2)) * 100:0;
 				?>
@@ -1577,8 +1584,11 @@ class Reports extends CI_Controller {
 								<th class="text-left" width="10%">
 									<span>Rp.</span>
 								</th>
-								<th class="text-right" width="90%">
+								<!--<th class="text-right" width="90%">
 									<span><a target="_blank" href="<?= base_url("laporan/cetak_beban_pokok_penjualan_2?filter_date=".$filter_date_2 = date('d F Y',strtotime($date3)).' - '.date('d F Y',strtotime($arr_filter_date[1]))) ?>"><?php echo number_format($total_harga_pokok_pendapatan_2,0,',','.');?></a></span>
+								</th>-->
+								<th class="text-right" width="90%">
+									<span><?php echo number_format($total_harga_pokok_pendapatan_2,0,',','.');?></span>
 								</th>
 							</tr>
 					</table>
