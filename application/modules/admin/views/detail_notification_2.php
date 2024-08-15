@@ -14,16 +14,25 @@
 <div class="wrap">
         <?php echo $this->Templates->PageHeader();?>
         <div class="page-body">
+            <?php echo $this->Templates->LeftBar();?>
             <div class="content">
+                <div class="content-header">
+                    <div class="leftside-content-header">
+                        <ul class="breadcrumbs">
+                            <li><i class="fa fa-sitemap" aria-hidden="true"></i><a href="<?php echo site_url('admin');?>">Dashboard</a></li>
+                            <li><a>Motifikasi</a></li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="row animated fadeInUp">
                     <div class="col-sm-12 col-lg-12">
                         <div class="panel">
-                            <div class="panel-header">
-                                <h3>Butuh Persetujuan Ka. Unit Bisnis</h3>
+                            <div class="panel-header"> 
+                                <h3>Butuh Persetujuan Ka. Plant</h3>
                                 <div class="text-left">
-                                    <a href="<?php echo site_url('admin');?>">
-                                    <button style="color:white; background-color:#5bc0de; border:1px solid black; border-radius:10px; line-height:30px;"><b>KEMBALI KE DASHBOARD</b></button></a>
-                                </div>
+                                <a href="<?php echo site_url('admin');?>">
+                                <button style="color:white; background-color:#5bc0de; border:1px solid black; border-radius:10px; line-height:30px;"><b>KEMBALI KE DASHBOARD</b></button></a>
+                            </div>
                             </div>
                             <div class="panel-content">
                                 <div class="row">
@@ -55,7 +64,7 @@
                                             <?php endforeach; ?>
                                         </table>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
