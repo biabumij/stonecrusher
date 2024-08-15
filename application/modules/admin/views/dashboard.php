@@ -161,7 +161,7 @@
                                 </figure>
                             </div>
 
-                            <br /><br />
+                            <br /><br /><br /><br />
 
                             <div class="col-sm-12">
                                 <figure class="highcharts-figure">
