@@ -104,10 +104,8 @@
                     </div>
                     <div class="content-body">
                         <div class="row animated fadeInUp">
-
                             <?php include_once("script_dashboard.php"); ?>
-
-                            <div class="col-sm-12" style="background-color:#333; font-size:18px; border-radius: 10px; padding:10px; margin-bottom:50px;">
+                            <div class="col-sm-12" style="background:#fff;background-image:linear-gradient(to right,#999999 0%,#333333 51%,#666666 100%); font-size:18px; border-radius: 10px; padding:10px; margin-bottom:50px;">
                                 <figure class="highcharts-figure">
                                     <?php
                                     if(in_array($this->session->userdata('admin_group_id'), array(1,5,6))){
