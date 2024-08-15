@@ -76,6 +76,11 @@
                                                         </table>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td>Nilai BPP</td>
+													<td></td>
+                                                    <td><input type="text" id="bpp" name="bpp" class="form-control rupiahformat text-center" value="0" required="" autocomplete="off"></td>
+                                                </tr>
                                             </tbody>
                                         </table>    
                                     </div>

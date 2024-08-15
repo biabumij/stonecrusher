@@ -286,6 +286,7 @@
                                                         <th>Tanggal</th>
 														<th>Vol. Persediaan Bahan Jadi</th>
 														<th>Nilai Persedian Bahan Jadi</th>
+                                                        <th>Nilai BPP</th>
                                                         <th>Hapus</th>										
                                                     </tr>
                                                 </thead>
@@ -780,12 +781,15 @@
                     "data": "nilai"
                 },
                 {
+                    "data": "bpp"
+                },
+                {
                     "data": "actions"
                 }
             ],
             "columnDefs": [
                 { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": [1,2], "className": 'text-right'},
+                { "targets": [2,3,4], "className": 'text-right'},
             ],
         });
 		

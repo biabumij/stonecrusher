@@ -1569,6 +1569,7 @@ class Produksi extends Secure_Controller {
 		$volume = str_replace(',', '.', $this->input->post('volume'));
 		$nilai = str_replace('.', '', $this->input->post('nilai'));
 		$produksi = $this->input->post('produksi');
+		$bpp = str_replace('.', '', $this->input->post('bpp'));
 
 		$this->db->trans_start(); # Starting Transaction
 		$this->db->trans_strict(FALSE); # See Note 01. If you wish can remove as well 
@@ -1578,6 +1579,7 @@ class Produksi extends Secure_Controller {
 			'volume' => $volume,
 			'nilai' => $nilai,
 			'produksi' => $produksi,
+			'bpp' => $bpp,
 			'unit_head' => 41,
 			'logistik' => 27,
 			'admin' => 27,
