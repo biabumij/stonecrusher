@@ -139,7 +139,7 @@
                                     
                                     $query = $query['id'];
                                     ?>
-                                        <center><b><a target="_blank" href="<?= base_url("pmm/reports/detail_notification/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN KA. UNIT BISNIS (<blink><?php echo number_format($query,0,',','.');?></blink>)</a><b></center>
+                                        <center><b><a target="_blank" href="<?= base_url("pmm/reports/detail_notification_2/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN KA. UNIT BISNIS (<blink><?php echo number_format($query,0,',','.');?></blink>)</a><b></center>
                                     <?php
                                     }
                                     ?>
@@ -154,7 +154,7 @@
                                     
                                     $query = $query['id'];
                                     ?>
-                                        <center><a target="_blank" href="<?= base_url("pmm/reports/detail_notification_2/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN TI & SISTEM (<blink><?php echo number_format($query,0,',','.');?></blink>)</a></center>
+                                        <center><a target="_blank" href="<?= base_url("pmm/reports/detail_notification_3/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN TI & SISTEM (<blink><?php echo number_format($query,0,',','.');?></blink>)</a></center>
                                     <?php
                                     }
                                     ?>
