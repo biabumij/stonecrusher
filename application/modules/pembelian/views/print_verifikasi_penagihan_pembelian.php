@@ -284,8 +284,11 @@
                             <td align="center">
                                 Dibuat Oleh
                             </td>
-                            <td align="center" colspan="3">
-                                Diperiksa & Disetujui
+                            <td align="center" colspan="2">
+                                Diperiksa 
+                            </td>
+							<td align="center">
+								Disetujui
                             </td>
 							<td align="center">
                                 Mengetahui
