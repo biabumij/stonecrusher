@@ -713,6 +713,8 @@ class Pembelian extends Secure_Controller
 	{
 		$this->db->set("status", "REJECT");
 		$this->db->where("id", $id);
+        $this->db->set("updated_by", $this->session->userdata('admin_id'));
+        $this->db->set("updated_on", date('Y-m-d H:i:s'));
 		$this->db->update("pmm_penawaran_pembelian");
 		$this->session->set_flashdata('notif_reject','<b>REJECTED</b>');
         $this->db->update('pmm_penawaran_pembelian_detail', array('status' => 'REJECT'), array('penawaran_pembelian_id' => $id));
