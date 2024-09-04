@@ -50,7 +50,7 @@
             background-color: #e69500;
 			font-size: 9px;
 			font-weight: bold;
-			border-bottom: 1pt solid #000000;
+			border-bottom: 1px solid black;
 		}
 			
 		table tr.table-active2{
