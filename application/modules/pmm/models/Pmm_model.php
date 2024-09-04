@@ -3762,7 +3762,7 @@ class Pmm_model extends CI_Model {
 		->from('pmm_productions pp')
 		->join('penerima p', 'pp.client_id = p.id','left')
 		->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-		//->where("pp.date_production between '$date1' and '$date2'")
+		->where("pp.date_production between '$date1' and '$date2'")
 		->where("pp.product_id in (3,4,7,8,9,14,24,63)")
 		->where("pp.salesPo_id <> 536 ")
 		->where("pp.salesPo_id <> 532 ")
