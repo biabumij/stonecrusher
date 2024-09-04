@@ -1519,31 +1519,7 @@ class Pmm_model extends CI_Model {
         return $output;
     }
 
-    function GetReceiptMatUseLalu($supplier_id=false,$purchase_order_no=false,$start_date=false,$filter_material=false)
-    {
-        $output = array();
-
-        $this->db->select('prm.measure,pm.material_name,prm.material_id,SUM(prm.volume) as total, SUM((prm.cost / prm.convert_value) * prm.display_volume) as total_price, prm.convert_value, SUM(prm.volume * prm.convert_value) as total_convert');
-        $this->db->join('pmm_materials pm','prm.material_id = pm.id','left');
-        $this->db->join('pmm_purchase_order ppo','prm.purchase_order_id = ppo.id','left');
-        if(!empty($start_date)){
-            $this->db->where('prm.date_receipt <',$start_date);
-        }
-        if(!empty($supplier_id)){
-            $this->db->where('ppo.supplier_id',$supplier_id);
-        }
-        if(!empty($purchase_order_no)){
-            $this->db->where('ppo.id',$purchase_order_no);
-        }
-        if(!empty($filter_material)){
-            $this->db->where_in('prm.material_id',$filter_material);
-        }
-        $this->db->order_by('pm.material_name','asc');
-        $this->db->group_by('prm.material_id');
-        $query = $this->db->get('pmm_receipt_material prm');
-        $output = $query->result_array();
-        return $output;
-    }
+    
 
     function GetProMatMonth()
     {
