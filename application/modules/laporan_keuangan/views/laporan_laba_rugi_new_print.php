@@ -285,6 +285,7 @@
 	            <th width="25%" align="center"><?php echo $filter_date;?></th>
 				<th width="25%" align="center">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 	        </tr>
+			<hr width="98%">
 			<tr class="table-active4">
 				<th width="100%" align="left"><b>Pendapatan Usaha</b></th>
 	        </tr>
