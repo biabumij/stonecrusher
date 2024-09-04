@@ -261,10 +261,10 @@
             },
             //minDate: new Date()+0,
 			//maxDate: new Date()+1,
-            minDate: moment().add(-1, 'M').toDate(),
+            //minDate: moment().add(-1, 'M').toDate(),
 			//maxDate: moment().add(+0, 'd').toDate(),
-            //minDate: moment().startOf('month').toDate(),
-			//maxDate: moment().endOf('month').toDate(),
+            minDate: moment().startOf('month').toDate(),
+			maxDate: moment().endOf('month').toDate(),
         });
         $('.dtpicker').on('apply.daterangepicker', function(ev, picker) {
               $(this).val(picker.startDate.format('DD-MM-YYYY'));
