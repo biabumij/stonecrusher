@@ -49,6 +49,7 @@
 	  	table tr.table-active{
             background-color: #e69500;
 			font-size: 9px;
+			font-weight: bold;
 		}
 			
 		table tr.table-active2{
@@ -279,12 +280,10 @@
 			$total_penjualan_all_lain_lain_2 = $total_penjualan_lain_lain_2;
 			?>
 			<tr class="table-active">
-				<th width="10%" align="center"></th>
-				<th width="40%" align="left">Periode</th>
+				<th width="50%" align="left" colspan="2">Periode</th>
 	            <th width="25%" align="center"><?php echo $filter_date;?></th>
 				<th width="25%" align="center">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
 	        </tr>
-			<hr width="98%">
 			<tr class="table-active4">
 				<th width="100%" align="left"><b>Pendapatan Usaha</b></th>
 	        </tr>
