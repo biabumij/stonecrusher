@@ -46,11 +46,9 @@
 			font-size: 9px;
 		}
 
-	  	table tr.table-active{
+		table tr.table-active{
             background-color: #e69500;
 			font-size: 9px;
-			font-weight: bold;
-			border-bottom: 1px solid black;
 		}
 			
 		table tr.table-active2{
@@ -280,11 +278,20 @@
 			$total_penjualan_all_lain_lain_2 = 0;
 			$total_penjualan_all_lain_lain_2 = $total_penjualan_lain_lain_2;
 			?>
-			<tr class="table-active">
-				<th width="50%" align="left" colspan="2">Periode</th>
-	            <th width="25%" align="center"><?php echo $filter_date;?></th>
-				<th width="25%" align="center">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
-	        </tr>
+			<table width="98%" border="0" cellpadding="3">
+				<tr class="table-active" style="">
+					<td width="50%">
+						<div style="display: block;font-weight: bold;font-size: 10px;">Periode</div>
+					</td>
+					<td align="right" width="25%">
+						<div align="center" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date;?></div>
+					</td>
+					<td align="right" width="25%">
+						<div align="center" style="display: block;font-weight: bold;font-size: 10px;">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></div>
+					</td>
+				</tr>
+			</table>
+			<hr width="98%">
 			<tr class="table-active4">
 				<th width="100%" align="left"><b>Pendapatan Usaha</b></th>
 	        </tr>
