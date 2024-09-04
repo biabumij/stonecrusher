@@ -280,13 +280,13 @@
 			?>
 			<table width="98%" border="0" cellpadding="0">
 				<tr class="table-active">
-					<td width="48%">
+					<td align="left">
 						<div style="display: block;font-weight: bold;font-size: 10px;">Periode</div>
 					</td>
-					<td align="right" width="25%">
+					<td align="right" colspan="2">
 						<div align="right" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date;?></div>
 					</td>
-					<td align="right" width="25%">
+					<td align="right" colspan="2">
 						<div align="right" style="display: block;font-weight: bold;font-size: 10px;">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></div>
 					</td>
 				</tr>
