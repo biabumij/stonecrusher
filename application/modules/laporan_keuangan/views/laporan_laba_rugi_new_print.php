@@ -279,7 +279,7 @@
 			$total_penjualan_all_lain_lain_2 = 0;
 			$total_penjualan_all_lain_lain_2 = $total_penjualan_lain_lain_2;
 			?>
-			<tr class="table-active">
+			<tr class="table-active" style="border-bottom: 1px solid #000000;">
 				<th width="50%" align="left" colspan="2">Periode</th>
 	            <th width="25%" align="center"><?php echo $filter_date;?></th>
 				<th width="25%" align="center">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></th>
