@@ -278,9 +278,9 @@
 			$total_penjualan_all_lain_lain_2 = 0;
 			$total_penjualan_all_lain_lain_2 = $total_penjualan_lain_lain_2;
 			?>
-			<table width="98%" border="0" cellpadding="3">
+			<table width="98%" border="0" cellpadding="0">
 				<tr class="table-active">
-					<td width="50%">
+					<td width="48%">
 						<div style="display: block;font-weight: bold;font-size: 10px;">Periode</div>
 					</td>
 					<td align="right" width="25%">
