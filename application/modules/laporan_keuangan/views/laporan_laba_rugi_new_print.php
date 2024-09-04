@@ -75,7 +75,7 @@
 		<br />
 		<table width="98%" cellpadding="3">
 			<tr>
-				<td align="center"  width="100%">
+				<td align="center" width="100%">
 					<div style="display: block;font-weight: bold;font-size: 12px;">LAPORAN LABA RUGI<br/>
 					<div style="text-transform: uppercase;">PERIODE <?php echo str_replace($search, $replace, $subject);?></div></div>
 				</td>
@@ -279,7 +279,7 @@
 			$total_penjualan_all_lain_lain_2 = $total_penjualan_lain_lain_2;
 			?>
 			<table width="98%" border="0" cellpadding="3">
-				<tr class="table-active" style="">
+				<tr class="table-active">
 					<td width="50%">
 						<div style="display: block;font-weight: bold;font-size: 10px;">Periode</div>
 					</td>
