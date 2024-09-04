@@ -283,13 +283,13 @@
 			<table width="98%" border="0" cellpadding="3">
 				<tr class="table-active">
 					<td width="50%">
-						<div style="display: block;font-weight: bold;font-size: 10px;">Periode</div>
+						<div style="display: block;font-weight: bold;font-size: 9px;">Periode</div>
 					</td>
 					<td align="right" width="25%">
-						<div align="center" style="display: block;font-weight: bold;font-size: 10px;"><?php echo $filter_date;?></div>
+						<div align="center" style="display: block;font-weight: bold;font-size: 9px;"><?php echo $filter_date;?></div>
 					</td>
 					<td align="right" width="25%">
-						<div align="center" style="display: block;font-weight: bold;font-size: 10px;">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></div>
+						<div align="center" style="display: block;font-weight: bold;font-size: 9px;">SD. <?php echo date('d/m/Y',strtotime($arr_filter_date[1]));?></div>
 					</td>
 				</tr>
 			</table>
