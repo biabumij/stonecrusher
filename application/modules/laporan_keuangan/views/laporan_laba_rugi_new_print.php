@@ -43,10 +43,9 @@
 	  <style type="text/css">
 		body {
 			font-family: helvetica;
-			font-size: 9px;
 		}
-
-		table tr.table-active{
+		
+	  	table tr.table-active{
             background-color: #e69500;
 			font-size: 9px;
 		}
@@ -61,22 +60,24 @@
 			
 		table tr.table-active4{
 			background-color: #D0D0D0;
-			font-weight: bold;
 			font-size: 9px;
 		}
+
 		tr.border-bottom td {
-        	border-bottom: 1pt solid #ff000d;
+        border-bottom: 1pt solid #ff000d;
       }
 	  </style>
 
 	</head>
 	<body>
-	<br />
+		<br />
 		<br />
 		<table width="98%" cellpadding="3">
 			<tr>
-				<td align="center" width="100%">
+				<td align="center"  width="100%">
 					<div style="display: block;font-weight: bold;font-size: 12px;">LAPORAN LABA RUGI<br/>
+					PROYEK BENDUNGAN TIGA DIHAJI<br/>
+					PT. BIA BUMI JAYENDRA<br/>
 					<div style="text-transform: uppercase;">PERIODE <?php echo str_replace($search, $replace, $subject);?></div></div>
 				</td>
 			</tr>
