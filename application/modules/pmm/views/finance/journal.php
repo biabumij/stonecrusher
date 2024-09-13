@@ -41,7 +41,6 @@
                             </div>
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Jurnal Umum</a></li>
-                                <!--<li role="presentation"><a href="#home_2" aria-controls="home_2" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Jurnal Umum (<?php echo date('F');?>)</a></li>-->
                             </ul>
                          
                             <div class="tab-content">
@@ -68,40 +67,13 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                
-                                <div role="tabpanel" class="tab-pane" id="home_2">
-								    <br />
-                                    <div class="col-sm-4">
-                                        <input type="text" id="filter_date_jurnal_2" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
-                                    </div>
-                                    <br /><br />
-                                    <h3 class="text-center"></h3>
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-hover" id="table_jurnal_2" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Nomor</th>
-                                                    <th>Debit</th>
-                                                    <th>Kredit</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>   
+                                </div>  
                             </div>
-                           
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </div>
     
@@ -307,37 +279,6 @@
                 }
             });
         }
-
-        var table_jurnal_2 = $('#table_jurnal_2').DataTable( {"bAutoWidth": false,
-            ajax: {
-                processing: true,
-                serverSide: true,
-                url: '<?php echo site_url('pmm/jurnal_umum/table_jurnal_2');?>',
-                type : 'POST',
-				data: function(d) {
-                    d.filter_date = $('#filter_date_jurnal_2').val();
-                }
-            },
-            columns: [
-                { "data": "no" },
-                { "data": "tanggal"},
-                { "data": "nomor" },
-                { "data": "total_debit"},
-                { "data": "total_kredit"}
-            ],
-            "columnDefs": [
-                { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": [3, 4], "className": 'text-right'},
-            ],
-            responsive: true,
-            pageLength: 25,
-        });
-
-		$('#filter_date_jurnal_2').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_jurnal_2.ajax.reload();
-		});
-
     </script>
 
 </body>

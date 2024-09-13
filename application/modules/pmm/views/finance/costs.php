@@ -41,7 +41,6 @@
                             </div>
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Biaya Umum & Adm.</a></li>
-                                <!--<li role="presentation"><a href="#home_2" aria-controls="home_2" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Biaya Umum & Adm. (<?php echo date('F');?>)</a></li>-->
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="home">
@@ -71,41 +70,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div role="tabpanel" class="tab-pane" id="home_2">
-                                    <br />
-                                    <div class="col-sm-4">
-                                        <input type="text" id="filter_date_biaya_2" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
-                                    </div>
-                                    <br /><br />
-                                    <div class="table-responsive">
-                                        <h3 class="text-center"></h3>
-                                        <div class="table-responsive">
-                                                <table class="table table-striped table-hover" id="table_biaya_2" style="width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Tanggal</th>
-                                                            <th>Nomor</th>
-                                                            <th>Penerima</th>
-                                                            <th>Total</th>
-                                                            <th>Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    
-                                                    </tbody>
-                                                </table>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </div>
 
@@ -310,39 +280,6 @@
                 }
             });
         }
-
-        var table_biaya_2 = $('#table_biaya_2').DataTable( {"bAutoWidth": false,
-            ajax: {
-                processing: true,
-                serverSide: true,
-                url: '<?php echo site_url('pmm/biaya/table_biaya_2');?>',
-                type : 'POST',
-				data: function(d) {
-                    d.filter_date = $('#filter_date_biaya_2').val();
-                }
-            },
-            columns: [
-                { "data": "no" },
-                { "data": "tanggal"},
-                { "data": "nomor_transaksi" },
-                { "data": "penerima" },
-                { "data": "jumlah_total" },
-                { "data": "status"}
-            ],
-            "columnDefs": [
-                { "width": "5%", "targets": 0, "className": 'text-center'},
-                { "targets": 4, "className": 'text-right'},
-            ],
-            responsive: true,
-            pageLength: 25,
-        });
-		
-		$('#filter_date_biaya_2').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        table_biaya_2.ajax.reload();
-		});
-
-
     </script>
     
 	<script type="text/javascript">
