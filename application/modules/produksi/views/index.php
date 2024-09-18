@@ -51,6 +51,13 @@
                                             <li><a href="javascript:void(0);" onclick="OpenForm()">Stock Opname</a></li>
                                             <li><a href="<?= site_url('produksi/form_kunci_bahan_baku'); ?>">Kunci Bahan Baku</a></li>
                                             <li><a href="<?= site_url('produksi/form_kunci_bahan_jadi'); ?>">Kunci Bahan Jadi</a></li>
+                                            <?php
+                                            if(in_array($this->session->userdata('admin_group_id'), array(1))){
+                                            ?>
+                                            <li><a href="<?= site_url('produksi/form_rakor'); ?>">Kunci Data Rakor</a></li>
+                                            <?php
+                                            }
+                                            ?>
                                         </ul>
                                     </div>
                                 </h3>
@@ -64,6 +71,13 @@
                                     <li role="presentation"><a href="#material_on_site" aria-controls="material_on_site" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Stock Opname</a></li>
                                     <li role="presentation"><a href="#kunci_bahan_baku" aria-controls="kunci_bahan_baku" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Kunci Bahan Baku</a></li>
                                     <li role="presentation"><a href="#kunci_bahan_jadi" aria-controls="kunci_bahan_jadi" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Kunci Bahan Jadi</a></li>
+                                    <?php
+                                    if(in_array($this->session->userdata('admin_group_id'), array(1))){
+                                    ?>
+                                    <li role="presentation"><a href="#rakor" aria-controls="rakor" role="tab" data-toggle="tab" style="border-radius:10px; font-weight:bold;">Kunci Data Rakor</a></li>
+                                    <?php
+                                    }
+                                    ?>
                                 </ul>
 
                                 <div class="tab-content">
@@ -73,6 +87,9 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="material_usage">
                                         <?php include_once "material_usage.php"; ?>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="rakor">
+                                        <?php include_once "rakor.php"; ?>
                                     </div>
 									
 										
@@ -827,6 +844,8 @@
     <?php include_once("script_material_on_site.php"); ?>
     
     <?php include_once("script_material_usage.php"); ?>
+
+    <?php include_once("script_rakor.php"); ?>
 
 </body>
 
