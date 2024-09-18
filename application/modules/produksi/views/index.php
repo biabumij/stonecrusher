@@ -74,7 +74,7 @@
                                     <?php
                                     if(in_array($this->session->userdata('admin_group_id'), array(1))){
                                     ?>
-                                    <li role="presentation"><a href="#rakor" aria-controls="rakor" role="tab" data-toggle="tab" style="border-radius:10px; font-weight:bold;">Kunci Data Rakor</a></li>
+                                    <li role="presentation"><a href="#rakor" aria-controls="rakor" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Kunci Data Rakor</a></li>
                                     <?php
                                     }
                                     ?>
