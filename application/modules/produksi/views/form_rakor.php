@@ -16,6 +16,14 @@
 		<div class="page-body">
             <?php echo $this->Templates->LeftBar();?>
 			<div class="content">
+                <div class="content-header">
+                    <div class="leftside-content-header">
+                        <ul class="breadcrumbs">
+                            <li><a href="<?php echo site_url('produksi#rakor');?>">Produksi</a></li>
+                            <li><a>Kunci Data Rakor</a></li>
+                        </ul>
+                    </div>
+                </div>
 				<div class="row animated fadeInUp">
 					<div class="col-sm-12 col-lg-12">
 						<div class="panel">
@@ -36,7 +44,7 @@
 									</div>
 									<br /><br /><br />
 									<div class="text-center">
-										<a href="<?= site_url('admin/stock_opname#rakor');?>" class="btn btn-danger" style="margin-bottom:0; font-weight:bold; border-radius:10px;">BATAL</a>
+										<a href="<?= site_url('admin/produksi#rakor');?>" class="btn btn-danger" style="margin-bottom:0; font-weight:bold; border-radius:10px;">BATAL</a>
 										<button type="submit" class="btn btn-success" style="font-weight:bold; border-radius:10px;">KIRIM</button>
 									</div>
 								</form>
