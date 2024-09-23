@@ -19,7 +19,7 @@
                 <div class="content-header">
                     <div class="leftside-content-header">
                         <ul class="breadcrumbs">
-                            <li><a href="<?php echo site_url('produksi#rakor');?>">Produksi</a></li>
+                            <li><a href="<?php echo site_url('admin/produksi#rakor');?>">Produksi</a></li>
                             <li><a>Kunci Data Rakor</a></li>
                         </ul>
                     </div>
@@ -29,7 +29,7 @@
 						<div class="panel">
 							<div class="panel-header"> 
 								<div>
-									<h3><b>KUNCI DATA RAKOR</b></h3>                                
+									<h3><b>Kunci Data Rakor</b></h3>                                
 								</div>
 							</div>
 							<div class="panel-content">
