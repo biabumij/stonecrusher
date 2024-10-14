@@ -1147,7 +1147,7 @@
                 { "data": "delete" }
             ],
             "columnDefs": [
-                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "width": "5%", "targets": [0,8], "className": 'text-center'},
                 { "targets": [6], "className": 'text-right'},
             ],
             responsive: true,
@@ -1386,7 +1386,7 @@
                     "selectRow": true
                 }
             },
-            { "width": "5%", "targets": 1, "className": 'text-center'},
+            { "width": "5%", "targets": [1,11], "className": 'text-center'},
             { "targets": 10, "className": 'text-right'},
         ],
     });
