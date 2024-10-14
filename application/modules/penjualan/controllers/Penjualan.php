@@ -18,9 +18,7 @@ class Penjualan extends Secure_Controller
 	public function table_penawaran()
 	{
 		$data = array();
-		
 		$w_date = $this->input->post('filter_date');
-
         if (!empty($w_date)) {
             $arr_date = explode(' - ', $w_date);
             $start_date = $arr_date[0];
@@ -28,7 +26,6 @@ class Penjualan extends Secure_Controller
             $this->db->where('tanggal  >=', date('Y-m-d', strtotime($start_date)));
             $this->db->where('tanggal <=', date('Y-m-d', strtotime($end_date)));
         }
-
 		$this->db->select('pmm_penawaran_penjualan.*,penerima.nama');
 		$this->db->join("penerima", "pmm_penawaran_penjualan.client_id = penerima.id");
 		$this->db->where('tanggal >=', date('2023-08-01'));
@@ -410,7 +407,6 @@ class Penjualan extends Secure_Controller
 	public function table_sales_po()
 	{
 		$data = array();
-
 		$w_date = $this->input->post('filter_date');
         if (!empty($w_date)) {
             $arr_date = explode(' - ', $w_date);
@@ -419,11 +415,12 @@ class Penjualan extends Secure_Controller
             $this->db->where('contract_date  >=', date('Y-m-d', strtotime($start_date)));
             $this->db->where('contract_date <=', date('Y-m-d', strtotime($end_date)));
         }
-
 		$this->db->select('ps.*, p.nama as client_name');
 		$this->db->join('penerima p', 'ps.client_id = p.id', 'left');
 		$this->db->where('contract_date >=', date('2023-08-01'));
-		$this->db->order_by('created_on', 'DESC');
+		$this->db->where("ps.status <> 'REJECT'");
+		$this->db->order_by('ps.status','DESC');
+		$this->db->order_by('ps.created_on', 'DESC');
 		$query = $this->db->get('pmm_sales_po ps');
 		if ($query->num_rows() > 0) {
 			foreach ($query->result_array() as $key => $row) {
