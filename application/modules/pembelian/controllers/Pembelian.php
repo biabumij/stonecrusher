@@ -1728,7 +1728,7 @@ class Pembelian extends Secure_Controller
 	{
 		$this->db->set("status", "REJECT");
 		$this->db->where("id", $id);
-        $this->db->update('pmm_purchase_order', array('status' => 'REJECTED'), array('id' => $id));
+        $this->db->update('pmm_purchase_order', array('status' => 'REJECT'), array('id' => $id));
 
         $permintaan_bahan_alat = $this->db->select('(request_material_id) as id')
         ->from('pmm_purchase_order')
