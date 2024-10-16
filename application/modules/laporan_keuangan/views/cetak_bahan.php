@@ -599,7 +599,7 @@
 			$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
 
 			$total_produksi_volume = $produksi_volume + $produksi_2_volume;
-			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai - $$harga_boulder['nilai_boulder_lain'];
+			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai - $harga_boulder['nilai_boulder_lain'];
 
 			$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
 			$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
