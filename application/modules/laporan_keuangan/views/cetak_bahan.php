@@ -597,7 +597,7 @@
 
 			$produksi_2_volume = $total_rekapitulasi_produksi_harian - $produksi_volume;
 			$produksi_2_harsat = $key;
-			$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
+			$produksi_2_nilai = ($produksi_2_volume * $produksi_2_harsat) - $harga_boulder['nilai_boulder_lain'];
 
 			$total_produksi_volume = $produksi_volume + $produksi_2_volume;
 			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai - $harga_boulder['nilai_boulder_lain'];
