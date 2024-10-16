@@ -1062,7 +1062,7 @@
 			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
 			
-			$harga_boulder = $this->db->select('pp.nilai_boulder as nilai_boulder')
+			$harga_boulder = $this->db->select('pp.nilai_boulder as nilai_boulder, pp.nilai_boulder_lain as nilai_boulder_lain')
 			->from('kunci_bahan_baku pp')
 			->where("(pp.date between '$date3_ago' and '$date2_ago')")
 			->order_by('pp.date','desc')->limit(1)
@@ -1109,7 +1109,7 @@
 			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai;
 
 			$stok_akhir_volume = $total_stok_volume - $produksi_volume - $produksi_2_volume;
-			$stok_akhir_nilai = $total_stok_nilai - $produksi_nilai - $produksi_2_nilai;
+			$total_produksi_nilai = $produksi_nilai + $produksi_2_nilai - $harga_boulder['nilai_boulder_lain'];
 
 			$harga_baru = ($total_rekapitulasi_produksi_harian!=0)?$total_produksi_nilai / $total_rekapitulasi_produksi_harian * 1:0;
 			$total_nilai_produksi_boulder = $total_rekapitulasi_produksi_harian * $harga_baru;

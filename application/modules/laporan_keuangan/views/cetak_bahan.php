@@ -549,8 +549,6 @@
 			->where("(pp.date between '$date3_ago' and '$date2_ago')")
 			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
-			file_put_contents("D:\\test.txt", $this->db->last_query());
-
 
 			$pembelian_boulder = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
 			->from('pmm_receipt_material prm')
