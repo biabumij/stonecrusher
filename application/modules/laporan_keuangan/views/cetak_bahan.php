@@ -599,7 +599,7 @@
 
 			$key = 0;
 			if($harsat_new == 0) {
-				$key = $produksi_harsat;
+				$key = $harsat_new;
 			}
 
 			if($harsat_new > 0) {
