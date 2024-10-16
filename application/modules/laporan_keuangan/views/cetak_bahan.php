@@ -544,11 +544,13 @@
 			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
 			
-			$harga_boulder = $this->db->select('pp.nilai_boulder as nilai_boulder, pp.nilai_boulder_lain as nilai_boulde_lain')
+			$harga_boulder = $this->db->select('pp.nilai_boulder as nilai_boulder, pp.nilai_boulder_lain as nilai_boulder_lain')
 			->from('kunci_bahan_baku pp')
 			->where("(pp.date between '$date3_ago' and '$date2_ago')")
 			->order_by('pp.date','desc')->limit(1)
 			->get()->row_array();
+			file_put_contents("D:\\test.txt", $this->db->last_query());
+
 
 			$pembelian_boulder = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
 			->from('pmm_receipt_material prm')
