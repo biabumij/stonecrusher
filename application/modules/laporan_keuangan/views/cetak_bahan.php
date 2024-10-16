@@ -556,7 +556,6 @@
 			->join('produk p', 'prm.material_id = p.id','left')
 			->where("prm.date_receipt between '$date1' and '$date2'")
 			->where("prm.material_id = 15")
-			->where("po.status in ('OPEN','CLOSED')")
 			->group_by('prm.material_id')
 			->get()->row_array();
 
@@ -596,7 +595,7 @@
 			}
 
 			$produksi_2_volume = $total_rekapitulasi_produksi_harian - $produksi_volume;
-			$produksi_2_harsat = $pembelian_harga;
+			$produksi_2_harsat = $key;
 			$produksi_2_nilai = $produksi_2_volume * $produksi_2_harsat;
 
 			$total_produksi_volume = $produksi_volume + $produksi_2_volume;
