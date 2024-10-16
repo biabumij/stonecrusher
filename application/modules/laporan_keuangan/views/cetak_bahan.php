@@ -556,7 +556,6 @@
 			->join('produk p', 'prm.material_id = p.id','left')
 			->where("prm.date_receipt between '$date1' and '$date2'")
 			->where("prm.material_id = 15")
-			->where("po.status in ('OPEN','CLOSED')")
 			->group_by('prm.material_id')
 			->get()->row_array();
 
@@ -586,24 +585,13 @@
 			$produksi_harsat = $stok_harsat_boulder_lalu;
 			$produksi_nilai = $stok_nilai_boulder_lalu;
 
-			$harsat_new = $this->db->select('(prm.display_price / prm.display_volume) as harga')
-			->from('pmm_receipt_material prm')
-			->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-			->join('produk p', 'prm.material_id = p.id','left')
-			->where("prm.date_receipt between '$date1' and '$date2'")
-			->where("prm.material_id = 15")
-			->where("po.status in ('OPEN','CLOSED')")
-			->group_by('prm.material_id')
-			->get()->row_array();
-			$harsat_new = $harsat_new['harga'];
-
 			$key = 0;
-			if($harsat_new == 0) {
-				$key = $harsat_new;
+			if($pembelian_harga == 0) {
+				$key = $produksi_harsat;
 			}
 
-			if($harsat_new > 0) {
-				$key = $harsat_new;
+			if($pembelian_harga > 0) {
+				$key = $pembelian_harga;
 			}
 
 			$produksi_2_volume = $total_rekapitulasi_produksi_harian - $produksi_volume;
