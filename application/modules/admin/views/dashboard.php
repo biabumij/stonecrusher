@@ -328,7 +328,7 @@
                                 },
                                 format: '{value}'
                             },
-                            min: -1200,
+                            min: -250,
                             max: 120,
                             tickInterval: 20,
                         },
