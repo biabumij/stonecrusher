@@ -1037,7 +1037,7 @@
 
 	$akumulasi_bahan_jadi_mei24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_mei24')
 	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_maret24_akhir' and '$date_mei24_akhir'")
+	->where("pp.date between '$date_april24_akhir' and '$date_mei24_akhir'")
 	->order_by('pp.date','desc')->limit(1)
 	->get()->row_array();
 	$harsat_bahan_jadi_mei24 = $akumulasi_bahan_jadi_mei24['harsat_mei24'];
@@ -1126,7 +1126,7 @@
 
 	$akumulasi_bahan_jadi_juni24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_juni24')
 	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_maret24_akhir' and '$date_juni24_akhir'")
+	->where("pp.date between '$date_mei24_akhir' and '$date_juni24_akhir'")
 	->order_by('pp.date','desc')->limit(1)
 	->get()->row_array();
 	$harsat_bahan_jadi_juni24 = $akumulasi_bahan_jadi_juni24['harsat_juni24'];
@@ -1215,7 +1215,7 @@
 
 	$akumulasi_bahan_jadi_juli24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_juli24')
 	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_maret24_akhir' and '$date_juli24_akhir'")
+	->where("pp.date between '$date_juni24_akhir' and '$date_juli24_akhir'")
 	->order_by('pp.date','desc')->limit(1)
 	->get()->row_array();
 	$harsat_bahan_jadi_juli24 = $akumulasi_bahan_jadi_juli24['harsat_juli24'];
@@ -1304,7 +1304,7 @@
 
 	$akumulasi_bahan_jadi_agustus24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_agustus24')
 	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_maret24_akhir' and '$date_agustus24_akhir'")
+	->where("pp.date between '$date_juli24_akhir' and '$date_agustus24_akhir'")
 	->order_by('pp.date','desc')->limit(1)
 	->get()->row_array();
 	$harsat_bahan_jadi_agustus24 = $akumulasi_bahan_jadi_agustus24['harsat_agustus24'];
@@ -1393,7 +1393,7 @@
 
 	$akumulasi_bahan_jadi_september24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_september24')
 	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_maret24_akhir' and '$date_september24_akhir'")
+	->where("pp.date between '$date_agustus24_akhir' and '$date_september24_akhir'")
 	->order_by('pp.date','desc')->limit(1)
 	->get()->row_array();
 	$harsat_bahan_jadi_september24 = $akumulasi_bahan_jadi_september24['harsat_september24'];
@@ -1482,7 +1482,7 @@
 
 	$akumulasi_bahan_jadi_oktober24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_oktober24')
 	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_maret24_akhir' and '$date_oktober24_akhir'")
+	->where("pp.date between '$date_september24_akhir' and '$date_oktober24_akhir'")
 	->order_by('pp.date','desc')->limit(1)
 	->get()->row_array();
 	$harsat_bahan_jadi_oktober24 = $akumulasi_bahan_jadi_oktober24['harsat_oktober24'];
