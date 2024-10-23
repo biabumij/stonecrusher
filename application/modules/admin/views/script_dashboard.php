@@ -2025,7 +2025,7 @@
 	
 	$harga_baru_mei24 = ($harga_boulder_mei24['nilai_boulder'] + $pembelian_boulder_mei24['nilai']) / (round($stock_opname_batu_boulder_ago_mei24['volume'],2) + round($pembelian_boulder_mei24['volume'],2));
 	$total_nilai_produksi_boulder_mei24 = $total_rekapitulasi_produksi_harian_mei24 * $harga_baru_mei24;
-	$total_nilai_produksi_boulder_mei24_fix = round($total_nilai_produksi_boulder_april24 / 1000000,0);
+	$total_nilai_produksi_boulder_mei24_fix = round($total_nilai_produksi_boulder_mei24 / 1000000,0);
 
 	//JUNI24
 	$rekapitulasi_produksi_harian_juni24 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
@@ -2068,7 +2068,7 @@
 	
 	$harga_baru_juni24 = ($harga_boulder_juni24['nilai_boulder'] + $pembelian_boulder_juni24['nilai']) / (round($stock_opname_batu_boulder_ago_juni24['volume'],2) + round($pembelian_boulder_juni24['volume'],2));
 	$total_nilai_produksi_boulder_juni24 = $total_rekapitulasi_produksi_harian_juni24 * $harga_baru_juni24;
-	$total_nilai_produksi_boulder_juni24_fix = round($total_nilai_produksi_boulder_april24 / 1000000,0);
+	$total_nilai_produksi_boulder_juni24_fix = round($total_nilai_produksi_boulder_juni24 / 1000000,0);
 
 	//JULI24
 	$rekapitulasi_produksi_harian_juli24 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
@@ -2111,7 +2111,7 @@
 	
 	$harga_baru_juli24 = ($harga_boulder_juli24['nilai_boulder'] + $pembelian_boulder_juli24['nilai']) / (round($stock_opname_batu_boulder_ago_juli24['volume'],2) + round($pembelian_boulder_juli24['volume'],2));
 	$total_nilai_produksi_boulder_juli24 = $total_rekapitulasi_produksi_harian_juli24 * $harga_baru_juli24;
-	$total_nilai_produksi_boulder_juli24_fix = round($total_nilai_produksi_boulder_april24 / 1000000,0);
+	$total_nilai_produksi_boulder_juli24_fix = round($total_nilai_produksi_boulder_juli24 / 1000000,0);
 
 	//AGUSTUS24
 	$rekapitulasi_produksi_harian_agustus24 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
@@ -2154,10 +2154,96 @@
 	
 	$harga_baru_agustus24 = ($harga_boulder_agustus24['nilai_boulder'] + $pembelian_boulder_agustus24['nilai']) / (round($stock_opname_batu_boulder_ago_agustus24['volume'],2) + round($pembelian_boulder_agustus24['volume'],2));
 	$total_nilai_produksi_boulder_agustus24 = $total_rekapitulasi_produksi_harian_agustus24 * $harga_baru_agustus24;
-	$total_nilai_produksi_boulder_agustus24_fix = round($total_nilai_produksi_boulder_april24 / 1000000,0);
-?>
+	$total_nilai_produksi_boulder_agustus24_fix = round($total_nilai_produksi_boulder_agustus24 / 1000000,0);
 
-<?php
+	//SEPTEMBER24
+	$rekapitulasi_produksi_harian_september24 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+	->from('pmm_produksi_harian pph ')
+	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+	->where("(pph.date_prod between '$date_september24_awal' and '$date_september24_akhir')")
+	->where('pph.status','PUBLISH')
+	->get()->row_array();
+	$total_rekapitulasi_produksi_harian_september24 = round($rekapitulasi_produksi_harian_september24['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_september24['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_september24['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_september24['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_september24['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_september24['jumlah_pemakaian_f'],2);
+
+	$nilai_rap_bahan_september24 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_september24,2);
+	$nilai_rap_bahan_september24_fix = round($nilai_rap_bahan_september24 / 1000000,0);
+
+	$date1_ago_september24 = date('2020-01-01');
+	$date2_ago_september24 = date('Y-m-d', strtotime('-1 days', strtotime($date_september24_awal)));
+	$date3_ago_september24 = date('Y-m-d', strtotime('-1 months', strtotime($date_september24_awal)));
+	$tanggal_opening_balance_september24 = date('Y-m-d', strtotime('-1 days', strtotime($date_september24_awal)));
+
+	$stock_opname_batu_boulder_ago_september24 = $this->db->select('pp.vol_nilai_boulder as volume')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date = '$tanggal_opening_balance_september24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$harga_boulder_september24 = $this->db->select('pp.nilai_boulder as nilai_boulder')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date between '$date3_ago_september24' and '$date2_ago_september24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$pembelian_boulder_september24 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
+	->from('pmm_receipt_material prm')
+	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
+	->join('produk p', 'prm.material_id = p.id','left')
+	->where("prm.date_receipt between '$date_september24_awal' and '$date_september24_akhir'")
+	->where("prm.material_id = 15")
+	->group_by('prm.material_id')
+	->get()->row_array();
+
+	$harga_baru_september24 = ($harga_boulder_september24['nilai_boulder'] + $pembelian_boulder_september24['nilai']) / (round($stock_opname_batu_boulder_ago_september24['volume'],2) + round($pembelian_boulder_september24['volume'],2));
+	$total_nilai_produksi_boulder_september24 = $total_rekapitulasi_produksi_harian_september24 * $harga_baru_september24;
+	$total_nilai_produksi_boulder_september24_fix = round($total_nilai_produksi_boulder_september24 / 1000000,0);
+
+	//OKTOBER24
+	$rekapitulasi_produksi_harian_oktober24 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+	->from('pmm_produksi_harian pph ')
+	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+	->where("(pph.date_prod between '$date_oktober24_awal' and '$date_oktober24_akhir')")
+	->where('pph.status','PUBLISH')
+	->get()->row_array();
+	$total_rekapitulasi_produksi_harian_oktober24 = round($rekapitulasi_produksi_harian_oktober24['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_oktober24['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_oktober24['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_oktober24['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_oktober24['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_oktober24['jumlah_pemakaian_f'],2);
+
+	$nilai_rap_bahan_oktober24 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_oktober24,2);
+	$nilai_rap_bahan_oktober24_fix = round($nilai_rap_bahan_oktober24 / 1000000,0);
+
+	$date1_ago_oktober24 = date('2020-01-01');
+	$date2_ago_oktober24 = date('Y-m-d', strtotime('-1 days', strtotime($date_oktober24_awal)));
+	$date3_ago_oktober24 = date('Y-m-d', strtotime('-1 months', strtotime($date_oktober24_awal)));
+	$tanggal_opening_balance_oktober24 = date('Y-m-d', strtotime('-1 days', strtotime($date_oktober24_awal)));
+
+	$stock_opname_batu_boulder_ago_oktober24 = $this->db->select('pp.vol_nilai_boulder as volume')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date = '$tanggal_opening_balance_oktober24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$harga_boulder_oktober24 = $this->db->select('pp.nilai_boulder as nilai_boulder')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date between '$date3_ago_oktober24' and '$date2_ago_oktober24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$pembelian_boulder_oktober24 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
+	->from('pmm_receipt_material prm')
+	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
+	->join('produk p', 'prm.material_id = p.id','left')
+	->where("prm.date_receipt between '$date_oktober24_awal' and '$date_oktober24_akhir'")
+	->where("prm.material_id = 15")
+	->group_by('prm.material_id')
+	->get()->row_array();
+
+	$harga_baru_oktober24 = ($harga_boulder_oktober24['nilai_boulder'] + $pembelian_boulder_oktober24['nilai']) / (round($stock_opname_batu_boulder_ago_oktober24['volume'],2) + round($pembelian_boulder_oktober24['volume'],2));
+	$total_nilai_produksi_boulder_oktober24 = $total_rekapitulasi_produksi_harian_oktober24 * $harga_baru_oktober24;
+	$total_nilai_produksi_boulder_oktober24_fix = round($total_nilai_produksi_boulder_oktober24 / 1000000,0);
+	?>
+
+	<?php
 	//AGUSTUS23
 	$vol_rap_alat_agustus23 = $total_rekapitulasi_produksi_harian_agustus23;
 	$nilai_rap_alat_agustus23 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_agustus23,2);
