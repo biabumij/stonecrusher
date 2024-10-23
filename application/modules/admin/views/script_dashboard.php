@@ -247,6 +247,13 @@
 
 	$penjualan_agustus23 = $total_penjualan_agustus23 + $total_penjualan_limbah_agustus23 + $total_penjualan_lain_lain_agustus23;
 	$beban_pokok_penjualan_agustus23 = $total_volume_penjualan_agustus23 * $harsat_bahan_jadi_agustus23;
+	$produksi_agustus23 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_agustus23_awal' and '$date_agustus23_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_agustus23 = $produksi_agustus23['produksi'];
+	$beban_pokok_penjualan_agustus23 = $beban_pokok_penjualan_agustus23 *$produksi_agustus23;
 	$laba_kotor_agustus23 = $penjualan_agustus23 - $beban_pokok_penjualan_agustus23;
 
 	$persentase_laba_kotor_agustus23 = ($penjualan_agustus23!=0)?($laba_kotor_agustus23 / $penjualan_agustus23) * 100:0;
@@ -335,6 +342,13 @@
 
 	$penjualan_september23 = $total_penjualan_september23 + $total_penjualan_limbah_september23 + $total_penjualan_lain_lain_september23;
 	$beban_pokok_penjualan_september23 = $total_volume_penjualan_september23 * $harsat_bahan_jadi_september23;
+	$produksi_september23 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_september23_awal' and '$date_september23_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_september23 = $produksi_september23['produksi'];
+	$beban_pokok_penjualan_september23 = $beban_pokok_penjualan_september23 *$produksi_september23;
 	$laba_kotor_september23 = $penjualan_september23 - $beban_pokok_penjualan_september23;
 
 	$persentase_laba_kotor_september23 = ($penjualan_september23!=0)?($laba_kotor_september23 / $penjualan_september23) * 100:0;
@@ -423,6 +437,13 @@
 
 	$penjualan_oktober23 = $total_penjualan_oktober23 + $total_penjualan_limbah_oktober23 + $total_penjualan_lain_lain_oktober23;
 	$beban_pokok_penjualan_oktober23 = $total_volume_penjualan_oktober23 * $harsat_bahan_jadi_oktober23;
+	$produksi_oktober23 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_oktober23_awal' and '$date_oktober23_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_oktober23 = $produksi_oktober23['produksi'];
+	$beban_pokok_penjualan_oktober23 = $beban_pokok_penjualan_oktober23 *$produksi_oktober23;
 	$laba_kotor_oktober23 = $penjualan_oktober23 - $beban_pokok_penjualan_oktober23;
 
 	$persentase_laba_kotor_oktober23 = ($penjualan_oktober23!=0)?($laba_kotor_oktober23 / $penjualan_oktober23) * 100:0;
@@ -511,8 +532,14 @@
 
 	$penjualan_november23 = $total_penjualan_november23 + $total_penjualan_limbah_november23 + $total_penjualan_lain_lain_november23;
 	$beban_pokok_penjualan_november23 = $total_volume_penjualan_november23 * $harsat_bahan_jadi_november23;
+	$produksi_november23 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_november23_awal' and '$date_november23_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_november23 = $produksi_november23['produksi'];
+	$beban_pokok_penjualan_november23 = $beban_pokok_penjualan_november23 *$produksi_november23;
 	$laba_kotor_november23 = $penjualan_november23 - $beban_pokok_penjualan_november23;
-
 	
 	$persentase_laba_kotor_november23 = ($penjualan_november23!=0)?($laba_kotor_november23 / $penjualan_november23) * 100:0;
 	$persentase_laba_kotor_november23_fix = round($persentase_laba_kotor_november23,2);
@@ -600,9 +627,15 @@
 
 	$penjualan_desember23 = $total_penjualan_desember23 + $total_penjualan_limbah_desember23 + $total_penjualan_lain_lain_desember23;
 	$beban_pokok_penjualan_desember23 = $total_volume_penjualan_desember23 * $harsat_bahan_jadi_desember23;
+	$produksi_desember23 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_desember23_awal' and '$date_desember23_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_desember23 = $produksi_desember23['produksi'];
+	$beban_pokok_penjualan_desember23 = $beban_pokok_penjualan_desember23 *$produksi_desember23;
 	$laba_kotor_desember23 = $penjualan_desember23 - $beban_pokok_penjualan_desember23;
 
-	
 	$persentase_laba_kotor_desember23 = ($penjualan_desember23!=0)?($laba_kotor_desember23 / $penjualan_desember23) * 100:0;
 	$persentase_laba_kotor_desember23_fix = round($persentase_laba_kotor_desember23,2);
 
@@ -689,6 +722,13 @@
 
 	$penjualan_januari24 = $total_penjualan_januari24 + $total_penjualan_limbah_januari24 + $total_penjualan_lain_lain_januari24;
 	$beban_pokok_penjualan_januari24 = $total_volume_penjualan_januari24 * $harsat_bahan_jadi_januari24;
+	$produksi_januari24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_januari24_awal' and '$date_januari24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_januari24 = $produksi_januari24['produksi'];
+	$beban_pokok_penjualan_januari24 = $beban_pokok_penjualan_januari24 *$produksi_januari24;
 	$laba_kotor_januari24 = $penjualan_januari24 - $beban_pokok_penjualan_januari24;
 	
 	$persentase_laba_kotor_januari24 = ($penjualan_januari24!=0)?($laba_kotor_januari24 / $penjualan_januari24) * 100:0;
@@ -777,8 +817,14 @@
 
 	$penjualan_februari24 = $total_penjualan_februari24 + $total_penjualan_limbah_februari24 + $total_penjualan_lain_lain_februari24;
 	$beban_pokok_penjualan_februari24 = $total_volume_penjualan_februari24 * $harsat_bahan_jadi_februari24;
+	$produksi_februari24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_februari24_awal' and '$date_februari24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_februari24 = $produksi_februari24['produksi'];
+	$beban_pokok_penjualan_februari24 = $beban_pokok_penjualan_februari24 *$produksi_februari24;
 	$laba_kotor_februari24 = $penjualan_februari24 - $beban_pokok_penjualan_februari24;
-
 	
 	$persentase_laba_kotor_februari24 = ($penjualan_februari24!=0)?($laba_kotor_februari24 / $penjualan_februari24) * 100:0;
 	$persentase_laba_kotor_februari24_fix = round($persentase_laba_kotor_februari24,2);
@@ -866,8 +912,14 @@
 
 	$penjualan_maret24 = $total_penjualan_maret24 + $total_penjualan_limbah_maret24 + $total_penjualan_lain_lain_maret24;
 	$beban_pokok_penjualan_maret24 = $total_volume_penjualan_maret24 * $harsat_bahan_jadi_maret24;
+	$produksi_maret24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_maret24_awal' and '$date_maret24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_maret24 = $produksi_maret24['produksi'];
+	$beban_pokok_penjualan_maret24 = $beban_pokok_penjualan_maret24 *$produksi_maret24;
 	$laba_kotor_maret24 = $penjualan_maret24 - $beban_pokok_penjualan_maret24;
-
 	
 	$persentase_laba_kotor_maret24 = ($penjualan_maret24!=0)?($laba_kotor_maret24 / $penjualan_maret24) * 100:0;
 	$persentase_laba_kotor_maret24_fix = round($persentase_laba_kotor_maret24,2);
@@ -955,9 +1007,15 @@
 
 	$penjualan_april24 = $total_penjualan_april24 + $total_penjualan_limbah_april24 + $total_penjualan_lain_lain_april24;
 	$beban_pokok_penjualan_april24 = $total_volume_penjualan_april24 * $harsat_bahan_jadi_april24;
+	$produksi_april24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_april24_awal' and '$date_april24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_april24 = $produksi_april24['produksi'];
+	$beban_pokok_penjualan_april24 = $beban_pokok_penjualan_april24 *$produksi_april24;
 	$laba_kotor_april24 = $penjualan_april24 - $beban_pokok_penjualan_april24;
 
-	
 	$persentase_laba_kotor_april24 = ($penjualan_april24!=0)?($laba_kotor_april24 / $penjualan_april24) * 100:0;
 	$persentase_laba_kotor_april24_fix = round($persentase_laba_kotor_april24,2);
 
@@ -1044,8 +1102,14 @@
 
 	$penjualan_mei24 = $total_penjualan_mei24 + $total_penjualan_limbah_mei24 + $total_penjualan_lain_lain_mei24;
 	$beban_pokok_penjualan_mei24 = $total_volume_penjualan_mei24 * $harsat_bahan_jadi_mei24;
+	$produksi_mei24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_mei24_awal' and '$date_mei24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_mei24 = $produksi_mei24['produksi'];
+	$beban_pokok_penjualan_mei24 = $beban_pokok_penjualan_mei24 *$produksi_mei24;
 	$laba_kotor_mei24 = $penjualan_mei24 - $beban_pokok_penjualan_mei24;
-
 	
 	$persentase_laba_kotor_mei24 = ($penjualan_mei24!=0)?($laba_kotor_mei24 / $penjualan_mei24) * 100:0;
 	$persentase_laba_kotor_mei24_fix = round($persentase_laba_kotor_mei24,2);
@@ -1141,7 +1205,6 @@
 	$produksi_juni24 = $produksi_juni24['produksi'];
 	$beban_pokok_penjualan_juni24 = $beban_pokok_penjualan_juni24 *$produksi_juni24;
 	$laba_kotor_juni24 = $penjualan_juni24 - $beban_pokok_penjualan_juni24;
-
 	
 	$persentase_laba_kotor_juni24 = ($penjualan_juni24!=0)?($laba_kotor_juni24 / $penjualan_juni24) * 100:0;
 	$persentase_laba_kotor_juni24_fix = round($persentase_laba_kotor_juni24,2);
@@ -1229,8 +1292,14 @@
 
 	$penjualan_juli24 = $total_penjualan_juli24 + $total_penjualan_limbah_juli24 + $total_penjualan_lain_lain_juli24;
 	$beban_pokok_penjualan_juli24 = $total_volume_penjualan_juli24 * $harsat_bahan_jadi_juli24;
+	$produksi_juli24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_juli24_awal' and '$date_juli24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_juli24 = $produksi_juli24['produksi'];
+	$beban_pokok_penjualan_juli24 = $beban_pokok_penjualan_juli24 *$produksi_juli24;
 	$laba_kotor_juli24 = $penjualan_juli24 - $beban_pokok_penjualan_juli24;
-
 	
 	$persentase_laba_kotor_juli24 = ($penjualan_juli24!=0)?($laba_kotor_juli24 / $penjualan_juli24) * 100:0;
 	$persentase_laba_kotor_juli24_fix = round($persentase_laba_kotor_juli24,2);
@@ -1318,8 +1387,14 @@
 
 	$penjualan_agustus24 = $total_penjualan_agustus24 + $total_penjualan_limbah_agustus24 + $total_penjualan_lain_lain_agustus24;
 	$beban_pokok_penjualan_agustus24 = $total_volume_penjualan_agustus24 * $harsat_bahan_jadi_agustus24;
+	$produksi_agustus24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_agustus24_awal' and '$date_agustus24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_agustus24 = $produksi_agustus24['produksi'];
+	$beban_pokok_penjualan_agustus24 = $beban_pokok_penjualan_agustus24 *$produksi_agustus24;
 	$laba_kotor_agustus24 = $penjualan_agustus24 - $beban_pokok_penjualan_agustus24;
-
 	
 	$persentase_laba_kotor_agustus24 = ($penjualan_agustus24!=0)?($laba_kotor_agustus24 / $penjualan_agustus24) * 100:0;
 	$persentase_laba_kotor_agustus24_fix = round($persentase_laba_kotor_agustus24,2);
@@ -1407,9 +1482,15 @@
 
 	$penjualan_september24 = $total_penjualan_september24 + $total_penjualan_limbah_september24 + $total_penjualan_lain_lain_september24;
 	$beban_pokok_penjualan_september24 = $total_volume_penjualan_september24 * $harsat_bahan_jadi_september24;
+	$produksi_september24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_september24_awal' and '$date_september24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_september24 = $produksi_september24['produksi'];
+	$beban_pokok_penjualan_september24 = $beban_pokok_penjualan_september24 *$produksi_september24;
 	$laba_kotor_september24 = $penjualan_september24 - $beban_pokok_penjualan_september24;
 
-	
 	$persentase_laba_kotor_september24 = ($penjualan_september24!=0)?($laba_kotor_september24 / $penjualan_september24) * 100:0;
 	$persentase_laba_kotor_september24_fix = round($persentase_laba_kotor_september24,2);
 
@@ -1496,9 +1577,15 @@
 
 	$penjualan_oktober24 = $total_penjualan_oktober24 + $total_penjualan_limbah_oktober24 + $total_penjualan_lain_lain_oktober24;
 	$beban_pokok_penjualan_oktober24 = $total_volume_penjualan_oktober24 * $harsat_bahan_jadi_oktober24;
+	$produksi_oktober24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_oktober24_awal' and '$date_oktober24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_oktober24 = $produksi_oktober24['produksi'];
+	$beban_pokok_penjualan_oktober24 = $beban_pokok_penjualan_oktober24 *$produksi_oktober24;
 	$laba_kotor_oktober24 = $penjualan_oktober24 - $beban_pokok_penjualan_oktober24;
 
-	
 	$persentase_laba_kotor_oktober24 = ($penjualan_oktober24!=0)?($laba_kotor_oktober24 / $penjualan_oktober24) * 100:0;
 	$persentase_laba_kotor_oktober24_fix = round($persentase_laba_kotor_oktober24,2);
 
