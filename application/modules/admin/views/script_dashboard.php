@@ -1133,6 +1133,13 @@
 
 	$penjualan_juni24 = $total_penjualan_juni24 + $total_penjualan_limbah_juni24 + $total_penjualan_lain_lain_juni24;
 	$beban_pokok_penjualan_juni24 = $total_volume_penjualan_juni24 * $harsat_bahan_jadi_juni24;
+	$produksi_juni24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_juni24_awal' and '$date_juni24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_juni24 = $produksi_juni24['produksi'];
+	$beban_pokok_penjualan_juni24 = $beban_pokok_penjualan_juni24 *$produksi_juni24;
 	$laba_kotor_juni24 = $penjualan_juni24 - $beban_pokok_penjualan_juni24;
 
 	
