@@ -105,7 +105,7 @@
 		?>
 		
 		<table width="98%" border="0" cellpadding="3">
-		<?php
+			<?php
 			$penjualan = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
 			->from('pmm_productions pp')
 			->join('penerima p', 'pp.client_id = p.id','left')
@@ -193,7 +193,7 @@
 			->get()->row_array();
 			$produksi = $produksi['produksi'];
 			$total_harga_pokok_pendapatan = $total_harga_pokok_pendapatan * $produksi;
-			
+
 			$laba_kotor = ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain) - $total_harga_pokok_pendapatan;
 			$persentase = ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain!=0)?($laba_kotor / ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain))  * 100:0;
 			?>
