@@ -185,14 +185,20 @@
 			$total_penjualan_all_lain_lain = 0;
 			$total_penjualan_all_lain_lain = $total_penjualan_lain_lain;
 			
-			$total_harga_pokok_pendapatan = $this->pmm_model->getBebanPokokPenjualan($date1,$date2);
+			//$total_harga_pokok_pendapatan = $this->pmm_model->getBebanPokokPenjualan($date1,$date2);
+			$bpp = $this->db->select('sum(bpp) as bpp')
+			->from('kunci_bahan_jadi')
+			->where("date between '$date1' and '$date2'")
+			->get()->row_array();
+			$bpp = $bpp['bpp'];
+			
 			$produksi = $this->db->select('produksi')
 			->from('kunci_bahan_jadi')
 			->where("date between '$date1' and '$date2'")
 			->order_by('id','desc')->limit(1)
 			->get()->row_array();
 			$produksi = $produksi['produksi'];
-			$total_harga_pokok_pendapatan = $total_harga_pokok_pendapatan * $produksi;
+			$total_harga_pokok_pendapatan = $bpp * $produksi;
 
 			$laba_kotor = ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain) - $total_harga_pokok_pendapatan;
 			$persentase = ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain!=0)?($laba_kotor / ($total_penjualan_all + $total_penjualan_all_limbah + $total_penjualan_all_lain_lain))  * 100:0;
