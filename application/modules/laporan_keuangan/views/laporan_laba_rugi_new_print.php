@@ -410,6 +410,7 @@
 				->get()->row_array();
 				$bpp = $bpp['bpp'];
 				$total_harga_pokok_pendapatan_2 = $bpp;
+
 				$laba_kotor_2 = ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2) - $total_harga_pokok_pendapatan_2;
 				$persentase_2 = ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2!=0)?($laba_kotor_2 / ($total_penjualan_all_2 + $total_penjualan_all_limbah_2 + $total_penjualan_all_lain_lain_2)) * 100:0;
 				?>
