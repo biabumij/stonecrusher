@@ -40,9 +40,26 @@
                                 </div>
                             </div>
                             <ul class="nav nav-tabs" role="tablist">
+                                <?php
+                                if(in_array($this->session->userdata('admin_group_id'), array(1,5,6,9,13))){
+                                ?>
                                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Biaya Umum & Adm.</a></li>
+                                <?php
+                                }
+                                ?>
+
+                                <?php
+                                if(in_array($this->session->userdata('admin_group_id'), array(7,10,11,12,14,15,16,17))){
+                                ?>
+                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" style="border-radius:10px 0px 10px 0px; font-weight:bold;">Biaya Umum & Adm.</a></li>
+                                <?php
+                                }
+                                ?>
                             </ul>
                             <div class="tab-content">
+                                <?php
+                                if(in_array($this->session->userdata('admin_group_id'), array(1,5,6,9,13))){
+                                ?>
                                 <div role="tabpanel" class="tab-pane active" id="home">
                                     <br />
                                     <div class="col-sm-4">
@@ -70,6 +87,44 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php
+                                }
+                                ?>
+
+                                <?php
+                                if(in_array($this->session->userdata('admin_group_id'), array(7,10,11,12,14,15,16,17))){
+                                ?>
+                                <div role="tabpanel" class="tab-pane active" id="home_2">
+                                    <br />
+                                    <div class="col-sm-3">
+                                        <input type="text" id="filter_date_biaya_2" name="filter_date" class="form-control dtpickerange" autocomplete="off" placeholder="Filter By Date">
+                                    </div>
+                                    <button style="background-color:#88b93c; border:1px solid black; border-radius:10px; line-height:30px;"><a href="<?php echo site_url('pmm/biaya/tambah_biaya'); ?>"><b style="color:white;">BUAT BIAYA BUA</b></a></button>
+                                    <br />
+                                    <br />
+                                    <h3 class="text-center"></h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover" id="table_biaya_2" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>NO.</th>
+                                                    <th>TANGGAL</th>
+                                                    <th>NOMOR TRANSAKSI</th>
+                                                    <th>PENERIMA</th>
+                                                    <th>TOTAL</th>
+                                                    <th>STATUS</th>
+                                                </tr>   
+                                            </thead>
+                                            <tbody>
+                                            
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <?php
+                                }
+                                ?>
+
                             </div>
                         </div>
                     </div>
@@ -280,6 +335,37 @@
                 }
             });
         }
+        
+        var table_biaya_2 = $('#table_biaya_2').DataTable( {"bAutoWidth": false,
+            ajax: {
+                processing: true,
+                serverSide: true,
+                url: '<?php echo site_url('pmm/biaya/table_biaya_2');?>',
+                type : 'POST',
+				data: function(d) {
+                    d.filter_date = $('#filter_date_biaya_2').val();
+                }
+            },
+            columns: [
+                { "data": "no" },
+                { "data": "tanggal"},
+                { "data": "nomor_transaksi" },
+                { "data": "penerima" },
+                { "data": "jumlah_total" },
+                { "data": "status"}
+            ],
+            "columnDefs": [
+                { "width": "5%", "targets": 0, "className": 'text-center'},
+                { "targets": 4, "className": 'text-right'},
+            ],
+            responsive: true,
+            pageLength: 25,
+        });
+		
+		$('#filter_date_biaya_2').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+            table_biaya_2.ajax.reload();
+		});
     </script>
     
 	<script type="text/javascript">
