@@ -51,8 +51,8 @@
                                 <?php
                                 if(in_array($this->session->userdata('admin_group_id'), array(7,10,11,12,14,15,16,17))){
                                 ?>
-                                <li role="presentation" class="active"><a href="#home_2" aria-controls="home_2" role="tab" data-toggle="tab" style="border-radius:10px; font-weight:bold; text-transform:uppercase;">Bulan Ini</a></li>
-                                <li role="presentation"><a href="#home_3" aria-controls="home_3" role="tab" data-toggle="tab" style="border-radius:10px; font-weight:bold; text-transform:uppercase;">Semua</a></li>
+                                <li role="presentation" class="active"><a href="#home_2" aria-controls="home_2" role="tab" data-toggle="tab" style="border-radius:10px; font-weight:bold;">Bulan Ini</a></li>
+                                <li role="presentation"><a href="#home_3" aria-controls="home_3" role="tab" data-toggle="tab" style="border-radius:10px; font-weight:bold;">Semua</a></li>
                                 <?php
                                 }
                                 ?>
