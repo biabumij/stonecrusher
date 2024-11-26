@@ -3,17 +3,6 @@
 <?php
 
 	$date_now = date('Y-m-d');
-	$date_juli23_akhir = date('2023-07-31');
-	$date_agustus23_awal = date('2023-08-01');
-    $date_agustus23_akhir = date('2023-08-31');
-    $date_september23_awal = date('2023-09-01');
-    $date_september23_akhir = date('2023-09-30');
-    $date_oktober23_awal = date('2023-10-01');
-    $date_oktober23_akhir = date('2023-10-31');
-    $date_november23_awal = date('2023-11-01');
-    $date_november23_akhir = date('2023-11-30');
-    $date_desember23_awal = date('2023-12-01');
-    $date_desember23_akhir = date('2023-12-31');
     $date_januari24_awal = date('2024-01-01');
     $date_januari24_akhir = date('2024-01-31');
     $date_februari24_awal = date('2024-02-01');
@@ -167,481 +156,6 @@
 	$total = $nilai_boulder + $nilai_tangki + $nilai_sc + $nilai_gns + $nilai_wl + $nilai_timbangan + $overhead + $nilai_bbm_solar;
 	$total_ton = $nilai_boulder_ton + $nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $overhead_ton + $nilai_bbm_solar_ton;
 	$total_ton_rap = $total_ton + (($total_ton * 10) / 100);
-
-	//AGUSTUS23
-	$penjualan_agustus23 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_agustus23_awal' and '$date_agustus23_akhir'")
-	->where("pp.product_id in (3,4,7,8,9,14,24,63)")
-	->where("pp.salesPo_id <> 536 ")
-	->where("pp.salesPo_id <> 532 ")
-	->where("pp.salesPo_id <> 537 ")
-	->where("pp.salesPo_id <> 533 ")
-	->where("pp.salesPo_id <> 534 ")
-	->where("pp.salesPo_id <> 535 ")
-	->where("pp.salesPo_id <> 546 ")
-	->where("pp.salesPo_id <> 542 ")
-	->where("pp.salesPo_id <> 547 ")
-	->where("pp.salesPo_id <> 543 ")
-	->where("pp.salesPo_id <> 548 ")
-	->where("pp.salesPo_id <> 538 ")
-	->where("pp.salesPo_id <> 544 ")
-	->where("pp.salesPo_id <> 549 ")
-	->where("pp.salesPo_id <> 539 ")
-	->where("pp.salesPo_id <> 545 ")
-	->where("pp.salesPo_id <> 541 ")
-	->where("pp.salesPo_id <> 530 ")
-	->where("pp.salesPo_id <> 531 ")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-	
-	$total_penjualan_agustus23 = 0;
-	$total_volume_penjualan_agustus23 = 0;
-
-	foreach ($penjualan_agustus23 as $x){
-		$total_penjualan_agustus23 += $x['price'];
-		$total_volume_penjualan_agustus23 += $x['volume'];
-	}
-
-	$penjualan_limbah_agustus23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_agustus23_awal' and '$date_agustus23_akhir'")
-	->where("pp.product_id in (9)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_limbah_agustus23 = 0;
-
-	foreach ($penjualan_limbah_agustus23 as $x){
-		$total_penjualan_limbah_agustus23 += $x['price'];
-	}
-
-	$penjualan_lain_lain_agustus23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_agustus23_awal' and '$date_agustus23_akhir'")
-	->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_lain_lain_agustus23 = 0;
-
-	foreach ($penjualan_lain_lain_agustus23 as $x){
-		$total_penjualan_lain_lain_agustus23 += $x['price'];
-	}
-
-	$akumulasi_bahan_jadi_agustus23 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_agustus23')
-	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_juli23_akhir' and '$date_agustus23_akhir'")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$harsat_bahan_jadi_agustus23 = $akumulasi_bahan_jadi_agustus23['harsat_agustus23'];
-
-	$penjualan_agustus23 = $total_penjualan_agustus23 + $total_penjualan_limbah_agustus23 + $total_penjualan_lain_lain_agustus23;
-	$beban_pokok_penjualan_agustus23 = $total_volume_penjualan_agustus23 * $harsat_bahan_jadi_agustus23;
-	$produksi_agustus23 = $this->db->select('produksi')
-	->from('kunci_bahan_jadi')
-	->where("date between '$date_agustus23_awal' and '$date_agustus23_akhir'")
-	->order_by('id','desc')->limit(1)
-	->get()->row_array();
-	$produksi_agustus23 = $produksi_agustus23['produksi'];
-	$beban_pokok_penjualan_agustus23 = $beban_pokok_penjualan_agustus23 *$produksi_agustus23;
-	$laba_kotor_agustus23 = $penjualan_agustus23 - $beban_pokok_penjualan_agustus23;
-
-	$persentase_laba_kotor_agustus23 = ($penjualan_agustus23!=0)?($laba_kotor_agustus23 / $penjualan_agustus23) * 100:0;
-	$persentase_laba_kotor_agustus23_fix = round($persentase_laba_kotor_agustus23,2);
-
-	$laba_kotor_rap_agustus23 = $total_penjualan_agustus23 - ($total_volume_penjualan_agustus23 * $total_ton_rap);
-	$persentase_laba_kotor_rap_agustus23 = ($penjualan_agustus23!=0)?($laba_kotor_rap_agustus23 / $penjualan_agustus23)  * 100:0;
-	$persentase_laba_kotor_rap_agustus23_fix = round($persentase_laba_kotor_rap_agustus23,2);
-
-	//SEPTEMBER23
-	$penjualan_september23 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_september23_awal' and '$date_september23_akhir'")
-	->where("pp.product_id in (3,4,7,8,9,14,24,63)")
-	->where("pp.salesPo_id <> 536 ")
-	->where("pp.salesPo_id <> 532 ")
-	->where("pp.salesPo_id <> 537 ")
-	->where("pp.salesPo_id <> 533 ")
-	->where("pp.salesPo_id <> 534 ")
-	->where("pp.salesPo_id <> 535 ")
-	->where("pp.salesPo_id <> 546 ")
-	->where("pp.salesPo_id <> 542 ")
-	->where("pp.salesPo_id <> 547 ")
-	->where("pp.salesPo_id <> 543 ")
-	->where("pp.salesPo_id <> 548 ")
-	->where("pp.salesPo_id <> 538 ")
-	->where("pp.salesPo_id <> 544 ")
-	->where("pp.salesPo_id <> 549 ")
-	->where("pp.salesPo_id <> 539 ")
-	->where("pp.salesPo_id <> 545 ")
-	->where("pp.salesPo_id <> 541 ")
-	->where("pp.salesPo_id <> 530 ")
-	->where("pp.salesPo_id <> 531 ")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-	
-	$total_penjualan_september23 = 0;
-	$total_volume_penjualan_september23 = 0;
-
-	foreach ($penjualan_september23 as $x){
-		$total_penjualan_september23 += $x['price'];
-		$total_volume_penjualan_september23 += $x['volume'];
-	}
-
-	$penjualan_limbah_september23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_september23_awal' and '$date_september23_akhir'")
-	->where("pp.product_id in (9)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_limbah_september23 = 0;
-
-	foreach ($penjualan_limbah_september23 as $x){
-		$total_penjualan_limbah_september23 += $x['price'];
-	}
-
-	$penjualan_lain_lain_september23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_september23_awal' and '$date_september23_akhir'")
-	->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_lain_lain_september23 = 0;
-
-	foreach ($penjualan_lain_lain_september23 as $x){
-		$total_penjualan_lain_lain_september23 += $x['price'];
-	}
-
-	$akumulasi_bahan_jadi_september23 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_september23')
-	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_agustus23_akhir' and '$date_september23_akhir'")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$harsat_bahan_jadi_september23 = $akumulasi_bahan_jadi_september23['harsat_september23'];
-
-	$penjualan_september23 = $total_penjualan_september23 + $total_penjualan_limbah_september23 + $total_penjualan_lain_lain_september23;
-	$beban_pokok_penjualan_september23 = $total_volume_penjualan_september23 * $harsat_bahan_jadi_september23;
-	$produksi_september23 = $this->db->select('produksi')
-	->from('kunci_bahan_jadi')
-	->where("date between '$date_september23_awal' and '$date_september23_akhir'")
-	->order_by('id','desc')->limit(1)
-	->get()->row_array();
-	$produksi_september23 = $produksi_september23['produksi'];
-	$beban_pokok_penjualan_september23 = $beban_pokok_penjualan_september23 *$produksi_september23;
-	$laba_kotor_september23 = $penjualan_september23 - $beban_pokok_penjualan_september23;
-
-	$persentase_laba_kotor_september23 = ($penjualan_september23!=0)?($laba_kotor_september23 / $penjualan_september23) * 100:0;
-	$persentase_laba_kotor_september23_fix = round($persentase_laba_kotor_september23,2);
-
-	$laba_kotor_rap_september23 = $penjualan_september23 - ($total_volume_penjualan_september23 * $total_ton_rap);
-	$persentase_laba_kotor_rap_september23 = ($penjualan_september23!=0)?($laba_kotor_rap_september23 / $penjualan_september23)  * 100:0;
-	$persentase_laba_kotor_rap_september23_fix = round($persentase_laba_kotor_rap_september23,2);
-
-	//OKTOBER23
-	$penjualan_oktober23 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_oktober23_awal' and '$date_oktober23_akhir'")
-	->where("pp.product_id in (3,4,7,8,9,14,24,63)")
-	->where("pp.salesPo_id <> 536 ")
-	->where("pp.salesPo_id <> 532 ")
-	->where("pp.salesPo_id <> 537 ")
-	->where("pp.salesPo_id <> 533 ")
-	->where("pp.salesPo_id <> 534 ")
-	->where("pp.salesPo_id <> 535 ")
-	->where("pp.salesPo_id <> 546 ")
-	->where("pp.salesPo_id <> 542 ")
-	->where("pp.salesPo_id <> 547 ")
-	->where("pp.salesPo_id <> 543 ")
-	->where("pp.salesPo_id <> 548 ")
-	->where("pp.salesPo_id <> 538 ")
-	->where("pp.salesPo_id <> 544 ")
-	->where("pp.salesPo_id <> 549 ")
-	->where("pp.salesPo_id <> 539 ")
-	->where("pp.salesPo_id <> 545 ")
-	->where("pp.salesPo_id <> 541 ")
-	->where("pp.salesPo_id <> 530 ")
-	->where("pp.salesPo_id <> 531 ")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-	
-	$total_penjualan_oktober23 = 0;
-	$total_volume_penjualan_oktober23 = 0;
-
-	foreach ($penjualan_oktober23 as $x){
-		$total_penjualan_oktober23 += $x['price'];
-		$total_volume_penjualan_oktober23 += $x['volume'];
-	}
-
-	$penjualan_limbah_oktober23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_oktober23_awal' and '$date_oktober23_akhir'")
-	->where("pp.product_id in (9)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_limbah_oktober23 = 0;
-
-	foreach ($penjualan_limbah_oktober23 as $x){
-		$total_penjualan_limbah_oktober23 += $x['price'];
-	}
-
-	$penjualan_lain_lain_oktober23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_oktober23_awal' and '$date_oktober23_akhir'")
-	->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_lain_lain_oktober23 = 0;
-
-	foreach ($penjualan_lain_lain_oktober23 as $x){
-		$total_penjualan_lain_lain_oktober23 += $x['price'];
-	}
-
-	$akumulasi_bahan_jadi_oktober23 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_oktober23')
-	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_september23_akhir' and '$date_oktober23_akhir'")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$harsat_bahan_jadi_oktober23 = $akumulasi_bahan_jadi_oktober23['harsat_oktober23'];
-
-	$penjualan_oktober23 = $total_penjualan_oktober23 + $total_penjualan_limbah_oktober23 + $total_penjualan_lain_lain_oktober23;
-	$beban_pokok_penjualan_oktober23 = $total_volume_penjualan_oktober23 * $harsat_bahan_jadi_oktober23;
-	$produksi_oktober23 = $this->db->select('produksi')
-	->from('kunci_bahan_jadi')
-	->where("date between '$date_oktober23_awal' and '$date_oktober23_akhir'")
-	->order_by('id','desc')->limit(1)
-	->get()->row_array();
-	$produksi_oktober23 = $produksi_oktober23['produksi'];
-	$beban_pokok_penjualan_oktober23 = $beban_pokok_penjualan_oktober23 *$produksi_oktober23;
-	$laba_kotor_oktober23 = $penjualan_oktober23 - $beban_pokok_penjualan_oktober23;
-
-	$persentase_laba_kotor_oktober23 = ($penjualan_oktober23!=0)?($laba_kotor_oktober23 / $penjualan_oktober23) * 100:0;
-	$persentase_laba_kotor_oktober23_fix = round($persentase_laba_kotor_oktober23,2);
-
-	$laba_kotor_rap_oktober23 = $penjualan_oktober23 - ($total_volume_penjualan_oktober23 * $total_ton_rap);
-	$persentase_laba_kotor_rap_oktober23 = ($penjualan_oktober23!=0)?($laba_kotor_rap_oktober23 / $penjualan_oktober23)  * 100:0;
-	$persentase_laba_kotor_rap_oktober23_fix = round($persentase_laba_kotor_rap_oktober23,2);
-
-	//NOVEMBER23
-	$penjualan_november23 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_november23_awal' and '$date_november23_akhir'")
-	->where("pp.product_id in (3,4,7,8,9,14,24,63)")
-	->where("pp.salesPo_id <> 536 ")
-	->where("pp.salesPo_id <> 532 ")
-	->where("pp.salesPo_id <> 537 ")
-	->where("pp.salesPo_id <> 533 ")
-	->where("pp.salesPo_id <> 534 ")
-	->where("pp.salesPo_id <> 535 ")
-	->where("pp.salesPo_id <> 546 ")
-	->where("pp.salesPo_id <> 542 ")
-	->where("pp.salesPo_id <> 547 ")
-	->where("pp.salesPo_id <> 543 ")
-	->where("pp.salesPo_id <> 548 ")
-	->where("pp.salesPo_id <> 538 ")
-	->where("pp.salesPo_id <> 544 ")
-	->where("pp.salesPo_id <> 549 ")
-	->where("pp.salesPo_id <> 539 ")
-	->where("pp.salesPo_id <> 545 ")
-	->where("pp.salesPo_id <> 541 ")
-	->where("pp.salesPo_id <> 530 ")
-	->where("pp.salesPo_id <> 531 ")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-	
-	$total_penjualan_november23 = 0;
-	$total_volume_penjualan_november23 = 0;
-
-	foreach ($penjualan_november23 as $x){
-		$total_penjualan_november23 += $x['price'];
-		$total_volume_penjualan_november23 += $x['volume'];
-	}
-
-	$penjualan_limbah_november23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_november23_awal' and '$date_november23_akhir'")
-	->where("pp.product_id in (9)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_limbah_november23 = 0;
-
-	foreach ($penjualan_limbah_november23 as $x){
-		$total_penjualan_limbah_november23 += $x['price'];
-	}
-
-	$penjualan_lain_lain_november23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_november23_awal' and '$date_november23_akhir'")
-	->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_lain_lain_november23 = 0;
-
-	foreach ($penjualan_lain_lain_november23 as $x){
-		$total_penjualan_lain_lain_november23 += $x['price'];
-	}
-
-	$akumulasi_bahan_jadi_november23 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_november23')
-	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_oktober23_akhir' and '$date_november23_akhir'")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$harsat_bahan_jadi_november23 = $akumulasi_bahan_jadi_november23['harsat_november23'];
-
-	$penjualan_november23 = $total_penjualan_november23 + $total_penjualan_limbah_november23 + $total_penjualan_lain_lain_november23;
-	$beban_pokok_penjualan_november23 = $total_volume_penjualan_november23 * $harsat_bahan_jadi_november23;
-	$produksi_november23 = $this->db->select('produksi')
-	->from('kunci_bahan_jadi')
-	->where("date between '$date_november23_awal' and '$date_november23_akhir'")
-	->order_by('id','desc')->limit(1)
-	->get()->row_array();
-	$produksi_november23 = $produksi_november23['produksi'];
-	$beban_pokok_penjualan_november23 = $beban_pokok_penjualan_november23 *$produksi_november23;
-	$laba_kotor_november23 = $penjualan_november23 - $beban_pokok_penjualan_november23;
-	
-	$persentase_laba_kotor_november23 = ($penjualan_november23!=0)?($laba_kotor_november23 / $penjualan_november23) * 100:0;
-	$persentase_laba_kotor_november23_fix = round($persentase_laba_kotor_november23,2);
-
-	$laba_kotor_rap_november23 = $penjualan_november23 - ($total_volume_penjualan_november23 * $total_ton_rap);
-	$persentase_laba_kotor_rap_november23 = ($penjualan_november23!=0)?($laba_kotor_rap_november23 / $penjualan_november23)  * 100:0;
-	$persentase_laba_kotor_rap_november23_fix = round($persentase_laba_kotor_rap_november23,2);
-
-	//DESEMBER23
-	$penjualan_desember23 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_desember23_awal' and '$date_desember23_akhir'")
-	->where("pp.product_id in (3,4,7,8,9,14,24,63)")
-	->where("pp.salesPo_id <> 536 ")
-	->where("pp.salesPo_id <> 532 ")
-	->where("pp.salesPo_id <> 537 ")
-	->where("pp.salesPo_id <> 533 ")
-	->where("pp.salesPo_id <> 534 ")
-	->where("pp.salesPo_id <> 535 ")
-	->where("pp.salesPo_id <> 546 ")
-	->where("pp.salesPo_id <> 542 ")
-	->where("pp.salesPo_id <> 547 ")
-	->where("pp.salesPo_id <> 543 ")
-	->where("pp.salesPo_id <> 548 ")
-	->where("pp.salesPo_id <> 538 ")
-	->where("pp.salesPo_id <> 544 ")
-	->where("pp.salesPo_id <> 549 ")
-	->where("pp.salesPo_id <> 539 ")
-	->where("pp.salesPo_id <> 545 ")
-	->where("pp.salesPo_id <> 541 ")
-	->where("pp.salesPo_id <> 530 ")
-	->where("pp.salesPo_id <> 531 ")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-	
-	$total_penjualan_desember23 = 0;
-	$total_volume_penjualan_desember23 = 0;
-
-	foreach ($penjualan_desember23 as $x){
-		$total_penjualan_desember23 += $x['price'];
-		$total_volume_penjualan_desember23 += $x['volume'];
-	}
-
-	$penjualan_limbah_desember23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_desember23_awal' and '$date_desember23_akhir'")
-	->where("pp.product_id in (9)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_limbah_desember23 = 0;
-
-	foreach ($penjualan_limbah_desember23 as $x){
-		$total_penjualan_limbah_desember23 += $x['price'];
-	}
-
-	$penjualan_lain_lain_desember23 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
-	->from('pmm_productions pp')
-	->join('penerima p', 'pp.client_id = p.id','left')
-	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
-	->where("pp.date_production between '$date_desember23_awal' and '$date_desember23_akhir'")
-	->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
-	->where("ppo.status in ('OPEN','CLOSED')")
-	->group_by('pp.salesPo_id')
-	->get()->result_array();
-
-	$total_penjualan_lain_lain_desember23 = 0;
-
-	foreach ($penjualan_lain_lain_desember23 as $x){
-		$total_penjualan_lain_lain_desember23 += $x['price'];
-	}
-
-	$akumulasi_bahan_jadi_desember23 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_desember23')
-	->from('kunci_bahan_jadi pp')
-	->where("pp.date between '$date_november23_akhir' and '$date_desember23_akhir'")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$harsat_bahan_jadi_desember23 = $akumulasi_bahan_jadi_desember23['harsat_desember23'];
-
-	$penjualan_desember23 = $total_penjualan_desember23 + $total_penjualan_limbah_desember23 + $total_penjualan_lain_lain_desember23;
-	$beban_pokok_penjualan_desember23 = $total_volume_penjualan_desember23 * $harsat_bahan_jadi_desember23;
-	$produksi_desember23 = $this->db->select('produksi')
-	->from('kunci_bahan_jadi')
-	->where("date between '$date_desember23_awal' and '$date_desember23_akhir'")
-	->order_by('id','desc')->limit(1)
-	->get()->row_array();
-	$produksi_desember23 = $produksi_desember23['produksi'];
-	$beban_pokok_penjualan_desember23 = $beban_pokok_penjualan_desember23 *$produksi_desember23;
-	$laba_kotor_desember23 = $penjualan_desember23 - $beban_pokok_penjualan_desember23;
-
-	$persentase_laba_kotor_desember23 = ($penjualan_desember23!=0)?($laba_kotor_desember23 / $penjualan_desember23) * 100:0;
-	$persentase_laba_kotor_desember23_fix = round($persentase_laba_kotor_desember23,2);
-
-	$laba_kotor_rap_desember23 = $penjualan_desember23 - ($total_volume_penjualan_desember23 * $total_ton_rap);
-	$persentase_laba_kotor_rap_desember23 = ($penjualan_desember23!=0)?($laba_kotor_rap_desember23 / $penjualan_desember23)  * 100:0;
-	$persentase_laba_kotor_rap_desember23_fix = round($persentase_laba_kotor_rap_desember23,2);
 
 	//JANUARI24
 	$penjualan_januari24 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
@@ -1592,226 +1106,199 @@
 	$laba_kotor_rap_oktober24 = $penjualan_oktober24 - ($total_volume_penjualan_oktober24 * $total_ton_rap);
 	$persentase_laba_kotor_rap_oktober24 = ($penjualan_oktober24!=0)?($laba_kotor_rap_oktober24 / $penjualan_oktober24)  * 100:0;
 	$persentase_laba_kotor_rap_oktober24_fix = round($persentase_laba_kotor_rap_oktober24,2);
+
+	//NOVEMBER24
+	$penjualan_november24 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_november24_awal' and '$date_november24_akhir'")
+	->where("pp.product_id in (3,4,7,8,9,14,24,63)")
+	->where("pp.salesPo_id <> 536 ")
+	->where("pp.salesPo_id <> 532 ")
+	->where("pp.salesPo_id <> 537 ")
+	->where("pp.salesPo_id <> 533 ")
+	->where("pp.salesPo_id <> 534 ")
+	->where("pp.salesPo_id <> 535 ")
+	->where("pp.salesPo_id <> 546 ")
+	->where("pp.salesPo_id <> 542 ")
+	->where("pp.salesPo_id <> 547 ")
+	->where("pp.salesPo_id <> 543 ")
+	->where("pp.salesPo_id <> 548 ")
+	->where("pp.salesPo_id <> 538 ")
+	->where("pp.salesPo_id <> 544 ")
+	->where("pp.salesPo_id <> 549 ")
+	->where("pp.salesPo_id <> 539 ")
+	->where("pp.salesPo_id <> 545 ")
+	->where("pp.salesPo_id <> 541 ")
+	->where("pp.salesPo_id <> 530 ")
+	->where("pp.salesPo_id <> 531 ")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
 	
+	$total_penjualan_november24 = 0;
+	$total_volume_penjualan_november24 = 0;
+
+	foreach ($penjualan_november24 as $x){
+		$total_penjualan_november24 += $x['price'];
+		$total_volume_penjualan_november24 += $x['volume'];
+	}
+
+	$penjualan_limbah_november24 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_november24_awal' and '$date_november24_akhir'")
+	->where("pp.product_id in (9)")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
+
+	$total_penjualan_limbah_november24 = 0;
+
+	foreach ($penjualan_limbah_november24 as $x){
+		$total_penjualan_limbah_november24 += $x['price'];
+	}
+
+	$penjualan_lain_lain_november24 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_november24_awal' and '$date_november24_akhir'")
+	->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
+
+	$total_penjualan_lain_lain_november24 = 0;
+
+	foreach ($penjualan_lain_lain_november24 as $x){
+		$total_penjualan_lain_lain_november24 += $x['price'];
+	}
+
+	$akumulasi_bahan_jadi_november24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_november24')
+	->from('kunci_bahan_jadi pp')
+	->where("pp.date between '$date_oktober24_akhir' and '$date_november24_akhir'")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+	$harsat_bahan_jadi_november24 = $akumulasi_bahan_jadi_november24['harsat_november24'];
+
+	$penjualan_november24 = $total_penjualan_november24 + $total_penjualan_limbah_november24 + $total_penjualan_lain_lain_november24;
+	$beban_pokok_penjualan_november24 = $total_volume_penjualan_november24 * $harsat_bahan_jadi_november24;
+	$produksi_november24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_november24_awal' and '$date_november24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_november24 = $produksi_november24['produksi'];
+	$beban_pokok_penjualan_november24 = $beban_pokok_penjualan_november24 *$produksi_november24;
+	$laba_kotor_november24 = $penjualan_november24 - $beban_pokok_penjualan_november24;
+
+	$persentase_laba_kotor_november24 = ($penjualan_november24!=0)?($laba_kotor_november24 / $penjualan_november24) * 100:0;
+	$persentase_laba_kotor_november24_fix = round($persentase_laba_kotor_november24,2);
+
+	$laba_kotor_rap_november24 = $penjualan_november24 - ($total_volume_penjualan_november24 * $total_ton_rap);
+	$persentase_laba_kotor_rap_november24 = ($penjualan_november24!=0)?($laba_kotor_rap_november24 / $penjualan_november24)  * 100:0;
+	$persentase_laba_kotor_rap_november24_fix = round($persentase_laba_kotor_rap_november24,2);
+
+	//DESEMBER24
+	$penjualan_desember24 = $this->db->select('SUM(pp.display_price) as price, SUM(pp.display_volume) as volume')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_desember24_awal' and '$date_desember24_akhir'")
+	->where("pp.product_id in (3,4,7,8,9,14,24,63)")
+	->where("pp.salesPo_id <> 536 ")
+	->where("pp.salesPo_id <> 532 ")
+	->where("pp.salesPo_id <> 537 ")
+	->where("pp.salesPo_id <> 533 ")
+	->where("pp.salesPo_id <> 534 ")
+	->where("pp.salesPo_id <> 535 ")
+	->where("pp.salesPo_id <> 546 ")
+	->where("pp.salesPo_id <> 542 ")
+	->where("pp.salesPo_id <> 547 ")
+	->where("pp.salesPo_id <> 543 ")
+	->where("pp.salesPo_id <> 548 ")
+	->where("pp.salesPo_id <> 538 ")
+	->where("pp.salesPo_id <> 544 ")
+	->where("pp.salesPo_id <> 549 ")
+	->where("pp.salesPo_id <> 539 ")
+	->where("pp.salesPo_id <> 545 ")
+	->where("pp.salesPo_id <> 541 ")
+	->where("pp.salesPo_id <> 530 ")
+	->where("pp.salesPo_id <> 531 ")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
+	
+	$total_penjualan_desember24 = 0;
+	$total_volume_penjualan_desember24 = 0;
+
+	foreach ($penjualan_desember24 as $x){
+		$total_penjualan_desember24 += $x['price'];
+		$total_volume_penjualan_desember24 += $x['volume'];
+	}
+
+	$penjualan_limbah_desember24 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_desember24_awal' and '$date_desember24_akhir'")
+	->where("pp.product_id in (9)")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
+
+	$total_penjualan_limbah_desember24 = 0;
+
+	foreach ($penjualan_limbah_desember24 as $x){
+		$total_penjualan_limbah_desember24 += $x['price'];
+	}
+
+	$penjualan_lain_lain_desember24 = $this->db->select('p.nama, pp.client_id, SUM(pp.display_price) as price, SUM(pp.display_volume) as volume, pp.convert_measure as measure')
+	->from('pmm_productions pp')
+	->join('penerima p', 'pp.client_id = p.id','left')
+	->join('pmm_sales_po ppo', 'pp.salesPo_id = ppo.id','left')
+	->where("pp.date_production between '$date_desember24_awal' and '$date_desember24_akhir'")
+	->where("pp.salesPo_id in (536,532,537,533,534,535,546,542,547,543,548,538,544,549,539,545,541,530,531)")
+	->where("ppo.status in ('OPEN','CLOSED')")
+	->group_by('pp.salesPo_id')
+	->get()->result_array();
+
+	$total_penjualan_lain_lain_desember24 = 0;
+
+	foreach ($penjualan_lain_lain_desember24 as $x){
+		$total_penjualan_lain_lain_desember24 += $x['price'];
+	}
+
+	$akumulasi_bahan_jadi_desember24 = $this->db->select('(pp.nilai) / (pp.volume) as harsat_desember24')
+	->from('kunci_bahan_jadi pp')
+	->where("pp.date between '$date_november24_akhir' and '$date_desember24_akhir'")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+	$harsat_bahan_jadi_desember24 = $akumulasi_bahan_jadi_desember24['harsat_desember24'];
+
+	$penjualan_desember24 = $total_penjualan_desember24 + $total_penjualan_limbah_desember24 + $total_penjualan_lain_lain_desember24;
+	$beban_pokok_penjualan_desember24 = $total_volume_penjualan_desember24 * $harsat_bahan_jadi_desember24;
+	$produksi_desember24 = $this->db->select('produksi')
+	->from('kunci_bahan_jadi')
+	->where("date between '$date_desember24_awal' and '$date_desember24_akhir'")
+	->order_by('id','desc')->limit(1)
+	->get()->row_array();
+	$produksi_desember24 = $produksi_desember24['produksi'];
+	$beban_pokok_penjualan_desember24 = $beban_pokok_penjualan_desember24 *$produksi_desember24;
+	$laba_kotor_desember24 = $penjualan_desember24 - $beban_pokok_penjualan_desember24;
+
+	$persentase_laba_kotor_desember24 = ($penjualan_desember24!=0)?($laba_kotor_desember24 / $penjualan_desember24) * 100:0;
+	$persentase_laba_kotor_desember24_fix = round($persentase_laba_kotor_desember24,2);
+
+	$laba_kotor_rap_desember24 = $penjualan_desember24 - ($total_volume_penjualan_desember24 * $total_ton_rap);
+	$persentase_laba_kotor_rap_desember24 = ($penjualan_desember24!=0)?($laba_kotor_rap_desember24 / $penjualan_desember24)  * 100:0;
+	$persentase_laba_kotor_rap_desember24_fix = round($persentase_laba_kotor_rap_desember24,2);
 ?>
 
 <?php
-
-	//AGUSTUS23
-	$rekapitulasi_produksi_harian_agustus23 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-	->from('pmm_produksi_harian pph ')
-	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-	->where("(pph.date_prod between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->where('pph.status','PUBLISH')
-	->get()->row_array();
-	$total_rekapitulasi_produksi_harian_agustus23 = round($rekapitulasi_produksi_harian_agustus23['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_agustus23['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_agustus23['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_agustus23['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_agustus23['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_agustus23['jumlah_pemakaian_f'],2);
-
-	$nilai_rap_bahan_agustus23 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_agustus23,2);
-	$nilai_rap_bahan_agustus23_fix = round($nilai_rap_bahan_agustus23 / 1000000,0);
-
-	$date1_ago_agustus23 = date('2020-01-01');
-	$date2_ago_agustus23 = date('Y-m-d', strtotime('-1 days', strtotime($date_agustus23_awal)));
-	$date3_ago_agustus23 = date('Y-m-d', strtotime('-1 months', strtotime($date_agustus23_awal)));
-	$tanggal_opening_balance_agustus23 = date('Y-m-d', strtotime('-1 days', strtotime($date_agustus23_awal)));
-
-	$stock_opname_batu_boulder_ago_agustus23 = $this->db->select('pp.vol_nilai_boulder as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_agustus23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$harga_boulder_agustus23 = $this->db->select('pp.nilai_boulder as nilai_boulder')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_agustus23' and '$date2_ago_agustus23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_boulder_agustus23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_agustus23_awal' and '$date_agustus23_akhir'")
-	->where("prm.material_id = 15")
-	->group_by('prm.material_id')
-	->get()->row_array();
-
-	$harga_baru_agustus23 = ($harga_boulder_agustus23['nilai_boulder'] + $pembelian_boulder_agustus23['nilai']) / (round($stock_opname_batu_boulder_ago_agustus23['volume'],2) + round($pembelian_boulder_agustus23['volume'],2));
-	$total_nilai_produksi_boulder_agustus23 = $total_rekapitulasi_produksi_harian_agustus23 * $harga_baru_agustus23;
-	$total_nilai_produksi_boulder_agustus23_fix = round($total_nilai_produksi_boulder_agustus23 / 1000000,0);
-
-	//SEPTEMBER23
-	$rekapitulasi_produksi_harian_september23 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-	->from('pmm_produksi_harian pph ')
-	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-	->where("(pph.date_prod between '$date_september23_awal' and '$date_september23_akhir')")
-	->where('pph.status','PUBLISH')
-	->get()->row_array();
-	$total_rekapitulasi_produksi_harian_september23 = round($rekapitulasi_produksi_harian_september23['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_september23['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_september23['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_september23['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_september23['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_september23['jumlah_pemakaian_f'],2);
-
-	$nilai_rap_bahan_september23 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_september23,2);
-	$nilai_rap_bahan_september23_fix = round($nilai_rap_bahan_september23 / 1000000,0);
-
-	$date1_ago_september23 = date('2020-01-01');
-	$date2_ago_september23 = date('Y-m-d', strtotime('-1 days', strtotime($date_september23_awal)));
-	$date3_ago_september23 = date('Y-m-d', strtotime('-1 months', strtotime($date_september23_awal)));
-	$tanggal_opening_balance_september23 = date('Y-m-d', strtotime('-1 days', strtotime($date_september23_awal)));
-
-	$stock_opname_batu_boulder_ago_september23 = $this->db->select('pp.vol_nilai_boulder as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_september23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_boulder_september23 = $this->db->select('pp.nilai_boulder as nilai_boulder')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_september23' and '$date2_ago_september23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_boulder_september23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_september23_awal' and '$date_september23_akhir'")
-	->where("prm.material_id = 15")
-	->group_by('prm.material_id')
-	->get()->row_array();
-	
-	$harga_baru_september23 = ($harga_boulder_september23['nilai_boulder'] + $pembelian_boulder_september23['nilai']) / (round($stock_opname_batu_boulder_ago_september23['volume'],2) + round($pembelian_boulder_september23['volume'],2));
-	$total_nilai_produksi_boulder_september23 = $total_rekapitulasi_produksi_harian_september23 * $harga_baru_september23;
-	$total_nilai_produksi_boulder_september23_fix = round($total_nilai_produksi_boulder_september23 / 1000000,0);
-
-	//OKTOBER23
-	$rekapitulasi_produksi_harian_oktober23 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-	->from('pmm_produksi_harian pph ')
-	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-	->where("(pph.date_prod between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->where('pph.status','PUBLISH')
-	->get()->row_array();
-	$total_rekapitulasi_produksi_harian_oktober23 = round($rekapitulasi_produksi_harian_oktober23['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_oktober23['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_oktober23['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_oktober23['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_oktober23['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_oktober23['jumlah_pemakaian_f'],2);
-
-	$nilai_rap_bahan_oktober23 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_oktober23,2);
-	$nilai_rap_bahan_oktober23_fix = round($nilai_rap_bahan_oktober23 / 1000000,0);
-
-	$date1_ago_oktober23 = date('2020-01-01');
-	$date2_ago_oktober23 = date('Y-m-d', strtotime('-1 days', strtotime($date_oktober23_awal)));
-	$date3_ago_oktober23 = date('Y-m-d', strtotime('-1 months', strtotime($date_oktober23_awal)));
-	$tanggal_opening_balance_oktober23 = date('Y-m-d', strtotime('-1 days', strtotime($date_oktober23_awal)));
-
-	$stock_opname_batu_boulder_ago_oktober23 = $this->db->select('pp.vol_nilai_boulder as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_oktober23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_boulder_oktober23 = $this->db->select('pp.nilai_boulder as nilai_boulder')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_oktober23' and '$date2_ago_oktober23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_boulder_oktober23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_oktober23_awal' and '$date_oktober23_akhir'")
-	->where("prm.material_id = 15")
-	->group_by('prm.material_id')
-	->get()->row_array();
-	
-	$harga_baru_oktober23 = ($harga_boulder_oktober23['nilai_boulder'] + $pembelian_boulder_oktober23['nilai']) / (round($stock_opname_batu_boulder_ago_oktober23['volume'],2) + round($pembelian_boulder_oktober23['volume'],2));
-	$total_nilai_produksi_boulder_oktober23 = $total_rekapitulasi_produksi_harian_oktober23 * $harga_baru_oktober23;
-	$total_nilai_produksi_boulder_oktober23_fix = round($total_nilai_produksi_boulder_oktober23 / 1000000,0);
-
-	//NOVEMBER23
-	$rekapitulasi_produksi_harian_november23 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-	->from('pmm_produksi_harian pph ')
-	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-	->where("(pph.date_prod between '$date_november23_awal' and '$date_november23_akhir')")
-	->where('pph.status','PUBLISH')
-	->get()->row_array();
-	$total_rekapitulasi_produksi_harian_november23 = round($rekapitulasi_produksi_harian_november23['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_november23['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_november23['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_november23['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_november23['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_november23['jumlah_pemakaian_f'],2);
-
-	$nilai_rap_bahan_november23 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_november23,2);
-	$nilai_rap_bahan_november23_fix = round($nilai_rap_bahan_november23 / 1000000,0);
-
-	$date1_ago_november23 = date('2020-01-01');
-	$date2_ago_november23 = date('Y-m-d', strtotime('-1 days', strtotime($date_november23_awal)));
-	$date3_ago_november23 = date('Y-m-d', strtotime('-1 months', strtotime($date_november23_awal)));
-	$tanggal_opening_balance_november23 = date('Y-m-d', strtotime('-1 days', strtotime($date_november23_awal)));
-
-	$stock_opname_batu_boulder_ago_november23 = $this->db->select('pp.vol_nilai_boulder as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_november23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_boulder_november23 = $this->db->select('pp.nilai_boulder as nilai_boulder')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_november23' and '$date2_ago_november23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_boulder_november23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_november23_awal' and '$date_november23_akhir'")
-	->where("prm.material_id = 15")
-	->group_by('prm.material_id')
-	->get()->row_array();
-	
-	$harga_baru_november23 = ($harga_boulder_november23['nilai_boulder'] + $pembelian_boulder_november23['nilai']) / (round($stock_opname_batu_boulder_ago_november23['volume'],2) + round($pembelian_boulder_november23['volume'],2));
-	$total_nilai_produksi_boulder_november23 = $total_rekapitulasi_produksi_harian_november23 * $harga_baru_november23;
-	$total_nilai_produksi_boulder_november23_fix = round($total_nilai_produksi_boulder_november23 / 1000000,0);
-
-	//DESEMBER23
-	$rekapitulasi_produksi_harian_desember23 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
-	->from('pmm_produksi_harian pph ')
-	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
-	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
-	->where("(pph.date_prod between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->where('pph.status','PUBLISH')
-	->get()->row_array();
-	$total_rekapitulasi_produksi_harian_desember23 = round($rekapitulasi_produksi_harian_desember23['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_desember23['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_desember23['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_desember23['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_desember23['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_desember23['jumlah_pemakaian_f'],2);
-
-	$nilai_rap_bahan_desember23 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_desember23,2);
-	$nilai_rap_bahan_desember23_fix = round($nilai_rap_bahan_desember23 / 1000000,0);
-
-	$date1_ago_desember23 = date('2020-01-01');
-	$date2_ago_desember23 = date('Y-m-d', strtotime('-1 days', strtotime($date_desember23_awal)));
-	$date3_ago_desember23 = date('Y-m-d', strtotime('-1 months', strtotime($date_desember23_awal)));
-	$tanggal_opening_balance_desember23 = date('Y-m-d', strtotime('-1 days', strtotime($date_desember23_awal)));
-
-	$stock_opname_batu_boulder_ago_desember23 = $this->db->select('pp.vol_nilai_boulder as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_desember23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_boulder_desember23 = $this->db->select('pp.nilai_boulder as nilai_boulder')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_desember23' and '$date2_ago_desember23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_boulder_desember23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_desember23_awal' and '$date_desember23_akhir'")
-	->where("prm.material_id = 15")
-	->group_by('prm.material_id')
-	->get()->row_array();
-	
-	$harga_baru_desember23 = ($harga_boulder_desember23['nilai_boulder'] + $pembelian_boulder_desember23['nilai']) / (round($stock_opname_batu_boulder_ago_desember23['volume'],2) + round($pembelian_boulder_desember23['volume'],2));
-	$total_nilai_produksi_boulder_desember23 = $total_rekapitulasi_produksi_harian_desember23 * $harga_baru_desember23;
-	$total_nilai_produksi_boulder_desember23_fix = round($total_nilai_produksi_boulder_desember23 / 1000000,0);
-
 	//JANUARI24
 	$rekapitulasi_produksi_harian_januari24 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
 	->from('pmm_produksi_harian pph ')
@@ -2241,739 +1728,95 @@
 	$harga_baru_oktober24 = ($harga_boulder_oktober24['nilai_boulder'] + $pembelian_boulder_oktober24['nilai']) / (round($stock_opname_batu_boulder_ago_oktober24['volume'],2) + round($pembelian_boulder_oktober24['volume'],2));
 	$total_nilai_produksi_boulder_oktober24 = $total_rekapitulasi_produksi_harian_oktober24 * $harga_baru_oktober24;
 	$total_nilai_produksi_boulder_oktober24_fix = round($total_nilai_produksi_boulder_oktober24 / 1000000,0);
+
+	//NOVEMBER24
+	$rekapitulasi_produksi_harian_november24 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+	->from('pmm_produksi_harian pph ')
+	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+	->where("(pph.date_prod between '$date_november24_awal' and '$date_november24_akhir')")
+	->where('pph.status','PUBLISH')
+	->get()->row_array();
+	$total_rekapitulasi_produksi_harian_november24 = round($rekapitulasi_produksi_harian_november24['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_november24['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_november24['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_november24['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_november24['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_november24['jumlah_pemakaian_f'],2);
+
+	$nilai_rap_bahan_november24 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_november24,2);
+	$nilai_rap_bahan_november24_fix = round($nilai_rap_bahan_november24 / 1000000,0);
+
+	$date1_ago_november24 = date('2020-01-01');
+	$date2_ago_november24 = date('Y-m-d', strtotime('-1 days', strtotime($date_november24_awal)));
+	$date3_ago_november24 = date('Y-m-d', strtotime('-1 months', strtotime($date_november24_awal)));
+	$tanggal_opening_balance_november24 = date('Y-m-d', strtotime('-1 days', strtotime($date_november24_awal)));
+
+	$stock_opname_batu_boulder_ago_november24 = $this->db->select('pp.vol_nilai_boulder as volume')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date = '$tanggal_opening_balance_november24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$harga_boulder_november24 = $this->db->select('pp.nilai_boulder as nilai_boulder')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date between '$date3_ago_november24' and '$date2_ago_november24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$pembelian_boulder_november24 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
+	->from('pmm_receipt_material prm')
+	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
+	->join('produk p', 'prm.material_id = p.id','left')
+	->where("prm.date_receipt between '$date_november24_awal' and '$date_november24_akhir'")
+	->where("prm.material_id = 15")
+	->group_by('prm.material_id')
+	->get()->row_array();
+
+	$harga_baru_november24 = ($harga_boulder_november24['nilai_boulder'] + $pembelian_boulder_november24['nilai']) / (round($stock_opname_batu_boulder_ago_november24['volume'],2) + round($pembelian_boulder_november24['volume'],2));
+	$total_nilai_produksi_boulder_november24 = $total_rekapitulasi_produksi_harian_november24 * $harga_baru_november24;
+	$total_nilai_produksi_boulder_november24_fix = round($total_nilai_produksi_boulder_november24 / 1000000,0);
+
+	//DESEMBER24
+	$rekapitulasi_produksi_harian_desember24 = $this->db->select('pph.id, (SUM(pphd.use) * pk.presentase_a) / 100 as jumlah_pemakaian_a, (SUM(pphd.use) * pk.presentase_b) / 100 AS jumlah_pemakaian_b, (SUM(pphd.use) * pk.presentase_c) / 100 as jumlah_pemakaian_c, (SUM(pphd.use) * pk.presentase_d) / 100 as jumlah_pemakaian_d, (SUM(pphd.use) * pk.presentase_e) / 100 as jumlah_pemakaian_e, (SUM(pphd.use) * pk.presentase_f) / 100 as jumlah_pemakaian_f, pk.produk_a, pk.produk_b, pk.produk_c, pk.produk_d, pk.produk_e, pk.produk_f, pk.measure_a, pk.measure_b, pk.measure_c, pk.measure_d, pk.measure_e, pk.measure_f, pk.presentase_a, pk.presentase_b, pk.presentase_c, pk.presentase_d, pk.presentase_e, pk.presentase_f')
+	->from('pmm_produksi_harian pph ')
+	->join('pmm_produksi_harian_detail pphd', 'pph.id = pphd.produksi_harian_id','left')
+	->join('pmm_kalibrasi pk', 'pphd.product_id = pk.id')
+	->where("(pph.date_prod between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->where('pph.status','PUBLISH')
+	->get()->row_array();
+	$total_rekapitulasi_produksi_harian_desember24 = round($rekapitulasi_produksi_harian_desember24['jumlah_pemakaian_a'],2) + round($rekapitulasi_produksi_harian_desember24['jumlah_pemakaian_b'],2) + round($rekapitulasi_produksi_harian_desember24['jumlah_pemakaian_c'],2) + round($rekapitulasi_produksi_harian_desember24['jumlah_pemakaian_d'],2) + round($rekapitulasi_produksi_harian_desember24['jumlah_pemakaian_e'],2) + round($rekapitulasi_produksi_harian_desember24['jumlah_pemakaian_f'],2);
+
+	$nilai_rap_bahan_desember24 = $nilai_boulder_ton * round($total_rekapitulasi_produksi_harian_desember24,2);
+	$nilai_rap_bahan_desember24_fix = round($nilai_rap_bahan_desember24 / 1000000,0);
+
+	$date1_ago_desember24 = date('2020-01-01');
+	$date2_ago_desember24 = date('Y-m-d', strtotime('-1 days', strtotime($date_desember24_awal)));
+	$date3_ago_desember24 = date('Y-m-d', strtotime('-1 months', strtotime($date_desember24_awal)));
+	$tanggal_opening_balance_desember24 = date('Y-m-d', strtotime('-1 days', strtotime($date_desember24_awal)));
+
+	$stock_opname_batu_boulder_ago_desember24 = $this->db->select('pp.vol_nilai_boulder as volume')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date = '$tanggal_opening_balance_desember24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$harga_boulder_desember24 = $this->db->select('pp.nilai_boulder as nilai_boulder')
+	->from('kunci_bahan_baku pp')
+	->where("(pp.date between '$date3_ago_desember24' and '$date2_ago_desember24')")
+	->order_by('pp.date','desc')->limit(1)
+	->get()->row_array();
+
+	$pembelian_boulder_desember24 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
+	->from('pmm_receipt_material prm')
+	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
+	->join('produk p', 'prm.material_id = p.id','left')
+	->where("prm.date_receipt between '$date_desember24_awal' and '$date_desember24_akhir'")
+	->where("prm.material_id = 15")
+	->group_by('prm.material_id')
+	->get()->row_array();
+
+	$harga_baru_desember24 = ($harga_boulder_desember24['nilai_boulder'] + $pembelian_boulder_desember24['nilai']) / (round($stock_opname_batu_boulder_ago_desember24['volume'],2) + round($pembelian_boulder_desember24['volume'],2));
+	$total_nilai_produksi_boulder_desember24 = $total_rekapitulasi_produksi_harian_desember24 * $harga_baru_desember24;
+	$total_nilai_produksi_boulder_desember24_fix = round($total_nilai_produksi_boulder_desember24 / 1000000,0);
 	?>
 
 	<?php
-	//AGUSTUS23
-	$vol_rap_alat_agustus23 = $total_rekapitulasi_produksi_harian_agustus23;
-	$nilai_rap_alat_agustus23 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_agustus23,2);
-	$nilai_rap_alat_agustus23_fix = round($nilai_rap_alat_agustus23 / 1000000,0);
-
-	$stone_crusher_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_agustus23 = $stone_crusher_biaya_agustus23['total'] + $stone_crusher_jurnal_agustus23['total'];
-	
-	$whell_loader_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_agustus23 = $whell_loader_biaya_agustus23['total'] + $whell_loader_jurnal_agustus23['total'];
-	
-	$genset_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$genset_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$genset_agustus23 = $genset_biaya_agustus23['total'] + $genset_jurnal_agustus23['total'];
-	
-	$timbangan_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$timbangan_biaya_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$timbangan_agustus23 = $timbangan_biaya_agustus23['total'] + $timbangan_biaya_jurnal_agustus23['total'];
-	
-	$tangki_solar_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_agustus23 = $tangki_solar_biaya_agustus23['total'] + $tangki_solar_jurnal_agustus23['total'];		
-	
-	$total_biaya_peralatan_agustus23 = $stone_crusher_agustus23 + $whell_loader_agustus23 + $genset_agustus23 + $timbangan_agustus23 + $tangki_solar_agustus23;
-
-	//Opening Balance
-	$date1_ago_agustus23 = date('2020-01-01');
-	$date2_ago_agustus23 = date('Y-m-d', strtotime('-1 days', strtotime($date_agustus23_awal)));
-	$date3_ago_agustus23 = date('Y-m-d', strtotime('-1 months', strtotime($date_agustus23_awal)));
-	$tanggal_opening_balance_agustus23 = date('Y-m-d', strtotime('-1 days', strtotime($date_agustus23_awal)));
-
-	$stock_opname_bbm_ago_agustus23 = $this->db->select('pp.vol_nilai_bbm as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_agustus23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_bbm_agustus23 = $this->db->select('pp.nilai_bbm as nilai_bbm')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_agustus23' and '$date2_ago_agustus23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_bbm_agustus23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_agustus23_awal' and '$date_agustus23_akhir'")
-	->where("prm.material_id = 13")
-	->group_by('prm.material_id')
-	->get()->row_array();
-
-	$pemakaian_bbm_agustus23 = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$vol_pemakaian_bbm_agustus23 = $pemakaian_bbm_agustus23['volume'];
-	$nilai_pemakaian_bbm_agustus23 = $pemakaian_bbm_agustus23['nilai'];
-
-	$nilai_bbm_non_produksi_agustus23 = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$vol_bbm_non_produksi_agustus23 = $nilai_bbm_non_produksi_agustus23['memo'];
-	$nilai_bbm_non_produksi_agustus23 = $nilai_bbm_non_produksi_agustus23['total'];
-	$total_nilai_produksi_solar_agustus23 = $nilai_pemakaian_bbm_agustus23 + $nilai_bbm_non_produksi_agustus23;
-
-	$nilai_realisasi_alat_agustus23 = $total_biaya_peralatan_agustus23 + $total_nilai_produksi_solar_agustus23;
-	$nilai_realisasi_alat_agustus23_fix = round($nilai_realisasi_alat_agustus23 / 1000000,0);
-
-	//SEPTEMBER23
-	$vol_rap_alat_september23 = $total_rekapitulasi_produksi_harian_september23;
-	$nilai_rap_alat_september23 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_september23,2);
-	$nilai_rap_alat_september23_fix = round($nilai_rap_alat_september23 / 1000000,0);
-
-	$stone_crusher_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_september23 = $stone_crusher_biaya_september23['total'] + $stone_crusher_jurnal_september23['total'];
-	
-	$whell_loader_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_september23 = $whell_loader_biaya_september23['total'] + $whell_loader_jurnal_september23['total'];
-	
-	$genset_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$genset_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$genset_september23 = $genset_biaya_september23['total'] + $genset_jurnal_september23['total'];
-	
-	$timbangan_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$timbangan_biaya_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$timbangan_september23 = $timbangan_biaya_september23['total'] + $timbangan_biaya_jurnal_september23['total'];
-	
-	$tangki_solar_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_september23 = $tangki_solar_biaya_september23['total'] + $tangki_solar_jurnal_september23['total'];		
-	
-	$total_biaya_peralatan_september23 = $stone_crusher_september23 + $whell_loader_september23 + $genset_september23 + $timbangan_september23 + $tangki_solar_september23;
-
-	//Opening Balance
-	$date1_ago_september23 = date('2020-01-01');
-	$date2_ago_september23 = date('Y-m-d', strtotime('-1 days', strtotime($date_september23_awal)));
-	$date3_ago_september23 = date('Y-m-d', strtotime('-1 months', strtotime($date_september23_awal)));
-	$tanggal_opening_balance_september23 = date('Y-m-d', strtotime('-1 days', strtotime($date_september23_awal)));
-
-	$stock_opname_bbm_ago_september23 = $this->db->select('pp.vol_nilai_bbm as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_september23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_bbm_september23 = $this->db->select('pp.nilai_bbm as nilai_bbm')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_september23' and '$date2_ago_september23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_bbm_september23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_september23_awal' and '$date_september23_akhir'")
-	->where("prm.material_id = 13")
-	->group_by('prm.material_id')
-	->get()->row_array();
-
-	$pemakaian_bbm_september23 = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date_september23_awal' and '$date_september23_akhir')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$vol_pemakaian_bbm_september23 = $pemakaian_bbm_september23['volume'];
-	$nilai_pemakaian_bbm_september23 = $pemakaian_bbm_september23['nilai'];
-
-	$nilai_bbm_non_produksi_september23 = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$vol_bbm_non_produksi_september23 = $nilai_bbm_non_produksi_september23['memo'];
-	$nilai_bbm_non_produksi_september23 = $nilai_bbm_non_produksi_september23['total'];
-	$total_nilai_produksi_solar_september23 = $nilai_pemakaian_bbm_september23 + $nilai_bbm_non_produksi_september23;
-
-	$nilai_realisasi_alat_september23 = $total_biaya_peralatan_september23 + $total_nilai_produksi_solar_september23;
-	$nilai_realisasi_alat_september23_fix = round($nilai_realisasi_alat_september23 / 1000000,0);
-
-	//OKTOBER23
-	$vol_rap_alat_oktober23 = $total_rekapitulasi_produksi_harian_oktober23;
-	$nilai_rap_alat_oktober23 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_oktober23,2);
-	$nilai_rap_alat_oktober23_fix = round($nilai_rap_alat_oktober23 / 1000000,0);
-
-	$stone_crusher_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_oktober23 = $stone_crusher_biaya_oktober23['total'] + $stone_crusher_jurnal_oktober23['total'];
-	
-	$whell_loader_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_oktober23 = $whell_loader_biaya_oktober23['total'] + $whell_loader_jurnal_oktober23['total'];
-	
-	$genset_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$genset_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$genset_oktober23 = $genset_biaya_oktober23['total'] + $genset_jurnal_oktober23['total'];
-	
-	$timbangan_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$timbangan_biaya_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$timbangan_oktober23 = $timbangan_biaya_oktober23['total'] + $timbangan_biaya_jurnal_oktober23['total'];
-	
-	$tangki_solar_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_oktober23 = $tangki_solar_biaya_oktober23['total'] + $tangki_solar_jurnal_oktober23['total'];		
-	
-	$total_biaya_peralatan_oktober23 = $stone_crusher_oktober23 + $whell_loader_oktober23 + $genset_oktober23 + $timbangan_oktober23 + $tangki_solar_oktober23;
-
-	//Opening Balance
-	$date1_ago_oktober23 = date('2020-01-01');
-	$date2_ago_oktober23 = date('Y-m-d', strtotime('-1 days', strtotime($date_oktober23_awal)));
-	$date3_ago_oktober23 = date('Y-m-d', strtotime('-1 months', strtotime($date_oktober23_awal)));
-	$tanggal_opening_balance_oktober23 = date('Y-m-d', strtotime('-1 days', strtotime($date_oktober23_awal)));
-
-	$stock_opname_bbm_ago_oktober23 = $this->db->select('pp.vol_nilai_bbm as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_oktober23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_bbm_oktober23 = $this->db->select('pp.nilai_bbm as nilai_bbm')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_oktober23' and '$date2_ago_oktober23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_bbm_oktober23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_oktober23_awal' and '$date_oktober23_akhir'")
-	->where("prm.material_id = 13")
-	->group_by('prm.material_id')
-	->get()->row_array();
-
-	$pemakaian_bbm_oktober23 = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$vol_pemakaian_bbm_oktober23 = $pemakaian_bbm_oktober23['volume'];
-	$nilai_pemakaian_bbm_oktober23 = $pemakaian_bbm_oktober23['nilai'];
-
-	$nilai_bbm_non_produksi_oktober23 = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$vol_bbm_non_produksi_oktober23 = $nilai_bbm_non_produksi_oktober23['memo'];
-	$nilai_bbm_non_produksi_oktober23 = $nilai_bbm_non_produksi_oktober23['total'];
-	$total_nilai_produksi_solar_oktober23 = $nilai_pemakaian_bbm_oktober23 + $nilai_bbm_non_produksi_oktober23;
-
-	$nilai_realisasi_alat_oktober23 = $total_biaya_peralatan_oktober23 + $total_nilai_produksi_solar_oktober23;
-	$nilai_realisasi_alat_oktober23_fix = round($nilai_realisasi_alat_oktober23 / 1000000,0);
-
-	//NOVEMBER23
-	$vol_rap_alat_november23 = $total_rekapitulasi_produksi_harian_november23;
-	$nilai_rap_alat_november23 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_november23,2);
-	$nilai_rap_alat_november23_fix = round($nilai_rap_alat_november23 / 1000000,0);
-
-	$stone_crusher_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_november23 = $stone_crusher_biaya_november23['total'] + $stone_crusher_jurnal_november23['total'];
-	
-	$whell_loader_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_november23 = $whell_loader_biaya_november23['total'] + $whell_loader_jurnal_november23['total'];
-	
-	$genset_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$genset_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$genset_november23 = $genset_biaya_november23['total'] + $genset_jurnal_november23['total'];
-	
-	$timbangan_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$timbangan_biaya_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$timbangan_november23 = $timbangan_biaya_november23['total'] + $timbangan_biaya_jurnal_november23['total'];
-	
-	$tangki_solar_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_november23 = $tangki_solar_biaya_november23['total'] + $tangki_solar_jurnal_november23['total'];		
-	
-	$total_biaya_peralatan_november23 = $stone_crusher_november23 + $whell_loader_november23 + $genset_november23 + $timbangan_november23 + $tangki_solar_november23;
-
-	//Opening Balance
-	$date1_ago_november23 = date('2020-01-01');
-	$date2_ago_november23 = date('Y-m-d', strtotime('-1 days', strtotime($date_november23_awal)));
-	$date3_ago_november23 = date('Y-m-d', strtotime('-1 months', strtotime($date_november23_awal)));
-	$tanggal_opening_balance_november23 = date('Y-m-d', strtotime('-1 days', strtotime($date_november23_awal)));
-
-	$stock_opname_bbm_ago_november23 = $this->db->select('pp.vol_nilai_bbm as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_november23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_bbm_november23 = $this->db->select('pp.nilai_bbm as nilai_bbm')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_november23' and '$date2_ago_november23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_bbm_november23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_november23_awal' and '$date_november23_akhir'")
-	->where("prm.material_id = 13")
-	->group_by('prm.material_id')
-	->get()->row_array();
-
-	$pemakaian_bbm_november23 = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date_november23_awal' and '$date_november23_akhir')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$vol_pemakaian_bbm_november23 = $pemakaian_bbm_november23['volume'];
-	$nilai_pemakaian_bbm_november23 = $pemakaian_bbm_november23['nilai'];
-
-	$nilai_bbm_non_produksi_november23 = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$vol_bbm_non_produksi_november23 = $nilai_bbm_non_produksi_november23['memo'];
-	$nilai_bbm_non_produksi_november23 = $nilai_bbm_non_produksi_november23['total'];
-	$total_nilai_produksi_solar_november23 = $nilai_pemakaian_bbm_november23 + $nilai_bbm_non_produksi_november23;
-
-	$nilai_realisasi_alat_november23 = $total_biaya_peralatan_november23 + $total_nilai_produksi_solar_november23;
-	$nilai_realisasi_alat_november23_fix = round($nilai_realisasi_alat_november23 / 1000000,0);
-
-	//DESEMBER23
-	$vol_rap_alat_desember23 = $total_rekapitulasi_produksi_harian_desember23;
-	$nilai_rap_alat_desember23 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_desember23,2);
-	$nilai_rap_alat_desember23_fix = round($nilai_rap_alat_desember23 / 1000000,0);
-
-	$stone_crusher_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 101")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$stone_crusher_desember23 = $stone_crusher_biaya_desember23['total'] + $stone_crusher_jurnal_desember23['total'];
-	
-	$whell_loader_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 104")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$whell_loader_desember23 = $whell_loader_biaya_desember23['total'] + $whell_loader_jurnal_desember23['total'];
-	
-	$genset_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$genset_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 197")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$genset_desember23 = $genset_biaya_desember23['total'] + $genset_jurnal_desember23['total'];
-	
-	$timbangan_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$timbangan_biaya_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 198")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$timbangan_desember23 = $timbangan_biaya_desember23['total'] + $timbangan_biaya_jurnal_desember23['total'];
-	
-	$tangki_solar_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 207")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$tangki_solar_desember23 = $tangki_solar_biaya_desember23['total'] + $tangki_solar_jurnal_desember23['total'];		
-	
-	$total_biaya_peralatan_desember23 = $stone_crusher_desember23 + $whell_loader_desember23 + $genset_desember23 + $timbangan_desember23 + $tangki_solar_desember23;
-
-	//Opening Balance
-	$date1_ago_desember23 = date('2020-01-01');
-	$date2_ago_desember23 = date('Y-m-d', strtotime('-1 days', strtotime($date_desember23_awal)));
-	$date3_ago_desember23 = date('Y-m-d', strtotime('-1 months', strtotime($date_desember23_awal)));
-	$tanggal_opening_balance_desember23 = date('Y-m-d', strtotime('-1 days', strtotime($date_desember23_awal)));
-
-	$stock_opname_bbm_ago_desember23 = $this->db->select('pp.vol_nilai_bbm as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_desember23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_bbm_desember23 = $this->db->select('pp.nilai_bbm as nilai_bbm')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_desember23' and '$date2_ago_desember23')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_bbm_desember23 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_desember23_awal' and '$date_desember23_akhir'")
-	->where("prm.material_id = 13")
-	->group_by('prm.material_id')
-	->get()->row_array();
-
-	$pemakaian_bbm_desember23 = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$vol_pemakaian_bbm_desember23 = $pemakaian_bbm_desember23['volume'];
-	$nilai_pemakaian_bbm_desember23 = $pemakaian_bbm_desember23['nilai'];
-
-	$nilai_bbm_non_produksi_desember23 = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$vol_bbm_non_produksi_desember23 = $nilai_bbm_non_produksi_desember23['memo'];
-	$nilai_bbm_non_produksi_desember23 = $nilai_bbm_non_produksi_desember23['total'];
-	$total_nilai_produksi_solar_desember23 = $nilai_pemakaian_bbm_desember23 + $nilai_bbm_non_produksi_desember23;
-
-	$nilai_realisasi_alat_desember23 = $total_biaya_peralatan_desember23 + $total_nilai_produksi_solar_desember23;
-	$nilai_realisasi_alat_desember23_fix = round($nilai_realisasi_alat_desember23 / 1000000,0);
-
 	//JANUARI24
 	$vol_rap_alat_januari24 = $total_rekapitulasi_produksi_harian_januari24;
 	$nilai_rap_alat_januari24 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_januari24,2);
@@ -4287,2827 +3130,203 @@
 	
 	$total_biaya_peralatan_oktober24 = $stone_crusher_oktober24 + $whell_loader_oktober24 + $genset_oktober24 + $timbangan_oktober24 + $tangki_solar_oktober24;
 
-	//Opening Balance
-	$date1_ago_agustus24 = date('2020-01-01');
-	$date2_ago_agustus24 = date('Y-m-d', strtotime('-1 days', strtotime($date_agustus24_awal)));
-	$date3_ago_agustus24 = date('Y-m-d', strtotime('-1 months', strtotime($date_agustus24_awal)));
-	$tanggal_opening_balance_agustus24 = date('Y-m-d', strtotime('-1 days', strtotime($date_agustus24_awal)));
+	//NOVEMBER24
+	$vol_rap_alat_november24 = $total_rekapitulasi_produksi_harian_november24;
+	$nilai_rap_alat_november24 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_november24,2);
+	$nilai_rap_alat_november24_fix = round($nilai_rap_alat_november24 / 1000000,0);
 
-	$stock_opname_bbm_ago_agustus24 = $this->db->select('pp.vol_nilai_bbm as volume')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date = '$tanggal_opening_balance_agustus24')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	
-	$harga_bbm_agustus24 = $this->db->select('pp.nilai_bbm as nilai_bbm')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date3_ago_agustus24' and '$date2_ago_agustus24')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-
-	$pembelian_bbm_agustus24 = $this->db->select('prm.display_measure as satuan, SUM(prm.display_volume) as volume, (prm.display_price / prm.display_volume) as harga, SUM(prm.display_price) as nilai')
-	->from('pmm_receipt_material prm')
-	->join('pmm_purchase_order po', 'prm.purchase_order_id = po.id','left')
-	->join('produk p', 'prm.material_id = p.id','left')
-	->where("prm.date_receipt between '$date_agustus24_awal' and '$date_agustus24_akhir'")
-	->where("prm.material_id = 13")
-	->group_by('prm.material_id')
-	->get()->row_array();
-
-	$pemakaian_bbm_agustus24 = $this->db->select('sum(pp.vol_pemakaian_bbm) as volume, sum(pp.nilai_pemakaian_bbm) as nilai')
-	->from('kunci_bahan_baku pp')
-	->where("(pp.date between '$date_agustus24_awal' and '$date_agustus24_akhir')")
-	->order_by('pp.date','desc')->limit(1)
-	->get()->row_array();
-	$vol_pemakaian_bbm_agustus24 = $pemakaian_bbm_agustus24['volume'];
-	$nilai_pemakaian_bbm_agustus24 = $pemakaian_bbm_agustus24['nilai'];
-
-	$nilai_bbm_non_produksi_agustus24 = $this->db->select('sum(pdb.jumlah) as total, sum(pb.memo) as memo')
+	$stone_crusher_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
 	->from('pmm_biaya pb ')
 	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
+	->where("pdb.akun = 101")
 	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus24_awal' and '$date_agustus24_akhir')")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
 	->get()->row_array();
-	$vol_bbm_non_produksi_agustus24 = $nilai_bbm_non_produksi_agustus24['memo'];
-	$nilai_bbm_non_produksi_agustus24 = $nilai_bbm_non_produksi_agustus24['total'];
-	$total_nilai_produksi_solar_agustus24 = $nilai_pemakaian_bbm_agustus24 + $nilai_bbm_non_produksi_agustus24;
 
-	$nilai_realisasi_alat_agustus24 = $total_biaya_peralatan_agustus24 + $total_nilai_produksi_solar_agustus24;
-	$nilai_realisasi_alat_agustus24_fix = round($nilai_realisasi_alat_agustus24 / 1000000,0);
+	$stone_crusher_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 101")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$stone_crusher_november24 = $stone_crusher_biaya_november24['total'] + $stone_crusher_jurnal_november24['total'];
+	
+	$whell_loader_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 104")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$whell_loader_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 104")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$whell_loader_november24 = $whell_loader_biaya_november24['total'] + $whell_loader_jurnal_november24['total'];
+	
+	$genset_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 197")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$genset_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 197")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$genset_november24 = $genset_biaya_november24['total'] + $genset_jurnal_november24['total'];
+	
+	$timbangan_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 198")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$timbangan_biaya_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 198")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$timbangan_november24 = $timbangan_biaya_november24['total'] + $timbangan_biaya_jurnal_november24['total'];
+	
+	$tangki_solar_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 207")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$tangki_solar_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 207")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$tangki_solar_november24 = $tangki_solar_biaya_november24['total'] + $tangki_solar_jurnal_november24['total'];		
+	
+	$total_biaya_peralatan_november24 = $stone_crusher_november24 + $whell_loader_november24 + $genset_november24 + $timbangan_november24 + $tangki_solar_november24;
+
+	//DESEMBER24
+	$vol_rap_alat_desember24 = $total_rekapitulasi_produksi_harian_desember24;
+	$nilai_rap_alat_desember24 = ($nilai_tangki_ton + $nilai_sc_ton + $nilai_gns_ton + $nilai_wl_ton + $nilai_timbangan_ton + $nilai_bbm_solar_ton) * round($vol_rap_alat_desember24,2);
+	$nilai_rap_alat_desember24_fix = round($nilai_rap_alat_desember24 / 1000000,0);
+
+	$stone_crusher_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 101")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$stone_crusher_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 101")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$stone_crusher_desember24 = $stone_crusher_biaya_desember24['total'] + $stone_crusher_jurnal_desember24['total'];
+	
+	$whell_loader_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 104")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$whell_loader_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 104")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$whell_loader_desember24 = $whell_loader_biaya_desember24['total'] + $whell_loader_jurnal_desember24['total'];
+	
+	$genset_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 197")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$genset_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 197")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$genset_desember24 = $genset_biaya_desember24['total'] + $genset_jurnal_desember24['total'];
+	
+	$timbangan_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 198")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$timbangan_biaya_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 198")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$timbangan_desember24 = $timbangan_biaya_desember24['total'] + $timbangan_biaya_jurnal_desember24['total'];
+	
+	$tangki_solar_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 207")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$tangki_solar_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 207")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$tangki_solar_desember24 = $tangki_solar_biaya_desember24['total'] + $tangki_solar_jurnal_desember24['total'];		
+	
+	$total_biaya_peralatan_desember24 = $stone_crusher_desember24 + $whell_loader_desember24 + $genset_desember24 + $timbangan_desember24 + $tangki_solar_desember24;
 	
 ?>
 
 <?php
-	//AGUSTUS23
-	$nilai_rap_overhead_agustus23 = $overhead_ton * round($total_rekapitulasi_produksi_harian_agustus23,2);
-	$nilai_rap_overhead_agustus23_fix = round($nilai_rap_overhead_agustus23 / 1000000,0);
-
-	$konsumsi_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$konsumsi_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$konsumsi_agustus23 = $konsumsi_biaya_agustus23['total'] + $konsumsi_jurnal_agustus23['total'];
-
-	$gaji_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$gaji_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$gaji_agustus23 = $gaji_biaya_agustus23['total'] + $gaji_jurnal_agustus23['total'];
-
-	$upah_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$upah_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$upah_agustus23 = $upah_biaya_agustus23['total'] + $upah_jurnal_agustus23['total'];
-
-	$pengujian_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$pengujian_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$pengujian_agustus23 = $pengujian_biaya_agustus23['total'] + $pengujian_jurnal_agustus23['total'];
-
-	$perbaikan_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$perbaikan_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$perbaikan_agustus23 = $perbaikan_biaya_agustus23['total'] + $perbaikan_jurnal_agustus23['total'];
-
-	$akomodasi_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$akomodasi_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$akomodasi_agustus23 = $akomodasi_biaya_agustus23['total'] + $akomodasi_jurnal_agustus23['total'];
-
-	$listrik_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$listrik_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$listrik_agustus23 = $listrik_biaya_agustus23['total'] + $listrik_jurnal_agustus23['total'];
-
-	$thr_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$thr_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$thr_agustus23 = $thr_biaya_agustus23['total'] + $thr_jurnal_agustus23['total'];
-
-	$bensin_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$bensin_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$bensin_agustus23 = $bensin_biaya_agustus23['total'] + $bensin_jurnal_agustus23['total'];
-
-	$dinas_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$dinas_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$dinas_agustus23 = $dinas_biaya_agustus23['total'] + $dinas_jurnal_agustus23['total'];
-
-	$komunikasi_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$komunikasi_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$komunikasi_agustus23 = $komunikasi_biaya_agustus23['total'] + $komunikasi_jurnal_agustus23['total'];
-
-	$pakaian_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$pakaian_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$pakaian_agustus23 = $pakaian_biaya_agustus23['total'] + $pakaian_jurnal_agustus23['total'];
-
-	$tulis_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$tulis_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$tulis_agustus23 = $tulis_biaya_agustus23['total'] + $tulis_jurnal_agustus23['total'];
-
-	$keamanan_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$keamanan_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$keamanan_agustus23 = $keamanan_biaya_agustus23['total'] + $keamanan_jurnal_agustus23['total'];
-
-	$perlengkapan_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$perlengkapan_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$perlengkapan_agustus23 = $perlengkapan_biaya_agustus23['total'] + $perlengkapan_jurnal_agustus23['total'];
-
-	$beban_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$beban_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$beban_agustus23 = $beban_biaya_agustus23['total'] + $beban_jurnal_agustus23['total'];
-
-	$adm_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$adm_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$adm_agustus23 = $adm_biaya_agustus23['total'] + $adm_jurnal_agustus23['total'];
-
-	$lain_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$lain_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$lain_agustus23 = $lain_biaya_agustus23['total'] + $lain_jurnal_agustus23['total'];
-
-	$sewa_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$sewa_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$sewa_agustus23 = $sewa_biaya_agustus23['total'] + $sewa_jurnal_agustus23['total'];
-
-	$bpjs_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$bpjs_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$bpjs_agustus23 = $bpjs_biaya_agustus23['total'] + $bpjs_jurnal_agustus23['total'];
-
-	$penyusutan_kantor_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kantor_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$penyusutan_kantor_agustus23 = $penyusutan_kantor_biaya_agustus23['total'] + $penyusutan_kantor_jurnal_agustus23['total'];
-
-	$penyusutan_kendaraan_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kendaraan_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$penyusutan_kendaraan_agustus23 = $penyusutan_kendaraan_biaya_agustus23['total'] + $penyusutan_kendaraan_jurnal_agustus23['total'];
-
-	$iuran_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$iuran_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$iuran_agustus23 = $iuran_biaya_agustus23['total'] + $iuran_jurnal_agustus23['total'];
-
-	$kendaraan_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$kendaraan_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$kendaraan_agustus23 = $kendaraan_biaya_agustus23['total'] + $kendaraan_jurnal_agustus23['total'];
-
-	$pajak_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$pajak_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$pajak_agustus23 = $pajak_biaya_agustus23['total'] + $pajak_jurnal_agustus23['total'];
-
-	$solar_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$solar_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$solar_agustus23 = 0;
-
-	$donasi_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$donasi_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$donasi_agustus23 = $donasi_biaya_agustus23['total'] + $donasi_jurnal_agustus23['total'];
-
-	$legal_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$legal_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$legal_agustus23 = $legal_biaya_agustus23['total'] + $legal_jurnal_agustus23['total'];
-
-	$pengobatan_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$pengobatan_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$pengobatan_agustus23 = $pengobatan_biaya_agustus23['total'] + $pengobatan_jurnal_agustus23['total'];
-
-	$lembur_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$lembur_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$lembur_agustus23 = $lembur_biaya_agustus23['total'] + $lembur_jurnal_agustus23['total'];
-
-	$pelatihan_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$pelatihan_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$pelatihan_agustus23 = $pelatihan_biaya_agustus23['total'] + $pelatihan_jurnal_agustus23['total'];
-
-	$supplies_biaya_agustus23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-
-	$supplies_jurnal_agustus23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_agustus23_awal' and '$date_agustus23_akhir')")
-	->get()->row_array();
-	$supplies_agustus23 = $supplies_biaya_agustus23['total'] + $supplies_jurnal_agustus23['total'];
-
-	$total_operasional_agustus23 = $konsumsi_agustus23 + $gaji_agustus23 + $upah_agustus23 + $pengujian_agustus23 + $perbaikan_agustus23 + $akomodasi_agustus23 + $listrik_agustus23 + $thr_agustus23 + 
-	$bensin_agustus23 + $dinas_agustus23 + $komunikasi_agustus23 + $pakaian_agustus23 + $tulis_agustus23 + $keamanan_agustus23 + $perlengkapan_agustus23 + $beban_agustus23 + $adm_agustus23 + 
-	$lain_agustus23 + $sewa_agustus23 + $bpjs_agustus23 + $penyusutan_kantor_agustus23 + $penyusutan_kendaraan_agustus23 + $iuran_agustus23 + $kendaraan_agustus23 + $pajak_agustus23 + $solar_agustus23 + 
-	$donasi_agustus23 + $legal_agustus23 + $pengobatan_agustus23 + $lembur_agustus23 + $pelatihan_agustus23 + $supplies_agustus23;
-	$nilai_realisasi_overhead_agustus23_fix = round($total_operasional_agustus23 / 1000000,0);
-
-	//SEPTEMBER23
-	$nilai_rap_overhead_september23 = $overhead_ton * round($total_rekapitulasi_produksi_harian_september23,2);
-	$nilai_rap_overhead_september23_fix = round($nilai_rap_overhead_september23 / 1000000,0);
-
-	$konsumsi_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$konsumsi_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$konsumsi_september23 = $konsumsi_biaya_september23['total'] + $konsumsi_jurnal_september23['total'];
-
-	$gaji_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$gaji_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$gaji_september23 = $gaji_biaya_september23['total'] + $gaji_jurnal_september23['total'];
-
-	$upah_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$upah_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$upah_september23 = $upah_biaya_september23['total'] + $upah_jurnal_september23['total'];
-
-	$pengujian_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$pengujian_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$pengujian_september23 = $pengujian_biaya_september23['total'] + $pengujian_jurnal_september23['total'];
-
-	$perbaikan_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$perbaikan_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$perbaikan_september23 = $perbaikan_biaya_september23['total'] + $perbaikan_jurnal_september23['total'];
-
-	$akomodasi_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$akomodasi_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$akomodasi_september23 = $akomodasi_biaya_september23['total'] + $akomodasi_jurnal_september23['total'];
-
-	$listrik_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$listrik_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$listrik_september23 = $listrik_biaya_september23['total'] + $listrik_jurnal_september23['total'];
-	
-	$thr_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$thr_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$thr_september23 = $thr_biaya_september23['total'] + $thr_jurnal_september23['total'];
-
-	$bensin_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$bensin_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$bensin_september23 = $bensin_biaya_september23['total'] + $bensin_jurnal_september23['total'];
-
-	$dinas_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$dinas_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$dinas_september23 = $dinas_biaya_september23['total'] + $dinas_jurnal_september23['total'];
-
-	$komunikasi_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$komunikasi_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$komunikasi_september23 = $komunikasi_biaya_september23['total'] + $komunikasi_jurnal_september23['total'];
-
-	$pakaian_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$pakaian_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$pakaian_september23 = $pakaian_biaya_september23['total'] + $pakaian_jurnal_september23['total'];
-	
-	$tulis_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$tulis_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$tulis_september23 = $tulis_biaya_september23['total'] + $tulis_jurnal_september23['total'];
-
-	$keamanan_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$keamanan_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$keamanan_september23 = $keamanan_biaya_september23['total'] + $keamanan_jurnal_september23['total'];
-
-	$perlengkapan_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$perlengkapan_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$perlengkapan_september23 = $perlengkapan_biaya_september23['total'] + $perlengkapan_jurnal_september23['total'];
-
-	$beban_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$beban_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$beban_september23 = $beban_biaya_september23['total'] + $beban_jurnal_september23['total'];
-
-	$adm_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$adm_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$adm_september23 = $adm_biaya_september23['total'] + $adm_jurnal_september23['total'];
-
-	$lain_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$lain_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$lain_september23 = $lain_biaya_september23['total'] + $lain_jurnal_september23['total'];
-
-	$sewa_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$sewa_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$sewa_september23 = $sewa_biaya_september23['total'] + $sewa_jurnal_september23['total'];
-
-	$bpjs_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$bpjs_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$bpjs_september23 = $bpjs_biaya_september23['total'] + $bpjs_jurnal_september23['total'];
-
-	$penyusutan_kantor_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kantor_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$penyusutan_kantor_september23 = $penyusutan_kantor_biaya_september23['total'] + $penyusutan_kantor_jurnal_september23['total'];
-
-	$penyusutan_kendaraan_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kendaraan_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$penyusutan_kendaraan_september23 = $penyusutan_kendaraan_biaya_september23['total'] + $penyusutan_kendaraan_jurnal_september23['total'];
-
-	$iuran_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$iuran_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$iuran_september23 = $iuran_biaya_september23['total'] + $iuran_jurnal_september23['total'];
-
-	$kendaraan_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$kendaraan_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$kendaraan_september23 = $kendaraan_biaya_september23['total'] + $kendaraan_jurnal_september23['total'];
-
-	$pajak_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$pajak_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$pajak_september23 = $pajak_biaya_september23['total'] + $pajak_jurnal_september23['total'];
-
-	$solar_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$solar_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$solar_september23 = 0;
-
-	$donasi_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$donasi_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$donasi_september23 = $donasi_biaya_september23['total'] + $donasi_jurnal_september23['total'];
-
-	$legal_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$legal_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$legal_september23 = $legal_biaya_september23['total'] + $legal_jurnal_september23['total'];
-
-	$pengobatan_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$pengobatan_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$pengobatan_september23 = $pengobatan_biaya_september23['total'] + $pengobatan_jurnal_september23['total'];
-
-	$lembur_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$lembur_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$lembur_september23 = $lembur_biaya_september23['total'] + $lembur_jurnal_september23['total'];
-
-	$pelatihan_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$pelatihan_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$pelatihan_september23 = $pelatihan_biaya_september23['total'] + $pelatihan_jurnal_september23['total'];
-
-	$supplies_biaya_september23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-
-	$supplies_jurnal_september23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_september23_awal' and '$date_september23_akhir')")
-	->get()->row_array();
-	$supplies_september23 = $supplies_biaya_september23['total'] + $supplies_jurnal_september23['total'];
-
-	$total_operasional_september23 = $konsumsi_september23 + $gaji_september23 + $upah_september23 + $pengujian_september23 + $perbaikan_september23 + $akomodasi_september23 + $listrik_september23 + $thr_september23 + 
-	$bensin_september23 + $dinas_september23 + $komunikasi_september23 + $pakaian_september23 + $tulis_september23 + $keamanan_september23 + $perlengkapan_september23 + $beban_september23 + $adm_september23 + 
-	$lain_september23 + $sewa_september23 + $bpjs_september23 + $penyusutan_kantor_september23 + $penyusutan_kendaraan_september23 + $iuran_september23 + $kendaraan_september23 + $pajak_september23 + $solar_september23 + 
-	$donasi_september23 + $legal_september23 + $pengobatan_september23 + $lembur_september23 + $pelatihan_september23 + $supplies_september23;
-	$nilai_realisasi_overhead_september23_fix = round($total_operasional_september23 / 1000000,0);
-
-	//OKTOBER23
-	$nilai_rap_overhead_oktober23 = $overhead_ton * round($total_rekapitulasi_produksi_harian_oktober23,2);
-	$nilai_rap_overhead_oktober23_fix = round($nilai_rap_overhead_oktober23 / 1000000,0);
-
-	$konsumsi_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$konsumsi_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$konsumsi_oktober23 = $konsumsi_biaya_oktober23['total'] + $konsumsi_jurnal_oktober23['total'];
-
-	$gaji_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$gaji_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$gaji_oktober23 = $gaji_biaya_oktober23['total'] + $gaji_jurnal_oktober23['total'];
-
-	$upah_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$upah_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$upah_oktober23 = $upah_biaya_oktober23['total'] + $upah_jurnal_oktober23['total'];
-
-	$pengujian_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$pengujian_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$pengujian_oktober23 = $pengujian_biaya_oktober23['total'] + $pengujian_jurnal_oktober23['total'];
-
-	$perbaikan_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$perbaikan_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$perbaikan_oktober23 = $perbaikan_biaya_oktober23['total'] + $perbaikan_jurnal_oktober23['total'];
-
-	$akomodasi_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$akomodasi_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$akomodasi_oktober23 = $akomodasi_biaya_oktober23['total'] + $akomodasi_jurnal_oktober23['total'];
-
-	$listrik_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$listrik_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$listrik_oktober23 = $listrik_biaya_oktober23['total'] + $listrik_jurnal_oktober23['total'];
-
-	$thr_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$thr_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$thr_oktober23 = $thr_biaya_oktober23['total'] + $thr_jurnal_oktober23['total'];
-
-	$bensin_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$bensin_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$bensin_oktober23 = $bensin_biaya_oktober23['total'] + $bensin_jurnal_oktober23['total'];
-
-	$dinas_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$dinas_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$dinas_oktober23 = $dinas_biaya_oktober23['total'] + $dinas_jurnal_oktober23['total'];
-
-	$komunikasi_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$komunikasi_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$komunikasi_oktober23 = $komunikasi_biaya_oktober23['total'] + $komunikasi_jurnal_oktober23['total'];
-
-	$pakaian_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$pakaian_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$pakaian_oktober23 = $pakaian_biaya_oktober23['total'] + $pakaian_jurnal_oktober23['total'];
-
-	$tulis_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$tulis_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$tulis_oktober23 = $tulis_biaya_oktober23['total'] + $tulis_jurnal_oktober23['total'];
-
-	$keamanan_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$keamanan_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$keamanan_oktober23 = $keamanan_biaya_oktober23['total'] + $keamanan_jurnal_oktober23['total'];
-
-	$perlengkapan_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$perlengkapan_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$perlengkapan_oktober23 = $perlengkapan_biaya_oktober23['total'] + $perlengkapan_jurnal_oktober23['total'];
-
-	$beban_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$beban_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$beban_oktober23 = $beban_biaya_oktober23['total'] + $beban_jurnal_oktober23['total'];
-
-	$adm_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$adm_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$adm_oktober23 = $adm_biaya_oktober23['total'] + $adm_jurnal_oktober23['total'];
-
-	$lain_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$lain_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$lain_oktober23 = $lain_biaya_oktober23['total'] + $lain_jurnal_oktober23['total'];
-
-	$sewa_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$sewa_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$sewa_oktober23 = $sewa_biaya_oktober23['total'] + $sewa_jurnal_oktober23['total'];
-
-	$bpjs_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$bpjs_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$bpjs_oktober23 = $bpjs_biaya_oktober23['total'] + $bpjs_jurnal_oktober23['total'];
-
-	$penyusutan_kantor_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kantor_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$penyusutan_kantor_oktober23 = $penyusutan_kantor_biaya_oktober23['total'] + $penyusutan_kantor_jurnal_oktober23['total'];
-
-	$penyusutan_kendaraan_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kendaraan_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$penyusutan_kendaraan_oktober23 = $penyusutan_kendaraan_biaya_oktober23['total'] + $penyusutan_kendaraan_jurnal_oktober23['total'];
-
-	$iuran_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$iuran_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$iuran_oktober23 = $iuran_biaya_oktober23['total'] + $iuran_jurnal_oktober23['total'];
-
-	$kendaraan_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$kendaraan_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$kendaraan_oktober23 = $kendaraan_biaya_oktober23['total'] + $kendaraan_jurnal_oktober23['total'];
-
-	$pajak_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$pajak_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$pajak_oktober23 = $pajak_biaya_oktober23['total'] + $pajak_jurnal_oktober23['total'];
-
-	$solar_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$solar_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$solar_oktober23 = 0;
-
-	$donasi_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$donasi_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$donasi_oktober23 = $donasi_biaya_oktober23['total'] + $donasi_jurnal_oktober23['total'];
-
-	$legal_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$legal_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$legal_oktober23 = $legal_biaya_oktober23['total'] + $legal_jurnal_oktober23['total'];
-
-	$pengobatan_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$pengobatan_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$pengobatan_oktober23 = $pengobatan_biaya_oktober23['total'] + $pengobatan_jurnal_oktober23['total'];
-
-	$lembur_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$lembur_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$lembur_oktober23 = $lembur_biaya_oktober23['total'] + $lembur_jurnal_oktober23['total'];
-
-	$pelatihan_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$pelatihan_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$pelatihan_oktober23 = $pelatihan_biaya_oktober23['total'] + $pelatihan_jurnal_oktober23['total'];
-
-	$supplies_biaya_oktober23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-
-	$supplies_jurnal_oktober23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_oktober23_awal' and '$date_oktober23_akhir')")
-	->get()->row_array();
-	$supplies_oktober23 = $supplies_biaya_oktober23['total'] + $supplies_jurnal_oktober23['total'];
-
-	$total_operasional_oktober23 = $konsumsi_oktober23 + $gaji_oktober23 + $upah_oktober23 + $pengujian_oktober23 + $perbaikan_oktober23 + $akomodasi_oktober23 + $listrik_oktober23 + $thr_oktober23 + 
-	$bensin_oktober23 + $dinas_oktober23 + $komunikasi_oktober23 + $pakaian_oktober23 + $tulis_oktober23 + $keamanan_oktober23 + $perlengkapan_oktober23 + $beban_oktober23 + $adm_oktober23 + 
-	$lain_oktober23 + $sewa_oktober23 + $bpjs_oktober23 + $penyusutan_kantor_oktober23 + $penyusutan_kendaraan_oktober23 + $iuran_oktober23 + $kendaraan_oktober23 + $pajak_oktober23 + $solar_oktober23 + 
-	$donasi_oktober23 + $legal_oktober23 + $pengobatan_oktober23 + $lembur_oktober23 + $pelatihan_oktober23 + $supplies_oktober23;
-	$nilai_realisasi_overhead_oktober23_fix = round($total_operasional_oktober23 / 1000000,0);
-
-	//NOVEMBER23
-	$nilai_rap_overhead_november23 = $overhead_ton * round($total_rekapitulasi_produksi_harian_november23,2);
-	$nilai_rap_overhead_november23_fix = round($nilai_rap_overhead_november23 / 1000000,0);
-
-	$konsumsi_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$konsumsi_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$konsumsi_november23 = $konsumsi_biaya_november23['total'] + $konsumsi_jurnal_november23['total'];
-
-	$gaji_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$gaji_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$gaji_november23 = $gaji_biaya_november23['total'] + $gaji_jurnal_november23['total'];
-
-	$upah_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$upah_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$upah_november23 = $upah_biaya_november23['total'] + $upah_jurnal_november23['total'];
-
-	$pengujian_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$pengujian_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$pengujian_november23 = $pengujian_biaya_november23['total'] + $pengujian_jurnal_november23['total'];
-
-	$perbaikan_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$perbaikan_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$perbaikan_november23 = $perbaikan_biaya_november23['total'] + $perbaikan_jurnal_november23['total'];
-
-	$akomodasi_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$akomodasi_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$akomodasi_november23 = $akomodasi_biaya_november23['total'] + $akomodasi_jurnal_november23['total'];
-
-	$listrik_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$listrik_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$listrik_november23 = $listrik_biaya_november23['total'] + $listrik_jurnal_november23['total'];
-
-	$thr_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$thr_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$thr_november23 = $thr_biaya_november23['total'] + $thr_jurnal_november23['total'];
-
-	$bensin_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$bensin_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$bensin_november23 = $bensin_biaya_november23['total'] + $bensin_jurnal_november23['total'];
-
-	$dinas_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$dinas_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$dinas_november23 = $dinas_biaya_november23['total'] + $dinas_jurnal_november23['total'];
-
-	$komunikasi_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$komunikasi_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$komunikasi_november23 = $komunikasi_biaya_november23['total'] + $komunikasi_jurnal_november23['total'];
-
-	$pakaian_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$pakaian_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$pakaian_november23 = $pakaian_biaya_november23['total'] + $pakaian_jurnal_november23['total'];
-
-	$tulis_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$tulis_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$tulis_november23 = $tulis_biaya_november23['total'] + $tulis_jurnal_november23['total'];
-
-	$keamanan_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$keamanan_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$keamanan_november23 = $keamanan_biaya_november23['total'] + $keamanan_jurnal_november23['total'];
-
-	$perlengkapan_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$perlengkapan_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$perlengkapan_november23 = $perlengkapan_biaya_november23['total'] + $perlengkapan_jurnal_november23['total'];
-
-	$beban_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$beban_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$beban_november23 = $beban_biaya_november23['total'] + $beban_jurnal_november23['total'];
-
-	$adm_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$adm_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$adm_november23 = $adm_biaya_november23['total'] + $adm_jurnal_november23['total'];
-
-	$lain_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$lain_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$lain_november23 = $lain_biaya_november23['total'] + $lain_jurnal_november23['total'];
-
-	$sewa_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$sewa_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$sewa_november23 = $sewa_biaya_november23['total'] + $sewa_jurnal_november23['total'];
-
-	$bpjs_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$bpjs_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$bpjs_november23 = $bpjs_biaya_november23['total'] + $bpjs_jurnal_november23['total'];
-
-	$penyusutan_kantor_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kantor_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$penyusutan_kantor_november23 = $penyusutan_kantor_biaya_november23['total'] + $penyusutan_kantor_jurnal_november23['total'];
-
-	$penyusutan_kendaraan_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kendaraan_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$penyusutan_kendaraan_november23 = $penyusutan_kendaraan_biaya_november23['total'] + $penyusutan_kendaraan_jurnal_november23['total'];
-
-	$iuran_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$iuran_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$iuran_november23 = $iuran_biaya_november23['total'] + $iuran_jurnal_november23['total'];
-
-	$kendaraan_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$kendaraan_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$kendaraan_november23 = $kendaraan_biaya_november23['total'] + $kendaraan_jurnal_november23['total'];
-
-	$pajak_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$pajak_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$pajak_november23 = $pajak_biaya_november23['total'] + $pajak_jurnal_november23['total'];
-
-	$solar_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$solar_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$solar_november23 = 0;
-
-	$donasi_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$donasi_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$donasi_november23 = $donasi_biaya_november23['total'] + $donasi_jurnal_november23['total'];
-
-	$legal_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$legal_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$legal_november23 = $legal_biaya_november23['total'] + $legal_jurnal_november23['total'];
-
-	$pengobatan_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$pengobatan_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$pengobatan_november23 = $pengobatan_biaya_november23['total'] + $pengobatan_jurnal_november23['total'];
-
-	$lembur_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$lembur_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$lembur_november23 = $lembur_biaya_november23['total'] + $lembur_jurnal_november23['total'];
-
-	$pelatihan_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$pelatihan_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$pelatihan_november23 = $pelatihan_biaya_november23['total'] + $pelatihan_jurnal_november23['total'];
-
-	$supplies_biaya_november23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-
-	$supplies_jurnal_november23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_november23_awal' and '$date_november23_akhir')")
-	->get()->row_array();
-	$supplies_november23 = $supplies_biaya_november23['total'] + $supplies_jurnal_november23['total'];
-
-	$total_operasional_november23 = $konsumsi_november23 + $gaji_november23 + $upah_november23 + $pengujian_november23 + $perbaikan_november23 + $akomodasi_november23 + $listrik_november23 + $thr_november23 + 
-	$bensin_november23 + $dinas_november23 + $komunikasi_november23 + $pakaian_november23 + $tulis_november23 + $keamanan_november23 + $perlengkapan_november23 + $beban_november23 + $adm_november23 + 
-	$lain_november23 + $sewa_november23 + $bpjs_november23 + $penyusutan_kantor_november23 + $penyusutan_kendaraan_november23 + $iuran_november23 + $kendaraan_november23 + $pajak_november23 + $solar_november23 + 
-	$donasi_november23 + $legal_november23 + $pengobatan_november23 + $lembur_november23 + $pelatihan_november23 + $supplies_november23;
-	$nilai_realisasi_overhead_november23_fix = round($total_operasional_november23 / 1000000,0);
-//DESEMBER23
-	$nilai_rap_overhead_desember23 = $overhead_ton * round($total_rekapitulasi_produksi_harian_desember23,2);
-	$nilai_rap_overhead_desember23_fix = round($nilai_rap_overhead_desember23 / 1000000,0);
-
-	$konsumsi_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$konsumsi_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 201")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$konsumsi_desember23 = $konsumsi_biaya_desember23['total'] + $konsumsi_jurnal_desember23['total'];
-
-	$gaji_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$gaji_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 199")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$gaji_desember23 = $gaji_biaya_desember23['total'] + $gaji_jurnal_desember23['total'];
-
-	$upah_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$upah_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 200")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$upah_desember23 = $upah_biaya_desember23['total'] + $upah_jurnal_desember23['total'];
-
-	$pengujian_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$pengujian_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 205")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$pengujian_desember23 = $pengujian_biaya_desember23['total'] + $pengujian_jurnal_desember23['total'];
-
-	$perbaikan_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$perbaikan_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 203")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$perbaikan_desember23 = $perbaikan_biaya_desember23['total'] + $perbaikan_jurnal_desember23['total'];
-
-	$akomodasi_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$akomodasi_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 204")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$akomodasi_desember23 = $akomodasi_biaya_desember23['total'] + $akomodasi_jurnal_desember23['total'];
-
-	$listrik_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$listrik_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 206")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$listrik_desember23 = $listrik_biaya_desember23['total'] + $listrik_jurnal_desember23['total'];
-
-	$thr_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$thr_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 202")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$thr_desember23 = $thr_biaya_desember23['total'] + $thr_jurnal_desember23['total'];
-
-	$bensin_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$bensin_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 129")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$bensin_desember23 = $bensin_biaya_desember23['total'] + $bensin_jurnal_desember23['total'];
-
-	$dinas_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$dinas_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 131")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$dinas_desember23 = $dinas_biaya_desember23['total'] + $dinas_jurnal_desember23['total'];
-
-	$komunikasi_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$komunikasi_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 133")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$komunikasi_desember23 = $komunikasi_biaya_desember23['total'] + $komunikasi_jurnal_desember23['total'];
-
-	$pakaian_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$pakaian_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 138")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$pakaian_desember23 = $pakaian_biaya_desember23['total'] + $pakaian_jurnal_desember23['total'];
-
-	$tulis_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$tulis_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 149")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$tulis_desember23 = $tulis_biaya_desember23['total'] + $tulis_jurnal_desember23['total'];
-
-	$keamanan_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$keamanan_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 151")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$keamanan_desember23 = $keamanan_biaya_desember23['total'] + $keamanan_jurnal_desember23['total'];
-
-	$perlengkapan_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$perlengkapan_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 153")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$perlengkapan_desember23 = $perlengkapan_biaya_desember23['total'] + $perlengkapan_jurnal_desember23['total'];
-
-	$beban_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$beban_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 145")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$beban_desember23 = $beban_biaya_desember23['total'] + $beban_jurnal_desember23['total'];
-
-	$adm_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$adm_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 143")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$adm_desember23 = $adm_biaya_desember23['total'] + $adm_jurnal_desember23['total'];
-
-	$lain_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$lain_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 146")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$lain_desember23 = $lain_biaya_desember23['total'] + $lain_jurnal_desember23['total'];
-
-	$sewa_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$sewa_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 154")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$sewa_desember23 = $sewa_biaya_desember23['total'] + $sewa_jurnal_desember23['total'];
-
-	$bpjs_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$bpjs_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 123")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$bpjs_desember23 = $bpjs_biaya_desember23['total'] + $bpjs_jurnal_desember23['total'];
-
-	$penyusutan_kantor_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kantor_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 162")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$penyusutan_kantor_desember23 = $penyusutan_kantor_biaya_desember23['total'] + $penyusutan_kantor_jurnal_desember23['total'];
-
-	$penyusutan_kendaraan_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$penyusutan_kendaraan_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 160")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$penyusutan_kendaraan_desember23 = $penyusutan_kendaraan_biaya_desember23['total'] + $penyusutan_kendaraan_jurnal_desember23['total'];
-
-	$iuran_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$iuran_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 134")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$iuran_desember23 = $iuran_biaya_desember23['total'] + $iuran_jurnal_desember23['total'];
-
-	$kendaraan_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$kendaraan_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 155")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$kendaraan_desember23 = $kendaraan_biaya_desember23['total'] + $kendaraan_jurnal_desember23['total'];
-
-	$pajak_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$pajak_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 141")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$pajak_desember23 = $pajak_biaya_desember23['total'] + $pajak_jurnal_desember23['total'];
-
-	$solar_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$solar_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 105")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$solar_desember23 = 0;
-
-	$donasi_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$donasi_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 127")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$donasi_desember23 = $donasi_biaya_desember23['total'] + $donasi_jurnal_desember23['total'];
-
-	$legal_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$legal_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 136")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$legal_desember23 = $legal_biaya_desember23['total'] + $legal_jurnal_desember23['total'];
-
-	$pengobatan_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$pengobatan_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 121")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$pengobatan_desember23 = $pengobatan_biaya_desember23['total'] + $pengobatan_jurnal_desember23['total'];
-
-	$lembur_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$lembur_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 120")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$lembur_desember23 = $lembur_biaya_desember23['total'] + $lembur_jurnal_desember23['total'];
-
-	$pelatihan_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$pelatihan_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 139")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$pelatihan_desember23 = $pelatihan_biaya_desember23['total'] + $pelatihan_jurnal_desember23['total'];
-
-	$supplies_biaya_desember23 = $this->db->select('sum(pdb.jumlah) as total')
-	->from('pmm_biaya pb ')
-	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-
-	$supplies_jurnal_desember23 = $this->db->select('sum(pdb.debit) as total')
-	->from('pmm_jurnal_umum pb ')
-	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
-	->where("pdb.akun = 152")
-	->where("status = 'PAID'")
-	->where("(tanggal_transaksi between '$date_desember23_awal' and '$date_desember23_akhir')")
-	->get()->row_array();
-	$supplies_desember23 = $supplies_biaya_desember23['total'] + $supplies_jurnal_desember23['total'];
-
-	$total_operasional_desember23 = $konsumsi_desember23 + $gaji_desember23 + $upah_desember23 + $pengujian_desember23 + $perbaikan_desember23 + $akomodasi_desember23 + $listrik_desember23 + $thr_desember23 + 
-	$bensin_desember23 + $dinas_desember23 + $komunikasi_desember23 + $pakaian_desember23 + $tulis_desember23 + $keamanan_desember23 + $perlengkapan_desember23 + $beban_desember23 + $adm_desember23 + 
-	$lain_desember23 + $sewa_desember23 + $bpjs_desember23 + $penyusutan_kantor_desember23 + $penyusutan_kendaraan_desember23 + $iuran_desember23 + $kendaraan_desember23 + $pajak_desember23 + $solar_desember23 + 
-	$donasi_desember23 + $legal_desember23 + $pengobatan_desember23 + $lembur_desember23 + $pelatihan_desember23 + $supplies_desember23;
-	$nilai_realisasi_overhead_desember23_fix = round($total_operasional_desember23 / 1000000,0);
-
 	//JANUARI24
 	$nilai_rap_overhead_januari24 = $overhead_ton * round($total_rekapitulasi_produksi_harian_januari24,2);
 	$nilai_rap_overhead_januari24_fix = round($nilai_rap_overhead_januari24 / 1000000,0);
@@ -12647,4 +8866,1112 @@
 	$lain_oktober24 + $sewa_oktober24 + $bpjs_oktober24 + $penyusutan_kantor_oktober24 + $penyusutan_kendaraan_oktober24 + $iuran_oktober24 + $kendaraan_oktober24 + $pajak_oktober24 + $solar_oktober24 + 
 	$donasi_oktober24 + $legal_oktober24 + $pengobatan_oktober24 + $lembur_oktober24 + $pelatihan_oktober24 + $supplies_oktober24;
 	$nilai_realisasi_overhead_oktober24_fix = round($total_operasional_oktober24 / 1000000,0);
+
+	//NOVEMBER24
+	$nilai_rap_overhead_november24 = $overhead_ton * round($total_rekapitulasi_produksi_harian_november24,2);
+	$nilai_rap_overhead_november24_fix = round($nilai_rap_overhead_november24 / 1000000,0);
+
+	$konsumsi_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 201")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$konsumsi_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 201")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$konsumsi_november24 = $konsumsi_biaya_november24['total'] + $konsumsi_jurnal_november24['total'];
+
+	$gaji_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 199")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$gaji_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 199")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$gaji_november24 = $gaji_biaya_november24['total'] + $gaji_jurnal_november24['total'];
+
+	$upah_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 200")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$upah_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 200")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$upah_november24 = $upah_biaya_november24['total'] + $upah_jurnal_november24['total'];
+
+	$pengujian_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 205")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$pengujian_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 205")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$pengujian_november24 = $pengujian_biaya_november24['total'] + $pengujian_jurnal_november24['total'];
+
+	$perbaikan_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 203")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$perbaikan_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 203")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$perbaikan_november24 = $perbaikan_biaya_november24['total'] + $perbaikan_jurnal_november24['total'];
+
+	$akomodasi_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 204")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$akomodasi_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 204")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$akomodasi_november24 = $akomodasi_biaya_november24['total'] + $akomodasi_jurnal_november24['total'];
+
+	$listrik_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 206")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$listrik_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 206")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$listrik_november24 = $listrik_biaya_november24['total'] + $listrik_jurnal_november24['total'];
+
+	$thr_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 202")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$thr_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 202")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$thr_november24 = $thr_biaya_november24['total'] + $thr_jurnal_november24['total'];
+
+	$bensin_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 129")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$bensin_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 129")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$bensin_november24 = $bensin_biaya_november24['total'] + $bensin_jurnal_november24['total'];
+
+	$dinas_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 131")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$dinas_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 131")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$dinas_november24 = $dinas_biaya_november24['total'] + $dinas_jurnal_november24['total'];
+
+	$komunikasi_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 133")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$komunikasi_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 133")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$komunikasi_november24 = $komunikasi_biaya_november24['total'] + $komunikasi_jurnal_november24['total'];
+
+	$pakaian_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 138")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$pakaian_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 138")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$pakaian_november24 = $pakaian_biaya_november24['total'] + $pakaian_jurnal_november24['total'];
+
+	$tulis_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 149")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$tulis_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 149")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$tulis_november24 = $tulis_biaya_november24['total'] + $tulis_jurnal_november24['total'];
+
+	$keamanan_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 151")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$keamanan_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 151")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$keamanan_november24 = $keamanan_biaya_november24['total'] + $keamanan_jurnal_november24['total'];
+
+	$perlengkapan_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 153")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$perlengkapan_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 153")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$perlengkapan_november24 = $perlengkapan_biaya_november24['total'] + $perlengkapan_jurnal_november24['total'];
+
+	$beban_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 145")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$beban_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 145")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$beban_november24 = $beban_biaya_november24['total'] + $beban_jurnal_november24['total'];
+
+	$adm_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 143")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$adm_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 143")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$adm_november24 = $adm_biaya_november24['total'] + $adm_jurnal_november24['total'];
+
+	$lain_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 146")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$lain_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 146")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$lain_november24 = $lain_biaya_november24['total'] + $lain_jurnal_november24['total'];
+
+	$sewa_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 154")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$sewa_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 154")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$sewa_november24 = $sewa_biaya_november24['total'] + $sewa_jurnal_november24['total'];
+
+	$bpjs_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 123")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$bpjs_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 123")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$bpjs_november24 = $bpjs_biaya_november24['total'] + $bpjs_jurnal_november24['total'];
+
+	$penyusutan_kantor_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 162")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$penyusutan_kantor_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 162")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$penyusutan_kantor_november24 = $penyusutan_kantor_biaya_november24['total'] + $penyusutan_kantor_jurnal_november24['total'];
+
+	$penyusutan_kendaraan_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 160")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$penyusutan_kendaraan_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 160")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$penyusutan_kendaraan_november24 = $penyusutan_kendaraan_biaya_november24['total'] + $penyusutan_kendaraan_jurnal_november24['total'];
+
+	$iuran_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 134")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$iuran_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 134")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$iuran_november24 = $iuran_biaya_november24['total'] + $iuran_jurnal_november24['total'];
+
+	$kendaraan_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 155")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$kendaraan_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 155")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$kendaraan_november24 = $kendaraan_biaya_november24['total'] + $kendaraan_jurnal_november24['total'];
+
+	$pajak_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 141")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$pajak_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 141")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$pajak_november24 = $pajak_biaya_november24['total'] + $pajak_jurnal_november24['total'];
+
+	$solar_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 105")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$solar_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 105")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$solar_november24 = 0;
+
+	$donasi_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 127")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$donasi_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 127")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$donasi_november24 = $donasi_biaya_november24['total'] + $donasi_jurnal_november24['total'];
+
+	$legal_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 136")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$legal_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 136")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$legal_november24 = $legal_biaya_november24['total'] + $legal_jurnal_november24['total'];
+
+	$pengobatan_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 121")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$pengobatan_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 121")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$pengobatan_november24 = $pengobatan_biaya_november24['total'] + $pengobatan_jurnal_november24['total'];
+
+	$lembur_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 120")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$lembur_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 120")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$lembur_november24 = $lembur_biaya_november24['total'] + $lembur_jurnal_november24['total'];
+
+	$pelatihan_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 139")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$pelatihan_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 139")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$pelatihan_november24 = $pelatihan_biaya_november24['total'] + $pelatihan_jurnal_november24['total'];
+
+	$supplies_biaya_november24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 152")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+
+	$supplies_jurnal_november24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 152")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_november24_awal' and '$date_november24_akhir')")
+	->get()->row_array();
+	$supplies_november24 = $supplies_biaya_november24['total'] + $supplies_jurnal_november24['total'];
+
+	$total_operasional_november24 = $konsumsi_november24 + $gaji_november24 + $upah_november24 + $pengujian_november24 + $perbaikan_november24 + $akomodasi_november24 + $listrik_november24 + $thr_november24 + 
+	$bensin_november24 + $dinas_november24 + $komunikasi_november24 + $pakaian_november24 + $tulis_november24 + $keamanan_november24 + $perlengkapan_november24 + $beban_november24 + $adm_november24 + 
+	$lain_november24 + $sewa_november24 + $bpjs_november24 + $penyusutan_kantor_november24 + $penyusutan_kendaraan_november24 + $iuran_november24 + $kendaraan_november24 + $pajak_november24 + $solar_november24 + 
+	$donasi_november24 + $legal_november24 + $pengobatan_november24 + $lembur_november24 + $pelatihan_november24 + $supplies_november24;
+	$nilai_realisasi_overhead_november24_fix = round($total_operasional_november24 / 1000000,0);
+
+	//DESEMBER24
+	$nilai_rap_overhead_desember24 = $overhead_ton * round($total_rekapitulasi_produksi_harian_desember24,2);
+	$nilai_rap_overhead_desember24_fix = round($nilai_rap_overhead_desember24 / 1000000,0);
+
+	$konsumsi_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 201")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$konsumsi_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 201")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$konsumsi_desember24 = $konsumsi_biaya_desember24['total'] + $konsumsi_jurnal_desember24['total'];
+
+	$gaji_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 199")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$gaji_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 199")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$gaji_desember24 = $gaji_biaya_desember24['total'] + $gaji_jurnal_desember24['total'];
+
+	$upah_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 200")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$upah_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 200")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$upah_desember24 = $upah_biaya_desember24['total'] + $upah_jurnal_desember24['total'];
+
+	$pengujian_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 205")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$pengujian_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 205")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$pengujian_desember24 = $pengujian_biaya_desember24['total'] + $pengujian_jurnal_desember24['total'];
+
+	$perbaikan_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 203")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$perbaikan_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 203")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$perbaikan_desember24 = $perbaikan_biaya_desember24['total'] + $perbaikan_jurnal_desember24['total'];
+
+	$akomodasi_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 204")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$akomodasi_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 204")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$akomodasi_desember24 = $akomodasi_biaya_desember24['total'] + $akomodasi_jurnal_desember24['total'];
+
+	$listrik_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 206")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$listrik_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 206")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$listrik_desember24 = $listrik_biaya_desember24['total'] + $listrik_jurnal_desember24['total'];
+
+	$thr_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 202")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$thr_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 202")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$thr_desember24 = $thr_biaya_desember24['total'] + $thr_jurnal_desember24['total'];
+
+	$bensin_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 129")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$bensin_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 129")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$bensin_desember24 = $bensin_biaya_desember24['total'] + $bensin_jurnal_desember24['total'];
+
+	$dinas_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 131")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$dinas_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 131")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$dinas_desember24 = $dinas_biaya_desember24['total'] + $dinas_jurnal_desember24['total'];
+
+	$komunikasi_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 133")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$komunikasi_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 133")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$komunikasi_desember24 = $komunikasi_biaya_desember24['total'] + $komunikasi_jurnal_desember24['total'];
+
+	$pakaian_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 138")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$pakaian_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 138")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$pakaian_desember24 = $pakaian_biaya_desember24['total'] + $pakaian_jurnal_desember24['total'];
+
+	$tulis_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 149")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$tulis_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 149")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$tulis_desember24 = $tulis_biaya_desember24['total'] + $tulis_jurnal_desember24['total'];
+
+	$keamanan_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 151")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$keamanan_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 151")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$keamanan_desember24 = $keamanan_biaya_desember24['total'] + $keamanan_jurnal_desember24['total'];
+
+	$perlengkapan_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 153")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$perlengkapan_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 153")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$perlengkapan_desember24 = $perlengkapan_biaya_desember24['total'] + $perlengkapan_jurnal_desember24['total'];
+
+	$beban_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 145")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$beban_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 145")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$beban_desember24 = $beban_biaya_desember24['total'] + $beban_jurnal_desember24['total'];
+
+	$adm_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 143")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$adm_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 143")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$adm_desember24 = $adm_biaya_desember24['total'] + $adm_jurnal_desember24['total'];
+
+	$lain_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 146")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$lain_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 146")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$lain_desember24 = $lain_biaya_desember24['total'] + $lain_jurnal_desember24['total'];
+
+	$sewa_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 154")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$sewa_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 154")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$sewa_desember24 = $sewa_biaya_desember24['total'] + $sewa_jurnal_desember24['total'];
+
+	$bpjs_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 123")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$bpjs_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 123")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$bpjs_desember24 = $bpjs_biaya_desember24['total'] + $bpjs_jurnal_desember24['total'];
+
+	$penyusutan_kantor_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 162")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$penyusutan_kantor_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 162")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$penyusutan_kantor_desember24 = $penyusutan_kantor_biaya_desember24['total'] + $penyusutan_kantor_jurnal_desember24['total'];
+
+	$penyusutan_kendaraan_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 160")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$penyusutan_kendaraan_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 160")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$penyusutan_kendaraan_desember24 = $penyusutan_kendaraan_biaya_desember24['total'] + $penyusutan_kendaraan_jurnal_desember24['total'];
+
+	$iuran_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 134")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$iuran_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 134")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$iuran_desember24 = $iuran_biaya_desember24['total'] + $iuran_jurnal_desember24['total'];
+
+	$kendaraan_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 155")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$kendaraan_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 155")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$kendaraan_desember24 = $kendaraan_biaya_desember24['total'] + $kendaraan_jurnal_desember24['total'];
+
+	$pajak_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 141")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$pajak_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 141")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$pajak_desember24 = $pajak_biaya_desember24['total'] + $pajak_jurnal_desember24['total'];
+
+	$solar_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 105")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$solar_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 105")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$solar_desember24 = 0;
+
+	$donasi_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 127")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$donasi_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 127")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$donasi_desember24 = $donasi_biaya_desember24['total'] + $donasi_jurnal_desember24['total'];
+
+	$legal_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 136")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$legal_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 136")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$legal_desember24 = $legal_biaya_desember24['total'] + $legal_jurnal_desember24['total'];
+
+	$pengobatan_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 121")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$pengobatan_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 121")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$pengobatan_desember24 = $pengobatan_biaya_desember24['total'] + $pengobatan_jurnal_desember24['total'];
+
+	$lembur_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 120")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$lembur_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 120")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$lembur_desember24 = $lembur_biaya_desember24['total'] + $lembur_jurnal_desember24['total'];
+
+	$pelatihan_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 139")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$pelatihan_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 139")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$pelatihan_desember24 = $pelatihan_biaya_desember24['total'] + $pelatihan_jurnal_desember24['total'];
+
+	$supplies_biaya_desember24 = $this->db->select('sum(pdb.jumlah) as total')
+	->from('pmm_biaya pb ')
+	->join('pmm_detail_biaya pdb','pb.id = pdb.biaya_id','left')
+	->where("pdb.akun = 152")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+
+	$supplies_jurnal_desember24 = $this->db->select('sum(pdb.debit) as total')
+	->from('pmm_jurnal_umum pb ')
+	->join('pmm_detail_jurnal pdb','pb.id = pdb.jurnal_id','left')
+	->where("pdb.akun = 152")
+	->where("status = 'PAID'")
+	->where("(tanggal_transaksi between '$date_desember24_awal' and '$date_desember24_akhir')")
+	->get()->row_array();
+	$supplies_desember24 = $supplies_biaya_desember24['total'] + $supplies_jurnal_desember24['total'];
+
+	$total_operasional_desember24 = $konsumsi_desember24 + $gaji_desember24 + $upah_desember24 + $pengujian_desember24 + $perbaikan_desember24 + $akomodasi_desember24 + $listrik_desember24 + $thr_desember24 + 
+	$bensin_desember24 + $dinas_desember24 + $komunikasi_desember24 + $pakaian_desember24 + $tulis_desember24 + $keamanan_desember24 + $perlengkapan_desember24 + $beban_desember24 + $adm_desember24 + 
+	$lain_desember24 + $sewa_desember24 + $bpjs_desember24 + $penyusutan_kantor_desember24 + $penyusutan_kendaraan_desember24 + $iuran_desember24 + $kendaraan_desember24 + $pajak_desember24 + $solar_desember24 + 
+	$donasi_desember24 + $legal_desember24 + $pengobatan_desember24 + $lembur_desember24 + $pelatihan_desember24 + $supplies_desember24;
+	$nilai_realisasi_overhead_desember24_fix = round($total_operasional_desember24 / 1000000,0);
 ?>
