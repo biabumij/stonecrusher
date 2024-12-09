@@ -1128,7 +1128,7 @@
 				<?php
 				$styleColor = $nilai_boulder_ton < 0 ? 'color:red' : 'color:black';
 				?>
-				<th align="right"><?php echo number_format($nilai_boulder_ton,2,',','.');?></th>
+				<th align="right"><?php echo number_format($nilai_boulder_ton,0,',','.');?></th>
 				<?php
 				$nilai_evaluasi_bahan = ($nilai_boulder_ton * round($total_rekapitulasi_produksi_harian,2)) - $total_nilai_produksi_boulder;
 				$styleColor = $nilai_evaluasi_bahan < 0 ? 'color:red' : 'color:black';
