@@ -210,13 +210,17 @@
           height: 200,
           menubar: false,
         });
+
+        $kunci_rakor = $this->db->select('date')->order_by('date','desc')->limit(1)->get_where('kunci_rakor')->row_array();
+        $last_opname = date('d-m-Y', strtotime('+1 days', strtotime($kunci_rakor['date'])));
+
         $('.dtpicker').daterangepicker({
             singleDatePicker: true,
             showDropdowns : true,
             locale: {
               format: 'DD-MM-YYYY'
             },
-            minDate: moment().startOf('month').toDate(),
+            minDate: '<?php echo $last_opname;?>',
             maxDate: moment().endOf('month').toDate(),
         });
         $('.dtpicker').on('apply.daterangepicker', function(ev, picker) {
