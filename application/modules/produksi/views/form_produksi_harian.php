@@ -225,9 +225,10 @@
              minDate: '<?php echo $last_opname;?>',
              maxDate: moment().endOf('month').toDate(),
         });
+
         $('.dtpicker').on('apply.daterangepicker', function(ev, picker) {
-              $(this).val(picker.startDate.format('DD-MM-YYYY'));
-              // table.ajax.reload();
+            $(this).val(picker.startDate.format('DD-MM-YYYY'));
+            // table.ajax.reload();
         });
 	
 		$(document).ready(function(){
