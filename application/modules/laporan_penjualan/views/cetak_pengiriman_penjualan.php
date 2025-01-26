@@ -183,67 +183,55 @@
 		</table>
 		<br />
 		<br />
-		<table width="98%">
+		<table width="98%" border="0" cellpadding="30">
 			<tr >
 				<td width="5%"></td>
 				<td width="90%">
-					<table width="100%" border="0" cellpadding="3">
+					<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td align="center" >
-								Disetujui Oleh
+								Dibuat Oleh
+							</td>
+							<td align="center" >
+								Diperiksa Oleh
 							</td>
 							<td align="center">
 								Diperiksa Oleh
 							</td>
 							<td align="center">
-								Dibuat Oleh
+								Disetujui Oleh
 							</td>
 						</tr>
-						<?php
-							$create = $this->db->select('*')
-							->from('kunci_bahan_jadi')
-							->where("(date = '$end_date')")
-							->order_by('id','desc')->limit(1)
-							->get()->row_array();
-
-							$this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
-							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-							$this->db->where('a.admin_id',$create['unit_head']);
-							$unit_head = $this->db->get('tbl_admin a')->row_array();
-
-							$this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
-							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-							$this->db->where('a.admin_id',$create['logistik']);
-							$logistik = $this->db->get('tbl_admin a')->row_array();
-
-							$this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
-							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-							$this->db->where('a.admin_id',$create['admin']);
-							$admin = $this->db->get('tbl_admin a')->row_array();
-						?>
 						<tr class="">
-							<td align="center" height="70px">
-								<img src="<?= $unit_head['admin_ttd']?>" width="70px">
+							<td align="center" height="55px">
+								<img src="uploads/ttd_vicky.png" width="70px">
+							</td>
+							<td align="center" height="55px">
+								<img src="uploads/ttd_rifka.png" width="70px">
 							</td>
 							<td align="center">
-								<img src="<?= $logistik['admin_ttd']?>" width="70px">
+								<img src="uploads/ttd_dian.png" width="70px">
 							</td>
 							<td align="center">
-								<img src="<?= $admin['admin_ttd']?>" width="70px">
+								<img src="uploads/ttd_tri.png" width="70px">
 							</td>
 						</tr>
 						<tr>
 							<td align="center">
-								<b><u><?= $unit_head['admin_name']?></u><br />
-								Kepala Unit Bisnis</b>
+								<b><u>Vicky Irwana Yudha </u><br />
+								Logistik</b>
 							</td>
 							<td align="center">
-								<b><u><?= $logistik['admin_name']?></u><br />
-								Ka. Logistik</b>
+								<b><u>Dian Melinda</u><br />
+								Produksi</b>
 							</td>
 							<td align="center">
-								<b><u><?= $admin['admin_name']?></u><br />
-								Admin Logistik</b>
+								<b><u>Rifka Dian Bethary </u><br />
+								Keuangan</b>
+							</td>
+							<td align="center">
+								<b><u>Tri Wahyu Rahadi</u><br />
+								Ka. Plant</b>
 							</td>
 						</tr>
 					</table>

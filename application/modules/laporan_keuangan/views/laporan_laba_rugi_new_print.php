@@ -506,42 +506,38 @@
 					<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td align="center" >
-								Disetujui Oleh
-							</td>
-							<td align="center">
 								Dibuat Oleh
 							</td>
-						</tr>
-						<?php
-							$create = $this->db->select('*')
-							->from('kunci_bahan_jadi')
-							->where("(date = '$end_date')")
-							->order_by('id','desc')->limit(1)
-							->get()->row_array();
-
-							$this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
-							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-							$this->db->where('a.admin_id',$create['unit_head']);
-							$unit_head = $this->db->get('tbl_admin a')->row_array();
-
-							$dirut = $this->pmm_model->GetNameGroup(6);
-						?>
-						<tr class="">
-							<td align="center" height="70px">
-							
+							<td align="center">
+								Diperiksa Oleh
 							</td>
 							<td align="center">
-								<img src="<?= $unit_head['admin_ttd']?>" width="70px">
+								Disetujui Oleh
+							</td>
+						</tr>
+						<tr class="">
+							<td align="center" height="55px">
+								<img src="uploads/ttd_tri.png" width="70px">
+							</td>
+							<td align="center">
+								<img src="uploads/ttd_erika.png" width="70px">
+							</td>
+							<td align="center">
+								<img src="uploads/ttd_deddy.png" width="70px">
 							</td>
 						</tr>
 						<tr>
 							<td align="center">
-								<b><u><?= $dirut['admin_name'];?></u><br />
-								<?=  $dirut['admin_group_name'];?></b>
+								<b><u>Tri Wahyu Rahadi</u><br />
+								Ka. Plant</b>
 							</td>
 							<td align="center">
-								<b><u><?= $unit_head['admin_name'];?></u><br />
-								Kepala Unit Bisnis</b>
+								<b><u>Erika Sinaga</u><br />
+								Dir. Keuangan & SDM</b>
+							</td>
+							<td align="center">
+								<b><u>Deddy Sarwobiso</u><br />
+								Direktur Utama</b>
 							</td>
 						</tr>
 					</table>

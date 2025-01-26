@@ -171,63 +171,41 @@
 			<tr >
 				<td width="5%"></td>
 				<td width="90%">
-					<table width="100%" border="0" cellpadding="3">
+					<table width="100%" border="0" cellpadding="2">
 						<tr>
 							<td align="center" >
-								Disetujui Oleh
+								Dibuat Oleh
 							</td>
-							<td align="center" >
+							<td align="center">
 								Diperiksa Oleh
 							</td>
 							<td align="center">
-								Dibuat Oleh
+								Disetujui Oleh
 							</td>
 						</tr>
-						<?php
-							$create = $this->db->select('*')
-							->from('kunci_bahan_jadi')
-							->where("(date <= '$end_date')")
-							->order_by('id','desc')->limit(1)
-							->get()->row_array();
-
-							$this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
-							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-							$this->db->where('a.admin_id',$create['unit_head']);
-							$unit_head = $this->db->get('tbl_admin a')->row_array();
-
-							$this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
-							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-							$this->db->where('a.admin_id',$create['keu_1']);
-							$keu_1 = $this->db->get('tbl_admin a')->row_array();
-
-							$this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
-							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-							$this->db->where('a.admin_id',$create['keu_2']);
-							$keu_2 = $this->db->get('tbl_admin a')->row_array();
-						?>
 						<tr class="">
-							<td align="center" height="70px">
-								<img src="<?= $unit_head['admin_ttd']?>" width="70px">
+							<td align="center" height="55px">
+								<img src="uploads/ttd_rifka.png" width="70px">
 							</td>
 							<td align="center">
-								<img src="<?= $keu_1['admin_ttd']?>" width="70px">
+								<img src="uploads/ttd_tri.png" width="70px">
 							</td>
 							<td align="center">
-								<img src="<?= $keu_2['admin_ttd']?>" width="70px">
+								<img src="uploads/ttd_tri.png" width="70px">
 							</td>
 						</tr>
 						<tr>
-							<td align="center">
-								<b><u><?= $unit_head['admin_name'];?></u><br />
-								Kepala Unit Bisnis</b>
+						<td align="center">
+								<b><u>Rifka Dian Bethary </u><br />
+								Keuangan</b>
 							</td>
 							<td align="center">
-							<b><u><?= $keu_1['admin_name'];?></u><br />
-								Pj. Keuangan & SDM</b>
+								<b><u>Tri Wahyu Rahadi </u><br />
+								Ka. Plant</b>
 							</td>
 							<td align="center">
-							<b><u><?= $keu_2['admin_name'];?></u><br />
-								Staff Keuangan & SDM</b>
+								<b><u>Tri Wahyu Rahadi </u><br />
+								Ka. Plant</b>
 							</td>
 						</tr>
 					</table>
