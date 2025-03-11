@@ -141,7 +141,7 @@
                                 <b>Pj. Keuangan & SDM</b>
                             </td>
                             <td align="center" >
-                                <b>Produksi</b>
+                                <b>Pj. Produksi</b>
                             </td>
                             <td align="center" >
                                 <b>Ka. Unit Bisnis</b>

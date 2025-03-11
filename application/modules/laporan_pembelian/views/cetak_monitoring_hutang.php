@@ -248,7 +248,7 @@
 							</td>
 							<td align="center">
 								<b><u>Dian Melinda Sari </u><br />
-								Produksi</b>
+								Pj. Produksi</b>
 							</td>
 							<td align="center">
 								<b><u>Satria Widura Drana Wisesa </u><br />
