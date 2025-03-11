@@ -105,76 +105,45 @@
                             <td align="center">
                                 Dibuat Oleh
                             </td>
-                            <td align="center" colspan="2">
+                            <td align="center">
                                 Diperiksa Oleh
                             </td>
-                            <td align="center" >
-                                Disetujui
-                            </td>
-                            <td align="center" >
-                                Diketahui
+                            <td align="center">
+                                Disetujui Oleh
                             </td>
                         </tr>
-                        <?php
-                            $this->db->select('a.admin_name, g.admin_group_name, a.admin_ttd');
-							$this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-							$this->db->where('a.admin_id',$detail['created_by']);
-							$created = $this->db->get('tbl_admin a')->row_array();
-                            
-                            $pj_keuangan = $this->pmm_model->GetNameGroup(10);
-                            $kepala_unit_bisnis = $this->pmm_model->GetNameGroup(15);
-                            $dir_keu = $this->pmm_model->GetNameGroup(5);
-                            $dirut = $this->pmm_model->GetNameGroup(6);
-                        ?>
                         <tr class="">
-                            <td align="center" height="70px">
-                                <img src="<?= $created['admin_ttd']?>" width="70px">
+
+                            <td align="center" height="75px">
+                                <img src="uploads/ttd_rifka.png" width="100px">
                             </td>
                             <td align="center">
-                             <img src="uploads/ttd_rifka.png" width="70px">
+                                <img src="uploads/ttd_dian.png" width="100px"> 
                             </td>
                             <td align="center">
-                                <img src="uploads/ttd_dadang.png" width="100px">
-                            </td>
-                            <td align="center">
-                                
-                            </td>
-                            <td align="center">
-                                
+                                <img src="uploads/ttd_satria.png" width="100px"> 
                             </td>
                         </tr>
-                        <tr class="table-active3">
+                        <tr class="">
                             <td align="center">
-                                <?= $created['admin_name'];?>
-                            </td>
-                            <td align="center">
-                                <?= $pj_keuangan['admin_name'];?>
-                            </td>
-                            <td align="center">
-                                <?= $kepala_unit_bisnis['admin_name'];?>
-                            </td>
-                            <td align="center">
-                                <?= $dir_keu['admin_name'];?>
+                                <b>Rifka Dian Bethary</b>
                             </td>
                             <td align="center" >
-                                <?= $dirut['admin_name'];?>
+                                <b>Dian Melinda Sari</b>
+                            </td>
+                            <td align="center" >
+                                <b>Satria Widura Drana Wisesa</b>
                             </td>
                         </tr>
-                         <tr class="table-active3">
+                         <tr class="">
+                            <td align="center">
+                                <b>Pj. Keuangan & SDM</b>
+                            </td>
                             <td align="center" >
-                                <?= $created['admin_group_name']?>
+                                <b>Produksi</b>
                             </td>
-                            <td align="center">
-                                <?= $pj_keuangan['admin_group_name']?>
-                            </td>
-                            <td align="center">
-                                <?= $kepala_unit_bisnis['admin_group_name'];?>
-                            </td>
-                            <td align="center">
-                                <?= $dir_keu['admin_group_name'];?>
-                            </td>
-                            <td align="center">
-                                <?= $dirut['admin_group_name'];?>
+                            <td align="center" >
+                                <b>Ka. Unit Bisnis</b>
                             </td>
                         </tr>
                     </table>

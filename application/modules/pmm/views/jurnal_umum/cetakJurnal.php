@@ -108,13 +108,6 @@
         </table>
         <br />
         <br />
-        <?php
-        $staff_keuangan_proyek = $this->pmm_model->GetNameGroup(14);
-        $pj_keuangan = $this->pmm_model->GetNameGroup(10);
-        $kepala_unit_bisnis = $this->pmm_model->GetNameGroup(16);
-        $arr_no_trans = explode('/', $biaya['nomor_transaksi']);
-        ?>  
-
         <table width="98%" border="0" cellpadding="0">
             <tr>
                 <td width="100%">
@@ -126,110 +119,43 @@
                             <td align="center">
                                 Diperiksa Oleh
                             </td>
-                            <?php
-                            if(!empty($arr_no_trans)){
-								if (strpos($arr_no_trans[2], 'SC') === false) {
-                            ?>
-                            <td align="center"colspan="2">
-                                Disetujui
-                            </td>
-                              <?php
-                                }
-                            }
-                            ?>
-                            <td align="center" >
-                                Diketahui
-                            </td>
-                            <td align="center" >
-                                Diterima 
+                            <td align="center">
+                                Disetujui Oleh
                             </td>
                         </tr>
                         <tr class="">
+
                             <td align="center" height="75px">
-                                <img src="uploads/ttd_dian.png" width="100px">
-                            </td>
-                            <?php
-                            if(!empty($arr_no_trans)){
-                                if (strpos($arr_no_trans[2], 'SC') === false) {
-                                    ?>
-                                    <td align="center">
-                                    </td>
-                                    <td align="center">           
-                                    </td>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            <td align="center">  
-                                <img src="uploads/ttd_rifka.png" width="100px"> 
-                            </td>
-                            <td align="center">  
+                                <img src="uploads/ttd_rifka.png" width="100px">
                             </td>
                             <td align="center">
+                                <img src="uploads/ttd_dian.png" width="100px"> 
+                            </td>
+                            <td align="center">
+                                <img src="uploads/ttd_satria.png" width="100px"> 
                             </td>
                         </tr>
-                        <tr class="table-active3">
-                           <td align="center">
-                                <?= $this->crud_global->GetField('tbl_admin',array('admin_id'=>$biaya['created_by']),'admin_name'); ?>
-                            </td>
-                            <?php
-                            if(!empty($arr_no_trans)){
-                                if (strpos($arr_no_trans[2], 'SC') === false) {
-                                    ?>
-                                    <td align="center">
-                                        <?=  $keuangan_proyek['admin_name'];?>
-                                    </td>
-                                    <td align="center">
-                                        <?=  $kepala_unit_bisnis['admin_name'];?>
-                                    </td>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            <td align="center">
-								<?=  $pj_keuangan['admin_name'];?>
-                            </td>
+                        <tr class="">
                             
-                            <td align="center" >
-								<?=  $kepala_unit_bisnis['admin_name'];?>
+                            <td align="center">
+                                <b>Rifka Dian Bethary</b>
                             </td>
-                            <td align="center" >  
+                            <td align="center" >
+                                <b>Dian Melinda Sari</b>
+                            </td>
+                            <td align="center" >
+                                <b>Satria Widura Drana Wisesa</b>
                             </td>
                         </tr>
-                         <tr class="table-active3">
+                         <tr class="">
                             <td align="center">
-                                 <?php
-                                $this->db->select('g.admin_group_name');
-                                $this->db->join('tbl_admin_group g','a.admin_group_id = g.admin_group_id','left');
-                                $this->db->where('a.admin_id',$biaya['created_by']);
-                                $created_group = $this->db->get('tbl_admin a')->row_array();
-                                ?>
-                                <?= $created_group['admin_group_name']?>
-                            </td>
-                            <?php
-                            if(!empty($arr_no_trans)){
-                                if (strpos($arr_no_trans[2], 'SC') === false) {
-                                    ?>
-                                    
-                                    <td align="center">
-                                        <?=  $keuangan_proyek['admin_group_name'];?>
-                                    </td>
-                                    <td align="center">
-                                        <?=  $kepala_unit_bisnis['admin_group_name'];?>
-                                    </td>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            <td align="center">
-                                <?=  $pj_keuangan['admin_group_name'];?>
+                                <b>Pj. Keuangan & SDM</b>
                             </td>
                             <td align="center" >
-                                <!--<?=  $kepala_unit_bisnis['admin_group_name'];?>-->
-                                Kepala Unit Bisnis
+                                <b>Produksi</b>
                             </td>
                             <td align="center" >
-                               Penerima 
+                                <b>Ka. Unit Bisnis</b>
                             </td>
                         </tr>
                     </table>

@@ -227,24 +227,24 @@
 								<img src="uploads/ttd_rifka.png" width="30px">
 							</td>
 							<td align="center">
-								<img src="uploads/ttd_tri.png" width="30px">
+								<img src="uploads/ttd_dian.png" width="30px">
 							</td>
 							<td align="center">
-								<img src="uploads/ttd_tri.png" width="30px">
+								<img src="uploads/ttd_satria.png" width="30px">
 							</td>
 						</tr>
 						<tr>
 						<td align="center">
 								<b><u>Rifka Dian Bethary </u><br />
-								Keuangan</b>
+								Pj. Keuangan & SDM</b>
 							</td>
 							<td align="center">
-								<b><u>Tri Wahyu Rahadi </u><br />
-								Ka. Plant</b>
+								<b><u>Dian Melinda Sari </u><br />
+								Produksi</b>
 							</td>
 							<td align="center">
-								<b><u>Tri Wahyu Rahadi </u><br />
-								Ka. Plant</b>
+								<b><u>Satria Widura Drana Wisesa </u><br />
+								Ka. Unit Bisnis</b>
 							</td>
 						</tr>
 					</table>

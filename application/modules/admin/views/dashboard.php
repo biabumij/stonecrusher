@@ -105,11 +105,11 @@
                     <div class="content-body">
                         <div class="row animated fadeInUp">
                             <?php include_once("script_dashboard.php"); ?>
+                            <?php
+                            if(in_array($this->session->userdata('admin_group_id'), array(1,5,6,15))){
+                            ?>
                             <div class="col-sm-12" style="background:#fff;background-image:linear-gradient(to right,#999999 0%,#333333 51%,#666666 100%); font-size:18px; border-radius: 10px; padding:10px; margin-bottom:50px;">
                                 <figure class="highcharts-figure">
-                                    <?php
-                                    if(in_array($this->session->userdata('admin_group_id'), array(1,5,6))){
-                                    ?>
                                     <?php
                                     $query1 = $this->db->select('COUNT(pvp.id) as id')
                                     ->from('pmm_verifikasi_penagihan_pembelian pvp')
@@ -124,13 +124,7 @@
                                     $query = $query1['id'] + $query2['id'];
                                     ?>
                                         <center><b><a target="_blank" href="<?= base_url("pmm/reports/detail_notification/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN KANTOR PUSAT (<blink><?php echo number_format($query,0,',','.');?></blink>)</a><b></center>
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if(in_array($this->session->userdata('admin_group_id'), array(1,15))){
-                                    ?>
+                                
                                     <?php
                                     $query = $this->db->select('COUNT(req.id) as id')
                                     ->from('pmm_request_materials req')
@@ -140,9 +134,7 @@
                                     $query = $query['id'];
                                     ?>
                                         <center><b><a target="_blank" href="<?= base_url("pmm/reports/detail_notification_2/") ?>"><i class="fa-solid fa-clipboard-check"></i> BUTUH PERSETUJUAN KA. UNIT BISNIS (<blink><?php echo number_format($query,0,',','.');?></blink>)</a><b></center>
-                                    <?php
-                                    }
-                                    ?>
+                                    
                                     <!--<?php
                                     if(in_array($this->session->userdata('admin_group_id'), array(1))){
                                     ?>
@@ -160,6 +152,9 @@
                                     ?>-->
                                 </figure>    
                             </div>
+                            <?php
+                            }
+                            ?>
 
                             <br /><br />
 

@@ -131,13 +131,67 @@
         </table>
         <br />
         <br />
-        <?php
+        <table width="98%" border="0" cellpadding="0">
+            <tr>
+                <td width="100%">
+                    <table width="100%" border="1" cellpadding="2">
+                        <tr class="">
+                            <td align="center">
+                                Dibuat Oleh
+                            </td>
+                            <td align="center">
+                                Diperiksa Oleh
+                            </td>
+                            <td align="center">
+                                Disetujui Oleh
+                            </td>
+                        </tr>
+                        <tr class="">
+
+                            <td align="center" height="75px">
+                                <img src="uploads/ttd_rifka.png" width="100px">
+                            </td>
+                            <td align="center">
+                                <img src="uploads/ttd_dian.png" width="100px"> 
+                            </td>
+                            <td align="center">
+                                <img src="uploads/ttd_satria.png" width="100px"> 
+                            </td>
+                        </tr>
+                        <tr class="">
+                            
+                            <td align="center">
+                                <b>Rifka Dian Bethary</b>
+                            </td>
+                            <td align="center" >
+                                <b>Dian Melinda Sari</b>
+                            </td>
+                            <td align="center" >
+                                <b>Satria Widura Drana Wisesa</b>
+                            </td>
+                        </tr>
+                         <tr class="">
+                            <td align="center">
+                                <b>Pj. Keuangan & SDM</b>
+                            </td>
+                            <td align="center" >
+                                <b>Produksi</b>
+                            </td>
+                            <td align="center" >
+                                <b>Ka. Unit Bisnis</b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!--<?php
         $staff_keuangan_proyek = $this->pmm_model->GetNameGroup(14);
         $pj_keuangan = $this->pmm_model->GetNameGroup(10);
         $kepala_unit_bisnis = $this->pmm_model->GetNameGroup(15);
         $arr_no_trans = explode('/', $biaya['nomor_transaksi']);
-        ?>  
-
+        ?>
         <table width="98%" border="0" cellpadding="0">
             <tr>
                 <td width="100%">
@@ -255,7 +309,7 @@
                                 <b><?=  $pj_keuangan['admin_group_name'];?></b>
                             </td>
                             <td align="center" >
-                                <!--<b><?=  $kepala_unit_bisnis['admin_group_name'];?></b>-->
+                                <b><?=  $kepala_unit_bisnis['admin_group_name'];?></b>
                                 <b>Kepala Unit Bisnis</b>
                             </td>
                             <td align="center" >
@@ -265,7 +319,7 @@
                     </table>
                 </td>
             </tr>
-        </table>
+        </table>-->
             
         
 
