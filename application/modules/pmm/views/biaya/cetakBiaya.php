@@ -142,20 +142,25 @@
                             <td align="center">
                                 Diperiksa Oleh
                             </td>
-                            <td align="center">
-                                Disetujui Oleh
+                            <td align="center" >
+                                Diketahui
+                            </td>
+                            <td align="center" >
+                                Diterima 
                             </td>
                         </tr>
                         <tr class="">
-
                             <td align="center" height="75px">
                                 <img src="uploads/ttd_rifka.png" width="100px">
                             </td>
                             <td align="center">
-                                <img src="uploads/ttd_dian.png" width="100px"> 
+                                <img src="uploads/ttd_dian.png" width="100px">
                             </td>
                             <td align="center">
-                                <img src="uploads/ttd_satria.png" width="100px"> 
+                                <img src="uploads/ttd_satria.png" width="100px">
+                            </td>
+                            <td align="center">
+                            
                             </td>
                         </tr>
                         <tr class="">
@@ -163,36 +168,27 @@
                             <td align="center">
                                 <b>Rifka Dian Bethary</b>
                             </td>
-                            <td align="center" >
+                            <td align="center">
                                 <b>Dian Melinda Sari</b>
                             </td>
-                            <td align="center" >
+                            <td align="center">
                                 <b>Satria Widura Drana Wisesa</b>
+                            </td>
+                            <td align="center">
+                                <b></b>
                             </td>
                         </tr>
                          <tr class="">
-                            <td align="center">
-                                <b>Pj. Keuangan & SDM</b>
-                            </td>
-                            <td align="center" >
-                                <b>Pj. Produksi</b>
-                            </td>
-                            <td align="center" >
-                                <b>Ka. Unit Bisnis</b>
-                            </td>
+                            <td align="center"><b>Pj. Keuangan & SDM</b></td>
+                            <td align="center"><b>Pj. Produksi</b></td>
+                            <td align="center"><b>Ka. Unit Bisnis</b></td>
+                            <td align="center" ><b>Penerima</b></td>
                         </tr>
                     </table>
                 </td>
             </tr>
         </table>
-
-        <!--<?php
-        $staff_keuangan_proyek = $this->pmm_model->GetNameGroup(14);
-        $pj_keuangan = $this->pmm_model->GetNameGroup(10);
-        $kepala_unit_bisnis = $this->pmm_model->GetNameGroup(15);
-        $arr_no_trans = explode('/', $biaya['nomor_transaksi']);
-        ?>
-        <table width="98%" border="0" cellpadding="0">
+        <!--<table width="98%" border="0" cellpadding="0">
             <tr>
                 <td width="100%">
                     <table width="100%" border="1" cellpadding="2">
@@ -310,7 +306,6 @@
                             </td>
                             <td align="center" >
                                 <b><?=  $kepala_unit_bisnis['admin_group_name'];?></b>
-                                <b>Kepala Unit Bisnis</b>
                             </td>
                             <td align="center" >
                                 <b>Penerima</b>
@@ -320,8 +315,5 @@
                 </td>
             </tr>
         </table>-->
-            
-        
-
     </body>
 </html>

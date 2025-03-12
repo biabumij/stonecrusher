@@ -119,20 +119,25 @@
                             <td align="center">
                                 Diperiksa Oleh
                             </td>
-                            <td align="center">
-                                Disetujui Oleh
+                            <td align="center" >
+                                Diketahui
+                            </td>
+                            <td align="center" >
+                                Diterima 
                             </td>
                         </tr>
                         <tr class="">
-
                             <td align="center" height="75px">
                                 <img src="uploads/ttd_rifka.png" width="100px">
                             </td>
                             <td align="center">
-                                <img src="uploads/ttd_dian.png" width="100px"> 
+                                <img src="uploads/ttd_dian.png" width="100px">
                             </td>
                             <td align="center">
-                                <img src="uploads/ttd_satria.png" width="100px"> 
+                                <img src="uploads/ttd_satria.png" width="100px">
+                            </td>
+                            <td align="center">
+                            
                             </td>
                         </tr>
                         <tr class="">
@@ -140,23 +145,21 @@
                             <td align="center">
                                 <b>Rifka Dian Bethary</b>
                             </td>
-                            <td align="center" >
+                            <td align="center">
                                 <b>Dian Melinda Sari</b>
                             </td>
-                            <td align="center" >
+                            <td align="center">
                                 <b>Satria Widura Drana Wisesa</b>
+                            </td>
+                            <td align="center">
+                                <b></b>
                             </td>
                         </tr>
                          <tr class="">
-                            <td align="center">
-                                <b>Pj. Keuangan & SDM</b>
-                            </td>
-                            <td align="center" >
-                                <b>Pj. Produksi</b>
-                            </td>
-                            <td align="center" >
-                                <b>Ka. Unit Bisnis</b>
-                            </td>
+                            <td align="center"><b>Pj. Keuangan & SDM</b></td>
+                            <td align="center"><b>Pj. Produksi</b></td>
+                            <td align="center"><b>Ka. Unit Bisnis</b></td>
+                            <td align="center" ><b>Penerima</b></td>
                         </tr>
                     </table>
                 </td>
